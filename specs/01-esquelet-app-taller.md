@@ -1,6 +1,6 @@
 # SPEC 01 — Esquelet de l'app de taller: navegació, idioma i tema
 
-> **Estat:** Approved
+> **Estat:** Implemented
 > **Depèn de:** cap (spec inicial del projecte)
 > **Data:** 2026-08-12
 > **Objectiu:** Muntar l'aplicació local Node+Express+React+SQLite amb navegació lateral, canvi d'idioma català/castellà, tema fosc/clar i el mòdul de Clients complet com a patró CRUD de referència.
@@ -144,39 +144,39 @@ interface Client {
 
 ## Criteris d'acceptació
 
-- [ ] `npm run dev` arrenca backend i frontend amb una sola comanda i `http://localhost:5173` carrega l'app sense errors a la consola del navegador.
-- [ ] `npm start` serveix l'app compilada i l'API des de `http://localhost:3001`.
-- [ ] La barra lateral mostra les vuit seccions: Clients, Vehicles, Peces, Albarans, Factures, Personal, Nòmines i Configuració.
-- [ ] Les set seccions no implementades mostren l'avís "mòdul pendent" i no provoquen cap error.
-- [ ] En obrir l'app per primer cop, la interfície està en castellà.
-- [ ] El selector d'idioma canvia entre català i castellà i tots els textos visibles es tradueixen sense recarregar la pàgina.
-- [ ] Després de canviar l'idioma i recarregar la pàgina, l'idioma escollit es manté.
-- [ ] No queda cap text literal en castellà o català incrustat als components; tots passen per claus de traducció.
-- [ ] Els fitxers `ca.json` i `es.json` tenen exactament el mateix conjunt de claus.
-- [ ] En obrir l'app per primer cop en un sistema configurat en fosc, l'app arrenca en tema fosc.
-- [ ] El commutador de tema canvia entre clar i fosc i la tria es manté després de recarregar.
-- [ ] Cap text queda il·legible per contrast en cap dels dos temes a les pàgines de Clients.
-- [ ] Arrencar el servidor amb `data/taller.db` inexistent crea el fitxer i la taula `clients` sense errors.
-- [ ] Arrencar el servidor dues vegades seguides no torna a aplicar les migracions ja executades.
-- [ ] `GET /api/clients` retorna `200` amb un array JSON.
-- [ ] `POST /api/clients` sense el camp `nom` retorna `400`.
-- [ ] `GET /api/clients/9999` amb un id inexistent retorna `404`.
-- [ ] `npm run seed` omple la taula `clients` amb almenys 10 clients d'exemple.
-- [ ] Executar `npm run seed` dues vegades no duplica els clients d'exemple.
-- [ ] El llistat de Clients mostra els clients de la base de dades en una taula.
-- [ ] El camp de cerca del llistat filtra els clients per nom.
-- [ ] Clicar la capçalera d'una columna ordena el llistat per aquella columna.
-- [ ] Amb més de 20 clients, el llistat es pagina i els controls de pàgina funcionen.
-- [ ] Amb la taula `clients` buida, el llistat mostra l'estat buit amb un botó per crear el primer client.
-- [ ] Amb el servidor aturat, el llistat mostra l'estat d'error i no una pantalla en blanc.
-- [ ] Clicar una fila del llistat obre la fitxa de detall d'aquell client.
-- [ ] Crear un client des del formulari l'afegeix al llistat sense recarregar la pàgina.
-- [ ] Desar el formulari amb el camp `nom` buit mostra un error de validació i no envia la petició.
-- [ ] Editar un client i desar-lo actualitza les dades a la fitxa de detall.
-- [ ] Esborrar un client demana confirmació en un diàleg abans d'executar l'acció.
-- [ ] Cancel·lar el diàleg de confirmació no esborra el client.
-- [ ] Confirmar l'esborrat elimina el client del llistat i mostra un avís d'èxit.
-- [ ] Els components `DataTable`, `EntityForm`, `ConfirmDialog`, `Toast`, `EmptyState` i `ErrorState` no contenen cap referència específica a Clients.
+- [x] `npm run dev` arrenca backend i frontend amb una sola comanda i `http://localhost:5173` carrega l'app sense errors a la consola del navegador.
+- [x] `npm start` serveix l'app compilada i l'API des de `http://localhost:3001`.
+- [x] La barra lateral mostra les vuit seccions: Clients, Vehicles, Peces, Albarans, Factures, Personal, Nòmines i Configuració.
+- [x] Les set seccions no implementades mostren l'avís "mòdul pendent" i no provoquen cap error.
+- [x] En obrir l'app per primer cop, la interfície està en castellà.
+- [x] El selector d'idioma canvia entre català i castellà i tots els textos visibles es tradueixen sense recarregar la pàgina.
+- [x] Després de canviar l'idioma i recarregar la pàgina, l'idioma escollit es manté.
+- [x] No queda cap text literal en castellà o català incrustat als components; tots passen per claus de traducció.
+- [x] Els fitxers `ca.json` i `es.json` tenen exactament el mateix conjunt de claus.
+- [x] En obrir l'app per primer cop en un sistema configurat en fosc, l'app arrenca en tema fosc.
+- [x] El commutador de tema canvia entre clar i fosc i la tria es manté després de recarregar.
+- [x] Cap text queda il·legible per contrast en cap dels dos temes a les pàgines de Clients.
+- [x] Arrencar el servidor amb `data/taller.db` inexistent crea el fitxer i la taula `clients` sense errors.
+- [x] Arrencar el servidor dues vegades seguides no torna a aplicar les migracions ja executades.
+- [x] `GET /api/clients` retorna `200` amb un array JSON.
+- [x] `POST /api/clients` sense el camp `nom` retorna `400`.
+- [x] `GET /api/clients/9999` amb un id inexistent retorna `404`.
+- [x] `npm run seed` omple la taula `clients` amb almenys 10 clients d'exemple.
+- [x] Executar `npm run seed` dues vegades no duplica els clients d'exemple.
+- [x] El llistat de Clients mostra els clients de la base de dades en una taula.
+- [x] El camp de cerca del llistat filtra els clients per nom.
+- [x] Clicar la capçalera d'una columna ordena el llistat per aquella columna.
+- [x] Amb més de 20 clients, el llistat es pagina i els controls de pàgina funcionen.
+- [x] Amb la taula `clients` buida, el llistat mostra l'estat buit amb un botó per crear el primer client.
+- [x] Amb el servidor aturat, el llistat mostra l'estat d'error i no una pantalla en blanc.
+- [x] Clicar una fila del llistat obre la fitxa de detall d'aquell client.
+- [x] Crear un client des del formulari l'afegeix al llistat sense recarregar la pàgina.
+- [x] Desar el formulari amb el camp `nom` buit mostra un error de validació i no envia la petició.
+- [x] Editar un client i desar-lo actualitza les dades a la fitxa de detall.
+- [x] Esborrar un client demana confirmació en un diàleg abans d'executar l'acció.
+- [x] Cancel·lar el diàleg de confirmació no esborra el client.
+- [x] Confirmar l'esborrat elimina el client del llistat i mostra un avís d'èxit.
+- [x] Els components `DataTable`, `EntityForm`, `ConfirmDialog`, `Toast`, `EmptyState` i `ErrorState` no contenen cap referència específica a Clients.
 
 ---
 
