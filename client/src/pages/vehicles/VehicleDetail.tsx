@@ -3,9 +3,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { vehiclesService } from '../../services/vehicles';
 import { clientsService } from '../../services/clients';
+import { albaransService } from '../../services/albarans';
 import { ApiError } from '../../services/api';
 import type { Vehicle } from '../../types/vehicle';
 import type { Client } from '../../types/client';
+import type { Albara } from '../../types/albara';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -16,6 +18,7 @@ function VehicleDetail() {
   const { t } = useTranslation();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [client, setClient] = useState<Client | null>(null);
+  const [albarans, setAlbarans] = useState<Albara[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -28,9 +31,15 @@ function VehicleDetail() {
       .get(Number(id))
       .then((data) => {
         setVehicle(data);
-        return clientsService.get(data.clientId);
+        return Promise.all([
+          clientsService.get(data.clientId),
+          albaransService.listByVehicle(data.id),
+        ]);
       })
-      .then(setClient)
+      .then(([clientData, albaransData]) => {
+        setClient(clientData);
+        setAlbarans(albaransData);
+      })
       .catch((err: unknown) => {
         setError(err instanceof ApiError ? err.message : t('vehicles.error'));
       })
@@ -108,6 +117,39 @@ function VehicleDetail() {
           </div>
         ))}
       </dl>
+
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+            {t('vehicles.detail.albaransTitle')}
+          </h2>
+          <button
+            type="button"
+            onClick={() => navigate(`/albarans/nou?vehicleId=${vehicle.id}`)}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            {t('vehicles.detail.newAlbara')}
+          </button>
+        </div>
+        {albarans.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t('vehicles.detail.noAlbarans')}
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {albarans.map((albara) => (
+              <li key={albara.id}>
+                <Link
+                  to={`/albarans/${albara.id}`}
+                  className="text-sm text-primary-600 hover:underline"
+                >
+                  {albara.numero} — {t(`albarans.estat.${albara.estat}`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <ConfirmDialog
         open={confirmOpen}

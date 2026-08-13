@@ -8,7 +8,7 @@ export interface FormFieldOption {
 export interface FormField {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea' | 'number' | 'select';
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'number' | 'select' | 'date';
   required?: boolean;
   options?: FormFieldOption[];
   placeholder?: string;

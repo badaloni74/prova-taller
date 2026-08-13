@@ -10,6 +10,9 @@ import PecaForm from './pages/peces/PecaForm';
 import VehiclesList from './pages/vehicles/VehiclesList';
 import VehicleDetail from './pages/vehicles/VehicleDetail';
 import VehicleForm from './pages/vehicles/VehicleForm';
+import AlbaransList from './pages/albarans/AlbaransList';
+import AlbaraDetail from './pages/albarans/AlbaraDetail';
+import AlbaraForm from './pages/albarans/AlbaraForm';
 import { navSections } from './nav';
 
 function App() {
@@ -30,6 +33,10 @@ function App() {
           <Route path="/vehicles/nou" element={<VehicleForm />} />
           <Route path="/vehicles/:id/editar" element={<VehicleForm />} />
           <Route path="/vehicles/:id" element={<VehicleDetail />} />
+          <Route path="/albarans" element={<AlbaransList />} />
+          <Route path="/albarans/nou" element={<AlbaraForm />} />
+          <Route path="/albarans/:id/editar" element={<AlbaraForm />} />
+          <Route path="/albarans/:id" element={<AlbaraDetail />} />
           {navSections
             .filter((section) => !section.implemented)
             .map((section) => (
