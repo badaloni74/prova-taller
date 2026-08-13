@@ -6,6 +6,7 @@ import EntityForm from '../../components/EntityForm';
 import type { FormField } from '../../components/EntityForm';
 import Spinner from '../../components/Spinner';
 import { pecesService } from '../../services/peces';
+import { ApiError } from '../../services/api';
 
 const EMPTY_VALUES = {
   nom: '',
@@ -76,11 +77,14 @@ function PecaForm() {
       estoc: Number(values.estoc) || 0,
     };
 
-    const peca = isEdit
-      ? await pecesService.update(Number(id), payload)
-      : await pecesService.create(payload);
-
-    navigate(`/peces/${peca.id}`);
+    try {
+      const peca = isEdit
+        ? await pecesService.update(Number(id), payload)
+        : await pecesService.create(payload);
+      navigate(`/peces/${peca.id}`);
+    } catch (err: unknown) {
+      setErrors({ nom: err instanceof ApiError ? err.message : t('peces.error') });
+    }
   };
 
   if (loading) return <Spinner />;

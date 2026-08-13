@@ -6,6 +6,7 @@ import EntityForm from '../../components/EntityForm';
 import type { FormField } from '../../components/EntityForm';
 import Spinner from '../../components/Spinner';
 import { clientsService } from '../../services/clients';
+import { ApiError } from '../../services/api';
 
 const EMPTY_VALUES = {
   nom: '',
@@ -72,11 +73,14 @@ function ClientForm() {
       notes: values.notes || null,
     };
 
-    const client = isEdit
-      ? await clientsService.update(Number(id), payload)
-      : await clientsService.create(payload);
-
-    navigate(`/clients/${client.id}`);
+    try {
+      const client = isEdit
+        ? await clientsService.update(Number(id), payload)
+        : await clientsService.create(payload);
+      navigate(`/clients/${client.id}`);
+    } catch (err: unknown) {
+      setErrors({ nom: err instanceof ApiError ? err.message : t('clients.error') });
+    }
   };
 
   if (loading) return <Spinner />;

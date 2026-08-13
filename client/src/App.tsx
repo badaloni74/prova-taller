@@ -7,6 +7,9 @@ import ClientForm from './pages/clients/ClientForm';
 import PecesList from './pages/peces/PecesList';
 import PecaDetail from './pages/peces/PecaDetail';
 import PecaForm from './pages/peces/PecaForm';
+import VehiclesList from './pages/vehicles/VehiclesList';
+import VehicleDetail from './pages/vehicles/VehicleDetail';
+import VehicleForm from './pages/vehicles/VehicleForm';
 import { navSections } from './nav';
 
 function App() {
@@ -23,6 +26,10 @@ function App() {
           <Route path="/peces/nou" element={<PecaForm />} />
           <Route path="/peces/:id/editar" element={<PecaForm />} />
           <Route path="/peces/:id" element={<PecaDetail />} />
+          <Route path="/vehicles" element={<VehiclesList />} />
+          <Route path="/vehicles/nou" element={<VehicleForm />} />
+          <Route path="/vehicles/:id/editar" element={<VehicleForm />} />
+          <Route path="/vehicles/:id" element={<VehicleDetail />} />
           {navSections
             .filter((section) => !section.implemented)
             .map((section) => (

@@ -6,7 +6,7 @@ export interface NavSection {
 
 export const navSections: NavSection[] = [
   { path: '/clients', labelKey: 'nav.clients', implemented: true },
-  { path: '/vehicles', labelKey: 'nav.vehicles', implemented: false },
+  { path: '/vehicles', labelKey: 'nav.vehicles', implemented: true },
   { path: '/peces', labelKey: 'nav.peces', implemented: true },
   { path: '/albarans', labelKey: 'nav.albarans', implemented: false },
   { path: '/factures', labelKey: 'nav.factures', implemented: false },

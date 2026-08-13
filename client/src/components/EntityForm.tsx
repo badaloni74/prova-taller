@@ -1,10 +1,17 @@
 import type { FormEvent } from 'react';
 
+export interface FormFieldOption {
+  value: string;
+  label: string;
+}
+
 export interface FormField {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea' | 'number';
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'number' | 'select';
   required?: boolean;
+  options?: FormFieldOption[];
+  placeholder?: string;
 }
 
 interface EntityFormProps {
@@ -48,6 +55,20 @@ function EntityForm({
               rows={3}
               className="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             />
+          ) : field.type === 'select' ? (
+            <select
+              id={field.name}
+              value={values[field.name] ?? ''}
+              onChange={(event) => onChange(field.name, event.target.value)}
+              className="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+            >
+              <option value="">{field.placeholder ?? ''}</option>
+              {field.options?.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           ) : (
             <input
               id={field.name}

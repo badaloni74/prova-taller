@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { clientsService } from '../../services/clients';
+import { vehiclesService } from '../../services/vehicles';
 import { ApiError } from '../../services/api';
 import type { Client } from '../../types/client';
+import type { Vehicle } from '../../types/vehicle';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -13,6 +15,7 @@ function ClientDetail() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [client, setClient] = useState<Client | null>(null);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -23,7 +26,11 @@ function ClientDetail() {
     setError(null);
     clientsService
       .get(Number(id))
-      .then(setClient)
+      .then((data) => {
+        setClient(data);
+        return vehiclesService.listByClient(data.id);
+      })
+      .then(setVehicles)
       .catch((err: unknown) => {
         setError(err instanceof ApiError ? err.message : t('clients.error'));
       })
@@ -90,6 +97,39 @@ function ClientDetail() {
           </div>
         ))}
       </dl>
+
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+            {t('clients.detail.vehiclesTitle')}
+          </h2>
+          <button
+            type="button"
+            onClick={() => navigate(`/vehicles/nou?clientId=${client.id}`)}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            {t('clients.detail.newVehicle')}
+          </button>
+        </div>
+        {vehicles.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t('clients.detail.noVehicles')}
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {vehicles.map((vehicle) => (
+              <li key={vehicle.id}>
+                <Link
+                  to={`/vehicles/${vehicle.id}`}
+                  className="text-sm text-primary-600 hover:underline"
+                >
+                  {vehicle.marca} {vehicle.model} — {vehicle.matricula}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <ConfirmDialog
         open={confirmOpen}

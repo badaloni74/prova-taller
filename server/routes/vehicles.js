@@ -4,7 +4,12 @@ const db = require('../db');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const vehicles = db.prepare('SELECT * FROM vehicles ORDER BY marca, model').all();
+  const { client_id } = req.query;
+  const vehicles = client_id
+    ? db
+        .prepare('SELECT * FROM vehicles WHERE client_id = ? ORDER BY marca, model')
+        .all(client_id)
+    : db.prepare('SELECT * FROM vehicles ORDER BY marca, model').all();
   res.json(vehicles);
 });
 
