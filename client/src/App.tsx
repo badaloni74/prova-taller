@@ -19,6 +19,9 @@ import FacturaForm from './pages/factures/FacturaForm';
 import PersonalList from './pages/personal/PersonalList';
 import PersonalDetail from './pages/personal/PersonalDetail';
 import PersonalForm from './pages/personal/PersonalForm';
+import NominesList from './pages/nomines/NominesList';
+import NominaDetail from './pages/nomines/NominaDetail';
+import NominaForm from './pages/nomines/NominaForm';
 import { navSections } from './nav';
 
 function App() {
@@ -50,6 +53,10 @@ function App() {
           <Route path="/personal/nou" element={<PersonalForm />} />
           <Route path="/personal/:id/editar" element={<PersonalForm />} />
           <Route path="/personal/:id" element={<PersonalDetail />} />
+          <Route path="/nomines" element={<NominesList />} />
+          <Route path="/nomines/nova" element={<NominaForm />} />
+          <Route path="/nomines/:id/editar" element={<NominaForm />} />
+          <Route path="/nomines/:id" element={<NominaDetail />} />
           {navSections
             .filter((section) => !section.implemented)
             .map((section) => (

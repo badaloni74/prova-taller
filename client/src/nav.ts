@@ -11,6 +11,6 @@ export const navSections: NavSection[] = [
   { path: '/albarans', labelKey: 'nav.albarans', implemented: true },
   { path: '/factures', labelKey: 'nav.factures', implemented: true },
   { path: '/personal', labelKey: 'nav.personal', implemented: true },
-  { path: '/nomines', labelKey: 'nav.nomines', implemented: false },
+  { path: '/nomines', labelKey: 'nav.nomines', implemented: true },
   { path: '/configuracio', labelKey: 'nav.configuracio', implemented: false },
 ];

@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { personalService } from '../../services/personal';
+import { nominesService } from '../../services/nomines';
 import { ApiError } from '../../services/api';
 import type { Personal } from '../../types/personal';
+import type { Nomina } from '../../types/nomina';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -13,6 +15,7 @@ function PersonalDetail() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [persona, setPersona] = useState<Personal | null>(null);
+  const [nomines, setNomines] = useState<Nomina[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -23,7 +26,11 @@ function PersonalDetail() {
     setError(null);
     personalService
       .get(Number(id))
-      .then(setPersona)
+      .then((data) => {
+        setPersona(data);
+        return nominesService.listByPersonal(data.id);
+      })
+      .then(setNomines)
       .catch((err: unknown) => {
         setError(err instanceof ApiError ? err.message : t('personal.error'));
       })
@@ -94,6 +101,41 @@ function PersonalDetail() {
           </div>
         ))}
       </dl>
+
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+            {t('personal.detail.nominesTitle')}
+          </h2>
+          <button
+            type="button"
+            onClick={() => navigate(`/nomines/nova?personalId=${persona.id}`)}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            {t('personal.detail.newNomina')}
+          </button>
+        </div>
+        {nomines.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t('personal.detail.noNomines')}
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {nomines.map((nomina) => (
+              <li key={nomina.id}>
+                <Link
+                  to={`/nomines/${nomina.id}`}
+                  className="text-sm text-primary-600 hover:underline"
+                >
+                  {String(nomina.mes).padStart(2, '0')}/{nomina.anyNomina} —{' '}
+                  {t(`nomines.estatPagament.${nomina.estatPagament}`)} —{' '}
+                  {nomina.salariNet.toFixed(2)} €
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <ConfirmDialog
         open={confirmOpen}
