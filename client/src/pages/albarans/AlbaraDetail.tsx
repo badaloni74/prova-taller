@@ -11,6 +11,7 @@ import type { Client } from '../../types/client';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import AlbaraLiniesSection from './AlbaraLiniesSection';
 
 function AlbaraDetail() {
   const { id } = useParams<{ id: string }>();
@@ -149,6 +150,8 @@ function AlbaraDetail() {
           <dd className="text-sm text-slate-800 dark:text-slate-100">{albara.creatEl}</dd>
         </div>
       </dl>
+
+      <AlbaraLiniesSection albara={albara} onUpdate={setAlbara} editable={isPendent} />
 
       <ConfirmDialog
         open={confirmOpen}
