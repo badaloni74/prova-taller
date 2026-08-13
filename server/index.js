@@ -5,6 +5,7 @@ const clientsRouter = require('./routes/clients');
 const pecesRouter = require('./routes/peces');
 const vehiclesRouter = require('./routes/vehicles');
 const albaransRouter = require('./routes/albarans');
+const facturesRouter = require('./routes/factures');
 
 runMigrations();
 
@@ -22,6 +23,7 @@ app.use('/api/clients', clientsRouter);
 app.use('/api/peces', pecesRouter);
 app.use('/api/vehicles', vehiclesRouter);
 app.use('/api/albarans', albaransRouter);
+app.use('/api/factures', facturesRouter);
 
 app.use(express.static(CLIENT_DIST));
 
