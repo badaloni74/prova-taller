@@ -4,6 +4,8 @@ import type { Albara, AlbaraInput, AlbaraLiniaInput } from '../types/albara';
 export const albaransService = {
   list: () => api.get<Albara[]>('/albarans'),
   listByVehicle: (vehicleId: number) => api.get<Albara[]>(`/albarans?vehicle_id=${vehicleId}`),
+  listByClient: (clientId: number, estat?: 'pendent' | 'facturat') =>
+    api.get<Albara[]>(`/albarans?client_id=${clientId}${estat ? `&estat=${estat}` : ''}`),
   get: (id: number) => api.get<Albara>(`/albarans/${id}`),
   create: (data: AlbaraInput) => api.post<Albara>('/albarans', data),
   update: (id: number, data: AlbaraInput) => api.put<Albara>(`/albarans/${id}`, data),

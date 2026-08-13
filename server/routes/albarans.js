@@ -13,10 +13,30 @@ function withLinies(albara) {
 }
 
 router.get('/', (req, res) => {
-  const { vehicle_id } = req.query;
-  const albarans = vehicle_id
-    ? db.prepare('SELECT * FROM albarans WHERE vehicle_id = ? ORDER BY numero DESC').all(vehicle_id)
-    : db.prepare('SELECT * FROM albarans ORDER BY numero DESC').all();
+  const { vehicle_id, client_id, estat } = req.query;
+
+  let query = 'SELECT albarans.* FROM albarans';
+  const conditions = [];
+  const params = [];
+
+  if (client_id) {
+    query += ' JOIN vehicles ON vehicles.id = albarans.vehicle_id';
+    conditions.push('vehicles.client_id = ?');
+    params.push(client_id);
+  } else if (vehicle_id) {
+    conditions.push('albarans.vehicle_id = ?');
+    params.push(vehicle_id);
+  }
+  if (estat) {
+    conditions.push('albarans.estat = ?');
+    params.push(estat);
+  }
+  if (conditions.length > 0) {
+    query += ' WHERE ' + conditions.join(' AND ');
+  }
+  query += ' ORDER BY albarans.numero DESC';
+
+  const albarans = db.prepare(query).all(...params);
   res.json(albarans);
 });
 

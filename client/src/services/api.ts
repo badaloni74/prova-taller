@@ -68,5 +68,7 @@ export const api = {
     request<T>(path, { method: 'POST', body: JSON.stringify(toSnakeCase(data)) }),
   put: <T>(path: string, data: unknown) =>
     request<T>(path, { method: 'PUT', body: JSON.stringify(toSnakeCase(data)) }),
+  patch: <T>(path: string, data: unknown) =>
+    request<T>(path, { method: 'PATCH', body: JSON.stringify(toSnakeCase(data)) }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
 };

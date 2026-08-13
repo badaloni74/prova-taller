@@ -13,6 +13,9 @@ import VehicleForm from './pages/vehicles/VehicleForm';
 import AlbaransList from './pages/albarans/AlbaransList';
 import AlbaraDetail from './pages/albarans/AlbaraDetail';
 import AlbaraForm from './pages/albarans/AlbaraForm';
+import FacturesList from './pages/factures/FacturesList';
+import FacturaDetail from './pages/factures/FacturaDetail';
+import FacturaForm from './pages/factures/FacturaForm';
 import { navSections } from './nav';
 
 function App() {
@@ -37,6 +40,9 @@ function App() {
           <Route path="/albarans/nou" element={<AlbaraForm />} />
           <Route path="/albarans/:id/editar" element={<AlbaraForm />} />
           <Route path="/albarans/:id" element={<AlbaraDetail />} />
+          <Route path="/factures" element={<FacturesList />} />
+          <Route path="/factures/nova" element={<FacturaForm />} />
+          <Route path="/factures/:id" element={<FacturaDetail />} />
           {navSections
             .filter((section) => !section.implemented)
             .map((section) => (
