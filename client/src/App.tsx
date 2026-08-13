@@ -16,6 +16,9 @@ import AlbaraForm from './pages/albarans/AlbaraForm';
 import FacturesList from './pages/factures/FacturesList';
 import FacturaDetail from './pages/factures/FacturaDetail';
 import FacturaForm from './pages/factures/FacturaForm';
+import PersonalList from './pages/personal/PersonalList';
+import PersonalDetail from './pages/personal/PersonalDetail';
+import PersonalForm from './pages/personal/PersonalForm';
 import { navSections } from './nav';
 
 function App() {
@@ -43,6 +46,10 @@ function App() {
           <Route path="/factures" element={<FacturesList />} />
           <Route path="/factures/nova" element={<FacturaForm />} />
           <Route path="/factures/:id" element={<FacturaDetail />} />
+          <Route path="/personal" element={<PersonalList />} />
+          <Route path="/personal/nou" element={<PersonalForm />} />
+          <Route path="/personal/:id/editar" element={<PersonalForm />} />
+          <Route path="/personal/:id" element={<PersonalDetail />} />
           {navSections
             .filter((section) => !section.implemented)
             .map((section) => (
