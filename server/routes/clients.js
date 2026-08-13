@@ -71,6 +71,13 @@ router.delete('/:id', (req, res) => {
     return res.status(404).json({ error: 'Client no trobat' });
   }
 
+  const hasVehicles = db
+    .prepare('SELECT COUNT(*) AS count FROM vehicles WHERE client_id = ?')
+    .get(req.params.id).count;
+  if (hasVehicles > 0) {
+    return res.status(409).json({ error: 'El client té vehicles associats i no es pot esborrar' });
+  }
+
   db.prepare('DELETE FROM clients WHERE id = ?').run(req.params.id);
   res.status(204).end();
 });
