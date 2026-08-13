@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 export interface FormField {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea';
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'number';
   required?: boolean;
 }
 
