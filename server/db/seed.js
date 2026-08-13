@@ -39,6 +39,14 @@ const vehicles = [
   { clientNif: '12345676F', marca: 'Ford', model: 'Focus', matricula: '2345FGH', bastidor: 'VF1FG678901234567', anyMatriculacio: 2017, quilometratge: 95000, color: 'Blanc' },
 ];
 
+const personal = [
+  { nom: 'Marc Oliveras Puig', telefon: '600700111', email: 'marc.oliveras@taller.cat', dni: '40111222A', carrec: 'Mecànic', data_alta: '2020-01-15', salari_base: 1650 },
+  { nom: 'Núria Bosch Vidal', telefon: '600700222', email: 'nuria.bosch@taller.cat', dni: '40222333B', carrec: 'Recepcionista', data_alta: '2021-06-01', salari_base: 1450 },
+  { nom: 'David Roig Ferrer', telefon: '600700333', email: 'david.roig@taller.cat', dni: '40333444C', carrec: 'Cap de taller', data_alta: '2018-03-10', salari_base: 2100 },
+  { nom: 'Laia Muñoz Sala', telefon: '600700444', email: 'laia.munoz@taller.cat', dni: '40444555D', carrec: 'Administrativa', data_alta: '2022-09-01', salari_base: 1500 },
+  { nom: 'Xavier Torres Bou', telefon: '600700555', email: 'xavier.torres@taller.cat', dni: '40555666E', carrec: 'Mecànic', data_alta: '2019-11-20', salari_base: 1700 },
+];
+
 const alreadySeeded = db
   .prepare('SELECT COUNT(*) AS count FROM clients WHERE nif = ?')
   .get(clients[0].nif).count > 0;
@@ -73,6 +81,14 @@ if (alreadySeeded) {
   );
   const linkAlbaraToFactura = db.prepare(
     "UPDATE albarans SET factura_id = ?, estat = 'facturat' WHERE id = ?",
+  );
+  const insertPersonal = db.prepare(
+    `INSERT INTO personal (nom, telefon, email, dni, carrec, data_alta, salari_base)
+     VALUES (@nom, @telefon, @email, @dni, @carrec, @data_alta, @salari_base)`,
+  );
+  const insertNomina = db.prepare(
+    `INSERT INTO nomines (personal_id, mes, any_nomina, salari_brut, deduccions, estat_pagament)
+     VALUES (?, ?, ?, ?, ?, ?)`,
   );
 
   const seed = db.transaction(() => {
@@ -147,11 +163,19 @@ if (alreadySeeded) {
     const facturaNumero = generateNumero('factures', 'F');
     const facturaResult = insertFactura.run(facturaNumero, clientIdByNif['12345672B']);
     linkAlbaraToFactura.run(facturaResult.lastInsertRowid, albaraFacturable);
+
+    const personalIds = personal.map((persona) => insertPersonal.run(persona).lastInsertRowid);
+
+    insertNomina.run(personalIds[0], 1, 2026, 1650, 290, 'pagada');
+    insertNomina.run(personalIds[0], 2, 2026, 1650, 290, 'pendent');
+    insertNomina.run(personalIds[1], 1, 2026, 1450, 250, 'pagada');
+    insertNomina.run(personalIds[2], 1, 2026, 2100, 380, 'pagada');
+    insertNomina.run(personalIds[4], 1, 2026, 1700, 300, 'pendent');
   });
 
   seed();
 
   console.log(
-    `Seed aplicat: ${clients.length} clients, ${peces.length} peces, ${vehicles.length} vehicles, 4 albarans i 1 factura d'exemple afegits.`,
+    `Seed aplicat: ${clients.length} clients, ${peces.length} peces, ${vehicles.length} vehicles, 4 albarans, 1 factura, ${personal.length} empleats i 5 nòmines d'exemple afegits.`,
   );
 }
