@@ -4,6 +4,7 @@ const { runMigrations } = require('./db/migrate');
 const clientsRouter = require('./routes/clients');
 const pecesRouter = require('./routes/peces');
 const vehiclesRouter = require('./routes/vehicles');
+const albaransRouter = require('./routes/albarans');
 
 runMigrations();
 
@@ -20,6 +21,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/clients', clientsRouter);
 app.use('/api/peces', pecesRouter);
 app.use('/api/vehicles', vehiclesRouter);
+app.use('/api/albarans', albaransRouter);
 
 app.use(express.static(CLIENT_DIST));
 
