@@ -3,9 +3,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { clientsService } from '../../services/clients';
 import { vehiclesService } from '../../services/vehicles';
+import { facturesService } from '../../services/factures';
 import { ApiError } from '../../services/api';
 import type { Client } from '../../types/client';
 import type { Vehicle } from '../../types/vehicle';
+import type { Factura } from '../../types/factura';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -16,6 +18,7 @@ function ClientDetail() {
   const { t } = useTranslation();
   const [client, setClient] = useState<Client | null>(null);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [factures, setFactures] = useState<Factura[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -28,9 +31,15 @@ function ClientDetail() {
       .get(Number(id))
       .then((data) => {
         setClient(data);
-        return vehiclesService.listByClient(data.id);
+        return Promise.all([
+          vehiclesService.listByClient(data.id),
+          facturesService.listByClient(data.id),
+        ]);
       })
-      .then(setVehicles)
+      .then(([vehiclesData, facturesData]) => {
+        setVehicles(vehiclesData);
+        setFactures(facturesData);
+      })
       .catch((err: unknown) => {
         setError(err instanceof ApiError ? err.message : t('clients.error'));
       })
@@ -124,6 +133,40 @@ function ClientDetail() {
                   className="text-sm text-primary-600 hover:underline"
                 >
                   {vehicle.marca} {vehicle.model} — {vehicle.matricula}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="mt-8">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+            {t('clients.detail.facturesTitle')}
+          </h2>
+          <button
+            type="button"
+            onClick={() => navigate(`/factures/nova?clientId=${client.id}`)}
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            {t('factures.new')}
+          </button>
+        </div>
+        {factures.length === 0 ? (
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t('clients.detail.noFactures')}
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {factures.map((factura) => (
+              <li key={factura.id}>
+                <Link
+                  to={`/factures/${factura.id}`}
+                  className="text-sm text-primary-600 hover:underline"
+                >
+                  {factura.numero} — {t(`factures.estatPagament.${factura.estatPagament}`)} —{' '}
+                  {factura.total.toFixed(2)} €
                 </Link>
               </li>
             ))}

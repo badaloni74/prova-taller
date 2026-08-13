@@ -36,7 +36,10 @@ function withDetails(factura) {
 }
 
 router.get('/', (req, res) => {
-  const factures = db.prepare('SELECT * FROM factures ORDER BY numero DESC').all();
+  const { client_id } = req.query;
+  const factures = client_id
+    ? db.prepare('SELECT * FROM factures WHERE client_id = ? ORDER BY numero DESC').all(client_id)
+    : db.prepare('SELECT * FROM factures ORDER BY numero DESC').all();
   res.json(factures.map(withDetails));
 });
 
