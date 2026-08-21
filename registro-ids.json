@@ -1,0 +1,2849 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-17T09:40:00.000Z",
+  "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
+  "owners": {
+    "UC-*": "S-01 skill-doc-base",
+    "BR-*": "S-01 skill-doc-base",
+    "ACT-*": "S-01 skill-doc-base",
+    "REQ-*": "A-02 documentacion funcional",
+    "TC-*": "A-03 plan de pruebas",
+    "Q-*": "S-01, A-02, A-03 — espacio compartido; pedir numero a S-12 antes de asignar",
+    "FUN-*": "A-15 propuestas de funcionalidad",
+    "MEJ-*": "A-12 mejoras y roadmap",
+    "EVO-*": "A-06 refinamiento / intake"
+  },
+  "anchors": {
+    "ACT-01": {
+      "text": "Personal del taller",
+      "type": "actor",
+      "module": null,
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-CLI-01": {
+      "text": "Consultar el listado de clientes",
+      "type": "use_case",
+      "module": "clients",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-CLI-02": {
+      "text": "Dar de alta un cliente",
+      "type": "use_case",
+      "module": "clients",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-CLI-03": {
+      "text": "Consultar la ficha de un cliente",
+      "type": "use_case",
+      "module": "clients",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-CLI-04": {
+      "text": "Modificar un cliente",
+      "type": "use_case",
+      "module": "clients",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-CLI-05": {
+      "text": "Borrar un cliente",
+      "type": "use_case",
+      "module": "clients",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-VEH-01": {
+      "text": "Consultar el listado de vehículos",
+      "type": "use_case",
+      "module": "vehicles",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-VEH-02": {
+      "text": "Dar de alta un vehículo de un cliente",
+      "type": "use_case",
+      "module": "vehicles",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-VEH-03": {
+      "text": "Consultar la ficha de un vehículo",
+      "type": "use_case",
+      "module": "vehicles",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-VEH-04": {
+      "text": "Modificar un vehículo",
+      "type": "use_case",
+      "module": "vehicles",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-VEH-05": {
+      "text": "Borrar un vehículo",
+      "type": "use_case",
+      "module": "vehicles",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PEC-01": {
+      "text": "Consultar el catálogo de piezas",
+      "type": "use_case",
+      "module": "peces",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PEC-02": {
+      "text": "Dar de alta una pieza",
+      "type": "use_case",
+      "module": "peces",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PEC-03": {
+      "text": "Consultar la ficha de una pieza",
+      "type": "use_case",
+      "module": "peces",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PEC-04": {
+      "text": "Modificar una pieza",
+      "type": "use_case",
+      "module": "peces",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PEC-05": {
+      "text": "Borrar una pieza",
+      "type": "use_case",
+      "module": "peces",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-01": {
+      "text": "Consultar el listado de albaranes",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-02": {
+      "text": "Abrir un albarán para un vehículo",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-03": {
+      "text": "Añadir una línea de pieza",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-04": {
+      "text": "Añadir una línea de mano de obra",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-05": {
+      "text": "Retirar una línea",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-06": {
+      "text": "Modificar la cabecera de un albarán",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-ALB-07": {
+      "text": "Borrar un albarán",
+      "type": "use_case",
+      "module": "albarans",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-FAC-01": {
+      "text": "Emitir una factura agrupando albaranes",
+      "type": "use_case",
+      "module": "factures",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-FAC-02": {
+      "text": "Consultar el listado de facturas",
+      "type": "use_case",
+      "module": "factures",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-FAC-03": {
+      "text": "Consultar el detalle de una factura",
+      "type": "use_case",
+      "module": "factures",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-FAC-04": {
+      "text": "Marcar una factura como pagada o pendiente",
+      "type": "use_case",
+      "module": "factures",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PER-01": {
+      "text": "Consultar el listado de empleados",
+      "type": "use_case",
+      "module": "personal",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PER-02": {
+      "text": "Dar de alta un empleado",
+      "type": "use_case",
+      "module": "personal",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PER-03": {
+      "text": "Consultar la ficha de un empleado",
+      "type": "use_case",
+      "module": "personal",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PER-04": {
+      "text": "Modificar un empleado",
+      "type": "use_case",
+      "module": "personal",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-PER-05": {
+      "text": "Borrar un empleado",
+      "type": "use_case",
+      "module": "personal",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-01": {
+      "text": "Consultar el listado de nóminas",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-02": {
+      "text": "Registrar la nómina de un empleado",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-03": {
+      "text": "Consultar el detalle de una nómina",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-04": {
+      "text": "Modificar una nómina",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-05": {
+      "text": "Marcar una nómina como pagada o pendiente",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-NOM-06": {
+      "text": "Borrar una nómina",
+      "type": "use_case",
+      "module": "nomines",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-SHL-01": {
+      "text": "Cambiar el idioma de la interfaz",
+      "type": "use_case",
+      "module": "shell",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-SHL-02": {
+      "text": "Cambiar el tema claro/oscuro",
+      "type": "use_case",
+      "module": "shell",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "UC-SHL-03": {
+      "text": "Acceder a Configuración",
+      "type": "use_case",
+      "module": "configuracio",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-CLI-01": {
+      "text": "El nombre del cliente es obligatorio",
+      "type": "business_rule",
+      "module": "clients",
+      "source": "server/routes/clients.js:24",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-CLI-02": {
+      "text": "No se puede borrar un cliente que tenga vehículos asociados",
+      "type": "business_rule",
+      "module": "clients",
+      "source": "server/routes/clients.js:78",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-CLI-03": {
+      "text": "No se puede borrar un cliente que tenga facturas asociadas",
+      "type": "business_rule",
+      "module": "clients",
+      "source": "server/routes/clients.js:85",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-VEH-01": {
+      "text": "Un vehículo pertenece siempre a un cliente existente",
+      "type": "business_rule",
+      "module": "vehicles",
+      "source": "server/routes/vehicles.js:37",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-VEH-02": {
+      "text": "Marca, modelo y matrícula son obligatorios",
+      "type": "business_rule",
+      "module": "vehicles",
+      "source": "server/routes/vehicles.js:32",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-VEH-03": {
+      "text": "La matrícula es única en todo el sistema",
+      "type": "business_rule",
+      "module": "vehicles",
+      "source": "server/db/migrations/002_vehicles_peces_albarans_factures.sql:19",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-VEH-04": {
+      "text": "No se puede borrar un vehículo que tenga albaranes asociados",
+      "type": "business_rule",
+      "module": "vehicles",
+      "source": "server/routes/vehicles.js:124",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-PEC-01": {
+      "text": "El nombre de la pieza es obligatorio",
+      "type": "business_rule",
+      "module": "peces",
+      "source": "server/routes/peces.js:22",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-PEC-02": {
+      "text": "No se puede borrar una pieza usada en algún albarán",
+      "type": "business_rule",
+      "module": "peces",
+      "source": "server/routes/peces.js:85",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-01": {
+      "text": "Un albarán pertenece siempre a un vehículo existente",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:60",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-02": {
+      "text": "Un albarán nace en estado pendiente",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:68",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-03": {
+      "text": "Un albarán facturado no se puede modificar ni borrar, ni tocar sus líneas",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:81",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-04": {
+      "text": "Una línea es de pieza o de mano de obra, sin más opciones",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/db/migrations/002_vehicles_peces_albarans_factures.sql:53",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-05": {
+      "text": "La cantidad de una línea debe ser mayor que cero",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:137",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-06": {
+      "text": "Una línea de pieza exige una pieza existente; si no se informa precio, se toma el de catálogo",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:152",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-07": {
+      "text": "Una línea de mano de obra exige descripción",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:155",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-08": {
+      "text": "Añadir una línea de pieza descuenta el stock; retirarla lo devuelve",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:168",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-ALB-09": {
+      "text": "El número de albarán se genera solo, con formato año/A-nnnn",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/db/numbering.js:16",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-01": {
+      "text": "Una factura agrupa al menos un albarán",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:57",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-02": {
+      "text": "Todos los albaranes de una factura deben estar pendientes de facturar",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:68",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-03": {
+      "text": "Todos los albaranes de una factura deben ser del mismo cliente",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:75",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-04": {
+      "text": "Al facturar, los albaranes pasan a estado facturado y quedan enlazados a la factura",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:93",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-05": {
+      "text": "La base es la suma de cantidad por precio de todas las líneas de sus albaranes; el total es base más IVA",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:26",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-06": {
+      "text": "El IVA por defecto es el 21 por ciento",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:88",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-07": {
+      "text": "Base, IVA y total se presentan redondeados a dos decimales",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:32",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-08": {
+      "text": "El estado de pago solo puede ser pendiente o pagada",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:114",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-FAC-09": {
+      "text": "El número de factura se genera solo, con formato año/F-nnnn",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/db/numbering.js:16",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-PER-01": {
+      "text": "El nombre del empleado es obligatorio",
+      "type": "business_rule",
+      "module": "personal",
+      "source": "server/routes/personal.js:22",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-PER-02": {
+      "text": "No se puede borrar un empleado que tenga nóminas asociadas",
+      "type": "business_rule",
+      "module": "personal",
+      "source": "server/routes/personal.js:85",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-01": {
+      "text": "Una nómina pertenece a un empleado existente",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/routes/nomines.js:42",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-02": {
+      "text": "Empleado, mes y año son obligatorios",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/routes/nomines.js:35",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-03": {
+      "text": "El mes debe estar entre 1 y 12",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/routes/nomines.js:38",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-04": {
+      "text": "Solo puede existir una nómina por empleado, mes y año",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/db/migrations/003_personal_i_nomines.sql:24",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-05": {
+      "text": "El salario neto es el bruto menos las deducciones, redondeado a dos decimales, y se calcula sin almacenarse",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/routes/nomines.js:10",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-NOM-06": {
+      "text": "El estado de pago solo puede ser pendiente o pagada",
+      "type": "business_rule",
+      "module": "nomines",
+      "source": "server/routes/nomines.js:111",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-SHL-01": {
+      "text": "El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones",
+      "type": "business_rule",
+      "module": "shell",
+      "source": "specs/01-esquelet-app-taller.md:33",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "BR-SHL-02": {
+      "text": "El tema por defecto sigue la preferencia del sistema operativo y la elección del usuario se recuerda",
+      "type": "business_rule",
+      "module": "shell",
+      "source": "specs/01-esquelet-app-taller.md:34",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-001": {
+      "text": "El sistema ofrece un listado de clientes con búsqueda por nombre, ordenación por columna y paginación.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "UC-CLI-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-002": {
+      "text": "El sistema permite registrar un cliente nuevo.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "UC-CLI-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-003": {
+      "text": "El sistema exige el nombre del cliente tanto al registrarlo como al modificarlo.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "BR-CLI-01",
+        "UC-CLI-02",
+        "UC-CLI-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-004": {
+      "text": "La ficha de un cliente muestra sus datos, sus vehículos y sus facturas.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "UC-CLI-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-005": {
+      "text": "El sistema permite modificar los datos de un cliente ya registrado.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "UC-CLI-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-006": {
+      "text": "El sistema permite dar de baja un cliente previa confirmación del usuario.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "UC-CLI-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-007": {
+      "text": "El sistema impide dar de baja un cliente que tenga vehículos asociados.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "BR-CLI-02",
+        "UC-CLI-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-008": {
+      "text": "El sistema impide dar de baja un cliente que tenga facturas asociadas.",
+      "type": "requirement",
+      "module": "clients",
+      "source_anchors": [
+        "BR-CLI-03",
+        "UC-CLI-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-009": {
+      "text": "El sistema ofrece un listado de vehículos con búsqueda, ordenación por columna y paginación.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "UC-VEH-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-010": {
+      "text": "El sistema permite registrar un vehículo, tanto desde el módulo de vehículos como desde la ficha del cliente.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "UC-VEH-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-011": {
+      "text": "Todo vehículo queda asociado a un cliente que ya existe en el sistema.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "BR-VEH-01",
+        "UC-VEH-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-012": {
+      "text": "El sistema exige marca, modelo y matrícula para registrar o modificar un vehículo.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "BR-VEH-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-013": {
+      "text": "El sistema impide que dos vehículos compartan la misma matrícula.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "BR-VEH-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-014": {
+      "text": "La ficha de un vehículo muestra sus datos, el cliente propietario y sus albaranes.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "UC-VEH-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-015": {
+      "text": "El sistema permite modificar los datos de un vehículo ya registrado.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "UC-VEH-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-016": {
+      "text": "El sistema permite dar de baja un vehículo previa confirmación del usuario.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "UC-VEH-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-017": {
+      "text": "El sistema impide dar de baja un vehículo que tenga albaranes asociados.",
+      "type": "requirement",
+      "module": "vehicles",
+      "source_anchors": [
+        "BR-VEH-04",
+        "UC-VEH-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-018": {
+      "text": "El sistema ofrece un catálogo de piezas en el que cada pieza muestra su referencia, su precio y su stock actual.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "UC-PEC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-019": {
+      "text": "El sistema permite dar de alta una pieza en el catálogo con su stock inicial.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "UC-PEC-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-020": {
+      "text": "El sistema exige el nombre de la pieza tanto al darla de alta como al modificarla.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "BR-PEC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-021": {
+      "text": "La ficha de una pieza muestra su referencia, precio, coste, unidad, proveedor y stock.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "UC-PEC-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-022": {
+      "text": "El sistema permite modificar los datos de una pieza del catálogo.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "UC-PEC-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-023": {
+      "text": "El sistema permite dar de baja una pieza del catálogo previa confirmación del usuario.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "UC-PEC-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-024": {
+      "text": "El sistema impide dar de baja una pieza que se haya utilizado en algún albarán.",
+      "type": "requirement",
+      "module": "peces",
+      "source_anchors": [
+        "BR-PEC-02",
+        "UC-PEC-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-025": {
+      "text": "El sistema ofrece un listado de albaranes filtrable por vehículo, por cliente y por situación del albarán.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-026": {
+      "text": "El sistema permite abrir un albarán para un vehículo, tanto desde el módulo de albaranes como desde la ficha del vehículo, y el albarán nace sin líneas.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-027": {
+      "text": "Todo albarán queda asociado a un vehículo que ya existe en el sistema.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-01",
+        "UC-ALB-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-028": {
+      "text": "Un albarán recién abierto queda en situación de pendiente de facturar.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-02",
+        "UC-ALB-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-029": {
+      "text": "El sistema asigna a cada albarán un número correlativo anual sin intervención del usuario, con el formato año/A-nnnn.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-09"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-030": {
+      "text": "El sistema permite añadir a un albarán una línea de pieza indicando la pieza y la cantidad consumida.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-031": {
+      "text": "El sistema solo admite en un albarán líneas de pieza o de mano de obra: una anotación que no sea de ninguno de esos dos tipos no llega a registrarse, de modo que el albarán mantiene las líneas y los importes que ya tenía.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active",
+      "text_updated": "2026-08-15"
+    },
+    "REQ-032": {
+      "text": "El sistema exige que la cantidad de una línea de albarán sea mayor que cero.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-033": {
+      "text": "El sistema exige que la pieza de una línea de pieza exista en el catálogo.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-06"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-034": {
+      "text": "Cuando el usuario no indica el precio de una línea de pieza, el sistema aplica el precio que la pieza tiene en el catálogo.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-06",
+        "UC-ALB-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-035": {
+      "text": "Al añadir una línea de pieza, el sistema descuenta del stock de esa pieza la cantidad consumida, en la misma operación que registra la línea.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-08",
+        "UC-ALB-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-036": {
+      "text": "El sistema permite añadir a un albarán una línea de mano de obra con las horas trabajadas y su precio por hora.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-037": {
+      "text": "El sistema exige una descripción del trabajo en toda línea de mano de obra.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-07",
+        "UC-ALB-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-038": {
+      "text": "El sistema permite retirar una línea de un albarán no facturado.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-039": {
+      "text": "Al retirar una línea de pieza, el sistema devuelve al stock de esa pieza la cantidad que se había consumido, en la misma operación que elimina la línea.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-08",
+        "UC-ALB-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-040": {
+      "text": "El sistema permite modificar el vehículo, la fecha y las notas de un albarán no facturado.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-06"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-041": {
+      "text": "El sistema permite borrar un albarán no facturado junto con todas sus líneas, previa confirmación del usuario.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "UC-ALB-07"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-042": {
+      "text": "El sistema impide modificar, borrar o alterar las líneas de un albarán que ya ha sido facturado.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-03",
+        "UC-ALB-06",
+        "UC-ALB-07"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-043": {
+      "text": "El sistema permite emitir una factura a partir de los albaranes pendientes de facturar de un cliente.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-044": {
+      "text": "El sistema exige que toda factura agrupe al menos un albarán.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-01",
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-045": {
+      "text": "El sistema exige que todos los albaranes de una factura estén pendientes de facturar en el momento de emitirla.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-02",
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-046": {
+      "text": "El sistema exige que todos los albaranes de una misma factura pertenezcan al mismo cliente.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-03",
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-047": {
+      "text": "Al emitir una factura, el sistema marca sus albaranes como facturados y los enlaza a ella en la misma operación.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-04",
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-048": {
+      "text": "El sistema asigna a cada factura un número correlativo anual sin intervención del usuario, con el formato año/F-nnnn.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-09"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-049": {
+      "text": "La base de una factura es la suma de la cantidad por el precio de todas las líneas de los albaranes que agrupa, y su total es la base más el IVA.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-050": {
+      "text": "Cuando el usuario no indica un tipo de IVA al emitir la factura, el sistema aplica el 21 por ciento.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-06",
+        "UC-FAC-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-051": {
+      "text": "El sistema presenta la base, el IVA y el total de una factura redondeados a dos decimales.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-07"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-052": {
+      "text": "El sistema ofrece un listado de facturas en el que cada factura muestra su número, su estado de pago y su total.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "UC-FAC-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-053": {
+      "text": "El detalle de una factura muestra los albaranes que agrupa, la base, el IVA y el total.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "UC-FAC-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-054": {
+      "text": "El sistema permite marcar una factura como pagada o devolverla a pendiente de cobro.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "UC-FAC-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-055": {
+      "text": "El estado de pago de una factura solo puede ser pendiente o pagada.",
+      "type": "requirement",
+      "module": "factures",
+      "source_anchors": [
+        "BR-FAC-08"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-056": {
+      "text": "El sistema ofrece un listado de empleados en el que cada empleado muestra su nombre, su cargo y su contacto.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "UC-PER-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-057": {
+      "text": "El sistema permite dar de alta un empleado del taller.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "UC-PER-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-058": {
+      "text": "El sistema exige el nombre del empleado tanto al darlo de alta como al modificarlo.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "BR-PER-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-059": {
+      "text": "La ficha de un empleado muestra sus datos y sus nóminas.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "UC-PER-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-060": {
+      "text": "El sistema permite modificar los datos de un empleado.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "UC-PER-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-061": {
+      "text": "El sistema permite dar de baja un empleado previa confirmación del usuario.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "UC-PER-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-062": {
+      "text": "El sistema impide dar de baja un empleado que tenga nóminas asociadas.",
+      "type": "requirement",
+      "module": "personal",
+      "source_anchors": [
+        "BR-PER-02",
+        "UC-PER-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-063": {
+      "text": "El sistema ofrece un listado de nóminas ordenado de la más reciente a la más antigua por año y mes.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-064": {
+      "text": "El sistema permite registrar la nómina de un empleado para un mes y un año, indicando el salario bruto y las deducciones, tanto desde el módulo de nóminas como desde la ficha del empleado.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-065": {
+      "text": "Toda nómina queda asociada a un empleado que ya existe en el sistema.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-01",
+        "UC-NOM-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-066": {
+      "text": "El sistema exige empleado, mes y año para registrar o modificar una nómina.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-067": {
+      "text": "El sistema exige que el mes de una nómina esté comprendido entre 1 y 12.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-068": {
+      "text": "El sistema impide que un empleado tenga más de una nómina para el mismo mes y año.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-04",
+        "UC-NOM-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-069": {
+      "text": "El detalle de una nómina muestra el salario bruto, las deducciones y el salario neto.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-070": {
+      "text": "El salario neto de una nómina es el salario bruto menos las deducciones, redondeado a dos decimales, y se obtiene en cada consulta a partir de esos dos importes.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-05",
+        "UC-NOM-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-071": {
+      "text": "El sistema permite modificar los datos de una nómina registrada.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-04"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-072": {
+      "text": "El sistema permite marcar una nómina como pagada o devolverla a pendiente de pago.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-05"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-073": {
+      "text": "El estado de pago de una nómina solo puede ser pendiente o pagada.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "BR-NOM-06"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-074": {
+      "text": "El sistema permite borrar una nómina previa confirmación del usuario, sin ninguna restricción adicional.",
+      "type": "requirement",
+      "module": "nomines",
+      "source_anchors": [
+        "UC-NOM-06"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-075": {
+      "text": "El sistema permite al usuario cambiar el idioma de la interfaz entre catalán y castellano en cualquier momento, sin perder el trabajo en curso.",
+      "type": "requirement",
+      "module": "shell",
+      "source_anchors": [
+        "UC-SHL-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-076": {
+      "text": "La interfaz se presenta en castellano mientras el usuario no elija otro idioma, y su elección se conserva para las siguientes sesiones.",
+      "type": "requirement",
+      "module": "shell",
+      "source_anchors": [
+        "BR-SHL-01",
+        "UC-SHL-01"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-077": {
+      "text": "El sistema permite al usuario cambiar entre tema claro y tema oscuro en cualquier momento.",
+      "type": "requirement",
+      "module": "shell",
+      "source_anchors": [
+        "UC-SHL-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-078": {
+      "text": "La interfaz adopta el tema que prefiere el equipo del usuario mientras este no elija otro, y su elección se conserva para las siguientes sesiones.",
+      "type": "requirement",
+      "module": "shell",
+      "source_anchors": [
+        "BR-SHL-02",
+        "UC-SHL-02"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-079": {
+      "text": "La sección de Configuración informa al usuario de que el módulo está pendiente de desarrollo.",
+      "type": "requirement",
+      "module": "configuracio",
+      "source_anchors": [
+        "UC-SHL-03"
+      ],
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-001": {
+      "text": "Listar clientes y buscar por nombre",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-001",
+      "external_id": "TALLER-CLI-TC-001",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-002": {
+      "text": "Ordenar por columna y paginar el listado de clientes",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-001",
+      "external_id": "TALLER-CLI-TC-002",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-003": {
+      "text": "Registrar un cliente nuevo",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-002",
+      "external_id": "TALLER-CLI-TC-003",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-004": {
+      "text": "Rechazar el alta de un cliente sin nombre",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-003",
+      "external_id": "TALLER-CLI-TC-004",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-005": {
+      "text": "Rechazar la modificación que deja al cliente sin nombre",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-003",
+      "external_id": "TALLER-CLI-TC-005",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-006": {
+      "text": "Consultar la ficha de un cliente con vehículos y facturas",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-004",
+      "external_id": "TALLER-CLI-TC-006",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-007": {
+      "text": "Modificar los datos de un cliente registrado",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-005",
+      "external_id": "TALLER-CLI-TC-007",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-008": {
+      "text": "Dar de baja un cliente sin vehículos ni facturas",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-006",
+      "external_id": "TALLER-CLI-TC-008",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-009": {
+      "text": "Cancelar la confirmación de baja deja el cliente registrado",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-006",
+      "external_id": "TALLER-CLI-TC-009",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-010": {
+      "text": "Impedir la baja de un cliente con vehículos asociados",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-007",
+      "external_id": "TALLER-CLI-TC-010",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-011": {
+      "text": "Impedir la baja de un cliente con facturas asociadas",
+      "type": "test_case",
+      "module": "clients",
+      "requirement": "REQ-008",
+      "external_id": "TALLER-CLI-TC-011",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-012": {
+      "text": "Listar vehículos, buscar, ordenar y paginar",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-009",
+      "external_id": "TALLER-VEH-TC-012",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-013": {
+      "text": "Registrar un vehículo desde el módulo de vehículos",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-010",
+      "external_id": "TALLER-VEH-TC-013",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-014": {
+      "text": "Registrar un vehículo desde la ficha del cliente",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-010",
+      "external_id": "TALLER-VEH-TC-014",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-015": {
+      "text": "Rechazar el alta de un vehículo sin cliente existente",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-011",
+      "external_id": "TALLER-VEH-TC-015",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-016": {
+      "text": "Rechazar el alta de un vehículo sin marca, modelo o matrícula",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-012",
+      "external_id": "TALLER-VEH-TC-016",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-017": {
+      "text": "Rechazar la modificación que deja el vehículo sin matrícula",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-012",
+      "external_id": "TALLER-VEH-TC-017",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-018": {
+      "text": "Impedir registrar dos vehículos con la misma matrícula",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-013",
+      "external_id": "TALLER-VEH-TC-018",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-019": {
+      "text": "Impedir asignar por modificación una matrícula ya existente",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-013",
+      "external_id": "TALLER-VEH-TC-019",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-020": {
+      "text": "Consultar la ficha de un vehículo con su cliente y sus albaranes",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-014",
+      "external_id": "TALLER-VEH-TC-020",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-021": {
+      "text": "Modificar los datos de un vehículo registrado",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-015",
+      "external_id": "TALLER-VEH-TC-021",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-022": {
+      "text": "Dar de baja un vehículo sin albaranes",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-016",
+      "external_id": "TALLER-VEH-TC-022",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-023": {
+      "text": "Impedir la baja de un vehículo con albaranes asociados",
+      "type": "test_case",
+      "module": "vehicles",
+      "requirement": "REQ-017",
+      "external_id": "TALLER-VEH-TC-023",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-024": {
+      "text": "Consultar el catálogo de piezas con referencia, precio y stock",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-018",
+      "external_id": "TALLER-PEC-TC-024",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-025": {
+      "text": "Dar de alta una pieza con su stock inicial",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-019",
+      "external_id": "TALLER-PEC-TC-025",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-026": {
+      "text": "Rechazar el alta de una pieza sin nombre",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-020",
+      "external_id": "TALLER-PEC-TC-026",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-027": {
+      "text": "Rechazar la modificación que deja la pieza sin nombre",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-020",
+      "external_id": "TALLER-PEC-TC-027",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-028": {
+      "text": "Consultar la ficha completa de una pieza",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-021",
+      "external_id": "TALLER-PEC-TC-028",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-029": {
+      "text": "Modificar el precio y el stock de una pieza",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-022",
+      "external_id": "TALLER-PEC-TC-029",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-030": {
+      "text": "Dar de baja una pieza no utilizada en ningún albarán",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-023",
+      "external_id": "TALLER-PEC-TC-030",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-031": {
+      "text": "Impedir la baja de una pieza utilizada en un albarán",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-024",
+      "external_id": "TALLER-PEC-TC-031",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-032": {
+      "text": "Filtrar el listado de albaranes por vehículo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-025",
+      "external_id": "TALLER-ALB-TC-032",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-033": {
+      "text": "Filtrar el listado de albaranes por cliente y por situación",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-025",
+      "external_id": "TALLER-ALB-TC-033",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-034": {
+      "text": "Abrir un albarán desde el módulo de albaranes y comprobar que nace sin líneas",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-026",
+      "external_id": "TALLER-ALB-TC-034",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-035": {
+      "text": "Abrir un albarán desde la ficha del vehículo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-026",
+      "external_id": "TALLER-ALB-TC-035",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-036": {
+      "text": "Rechazar la apertura de un albarán sin vehículo existente",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-027",
+      "external_id": "TALLER-ALB-TC-036",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-037": {
+      "text": "Un albarán recién abierto queda pendiente de facturar",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-028",
+      "external_id": "TALLER-ALB-TC-037",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-038": {
+      "text": "El albarán recibe número automático con formato año/A-nnnn",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-029",
+      "external_id": "TALLER-ALB-TC-038",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-039": {
+      "text": "El segundo albarán del año incrementa el correlativo en uno",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-029",
+      "external_id": "TALLER-ALB-TC-039",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-040": {
+      "text": "Añadir a un albarán una línea de pieza con su cantidad",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-030",
+      "external_id": "TALLER-ALB-TC-040",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-041": {
+      "text": "Una anotación de un tercer tipo no se registra y el albarán conserva sus líneas y sus importes",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-031",
+      "external_id": "TALLER-ALB-TC-041",
+      "created": "2026-08-15",
+      "status": "active",
+      "text_updated": "2026-08-16"
+    },
+    "TC-042": {
+      "text": "Rechazar una línea con cantidad cero",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-032",
+      "external_id": "TALLER-ALB-TC-042",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-043": {
+      "text": "Rechazar una línea con cantidad negativa",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-032",
+      "external_id": "TALLER-ALB-TC-043",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-044": {
+      "text": "Aceptar una línea con cantidad uno",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-032",
+      "external_id": "TALLER-ALB-TC-044",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-045": {
+      "text": "Rechazar una línea de pieza que no existe en el catálogo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-033",
+      "external_id": "TALLER-ALB-TC-045",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-046": {
+      "text": "La línea de pieza sin precio hereda el precio del catálogo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-034",
+      "external_id": "TALLER-ALB-TC-046",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-047": {
+      "text": "El precio informado a mano prevalece sobre el del catálogo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-034",
+      "external_id": "TALLER-ALB-TC-047",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-048": {
+      "text": "Añadir una línea de pieza descuenta el stock del catálogo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-035",
+      "external_id": "TALLER-ALB-TC-048",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-049": {
+      "text": "Una línea rechazada no mueve el stock",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-035",
+      "external_id": "TALLER-ALB-TC-049",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-050": {
+      "text": "Añadir una línea de mano de obra con horas y precio por hora",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-036",
+      "external_id": "TALLER-ALB-TC-050",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-051": {
+      "text": "Rechazar una línea de mano de obra sin descripción",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-037",
+      "external_id": "TALLER-ALB-TC-051",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-052": {
+      "text": "Retirar una línea de un albarán no facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-038",
+      "external_id": "TALLER-ALB-TC-052",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-053": {
+      "text": "Retirar una línea de pieza devuelve el stock al catálogo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-039",
+      "external_id": "TALLER-ALB-TC-053",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-054": {
+      "text": "Añadir y retirar la misma línea deja el stock como estaba",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-039",
+      "external_id": "TALLER-ALB-TC-054",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-055": {
+      "text": "Modificar vehículo, fecha y notas de un albarán no facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-055",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-056": {
+      "text": "Borrar un albarán no facturado con todas sus líneas",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-041",
+      "external_id": "TALLER-ALB-TC-056",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-057": {
+      "text": "Impedir modificar la cabecera de un albarán facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-ALB-TC-057",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-058": {
+      "text": "Impedir borrar un albarán facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-ALB-TC-058",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-059": {
+      "text": "Impedir añadir o retirar líneas en un albarán facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-ALB-TC-059",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-060": {
+      "text": "Emitir una factura con los albaranes pendientes de un cliente",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-043",
+      "external_id": "TALLER-FAC-TC-060",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-061": {
+      "text": "La emisión solo ofrece albaranes pendientes del cliente elegido",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-043",
+      "external_id": "TALLER-FAC-TC-061",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-062": {
+      "text": "Rechazar la emisión de una factura sin ningún albarán",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-044",
+      "external_id": "TALLER-FAC-TC-062",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-063": {
+      "text": "Rechazar la emisión con un albarán ya facturado",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-045",
+      "external_id": "TALLER-FAC-TC-063",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-064": {
+      "text": "Rechazar la emisión con albaranes de dos clientes distintos",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-046",
+      "external_id": "TALLER-FAC-TC-064",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-065": {
+      "text": "Al emitir, los albaranes pasan a facturados y quedan enlazados",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-065",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-066": {
+      "text": "Una emisión rechazada deja los albaranes pendientes",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-066",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-067": {
+      "text": "La factura recibe número automático con formato año/F-nnnn",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-048",
+      "external_id": "TALLER-FAC-TC-067",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-068": {
+      "text": "La segunda factura del año incrementa el correlativo en uno",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-048",
+      "external_id": "TALLER-FAC-TC-068",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-069": {
+      "text": "La base es la suma de cantidad por precio y el total es base más IVA",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-049",
+      "external_id": "TALLER-FAC-TC-069",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-070": {
+      "text": "La base agrega las líneas de todos los albaranes de la factura",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-049",
+      "external_id": "TALLER-FAC-TC-070",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-071": {
+      "text": "Sin indicar tipo de IVA, la factura aplica el 21 por ciento",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-050",
+      "external_id": "TALLER-FAC-TC-071",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-072": {
+      "text": "El tipo de IVA indicado se aplica en lugar del 21 por ciento",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-050",
+      "external_id": "TALLER-FAC-TC-072",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-073": {
+      "text": "Base, IVA y total se presentan con dos decimales",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-051",
+      "external_id": "TALLER-FAC-TC-073",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-074": {
+      "text": "Listar facturas con número, estado de pago y total",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-052",
+      "external_id": "TALLER-FAC-TC-074",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-075": {
+      "text": "El detalle de la factura muestra albaranes, base, IVA y total",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-053",
+      "external_id": "TALLER-FAC-TC-075",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-076": {
+      "text": "Marcar una factura como pagada",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-054",
+      "external_id": "TALLER-FAC-TC-076",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-077": {
+      "text": "Devolver una factura pagada a pendiente de cobro",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-054",
+      "external_id": "TALLER-FAC-TC-077",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-078": {
+      "text": "El estado de pago de la factura solo admite pendiente o pagada",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-055",
+      "external_id": "TALLER-FAC-TC-078",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-079": {
+      "text": "Listar empleados con nombre, cargo y contacto",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-056",
+      "external_id": "TALLER-PER-TC-079",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-080": {
+      "text": "Dar de alta un empleado del taller",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-057",
+      "external_id": "TALLER-PER-TC-080",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-081": {
+      "text": "Rechazar el alta de un empleado sin nombre",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-058",
+      "external_id": "TALLER-PER-TC-081",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-082": {
+      "text": "Rechazar la modificación que deja al empleado sin nombre",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-058",
+      "external_id": "TALLER-PER-TC-082",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-083": {
+      "text": "Consultar la ficha de un empleado con sus nóminas",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-059",
+      "external_id": "TALLER-PER-TC-083",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-084": {
+      "text": "Modificar los datos de un empleado",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-060",
+      "external_id": "TALLER-PER-TC-084",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-085": {
+      "text": "Dar de baja un empleado sin nóminas",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-061",
+      "external_id": "TALLER-PER-TC-085",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-086": {
+      "text": "Impedir la baja de un empleado con nóminas asociadas",
+      "type": "test_case",
+      "module": "personal",
+      "requirement": "REQ-062",
+      "external_id": "TALLER-PER-TC-086",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-087": {
+      "text": "Listar nóminas de la más reciente a la más antigua",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-063",
+      "external_id": "TALLER-NOM-TC-087",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-088": {
+      "text": "Registrar una nómina desde el módulo de nóminas",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-064",
+      "external_id": "TALLER-NOM-TC-088",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-089": {
+      "text": "Registrar una nómina desde la ficha del empleado",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-064",
+      "external_id": "TALLER-NOM-TC-089",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-090": {
+      "text": "Rechazar una nómina sin empleado existente",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-065",
+      "external_id": "TALLER-NOM-TC-090",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-091": {
+      "text": "Rechazar una nómina sin empleado, mes o año",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-066",
+      "external_id": "TALLER-NOM-TC-091",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-092": {
+      "text": "Rechazar una nómina con mes 0",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-067",
+      "external_id": "TALLER-NOM-TC-092",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-093": {
+      "text": "Rechazar una nómina con mes 13",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-067",
+      "external_id": "TALLER-NOM-TC-093",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-094": {
+      "text": "Aceptar nóminas con mes 1 y con mes 12",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-067",
+      "external_id": "TALLER-NOM-TC-094",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-095": {
+      "text": "Impedir dos nóminas del mismo empleado, mes y año",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-068",
+      "external_id": "TALLER-NOM-TC-095",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-096": {
+      "text": "Permitir el mismo mes y año para otro empleado",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-068",
+      "external_id": "TALLER-NOM-TC-096",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-097": {
+      "text": "El detalle de la nómina muestra bruto, deducciones y neto",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-069",
+      "external_id": "TALLER-NOM-TC-097",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-098": {
+      "text": "El neto es el bruto menos las deducciones",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-070",
+      "external_id": "TALLER-NOM-TC-098",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-099": {
+      "text": "Al cambiar el bruto, el neto consultado cambia con él",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-070",
+      "external_id": "TALLER-NOM-TC-099",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-100": {
+      "text": "El neto se presenta con dos decimales",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-070",
+      "external_id": "TALLER-NOM-TC-100",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-101": {
+      "text": "Modificar los datos de una nómina registrada",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-071",
+      "external_id": "TALLER-NOM-TC-101",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-102": {
+      "text": "Marcar una nómina como pagada y devolverla a pendiente",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-072",
+      "external_id": "TALLER-NOM-TC-102",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-103": {
+      "text": "El estado de pago de la nómina solo admite pendiente o pagada",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-073",
+      "external_id": "TALLER-NOM-TC-103",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-104": {
+      "text": "Borrar una nómina previa confirmación",
+      "type": "test_case",
+      "module": "nomines",
+      "requirement": "REQ-074",
+      "external_id": "TALLER-NOM-TC-104",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-105": {
+      "text": "Cambiar el idioma sin perder el trabajo en curso",
+      "type": "test_case",
+      "module": "shell",
+      "requirement": "REQ-075",
+      "external_id": "TALLER-SHL-TC-105",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-106": {
+      "text": "La interfaz arranca en castellano sin elección previa",
+      "type": "test_case",
+      "module": "shell",
+      "requirement": "REQ-076",
+      "external_id": "TALLER-SHL-TC-106",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-107": {
+      "text": "El idioma elegido se conserva en la sesión siguiente",
+      "type": "test_case",
+      "module": "shell",
+      "requirement": "REQ-076",
+      "external_id": "TALLER-SHL-TC-107",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-108": {
+      "text": "Cambiar entre tema claro y tema oscuro",
+      "type": "test_case",
+      "module": "shell",
+      "requirement": "REQ-077",
+      "external_id": "TALLER-SHL-TC-108",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-109": {
+      "text": "El tema sigue la preferencia del equipo y la elección se conserva",
+      "type": "test_case",
+      "module": "shell",
+      "requirement": "REQ-078",
+      "external_id": "TALLER-SHL-TC-109",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "TC-110": {
+      "text": "La sección de Configuración avisa de que está pendiente de desarrollo",
+      "type": "test_case",
+      "module": "configuracio",
+      "requirement": "REQ-079",
+      "external_id": "TALLER-CFG-TC-110",
+      "created": "2026-08-15",
+      "status": "active"
+    },
+    "Q-01": {
+      "text": "La pieza guarda un coste además del precio, pero el coste no interviene en ningún cálculo del taller. ¿Es un margen previsto para más adelante o un dato solo informativo?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-021",
+      "source": "yaml"
+    },
+    "Q-02": {
+      "text": "Al añadir una línea de pieza el stock se descuenta sin comprobar que haya existencias suficientes, por lo que puede quedar negativo. ¿Es una decisión consciente del taller o falta una regla?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-035",
+      "source": "yaml"
+    },
+    "Q-03": {
+      "text": "La unidad de medida de la pieza no interviene en ningún cálculo ni validación. ¿Qué uso se le quiere dar?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-021",
+      "source": "yaml"
+    },
+    "Q-04": {
+      "text": "La sección de Configuración aparece en el menú pero no está desarrollada y ninguna especificación describe su contenido. ¿Qué debe contener?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-079",
+      "source": "yaml"
+    },
+    "Q-05": {
+      "text": "El empleado guarda fecha de alta y salario base, pero la nómina no los usa: el bruto se teclea a mano cada mes. ¿Se espera que el salario base proponga el bruto?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-064",
+      "source": "yaml"
+    },
+    "Q-06": {
+      "text": "Una factura no se puede modificar ni anular y sus albaranes quedan bloqueados de forma permanente. ¿Cómo corrige el taller una factura emitida por error?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-043",
+      "source": "yaml"
+    },
+    "Q-07": {
+      "text": "Los albaranes no tienen ninguna situación intermedia entre pendiente y facturado. ¿El taller trabaja así o falta reflejar un paso real del trabajo?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-028",
+      "source": "yaml"
+    },
+    "Q-08": {
+      "text": "El idioma y el tema por defecto son las dos únicas reglas de DOC-01 que proceden de una especificación y no del comportamiento observado, pese a que DOC-01 declara que todas sus reglas están leídas del sistema. ¿El comportamiento real coincide con lo que describe la especificación?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-076",
+      "source": "yaml"
+    },
+    "Q-09": {
+      "text": "El tipo de IVA de una factura se puede indicar al emitirla y solo el valor por defecto está fijado. Ninguna regla acota qué tipos son admisibles. ¿Qué tipos puede aplicar el taller y quién los autoriza?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-050",
+      "source": "yaml"
+    },
+    "Q-10": {
+      "text": "Se puede cambiar el vehículo de un albarán no facturado. Si el vehículo nuevo pertenece a otro cliente, cambia el cliente al que acabará facturándose el trabajo. ¿Es un cambio admisible o debe impedirse?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-040",
+      "source": "yaml"
+    },
+    "Q-11": {
+      "text": "Una nómina se puede modificar y borrar sin restricción, incluso después de marcarla como pagada, a diferencia del albarán facturado, que queda bloqueado. ¿Debe bloquearse la nómina pagada?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-071",
+      "source": "yaml"
+    },
+    "Q-12": {
+      "text": "Ninguna regla acota a valores no negativos el precio, el coste ni el stock de una pieza, ni el precio de una línea de albarán o el precio por hora de la mano de obra. ¿Qué importes debe rechazar el sistema?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-019",
+      "source": "yaml"
+    },
+    "Q-13": {
+      "text": "El término estado designa a la vez la situación del albarán (pendiente o facturado) y la situación de cobro de facturas y nóminas (pendiente o pagada). El glosario lo marca como ambiguo. ¿Con qué nombres deben aparecer ambos conceptos en la interfaz y en los filtros?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-025",
+      "source": "yaml"
+    },
+    "Q-14": {
+      "text": "El estado de pago de una factura solo sirve hoy para mostrarse: ninguna regla del taller depende de él y no hay ningún recuento de facturas pendientes de cobro ni ningún filtro por estado de pago. ¿Qué debe ver el taller si una factura acaba con un estado de pago que no sea ni pendiente ni pagada, y qué recuento o filtro de pendientes de cobro espera el negocio?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-055",
+      "source": "yaml"
+    },
+    "Q-15": {
+      "text": "El estado de pago de una nómina tampoco condiciona nada: no hay recuento ni filtro de nóminas pendientes de pago, y una nómina pagada se puede modificar y borrar igual que una pendiente. ¿Qué debe ver el taller si una nómina acaba con un estado de pago que no sea ni pendiente ni pagada, y qué recuento o filtro de pendientes de pago espera el negocio?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "resolution": "gap_confirmed",
+      "blocks": "REQ-073",
+      "source": "yaml"
+    },
+    "Q-16": {
+      "text": "¿Qué se espera que ocurra con la numeración anual de albarán y factura al cambiar de ejercicio? DOC-04 dice correlativo anual en REQ-029 y REQ-048, pero no describe el reinicio.",
+      "type": "open_question",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-029",
+      "source": "yaml"
+    },
+    "Q-17": {
+      "text": "¿Cuál es el modo de redondeo cuando el tercer decimal es exactamente 5? El 21 por ciento sobre 107,50 euros da 22,575 euros. DOC-04 exige dos decimales pero no dice cómo se rompe el empate.",
+      "type": "open_question",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "REQ-051",
+      "source": "yaml"
+    },
+    "Q-18": {
+      "text": "Sin DOC-03-API.md, ¿existe alguna vía de entrada al sistema distinta de la interfaz -importación, scripts de datos, API- por la que se pudieran saltar las validaciones que aquí se prueban?",
+      "type": "open_question",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "blocks": "REQ-019",
+      "source": "yaml",
+      "answered_on": "2026-08-17",
+      "answered_in_two_halves": true,
+      "resolution": "Respondida en dos mitades. (a) FACTUAL, por evidencia reproducible: la via existe, esta usada y detras no hay defensa. A-14 ejecuto contra localhost:3001 sin pasar por la interfaz (DOC-24-BUGS.json); BUG-003 demuestra que la validacion de importes no esta en ninguna de las dos capas. A-15 lo corrobora como evidence en DOC-25 1.1.1. (b) METODO, decidida por A-03, que es su duenno: un caso va por servicio SOLO cuando el vector no existe en la interfaz; no es una prueba de contrato de API, es la unica via de ejercer la regla. Implementada como el campo verification_path (ui|service|mixed) en los 110 casos: 109 ui, 1 service (TC-041), 0 mixed. Cero casos nuevos y cero casos modificados.",
+      "answered_by": "A-03",
+      "evidence": "DOC-24-BUGS.json BUG-001/BUG-002/BUG-003 · DOC-25-PROPUESTAS-FUNCIONALES.md 1.1.1",
+      "consumed_by": "S-17"
+    },
+    "Q-19": {
+      "text": "Los cuatro defectos que A-14 confirmó contra la aplicación real no los detecta ningún caso de este plan, porque los casos AS-IS afirman lo que el sistema hace y los defectos son precisamente lo que el sistema hace. ¿Debe DOC-05 incorporar casos-testigo que fijen el comportamiento defectuoso de hoy, o se acepta que esos cuatro defectos no tengan cobertura hasta que el evolutivo llegue y A-02 regenere DOC-04?",
+      "type": "open_question",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-16",
+      "status": "answered",
+      "blocks": "REQ-035",
+      "source": "yaml",
+      "answered_on": "2026-08-16",
+      "answered_by": "propietario-del-proyecto",
+      "recommendation_by": "A-05",
+      "resolution": "No se anaden casos-testigo a DOC-05: un testigo del comportamiento defectuoso pasa en verde mientras el sistema esta roto y Rally solo transporta PASS. La vigilancia de los cuatro defectos de DOC-24 vive en DOC-23-AUTOMATION, que no exporta a Rally (TC-900 sobre BUG-001). Cero casos nuevos y cero casos modificados en DOC-05 por esta respuesta.",
+      "resolution_immutable": true,
+      "resolution_path_correction": {
+        "applies_to": "resolution",
+        "quoted_path": "docs/DOC-23-AUTOMATION",
+        "current_path": "automation/ui",
+        "moved_on": "2026-08-17",
+        "moved_by": "propietario-del-proyecto",
+        "what_changed": "solo la ubicacion del codigo. El documento sigue siendo DOC-23 y la decision no varia.",
+        "note": "la resolution NO se reescribe: es el registro literal de una decision cerrada el 2026-08-16, anterior al movimiento."
+      }
+    },
+    "FUN-001": {
+      "text": "Llevarse la factura en papel o en un archivo para dárselo al cliente",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "high",
+      "size": "medium"
+    },
+    "FUN-002": {
+      "text": "Poder guardar una copia de los datos del taller y recuperarla",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "high",
+      "size": "medium"
+    },
+    "FUN-003": {
+      "text": "Dar contenido a la sección Configuración",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "medium"
+    },
+    "FUN-004": {
+      "text": "Avisar de qué piezas se están acabando",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "small"
+    },
+    "FUN-005": {
+      "text": "Que la nómina proponga el salario bruto del empleado",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "small"
+    },
+    "FUN-006": {
+      "text": "Saber cuánto gana el taller en cada trabajo",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "medium"
+    },
+    "FUN-007": {
+      "text": "Poder decir en qué punto está un trabajo",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "medium"
+    },
+    "FUN-008": {
+      "text": "Anotar el material que entra, en vez de recontar el stock entero",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "opinion",
+      "business_value": "low",
+      "size": "small"
+    },
+    "MEJ-001": {
+      "text": "Identificadores estables de prueba en la interfaz",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "low",
+      "difficulty": "low",
+      "size": "small"
+    },
+    "MEJ-002": {
+      "text": "Catálogo único de los literales de error del servidor",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "medium",
+      "difficulty": "low",
+      "size": "medium"
+    },
+    "MEJ-003": {
+      "text": "Suite de pruebas automáticas del servidor y CI mínima",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "low",
+      "difficulty": "medium",
+      "size": "large"
+    },
+    "MEJ-004": {
+      "text": "Un sitio donde vivan las reglas de escritura",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "high",
+      "difficulty": "high",
+      "size": "large"
+    },
+    "MEJ-005": {
+      "text": "Estado de base reproducible entre escenarios",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "low",
+      "difficulty": "low",
+      "size": "small"
+    },
+    "MEJ-006": {
+      "text": "Fijar la versión de Node y hacer configurable la ruta de la base",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-16",
+      "status": "proposed",
+      "source": "opinion",
+      "impact": "low",
+      "difficulty": "low",
+      "size": "small"
+    },
+    "Q-20": {
+      "text": "¿Los listados de piezas, albaranes, facturas, personal y nóminas tienen búsqueda, ordenación por columna y paginación? DOC-04 solo se lo atribuye a los de clientes y vehículos, así que no se sabe si los demás no las tienen o si solo no se documentaron.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§4/A.14, §4/A.17, §4/B.2, §4/C.2 y §4/C.6 — no se puede decir como se busca en esos listados",
+      "source": "yaml"
+    },
+    "Q-21": {
+      "text": "¿Se puede imprimir o exportar un albarán o una factura para entregársela al cliente? Ningún requisito lo menciona, de modo que no se sabe si no existe o si no se documentó.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§4/A.16 y §4/A.17 — el manual no puede explicar como se le entrega la factura al cliente",
+      "source": "yaml"
+    },
+    "Q-22": {
+      "text": "¿Existe algún procedimiento de copia de seguridad de los datos del taller? Viven en un solo ordenador y ningún requisito habla de respaldarlos.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§2 y §6 — el manual no puede decirle al taller como proteger su facturacion",
+      "source": "yaml"
+    },
+    "Q-23": {
+      "text": "¿Cómo se arranca la aplicación y qué ve el usuario al abrirla, pantalla de inicio, resumen o listado por defecto? El apartado 2 solo puede decir que no hay contraseña.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§2 — el manual no puede describir el primer minuto de uso",
+      "source": "yaml"
+    },
+    "Q-24": {
+      "text": "¿Cuáles son las etiquetas reales de los botones de guardar, cancelar y confirmar, y son las mismas en todas las pantallas? DOC-01 y DOC-04 solo nombran los botones de creación y las secciones del menú.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "todas las tareas con formulario o confirmacion — sus pasos dicen guarda y confirma sin nombre exacto",
+      "source": "yaml"
+    },
+    "Q-25": {
+      "text": "¿Qué texto muestra la aplicación en cada error y dónde aparece, junto al campo o en la cabecera del formulario? DOC-04 enuncia las reglas pero no lo que el usuario acaba leyendo.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "todos los apartados Si algo va mal — describen la causa y la solucion, no el texto literal",
+      "source": "yaml"
+    },
+    "Q-26": {
+      "text": "¿Cómo se edita y cómo se borra una ficha, con un botón en el listado, en la ficha o en un menú, cómo se llama y cómo es la confirmación de borrado? DOC-04 dice que se puede, no cómo.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "las once tareas de modificacion y de baja",
+      "source": "yaml"
+    },
+    "Q-27": {
+      "text": "¿Cómo es la pantalla de emisión de factura, cómo se elige el cliente, cómo se seleccionan los albaranes pendientes, cómo se llama el campo del tipo de IVA y cuál es el botón que emite? Es la operación irreversible de la aplicación y es la peor descrita.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§4/A.16 · Cobrar el trabajo hecho, emitir la factura",
+      "source": "yaml"
+    },
+    "Q-28": {
+      "text": "¿Dónde está el conmutador de pago de facturas y de nóminas, en el listado, en el detalle o en ambos, y cómo se llama?",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§4/A.18 y §4/C.7 — el paso dice acciona el conmutador de pago sin decir donde esta",
+      "source": "yaml"
+    },
+    "Q-29": {
+      "text": "¿Cuál es la lista completa de datos de un cliente y de un empleado, hay teléfono, dirección, NIF, correo? De cliente solo consta que el nombre es obligatorio y de empleado el nombre, el cargo y el contacto.",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-16",
+      "status": "open",
+      "blocks": "§4/A.1, §4/A.3, §4/C.1 y §4/C.3 — el paso dice rellena los datos sin poder enumerarlos",
+      "source": "yaml"
+    },
+    "EVO-001": {
+      "text": null,
+      "type": "evolutivo",
+      "document": "DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md",
+      "created": "2026-08-16",
+      "status": "active"
+    }
+  }
+}

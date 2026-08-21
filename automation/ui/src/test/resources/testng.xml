@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DOC-23 Automation">
+  <test name="Casos criticos DOC-05">
+    <classes>
+      <class name="com.qa.taller.runner.TestScenarios"/>
+    </classes>
+  </test>
+</suite>

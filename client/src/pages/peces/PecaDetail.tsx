@@ -16,6 +16,7 @@ function PecaDetail() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const load = () => {
     if (!id) return;
@@ -38,8 +39,13 @@ function PecaDetail() {
   const handleDelete = async () => {
     if (!peca) return;
     setConfirmOpen(false);
-    await pecesService.remove(peca.id);
-    navigate('/peces', { state: { toast: t('peces.toast.deleted') } });
+    setDeleteError(null);
+    try {
+      await pecesService.remove(peca.id);
+      navigate('/peces', { state: { toast: t('peces.toast.deleted') } });
+    } catch (err: unknown) {
+      setDeleteError(err instanceof ApiError ? err.message : t('peces.error'));
+    }
   };
 
   if (loading) return <Spinner />;
@@ -82,6 +88,10 @@ function PecaDetail() {
           </button>
         </div>
       </div>
+
+      {deleteError && (
+        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{deleteError}</p>
+      )}
 
       <dl className="mt-6 grid grid-cols-2 gap-4">
         {fields.map(([label, value]) => (

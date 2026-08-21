@@ -1,0 +1,173 @@
+{
+  "doc_id": "DOC-24",
+  "doc_name": "DOC-24-BUGS",
+  "version": "1.0.0",
+  "status": "draft",
+  "generator": "A-14 explorador ejecutor",
+  "generator_version": "1.0",
+  "generated_at": "2026-08-16T08:05:00+02:00",
+  "source": {
+    "repo_path": "C:\\Claude\\appdani",
+    "vcs": "git",
+    "branch": "master",
+    "commit_sha": "44748fb66d19c5d90106d3bceaaf87dc92c7705b"
+  },
+  "environment": {
+    "type": "local-dev",
+    "is_production": false,
+    "server": "http://localhost:3001",
+    "client": "http://localhost:5173",
+    "database": "data/taller.db (SQLite local, con datos de seed)",
+    "credentials_used": "ninguna (la aplicación no tiene autenticación)"
+  },
+  "focus": {
+    "form": "argumento libre",
+    "value": "Los cuatro huecos de regla que negocio decidió corregir el 2026-08-16 (Q-02, Q-06, Q-10, Q-12), más el ciclo albarán → factura por concentrar las reglas de dinero.",
+    "rationale": "Verificar empíricamente que los huecos que DOC-04 documenta existen de verdad en el sistema desplegado, antes de construir evolutivos sobre ellos."
+  },
+  "inputs": [
+    { "id": "DOC-04-FUNCIONAL.md", "from": "A-02", "version": "1.1.0" },
+    { "id": "DOC-06-MANUAL-USUARIO.md", "from": "A-04", "version": "1.0.0" },
+    { "id": "DOC-14-EXPLORATORIO.md", "from": "A-10", "present": false }
+  ],
+
+  "summary": {
+    "bugs_found": 4,
+    "critical": 2,
+    "high": 2,
+    "medium": 0,
+    "validated_ok": 3,
+    "documentation_discrepancies": 1,
+    "false_leads_discarded": 1
+  },
+
+  "bugs": [
+    {
+      "id": "BUG-001",
+      "severity": "critical",
+      "title": "El stock se descuenta sin comprobar existencias y queda negativo, sin límite",
+      "requirement": "REQ-035",
+      "business_rule": "BR-ALB-08",
+      "open_question": "Q-02",
+      "reproduction": [
+        "Pieza 7 (Bateria 60Ah) con stock real 10.",
+        "POST /api/albarans/{id}/linies con {tipus:'peca', peca_id:7, quantitat:999}.",
+        "Respuesta HTTP 201: la línea se crea.",
+        "GET /api/peces/7 devuelve estoc = -989."
+      ],
+      "observed": "El sistema acepta consumir 999 unidades de una pieza que tiene 10. El stock queda en -989 y no hay ningún aviso ni en la API ni en la interfaz.",
+      "expected_after_decision": "Negocio decidió el 2026-08-16 que debe bloquearse: no se puede añadir una línea de pieza si no hay existencias suficientes.",
+      "probable_cause": "server/routes/albarans.js:168 ejecuta 'UPDATE peces SET estoc = estoc - ?' sin comprobar previamente el stock disponible. La transacción garantiza atomicidad pero no validez.",
+      "impact": "El importe de la línea entra en el albarán y de ahí en la factura. En esta exploración produjo una factura de 114.835,05 € a partir de una sola línea errónea.",
+      "reachable_from_ui": true
+    },
+    {
+      "id": "BUG-002",
+      "severity": "critical",
+      "title": "Cambiar el vehículo de un albarán no facturado cambia el cliente al que se factura, sin aviso",
+      "requirement": "REQ-040",
+      "open_question": "Q-10",
+      "reproduction": [
+        "Albarán 5 creado sobre el vehículo 6, que pertenece al cliente 12.",
+        "PUT /api/albarans/5 con {vehicle_id: 4}. El vehículo 4 pertenece al cliente 8.",
+        "Respuesta HTTP 200. El albarán queda en el vehículo 4.",
+        "POST /api/factures con ese albarán emite la factura 2026/F-0002 al cliente 8."
+      ],
+      "observed": "El trabajo realizado sobre el vehículo de un cliente se factura a un cliente distinto. No hay validación ni aviso en ningún punto del recorrido.",
+      "expected_after_decision": "Negocio decidió el 2026-08-16 impedir el cambio a un vehículo de otro cliente; corregir el vehículo dentro del mismo cliente sigue permitido.",
+      "probable_cause": "server/routes/albarans.js:76-103 valida que el vehículo exista, pero no compara su client_id con el del vehículo anterior. El cliente de la factura se resuelve en factures.js:73 desde el vehículo en el momento de facturar, no en el de crear el albarán.",
+      "impact": "Facturación a cliente equivocado. Es el peor de los cuatro porque el resultado es un documento de cobro válido y numerado, indistinguible de uno correcto.",
+      "reachable_from_ui": true
+    },
+    {
+      "id": "BUG-003",
+      "severity": "high",
+      "title": "Se aceptan precios, costes y stocks negativos, también desde la interfaz",
+      "requirement": "REQ-019",
+      "open_question": "Q-12",
+      "reproduction": [
+        "Vía API: POST /api/peces con {preu:-50, cost:-10, estoc:-5} devuelve HTTP 201.",
+        "Vía interfaz: Piezas > Nueva pieza, informar nombre y precio -99, pulsar Guardar.",
+        "La pieza se crea con precio -99. No aparece ningún mensaje de error ni marca de validación."
+      ],
+      "observed": "Ninguna validación de no-negatividad, ni en servidor ni en cliente. El campo Precio es <input type=number> sin atributo min.",
+      "expected_after_decision": "Negocio decidió el 2026-08-16 que precio, coste y stock de pieza, precio de línea y precio por hora deben ser siempre positivos.",
+      "probable_cause": "server/routes/peces.js:22 solo valida que el nombre no esté vacío. El formulario del cliente no declara min en los campos numéricos.",
+      "impact": "Una pieza con precio negativo resta del total de la factura. Menor que BUG-001 y BUG-002 porque requiere que alguien teclee un negativo, no ocurre por accidente.",
+      "reachable_from_ui": true,
+      "note": "Verificado en ambas capas deliberadamente: la protección no existe en ninguna, no es un caso de validación de cliente sorteable por API."
+    },
+    {
+      "id": "BUG-004",
+      "severity": "high",
+      "title": "Una factura emitida no se puede anular ni corregir por ningún medio",
+      "requirement": "REQ-043",
+      "business_rule": "BR-ALB-03",
+      "open_question": "Q-06",
+      "reproduction": [
+        "DELETE /api/factures/2 devuelve HTTP 404.",
+        "PUT /api/factures/2 devuelve HTTP 404.",
+        "DELETE /api/albarans/5 (albarán ya facturado) devuelve HTTP 409 con mensaje explícito."
+      ],
+      "observed": "El bloqueo del albarán facturado es una regla implementada y devuelve 409 con su mensaje. En cambio la inmutabilidad de la factura no es una regla: los endpoints de modificación y borrado sencillamente no existen, y devuelven 404.",
+      "expected_after_decision": "Negocio decidió el 2026-08-16 introducir la factura rectificativa: una factura nueva que anula la anterior, quedando ambas en el histórico.",
+      "impact": "Comprobado en esta misma exploración: la factura 2026/F-0002, de 114.835,05 € y emitida al cliente equivocado por BUG-002, no se puede eliminar del sistema. Los datos de prueba de esta sesión son permanentes.",
+      "reachable_from_ui": true,
+      "note": "La distinción entre 404 y 409 importa para el evolutivo: DOC-04 enuncia la inmutabilidad como si fuera una decisión de diseño, y en el código es una funcionalidad ausente. No hay nada que desactivar, hay algo que construir."
+    }
+  ],
+
+  "validated_ok": [
+    {
+      "area": "Bloqueo de albarán facturado",
+      "checked": "DELETE y PUT sobre un albarán ya facturado.",
+      "result": "HTTP 409 con mensaje en catalán. REQ y BR-ALB-03 se comportan exactamente como los describe DOC-04."
+    },
+    {
+      "area": "Cálculo de totales de factura",
+      "checked": "Factura 2026/F-0001 del seed: base, IVA al 21% y total.",
+      "result": "119,06 € coherente con la suma de líneas. BR-FAC-05, BR-FAC-06 y BR-FAC-07 correctos."
+    },
+    {
+      "area": "Numeración de albaranes y facturas",
+      "checked": "Formato de los números emitidos durante la exploración.",
+      "result": "2026/A-nnnn y 2026/F-nnnn, correlativos. BR-ALB-09 y BR-FAC-09 correctos."
+    }
+  ],
+
+  "documentation_discrepancies": [
+    {
+      "id": "DISC-001",
+      "severity": "low",
+      "document": "DOC-04-FUNCIONAL.md",
+      "requirement": "REQ-043",
+      "finding": "El enunciado presenta la imposibilidad de modificar o anular una factura como una regla del sistema. La exploración muestra que no hay regla: no existen los endpoints. Es una funcionalidad ausente, no una restricción implementada.",
+      "recommendation": "A-02 debería matizar el enunciado, o dejar constancia de la distinción. Afecta al alcance del evolutivo de Q-06."
+    }
+  ],
+
+  "false_leads_discarded": [
+    {
+      "hypothesis": "El formulario de pieza no expone el campo Stock, de modo que el taller nunca podría reponer existencias.",
+      "why_it_looked_true": "Una primera lectura del árbol de accesibilidad devolvió solo seis campos, sin Stock, y una lectura parcial del código pareció confirmarlo.",
+      "how_it_was_discarded": "El campo está declarado sin condiciones en PecaForm.tsx:54 y una búsqueda dirigida en la página lo localizó: estaba por debajo del pliegue del viewport. Se verificó además que PUT /api/peces actualiza el stock correctamente.",
+      "conclusion": "No es un defecto. El stock se puede fijar y reponer con normalidad desde la interfaz."
+    }
+  ],
+
+  "test_data_left_behind": {
+    "removable": "Piezas de prueba id 9 y 10 eliminadas. Stock de la pieza 7 restaurado a 10.",
+    "permanent": [
+      "Albarán 5 (2026/A-0002), con una línea de 999 unidades de la pieza 7.",
+      "Factura 2026/F-0002, 114.835,05 €, emitida al cliente 8."
+    ],
+    "why": "Consecuencia directa de BUG-004: el sistema no ofrece ningún camino para deshacer una factura ni para liberar un albarán facturado. Eliminarlos exigiría tocar la base de datos por fuera de la aplicación, y eso queda a decisión del propietario del proyecto.",
+    "recommendation": "Si conviene dejar el entorno limpio, borrar en SQLite las filas de factures, albarans y albara_linies correspondientes, o regenerar la base con npm run seed."
+  },
+
+  "gate": {
+    "status": "pending",
+    "required": "QA valida los bugs antes de que ninguno pase a Rally.",
+    "note": "Ninguno de estos hallazgos se ha escrito en ninguna herramienta de gestión de defectos."
+  }
+}

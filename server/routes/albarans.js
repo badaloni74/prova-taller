@@ -87,9 +87,20 @@ router.put('/:id', (req, res) => {
     return res.status(400).json({ error: 'El camp vehicle_id és obligatori' });
   }
 
-  const vehicle = db.prepare('SELECT id FROM vehicles WHERE id = ?').get(vehicle_id);
+  const vehicle = db.prepare('SELECT id, client_id FROM vehicles WHERE id = ?').get(vehicle_id);
   if (!vehicle) {
     return res.status(400).json({ error: 'El vehicle indicat no existeix' });
+  }
+
+  if (Number(vehicle_id) !== existing.vehicle_id) {
+    const currentVehicle = db
+      .prepare('SELECT client_id FROM vehicles WHERE id = ?')
+      .get(existing.vehicle_id);
+    if (currentVehicle && currentVehicle.client_id !== vehicle.client_id) {
+      return res.status(409).json({
+        error: 'No es pot canviar el vehicle a un que pertany a un altre client',
+      });
+    }
   }
 
   db.prepare(
@@ -148,6 +159,11 @@ router.post('/:id/linies', (req, res) => {
     peca = db.prepare('SELECT * FROM peces WHERE id = ?').get(peca_id);
     if (!peca) {
       return res.status(400).json({ error: 'La peça indicada no existeix' });
+    }
+    if (Number(quantitat) > peca.estoc) {
+      return res.status(409).json({
+        error: `Estoc insuficient: hi ha ${peca.estoc} unitats de "${peca.nom}"`,
+      });
     }
     if (!preu) {
       finalPreu = peca.preu;

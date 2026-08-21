@@ -22,6 +22,7 @@ function VehicleDetail() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const load = () => {
     if (!id) return;
@@ -54,8 +55,13 @@ function VehicleDetail() {
   const handleDelete = async () => {
     if (!vehicle) return;
     setConfirmOpen(false);
-    await vehiclesService.remove(vehicle.id);
-    navigate('/vehicles', { state: { toast: t('vehicles.toast.deleted') } });
+    setDeleteError(null);
+    try {
+      await vehiclesService.remove(vehicle.id);
+      navigate('/vehicles', { state: { toast: t('vehicles.toast.deleted') } });
+    } catch (err: unknown) {
+      setDeleteError(err instanceof ApiError ? err.message : t('vehicles.error'));
+    }
   };
 
   if (loading) return <Spinner />;
@@ -99,6 +105,10 @@ function VehicleDetail() {
           </button>
         </div>
       </div>
+
+      {deleteError && (
+        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{deleteError}</p>
+      )}
 
       {client && (
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">

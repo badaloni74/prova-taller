@@ -22,6 +22,7 @@ function ClientDetail() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const load = () => {
     if (!id) return;
@@ -54,8 +55,13 @@ function ClientDetail() {
   const handleDelete = async () => {
     if (!client) return;
     setConfirmOpen(false);
-    await clientsService.remove(client.id);
-    navigate('/clients', { state: { toast: t('clients.toast.deleted') } });
+    setDeleteError(null);
+    try {
+      await clientsService.remove(client.id);
+      navigate('/clients', { state: { toast: t('clients.toast.deleted') } });
+    } catch (err: unknown) {
+      setDeleteError(err instanceof ApiError ? err.message : t('clients.error'));
+    }
   };
 
   if (loading) return <Spinner />;
@@ -97,6 +103,10 @@ function ClientDetail() {
           </button>
         </div>
       </div>
+
+      {deleteError && (
+        <p className="mt-2 text-sm text-red-600 dark:text-red-400">{deleteError}</p>
+      )}
 
       <dl className="mt-6 grid grid-cols-2 gap-4">
         {fields.map(([label, value]) => (
