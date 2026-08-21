@@ -75,12 +75,18 @@ public class AlbaraDetallPO extends BasePO {
     public void seValida(String argumento) {
         Argumentos.Argumento a = Argumentos.desglosar(argumento);
         switch (a.tipo) {
+            // Con espera, no con una lectura instantánea: handleRemove hace
+            // una llamada al servidor (await) antes de quitar la fila del
+            // DOM, así que hay una ventana real entre el clic en "Eliminar"
+            // y el recuento correcto. Fallo real: TC-052 leía 1 línea
+            // cuando el servidor ya la había borrado un instante después.
             case "Lineas" -> {
                 int esperadas = Integer.parseInt(a.valor);
-                int reales = contarLineas();
-                if (reales != esperadas) {
+                try {
+                    wait.until(d -> contarLineas() == esperadas);
+                } catch (TimeoutException e) {
                     throw new AssertionError(
-                        "lineasInesperadas: se esperaban " + esperadas + " y hay " + reales);
+                        "lineasInesperadas: se esperaban " + esperadas + " y hay " + contarLineas());
                 }
             }
             case "Error" -> {

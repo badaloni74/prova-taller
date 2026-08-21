@@ -143,3 +143,65 @@ Característica: Vehículos — casos críticos de DOC-05 (REQ prioridad critica
     Ejemplos:
       | matricula | albaran      |
       | 1234ABC   | 2026/A-0001  |
+
+  @TC-012 @doc05 @high
+  Esquema del escenario: TC-012 Listar vehículos, buscar, ordenar y paginar
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se rellena "Buscador: Matrícula" con "<busqueda>"
+    Entonces se valida "Literal: <coincide>"
+    Y se valida "Ausente: <noCoincide>"
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se pulsa en "Columna: Matrícula"
+    Entonces se valida "PrimeraFila: <primeroOrdenado>"
+
+    Ejemplos:
+      | busqueda | coincide  | noCoincide | primeroOrdenado |
+      | 1234ABC  | 1234ABC   | 5678BCD    | 1234ABC         |
+
+  @TC-020 @doc05 @high
+  Esquema del escenario: TC-020 Consultar la ficha de un vehículo con su cliente y sus albaranes
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se pulsa en "Fila: <matricula>"
+    Entonces se muestra la pantalla "VehiculoDetalle"
+    Y se valida "Literal: <cliente>"
+    Y se valida "Literal: <albaran>"
+
+    Ejemplos:
+      | matricula | cliente          | albaran      |
+      | 1234ABC   | Anna Puig Ferrer | 2026/A-0001  |
+
+  @TC-021 @doc05 @high
+  Esquema del escenario: TC-021 Modificar los datos de un vehículo registrado
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se pulsa en "Fila: <matricula>"
+    Entonces se muestra la pantalla "VehiculoDetalle"
+    Cuando se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "VehiculoForm"
+    Cuando se rellena "Campo: Color" con "<colorNuevo>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "VehiculoDetalle"
+    Y se valida "Literal: <colorNuevo>"
+
+    Ejemplos:
+      | matricula | colorNuevo |
+      | 9012CDE   | Vermell    |
+
+  @TC-022 @doc05 @medium
+  Esquema del escenario: TC-022 Dar de baja un vehículo sin albaranes
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se pulsa en "Fila: <matricula>"
+    Entonces se muestra la pantalla "VehiculoDetalle"
+    Cuando se pulsa en "Boton: Eliminar"
+    Y se pulsa en "Dialogo: Eliminar"
+    Entonces se muestra la pantalla "Vehiculos"
+    Y se valida "Literal: Vehículo eliminado correctamente"
+    Y se valida "Ausente: <matricula>"
+
+    Ejemplos:
+      | matricula |
+      | 7890EFG   |

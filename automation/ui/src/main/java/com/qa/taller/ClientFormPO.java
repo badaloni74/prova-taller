@@ -33,4 +33,24 @@ public class ClientFormPO extends BasePO {
             default -> throw noDisponible(argumento);
         }
     }
+
+    /** "CampoNombre: <valor>" comprueba el valor tecleado en el campo
+     *  Nombre, aún sin guardar. "Literal:" no sirve aquí: el valor de un
+     *  <input> no es un nodo de texto, así que una búsqueda por texto nunca
+     *  lo encuentra, esté o no. Hace falta para TC-105 (cambiar idioma sin
+     *  perder el trabajo en curso): el valor sobrevive de verdad al cambio
+     *  de idioma, y sin este método no hay forma de comprobarlo. */
+    @Override
+    public void seValida(String argumento) {
+        Argumentos.Argumento a = Argumentos.desglosar(argumento);
+        if ("CampoNombre".equals(a.tipo)) {
+            String actual = porId("nom").getAttribute("value");
+            if (!a.valor.equals(actual)) {
+                throw new AssertionError(
+                    "valorInesperado: campo Nombre es \"" + actual + "\", se esperaba \"" + a.valor + "\"");
+            }
+            return;
+        }
+        super.seValida(argumento);
+    }
 }

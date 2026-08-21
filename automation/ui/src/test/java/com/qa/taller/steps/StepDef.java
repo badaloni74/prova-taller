@@ -5,11 +5,14 @@ import com.qa.taller.Plantillas.BasePO;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.es.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Steps genéricos. No contiene ni un solo localizador: todo se delega en
@@ -22,6 +25,7 @@ public class StepDef {
 
     private WebDriver driver;
     private BasePO pantallaActual;
+    private String numeroGuardado;
 
     @Before
     public void abrirNavegador() {
@@ -66,6 +70,7 @@ public class StepDef {
             case "Nomines"       -> new NominesPO(driver);
             case "NominaForm"    -> new NominaFormPO(driver);
             case "NominaDetalle" -> new NominaDetailPO(driver);
+            case "Configuracio"  -> new ConfiguracioPO(driver);
             default -> throw new IllegalArgumentException(
                 "pantallaDesconocida: \"" + nombre + "\" no está en el switch de StepDef");
         };
@@ -75,6 +80,49 @@ public class StepDef {
     @Cuando("se navega a {string}")
     public void seNavegaA(String ruta) {
         driver.get(BASE_URL + ruta);
+    }
+
+    /** Vuelve a la página anterior del historial del navegador. Hace falta
+     *  cuando el escenario necesita regresar a un registro recién creado
+     *  cuyo id es autogenerado (no se puede volver a localizar por número
+     *  en un listado paginado): la entrada de historial ya apunta a él, así
+     *  que no hace falta buscarlo por la lista. */
+    @Cuando("se vuelve atrás en el navegador")
+    public void seVuelveAtras() {
+        driver.navigate().back();
+    }
+
+    /** Guarda el número visible (el <h1> de un albarán o factura recién
+     *  creado) para compararlo más tarde. Hace falta para comprobar que un
+     *  correlativo sube en uno sin conocer de antemano ninguno de los dos
+     *  valores — ambos son autogenerados. */
+    @Cuando("se guarda el número de esta pantalla")
+    public void seGuardaNumero() {
+        numeroGuardado = driver.findElement(By.tagName("h1")).getText();
+    }
+
+    /** Compara el <h1> actual con el guardado: misma serie (año/prefijo) y
+     *  correlativo exactamente uno mayor. */
+    @Entonces("el número de esta pantalla es uno más que el guardado")
+    public void seValidaIncremento() {
+        String actual = driver.findElement(By.tagName("h1")).getText();
+        Pattern p = Pattern.compile("^(.*-)(\\d+)$");
+        Matcher mAnterior = p.matcher(numeroGuardado);
+        Matcher mActual = p.matcher(actual);
+        if (!mAnterior.matches() || !mActual.matches()) {
+            throw new AssertionError(
+                "formatoInesperado: \"" + numeroGuardado + "\" o \"" + actual + "\" no tienen forma <prefijo>-<nnnn>");
+        }
+        if (!mAnterior.group(1).equals(mActual.group(1))) {
+            throw new AssertionError(
+                "seriesDistintas: \"" + numeroGuardado + "\" y \"" + actual + "\" no comparten prefijo");
+        }
+        int anterior = Integer.parseInt(mAnterior.group(2));
+        int nuevo = Integer.parseInt(mActual.group(2));
+        if (nuevo != anterior + 1) {
+            throw new AssertionError(
+                "correlativoInesperado: " + numeroGuardado + " -> " + actual + " no incrementa en uno");
+        }
     }
 
     @Cuando("se pulsa en {string}")

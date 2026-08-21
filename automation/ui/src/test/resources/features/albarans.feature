@@ -263,8 +263,7 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
     Cuando se navega a "/peces"
     Y se muestra la pantalla "Piezas"
     Entonces se valida "Stock: <pieza>=<stockTrasAnadir>"
-    Cuando se navega a "/albarans"
-    Y se pulsa en "Fila: <matricula>"
+    Cuando se vuelve atrás en el navegador
     Entonces se muestra la pantalla "AlbaranDetalle"
     Cuando se pulsa en "Linea: <pieza>"
     Entonces se valida "Lineas: <lineasTrasRetirar>"
@@ -295,8 +294,7 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
     Cuando se navega a "/peces"
     Y se muestra la pantalla "Piezas"
     Entonces se valida "Stock: <pieza>=<stockTrasAnadir>"
-    Cuando se navega a "/albarans"
-    Y se pulsa en "Fila: <matricula>"
+    Cuando se vuelve atrás en el navegador
     Entonces se muestra la pantalla "AlbaranDetalle"
     Cuando se pulsa en "Linea: <pieza>"
     Y se navega a "/peces"
@@ -315,43 +313,213 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
   # más fuerte que un rechazo con aviso — no hay vector, ni siquiera hay
   # formulario — y la comprobación válida por UI es la ausencia de esos
   # controles, verificada aquí.
+  #
+  # Se navega directo a "/albarans/2" en vez de buscar la fila en el listado:
+  # el listado pagina de 10 en 10 y ordena por número descendente, así que en
+  # cuanto los escenarios anteriores acumulan más de 10 albaranes nuevos, el
+  # 2026/A-0002 del seed queda fuera de la primera página. El id es estable
+  # porque sale del seed determinista (mismo orden de alta en cada reseed).
 
   @TC-057 @doc05 @critical
   Esquema del escenario: TC-057 Impedir modificar la cabecera de un albarán facturado
-    Cuando se navega a "/albarans"
-    Y se muestra la pantalla "Albaranes"
-    Y se pulsa en "Fila: <numero>"
+    Cuando se navega a "<ruta>"
     Entonces se muestra la pantalla "AlbaranDetalle"
     Y se valida "Literal: Facturado"
     Y se valida "Ausente: Editar"
 
     Ejemplos:
-      | numero        |
-      | 2026/A-0002   |
+      | ruta            |
+      | /albarans/2     |
 
   @TC-058 @doc05 @critical
   Esquema del escenario: TC-058 Impedir borrar un albarán facturado
-    Cuando se navega a "/albarans"
-    Y se muestra la pantalla "Albaranes"
-    Y se pulsa en "Fila: <numero>"
+    Cuando se navega a "<ruta>"
     Entonces se muestra la pantalla "AlbaranDetalle"
     Y se valida "Literal: Facturado"
     Y se valida "Ausente: Eliminar"
 
     Ejemplos:
-      | numero        |
-      | 2026/A-0002   |
+      | ruta            |
+      | /albarans/2     |
 
   @TC-059 @doc05 @critical
   Esquema del escenario: TC-059 Impedir añadir o retirar líneas en un albarán facturado
-    Cuando se navega a "/albarans"
-    Y se muestra la pantalla "Albaranes"
-    Y se pulsa en "Fila: <numero>"
+    Cuando se navega a "<ruta>"
     Entonces se muestra la pantalla "AlbaranDetalle"
     Y se valida "Literal: <lineaPieza>"
     Y se valida "Literal: <lineaManoObra>"
     Y se valida "Ausente: Añadir línea"
 
     Ejemplos:
-      | numero        | lineaPieza                     | lineaManoObra          |
-      | 2026/A-0002   | Pastilles de fre davanteres    | Canvi de pastilles de fre |
+      | ruta          | lineaPieza                     | lineaManoObra          |
+      | /albarans/2   | Pastilles de fre davanteres    | Canvi de pastilles de fre |
+
+  # TC-032 y TC-033 (filtrar el listado por vehículo / cliente y situación) y
+  # TC-047 (precio informado a mano en una línea de pieza) no están aquí: no
+  # existe ningún vector por UI. AlbaransList.tsx no expone ningún filtro por
+  # vehicle_id/client_id (solo el buscador genérico de DataTable, que busca
+  # en las columnas numero/estat/data — ninguna es el vehículo ni el
+  # cliente), y AlbaraLiniesSection.tsx no renderiza ningún campo de precio
+  # para líneas de tipo "peca" — el precio de una pieza siempre es el del
+  # catálogo, no hay forma de indicar otro desde el formulario.
+
+  @TC-035 @doc05 @medium
+  Esquema del escenario: TC-035 Abrir un albarán desde la ficha del vehículo
+    Cuando se navega a "/vehicles"
+    Y se muestra la pantalla "Vehiculos"
+    Y se pulsa en "Fila: <matricula>"
+    Entonces se muestra la pantalla "VehiculoDetalle"
+    Cuando se pulsa en "Enlace: <enlaceAlbaran>"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <numero>"
+
+    Ejemplos:
+      | matricula | enlaceAlbaran                   | numero       |
+      | 1234ABC   | 2026/A-0001 — Pendiente         | 2026/A-0001  |
+
+  @TC-038 @doc05 @high
+  Esquema del escenario: TC-038 El albarán recibe número automático con formato año/A-nnnn
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Patron: ^\d{4}/A-\d{4}$"
+
+    Ejemplos:
+      | matricula |
+      | 2345FGH   |
+
+  @TC-039 @doc05 @medium
+  Esquema del escenario: TC-039 El segundo albarán del año incrementa el correlativo en uno
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se guarda el número de esta pantalla
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y el número de esta pantalla es uno más que el guardado
+
+    Ejemplos:
+      | matricula |
+      | 2345FGH   |
+
+  @TC-046 @doc05 @high
+  Esquema del escenario: TC-046 La línea de pieza sin precio hereda el precio del catálogo
+    Cuando se navega a "/peces"
+    Y se muestra la pantalla "Piezas"
+    Y se pulsa en "Fila: <pieza>"
+    Entonces se muestra la pantalla "PiezaDetalle"
+    Y se valida "Literal: <precioCatalogo> €"
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se rellena "Lista: Tipo" con "Pieza"
+    Y se rellena "Lista: Pieza" con "<pieza>"
+    Y se rellena "Campo: Cantidad" con "1"
+    Y se pulsa en "Boton: Añadir línea"
+    Entonces se valida "Literal: <precioCatalogo>"
+
+    Ejemplos:
+      | matricula | pieza          | precioCatalogo |
+      | 2345FGH   | Filtre d'oli    | 8.50           |
+
+  @TC-051 @doc05 @high
+  Esquema del escenario: TC-051 Rechazar una línea de mano de obra sin descripción
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se rellena "Lista: Tipo" con "Mano de obra"
+    Y se rellena "Campo: Horas" con "1"
+    Y se rellena "Campo: Precio/hora" con "30.00"
+    Y se pulsa en "Boton: Añadir línea"
+    Entonces se valida "Lineas: 0"
+
+    Ejemplos:
+      | matricula |
+      | 2345FGH   |
+
+  @TC-052 @doc05 @high
+  Esquema del escenario: TC-052 Retirar una línea de un albarán no facturado
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se rellena "Lista: Tipo" con "Mano de obra"
+    Y se rellena "Campo: Descripción" con "<descripcion>"
+    Y se rellena "Campo: Horas" con "1"
+    Y se rellena "Campo: Precio/hora" con "20.00"
+    Y se pulsa en "Boton: Añadir línea"
+    Entonces se valida "Lineas: 1"
+    Cuando se pulsa en "Linea: <descripcion>"
+    Entonces se valida "Lineas: 0"
+
+    Ejemplos:
+      | matricula | descripcion         |
+      | 2345FGH   | TC-052 automatizado |
+
+  @TC-055 @doc05 @medium
+  Esquema del escenario: TC-055 Modificar vehículo, fecha y notas de un albarán no facturado
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Campo: Notas" con "<notasNuevas>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <notasNuevas>"
+
+    Ejemplos:
+      | matricula | notasNuevas              |
+      | 1234ABC   | TC-055 notas modificadas |
+
+  @TC-056 @doc05 @medium
+  Esquema del escenario: TC-056 Borrar un albarán no facturado con todas sus líneas
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se rellena "Lista: Tipo" con "Mano de obra"
+    Y se rellena "Campo: Descripción" con "<descripcion>"
+    Y se rellena "Campo: Horas" con "1"
+    Y se rellena "Campo: Precio/hora" con "10.00"
+    Y se pulsa en "Boton: Añadir línea"
+    Entonces se valida "Lineas: 1"
+    Cuando se pulsa en "Boton: Eliminar"
+    Y se pulsa en "Dialogo: Eliminar"
+    Entonces se muestra la pantalla "Albaranes"
+    Y se valida "Literal: Albarán eliminado correctamente"
+
+    Ejemplos:
+      | matricula | descripcion         |
+      | 1234ABC   | TC-056 automatizado |

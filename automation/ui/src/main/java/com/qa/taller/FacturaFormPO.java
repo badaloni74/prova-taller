@@ -78,4 +78,24 @@ public class FacturaFormPO extends BasePO {
         String xp = "//label[normalize-space()=" + xq(numero) + "]/preceding-sibling::input[@type='checkbox']";
         return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xp)));
     }
+
+    /** "Pendientes: n" comprueba que hay al menos n casillas de albarán
+     *  pendiente en pantalla. Sirve para TC-066: tras una emisión rechazada,
+     *  no hace falta saber el número del albarán —autogenerado— para
+     *  comprobar que sigue ofreciéndose, basta con que su casilla no haya
+     *  desaparecido de la lista. */
+    @Override
+    public void seValida(String argumento) {
+        Argumentos.Argumento a = Argumentos.desglosar(argumento);
+        if ("Pendientes".equals(a.tipo)) {
+            int esperados = Integer.parseInt(a.valor);
+            int reales = driver.findElements(By.xpath("//input[@type='checkbox']")).size();
+            if (reales < esperados) {
+                throw new AssertionError(
+                    "pendientesInsuficientes: se esperaban al menos " + esperados + " y hay " + reales);
+            }
+            return;
+        }
+        super.seValida(argumento);
+    }
 }
