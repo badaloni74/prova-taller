@@ -9,6 +9,7 @@ import type { Nomina } from '../../types/nomina';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { formatMoney } from '../../utils/format';
 
 function PersonalDetail() {
   const { id } = useParams<{ id: string }>();
@@ -67,7 +68,7 @@ function PersonalDetail() {
     [t('personal.detail.dataAlta'), persona.dataAlta || '—'],
     [
       t('personal.detail.salariBase'),
-      persona.salariBase != null ? `${persona.salariBase.toFixed(2)} €` : '—',
+      persona.salariBase != null ? formatMoney(persona.salariBase) : '—',
     ],
     [t('personal.detail.creatEl'), persona.creatEl],
     [t('personal.detail.actualitzatEl'), persona.actualitzatEl],
@@ -139,7 +140,7 @@ function PersonalDetail() {
                 >
                   {String(nomina.mes).padStart(2, '0')}/{nomina.anyNomina} —{' '}
                   {t(`nomines.estatPagament.${nomina.estatPagament}`)} —{' '}
-                  {nomina.salariNet.toFixed(2)} €
+                  {formatMoney(nomina.salariNet)}
                 </Link>
               </li>
             ))}

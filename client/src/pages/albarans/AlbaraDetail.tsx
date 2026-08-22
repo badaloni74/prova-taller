@@ -12,6 +12,7 @@ import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import AlbaraLiniesSection from './AlbaraLiniesSection';
+import { formatDate } from '../../utils/format';
 
 function AlbaraDetail() {
   const { id } = useParams<{ id: string }>();
@@ -135,7 +136,7 @@ function AlbaraDetail() {
           <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">
             {t('albarans.detail.data')}
           </dt>
-          <dd className="text-sm text-slate-800 dark:text-slate-100">{albara.data}</dd>
+          <dd className="text-sm text-slate-800 dark:text-slate-100">{formatDate(albara.data)}</dd>
         </div>
         <div>
           <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">

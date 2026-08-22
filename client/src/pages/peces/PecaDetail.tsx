@@ -7,6 +7,7 @@ import type { Peca } from '../../types/peca';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { formatMoney } from '../../utils/format';
 
 function PecaDetail() {
   const { id } = useParams<{ id: string }>();
@@ -54,8 +55,8 @@ function PecaDetail() {
 
   const fields: [string, string][] = [
     [t('peces.detail.referencia'), peca.referencia || '—'],
-    [t('peces.detail.preu'), `${peca.preu.toFixed(2)} €`],
-    [t('peces.detail.cost'), peca.cost != null ? `${peca.cost.toFixed(2)} €` : '—'],
+    [t('peces.detail.preu'), formatMoney(peca.preu)],
+    [t('peces.detail.cost'), peca.cost != null ? formatMoney(peca.cost) : '—'],
     [t('peces.detail.unitat'), peca.unitat],
     [t('peces.detail.proveidor'), peca.proveidor || '—'],
     [t('peces.detail.estoc'), String(peca.estoc)],

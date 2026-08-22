@@ -9,6 +9,7 @@ import type { Personal } from '../../types/personal';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { formatMoney } from '../../utils/format';
 
 function NominaDetail() {
   const { id } = useParams<{ id: string }>();
@@ -124,7 +125,7 @@ function NominaDetail() {
             {t('nomines.detail.salariBrut')}
           </dt>
           <dd className="text-sm text-slate-800 dark:text-slate-100">
-            {nomina.salariBrut.toFixed(2)} €
+            {formatMoney(nomina.salariBrut)}
           </dd>
         </div>
         <div>
@@ -132,7 +133,7 @@ function NominaDetail() {
             {t('nomines.detail.deduccions')}
           </dt>
           <dd className="text-sm text-slate-800 dark:text-slate-100">
-            {nomina.deduccions.toFixed(2)} €
+            {formatMoney(nomina.deduccions)}
           </dd>
         </div>
         <div>
@@ -140,7 +141,7 @@ function NominaDetail() {
             {t('nomines.detail.salariNet')}
           </dt>
           <dd className="text-lg font-semibold text-slate-900 dark:text-slate-50">
-            {nomina.salariNet.toFixed(2)} €
+            {formatMoney(nomina.salariNet)}
           </dd>
         </div>
       </dl>

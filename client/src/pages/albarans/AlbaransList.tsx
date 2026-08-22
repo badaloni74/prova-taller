@@ -9,6 +9,7 @@ import Spinner from '../../components/Spinner';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
 import Toast from '../../components/Toast';
+import { formatDate } from '../../utils/format';
 
 function AlbaransList() {
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ function AlbaransList() {
               header: t('albarans.column.estat'),
               render: (albara) => t(`albarans.estat.${albara.estat}`),
             },
-            { key: 'data', header: t('albarans.column.data') },
+            { key: 'data', header: t('albarans.column.data'), render: (albara) => formatDate(albara.data) },
           ]}
           rows={albarans}
           getRowId={(albara) => albara.id}

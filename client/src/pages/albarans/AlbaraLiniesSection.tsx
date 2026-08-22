@@ -6,6 +6,7 @@ import { pecesService } from '../../services/peces';
 import type { Albara } from '../../types/albara';
 import type { Peca } from '../../types/peca';
 import { useSubmitGuard } from '../../hooks/useSubmitGuard';
+import { formatMoney } from '../../utils/format';
 
 interface AlbaraLiniesSectionProps {
   albara: Albara;
@@ -116,10 +117,10 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
                 </td>
                 <td className="px-2 py-2 text-slate-700 dark:text-slate-200">{linia.quantitat}</td>
                 <td className="px-2 py-2 text-slate-700 dark:text-slate-200">
-                  {linia.preu.toFixed(2)} €
+                  {formatMoney(linia.preu)}
                 </td>
                 <td className="px-2 py-2 text-slate-700 dark:text-slate-200">
-                  {(linia.quantitat * linia.preu).toFixed(2)} €
+                  {formatMoney(linia.quantitat * linia.preu)}
                 </td>
                 {editable && (
                   <td className="px-2 py-2 text-right">
@@ -139,7 +140,7 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
             <tr>
               <td colSpan={3} />
               <td className="px-2 py-2 font-semibold text-slate-900 dark:text-slate-50">
-                {total.toFixed(2)} €
+                {formatMoney(total)}
               </td>
               {editable && <td />}
             </tr>
