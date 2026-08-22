@@ -9,6 +9,7 @@ import Spinner from '../../components/Spinner';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
 import Toast from '../../components/Toast';
+import { formatMoney } from '../../utils/format';
 
 function PecesList() {
   const { t } = useTranslation();
@@ -86,7 +87,7 @@ function PecesList() {
           columns={[
             { key: 'nom', header: t('peces.column.nom') },
             { key: 'referencia', header: t('peces.column.referencia') },
-            { key: 'preu', header: t('peces.column.preu') },
+            { key: 'preu', header: t('peces.column.preu'), render: (peca) => formatMoney(peca.preu) },
             { key: 'estoc', header: t('peces.column.estoc') },
           ]}
           rows={peces}
