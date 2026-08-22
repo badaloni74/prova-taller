@@ -8,6 +8,7 @@ import { albaransService } from '../../services/albarans';
 import { ApiError } from '../../services/api';
 import type { Client } from '../../types/client';
 import type { Albara } from '../../types/albara';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 function FacturaForm() {
   const [searchParams] = useSearchParams();
@@ -43,6 +44,21 @@ function FacturaForm() {
     });
   };
 
+  const submitFactura = async () => {
+    try {
+      const factura = await facturesService.create({
+        albaraIds: [...selectedIds],
+        ivaPercentatge: Number(ivaPercentatge) || 21,
+      });
+      navigate(`/factures/${factura.id}`);
+    } catch (err: unknown) {
+      setError(err instanceof ApiError ? err.message : t('factures.error'));
+      throw err;
+    }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitFactura);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -56,15 +72,7 @@ function FacturaForm() {
       return;
     }
 
-    try {
-      const factura = await facturesService.create({
-        albaraIds: [...selectedIds],
-        ivaPercentatge: Number(ivaPercentatge) || 21,
-      });
-      navigate(`/factures/${factura.id}`);
-    } catch (err: unknown) {
-      setError(err instanceof ApiError ? err.message : t('factures.error'));
-    }
+    await guardedSubmit();
   };
 
   return (
@@ -140,9 +148,10 @@ function FacturaForm() {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
+            disabled={submitting}
+            className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
           >
-            {t('factures.form.submit')}
+            {submitting ? t('common.saving') : t('factures.form.submit')}
           </button>
           <button
             type="button"

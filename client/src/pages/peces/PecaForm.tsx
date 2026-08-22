@@ -7,6 +7,7 @@ import type { FormField } from '../../components/EntityForm';
 import Spinner from '../../components/Spinner';
 import { pecesService } from '../../services/peces';
 import { ApiError } from '../../services/api';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const EMPTY_VALUES = {
   nom: '',
@@ -58,15 +59,7 @@ function PecaForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!values.nom.trim()) {
-      setErrors({ nom: t('common.required') });
-      return;
-    }
-    setErrors({});
-
+  const submitPeca = async () => {
     const payload = {
       nom: values.nom,
       referencia: values.referencia || null,
@@ -84,7 +77,22 @@ function PecaForm() {
       navigate(`/peces/${peca.id}`);
     } catch (err: unknown) {
       setErrors({ nom: err instanceof ApiError ? err.message : t('peces.error') });
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitPeca);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!values.nom.trim()) {
+      setErrors({ nom: t('common.required') });
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -103,6 +111,8 @@ function PecaForm() {
         onCancel={() => navigate(isEdit ? `/peces/${id}` : '/peces')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );

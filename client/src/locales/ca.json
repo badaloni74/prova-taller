@@ -34,6 +34,7 @@
   "clients.detail.creatEl": "Creat el",
   "clients.detail.actualitzatEl": "Actualitzat el",
   "common.save": "Desa",
+  "common.saving": "Desant…",
   "common.cancel": "Cancel·la",
   "common.retry": "Torna-ho a provar",
   "common.required": "Aquest camp és obligatori",

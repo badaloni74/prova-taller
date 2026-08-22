@@ -5,6 +5,7 @@ import { albaransService } from '../../services/albarans';
 import { pecesService } from '../../services/peces';
 import type { Albara } from '../../types/albara';
 import type { Peca } from '../../types/peca';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 interface AlbaraLiniesSectionProps {
   albara: Albara;
@@ -28,6 +29,31 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
 
   const pecaName = (id: number | null) => peces.find((p) => p.id === id)?.nom ?? `#${id}`;
 
+  const submitLinia = async () => {
+    try {
+      const updated = await albaransService.addLinia(albara.id, {
+        tipus,
+        pecaId: tipus === 'peca' ? Number(pecaId) : undefined,
+        descripcio: tipus === 'ma_obra' ? descripcio : undefined,
+        quantitat: Number(quantitat),
+        preu: preu ? Number(preu) : undefined,
+      });
+      onUpdate(updated);
+      setPecaId('');
+      setDescripcio('');
+      setQuantitat('1');
+      setPreu('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+      throw err;
+    }
+  };
+
+  // resetOnSuccess: true perquè, a diferència dels altres punts d'enviament,
+  // aquest formulari no navega en acabar — cal poder tornar a prémer «Afegir
+  // línia» de seguida per anotar la línia següent del mateix albarà.
+  const { submitting, guardedSubmit } = useSubmitGuard(submitLinia, { resetOnSuccess: true });
+
   const handleAdd = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -45,22 +71,7 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
       return;
     }
 
-    try {
-      const updated = await albaransService.addLinia(albara.id, {
-        tipus,
-        pecaId: tipus === 'peca' ? Number(pecaId) : undefined,
-        descripcio: tipus === 'ma_obra' ? descripcio : undefined,
-        quantitat: Number(quantitat),
-        preu: preu ? Number(preu) : undefined,
-      });
-      onUpdate(updated);
-      setPecaId('');
-      setDescripcio('');
-      setQuantitat('1');
-      setPreu('');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-    }
+    await guardedSubmit();
   };
 
   const handleRemove = async (lineaId: number) => {
@@ -219,9 +230,10 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
 
           <button
             type="submit"
-            className="rounded-md bg-primary-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-700"
+            disabled={submitting}
+            className="rounded-md bg-primary-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
           >
-            {t('albarans.linies.add')}
+            {submitting ? t('common.saving') : t('albarans.linies.add')}
           </button>
 
           {error && <p className="w-full text-xs text-red-600 dark:text-red-400">{error}</p>}
