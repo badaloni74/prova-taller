@@ -102,6 +102,12 @@ function FacturaDetail() {
         </div>
         <div>
           <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">
+            {t('factures.detail.ivaImport')}
+          </dt>
+          <dd className="text-sm text-slate-800 dark:text-slate-100">{formatMoney(factura.ivaImport)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">
             {t('factures.detail.base')}
           </dt>
           <dd className="text-sm text-slate-800 dark:text-slate-100">{formatMoney(factura.base)}</dd>

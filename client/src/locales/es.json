@@ -161,6 +161,7 @@
   "factures.estatPagament.pagada": "Pagada",
   "factures.detail.client": "Cliente",
   "factures.detail.iva": "IVA",
+  "factures.detail.ivaImport": "Importe del IVA",
   "factures.detail.base": "Base imponible",
   "factures.detail.total": "Total",
   "factures.detail.estatPagament": "Estado de pago",
