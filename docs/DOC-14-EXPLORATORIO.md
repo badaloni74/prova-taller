@@ -1,33 +1,41 @@
 ---
-id: DOC-14
+doc_id: DOC-14
+doc_name: DOC-14-EXPLORATORIO
 version: 1.0.0
-hash: null
 status: draft
 generator: A-10 explorador QA
-from:
+generator_version: "1.0"
+generated_at: 2026-08-21T18:14:00+02:00
+source:
+  repo_path: C:\Claude\AppDani
+  vcs: git
+  branch: master
+  commit_sha: 83a95c5
+  working_tree_clean: false
+inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
+    from: A-03
     version: 1.6.0
-    present: true
   - id: automation/ui/**/*.feature
+    from: S-10
     version: null
-    present: true
   - id: DOC-23-INFORME.md
-    version: null
-    present: true
+    from: S-10
+    version: 2.0.0
   - id: DOC-04-FUNCIONAL.md
+    from: A-02
     version: 1.1.0
-    present: true
   - id: DOC-06-MANUAL-USUARIO.md
+    from: A-04
     version: 1.0.0
-    present: true
   - id: DOC-24-BUGS.json
+    from: A-14
     version: 1.0.0
-    present: true
   - id: DOC-16-ROADMAP.md
-    version: null
-    present: true
+    from: A-12
+    version: 2.0.0
   - id: DOC-14-EXPLORATORIO.md
-    version: null
+    from: A-10
     present: false
 ---
 
