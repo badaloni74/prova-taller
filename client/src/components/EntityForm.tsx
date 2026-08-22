@@ -23,6 +23,8 @@ interface EntityFormProps {
   onCancel: () => void;
   submitLabel: string;
   cancelLabel: string;
+  submitting?: boolean;
+  submittingLabel?: string;
 }
 
 function EntityForm({
@@ -34,6 +36,8 @@ function EntityForm({
   onCancel,
   submitLabel,
   cancelLabel,
+  submitting = false,
+  submittingLabel,
 }: EntityFormProps) {
   return (
     <form onSubmit={onSubmit} className="flex max-w-lg flex-col gap-4" noValidate>
@@ -88,9 +92,10 @@ function EntityForm({
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700"
+          disabled={submitting}
+          className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
         >
-          {submitLabel}
+          {submitting ? (submittingLabel ?? submitLabel) : submitLabel}
         </button>
         <button
           type="button"
