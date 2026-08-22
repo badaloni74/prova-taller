@@ -34,6 +34,7 @@
   "clients.detail.creatEl": "Creado el",
   "clients.detail.actualitzatEl": "Actualizado el",
   "common.save": "Guardar",
+  "common.saving": "Guardando…",
   "common.cancel": "Cancelar",
   "common.retry": "Volver a intentarlo",
   "common.required": "Este campo es obligatorio",
