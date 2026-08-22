@@ -9,6 +9,7 @@ import Spinner from '../../components/Spinner';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
 import Toast from '../../components/Toast';
+import { formatMoney } from '../../utils/format';
 
 function NominesList() {
   const { t } = useTranslation();
@@ -97,7 +98,7 @@ function NominesList() {
             {
               key: 'salariNet',
               header: t('nomines.column.salariNet'),
-              render: (nomina) => `${nomina.salariNet.toFixed(2)} €`,
+              render: (nomina) => formatMoney(nomina.salariNet),
             },
           ]}
           rows={nomines}

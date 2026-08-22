@@ -9,6 +9,7 @@ import Spinner from '../../components/Spinner';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
 import Toast from '../../components/Toast';
+import { formatMoney } from '../../utils/format';
 
 function FacturesList() {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ function FacturesList() {
             {
               key: 'total',
               header: t('factures.column.total'),
-              render: (factura) => `${factura.total.toFixed(2)} €`,
+              render: (factura) => formatMoney(factura.total),
             },
           ]}
           rows={factures}

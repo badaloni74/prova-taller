@@ -11,6 +11,7 @@ import type { Factura } from '../../types/factura';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
 import ConfirmDialog from '../../components/ConfirmDialog';
+import { formatMoney } from '../../utils/format';
 
 function ClientDetail() {
   const { id } = useParams<{ id: string }>();
@@ -176,7 +177,7 @@ function ClientDetail() {
                   className="text-sm text-primary-600 hover:underline"
                 >
                   {factura.numero} — {t(`factures.estatPagament.${factura.estatPagament}`)} —{' '}
-                  {factura.total.toFixed(2)} €
+                  {formatMoney(factura.total)}
                 </Link>
               </li>
             ))}

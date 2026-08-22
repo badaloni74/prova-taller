@@ -8,6 +8,7 @@ import type { Factura } from '../../types/factura';
 import type { Client } from '../../types/client';
 import Spinner from '../../components/Spinner';
 import ErrorState from '../../components/ErrorState';
+import { formatMoney } from '../../utils/format';
 
 function FacturaDetail() {
   const { id } = useParams<{ id: string }>();
@@ -103,14 +104,14 @@ function FacturaDetail() {
           <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">
             {t('factures.detail.base')}
           </dt>
-          <dd className="text-sm text-slate-800 dark:text-slate-100">{factura.base.toFixed(2)} €</dd>
+          <dd className="text-sm text-slate-800 dark:text-slate-100">{formatMoney(factura.base)}</dd>
         </div>
         <div>
           <dt className="text-xs uppercase text-slate-500 dark:text-slate-400">
             {t('factures.detail.total')}
           </dt>
           <dd className="text-lg font-semibold text-slate-900 dark:text-slate-50">
-            {factura.total.toFixed(2)} €
+            {formatMoney(factura.total)}
           </dd>
         </div>
       </dl>
