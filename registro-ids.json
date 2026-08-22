@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-17T09:40:00.000Z",
+  "updated_at": "2026-08-22T19:29:37.918Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -11,7 +11,9 @@
     "Q-*": "S-01, A-02, A-03 — espacio compartido; pedir numero a S-12 antes de asignar",
     "FUN-*": "A-15 propuestas de funcionalidad",
     "MEJ-*": "A-12 mejoras y roadmap",
-    "EVO-*": "A-06 refinamiento / intake"
+    "EVO-*": "A-06 refinamiento / intake",
+    "EXP-*": "A-10 exploracion QA (DOC-14) — NO gobernado aun por next/sync: falta anadir el esquema 'hallazgos' a registry.js en el repo de herramientas",
+    "BUG-*": "A-14 doctor QA (DOC-24) — NO gobernado aun por next/sync: DOC-24 es JSON plano, el lector de registry.js solo recorre bloques yaml en markdown"
   },
   "anchors": {
     "ACT-01": {
@@ -2844,6 +2846,28 @@
       "document": "DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md",
       "created": "2026-08-16",
       "status": "active"
+    },
+    "MEJ-007": {
+      "text": "Una sola guarda contra el reenvío en los tres puntos de escritura del cliente",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-22",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "medium",
+      "difficulty": "low",
+      "size": "small"
+    },
+    "MEJ-008": {
+      "text": "Un único sitio donde se dé formato a importes y fechas",
+      "type": "improvement",
+      "document": "DOC-16-ROADMAP.md",
+      "created": "2026-08-22",
+      "status": "proposed",
+      "source": "evidence",
+      "impact": "medium",
+      "difficulty": "low",
+      "size": "small"
     }
   }
 }
