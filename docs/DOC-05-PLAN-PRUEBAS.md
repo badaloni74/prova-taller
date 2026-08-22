@@ -6,15 +6,15 @@ status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-17T09:10:00+02:00
+generated_at: 2026-08-22T10:40:00+02:00
 project: app-taller
 project_code: TALLER
 source:
   repo_path: C:\Claude\appdani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: false   # solo hay sin versionar docs/ y registro-ids.json, generados por este ciclo
+  commit_sha: b2a8d7706df4fef373b87a144fe4be6cfbc94390
+  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
@@ -53,6 +53,10 @@ inputs:
     path_changed_on: 2026-08-17
     from: S-10 / A-13
     present: true
+    version_note: >-
+      es un proyecto de código (Selenium + Cucumber), no un documento versionado: no declara
+      `version` a propósito, y S-16 avisará siempre por esta entrada. El DOC-23 versionado es el
+      informe, declarado aparte con su `version` y su hash
     usage: destino acordado de la vigilancia de los defectos de DOC-24 al cerrar Q-19; contiene TC-900, en rojo sobre BUG-001. No exporta a Rally y no comparte numeración con este plan
     path_note: >-
       la carpeta de automatización se reorganizó el 2026-08-17 a petición del propietario del proyecto:
@@ -60,23 +64,24 @@ inputs:
       `automation/api/` para la colección Postman de S-17 (DOC-26). El documento sigue siendo DOC-23;
       lo que cambia es dónde vive
   - id: DOC-23-INFORME.md
-    path: automation/ui/DOC-23-INFORME.md
-    previous_path: docs/DOC-23-AUTOMATION/DOC-23-INFORME.md
-    path_changed_on: 2026-08-17
+    path: docs/DOC-23-INFORME.md
+    previous_path: automation/ui/DOC-23-INFORME.md
+    path_changed_on: 2026-08-21
     from: S-10
     present: true
+    version: 2.0.0
+    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    derived_from_version: 1.0.0
     usage: >-
-      evidencia de campo para el grado de automatización asignado a los 110 casos. De ahí salen los
-      tres hechos que más degradan: los formularios de línea de albarán no llevan id y hay que localizarlos
-      por proximidad de la etiqueta visible, el desplegable de pieza carga sus opciones por fetch y produjo
-      un flake dependiente del orden, y los campos de EntityForm sí llevan id={field.name} y son estables.
-      Es también la fuente del incidente TC-040/TC-048 que motiva los campos de aislamiento
-    note: no modifica ningún caso; solo justifica los campos `automation.grade` y `automation.reason`
+      evidencia de campo del grado de automatización de los 110 casos y del incidente TC-040/TC-048
+      que motiva los campos de aislamiento, que 2.0.0 sigue documentando con su causa raíz. No modifica
+      ningún caso; solo justifica `automation.grade` y `automation.reason`. Procedencia detallada de
+      los tres hechos de localización en el apartado «Procedencia»
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
     present: true
-    version: 2.0.0
-    hash: sha256:5f46a07a585dbdb991bb5c42f66bec909d43bfe062fbb5c4fb4b0ad1eb3c2634
+    version: 2.1.0
+    hash: sha256:3f418f7bd2f0f6b6a07a7d30b14fba5414a7727f951a42a398bcf94118ea5d77
     usage: >-
       origen del campo `verification_path`, que A-06 inventó para los criterios de aceptación de EVO-001
       y que este plan adopta en el contrato `testcases`. También es la evidencia de urgencia de Q-18:
@@ -4402,3 +4407,83 @@ de ahí. `automation/api/` (S-17, DOC-26) pasa a tener estos tres casos entre
 sus encargos. DOC-07 no cambia de fondo: ya reflejaba TC-064 como `A-05-11a`;
 TC-045 y TC-063 son la misma familia de hallazgo y su fila de matriz no varía
 (sigue habiendo un caso por requisito).
+
+---
+
+## Procedencia
+
+Cómo se han usado las entradas del bloque `inputs`, y por qué sus versiones son
+las que son. Aquí van los matices; el bloque `inputs` solo declara el dato.
+
+**Resello del 2026-08-22 · la versión sigue siendo 1.6.0.** `S-16` marcó este
+documento por una única causa —`DOC-05 1.6.0 — por DOC-08: declara 2.0.0, actual
+2.1.0 [MINOR]`— y la revisión se ha cerrado sin tocar un solo caso. El bloque
+`testcases` es byte a byte el de 1.6.0: los 110 casos, sus 241 pasos, sus
+`external_id`, sus prioridades y sus campos de aislamiento y automatización. Por
+eso **no sube la versión**: el contrato de A-03 reserva la subida para cuando
+cambia lo que este plan afirma, y aquí solo cambia de dónde dice que viene. Hay
+además una razón de ciclo: `DOC-08` declara como entrada `DOC-05 1.5.0`, y los
+dos documentos se referencian mutuamente. Subir a 1.7.0 volvería a marcar DOC-08
+en cuanto se resellara, y el ciclo no se cerraría nunca. Manteniendo 1.6.0, se
+cierra.
+
+**DOC-08 2.0.0 → 2.1.0 · por qué no llega a ningún caso.** El `-HIST.md` de A-06
+declara el salto como MINOR y enumera lo que cambia: `Q-18` pasa a cerrada en el
+apartado 4.2, entra `DOC-09` como entrada leída de vuelta, `AC-010` gana la
+precondición de datos «C1 con al menos dos vehículos», y nacen los apartados 4.3
+(datos necesarios, `DP-001`..`DP-003`) y 4.4 (`scope` frente a `effort_signal`).
+El propio documento lo dice: *el comportamiento exigido por los once criterios es
+exactamente el mismo y ninguno cambia de vía de comprobación*. Se ha verificado
+contra este plan de la única forma que cabe: **ningún caso de DOC-05 deriva de
+`EVO-001`**. Los criterios `AC-nnn` aparecen aquí en tres sitios, y ninguno es un
+caso: la nota de vocabulario del front-matter, el `verification_path_note` de
+TC-041 —que compara su clasificación con `AC-008` para declarar la divergencia de
+criterio con A-06— y el apartado 4.12. Los casos de `EVO-001` **nacen cuando A-02
+regenere DOC-04**, no antes. En consecuencia, `AC-010` y su nueva precondición no
+tienen destinatario en este plan, y `DP-001`..`DP-003` son identificadores locales
+de A-06 que no entran en el apartado 5: los `DS-nnn` de S-06 siguen siendo los
+mismos tres.
+
+**DOC-23-INFORME.md · ruta y versión.** El informe se movió a `docs/` en el commit
+`83a95c5` y allí vive hoy, reescrito como **2.0.0** para la suite completa (102
+casos automatizados, tabla por módulo, causa raíz del único rojo). El
+front-matter seguía apuntando a `automation/ui/DOC-23-INFORME.md`, que ya no
+existe; queda corregido, y `previous_path` pasa a declarar esa ruta como la
+anterior. Lo que **no** se movió es el proyecto Selenium + Cucumber, que sigue en
+`automation/ui/`: la entrada `DOC-23-AUTOMATION` no cambia.
+
+La entrada declaraba además `present: true` **sin `version`**, y S-16 avisaba
+(`entrada_sin_version`). Una entrada sin versión queda exenta del control de
+obsolescencia sin que nadie lo note, que es peor que declararla mal. Ahora
+declara `version: 2.0.0` con su hash.
+
+**El aviso `entrada_sin_version` que queda, y por qué se queda.** Tras este
+resello S-16 sigue emitiendo un aviso sobre este documento: `DOC-23 sin version
+declarada`. Ya no viene del informe —que ahora declara 2.0.0— sino de la entrada
+`DOC-23-AUTOMATION`, que apunta a la carpeta `automation/ui/`. Es **código, no un
+documento**: no tiene `version` que declarar, y ponerle una fingida sí sería un
+problema, porque el control de obsolescencia empezaría a comparar contra un número
+inventado. Queda declarado en la propia entrada con `version_note` para que nadie
+lo lea como un descuido. El aviso es informativo y no marca el documento como
+obsoleto.
+
+**Qué evidencia sostiene los `automation.grade`, y de qué versión sale.** Los
+tres hechos de localización que más degradan el grado —los formularios de línea
+de albarán no llevan id y hay que localizarlos por proximidad de la etiqueta
+visible; el desplegable de pieza carga sus opciones por fetch y produjo un flake
+dependiente del orden; los campos de `EntityForm` sí llevan `id={field.name}` y
+son estables— salen del **informe piloto 1.0.0**, el de 5 escenarios sobre
+`albarans` que vivía en `automation/ui/`. La reescritura 2.0.0 no los enuncia:
+cubre otra cosa, el resultado de la suite entera. Se declara por eso
+`derived_from_version: 1.0.0` junto a la versión vigente, igual que se hace con
+DOC-04: la procedencia real de un grado no se borra al resellar. Lo que 2.0.0 sí
+conserva, y con más detalle, es el **incidente TC-040/TC-048** —TC-040 consume
+stock y TC-048 comprueba después el inicial— que motiva los campos `touches`,
+`depends_on` y `restores_state` de este plan. Ningún `automation.grade` se ha
+reevaluado en este resello.
+
+**Sobre los anexos de versiones anteriores.** El «Anexo · Versión 1.5.0» afirma
+que las entradas declaradas entonces —incluida `DOC-08 2.0.0`— coincidían con la
+versión real de cada fichero. Era cierto el 2026-08-17 y se deja tal cual: es el
+registro de lo que se verificó en aquella versión, no una afirmación sobre hoy.
+El estado vigente es el del bloque `inputs`.

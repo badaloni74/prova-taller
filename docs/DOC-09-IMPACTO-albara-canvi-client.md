@@ -1,116 +1,76 @@
 ---
 doc_id: DOC-09
 doc_name: DOC-09-IMPACTO-albara-canvi-client
-version: 1.0.0
+version: 2.0.0
 status: draft
-generator: A-07 analisis de impacto
-generator_version: "1.0"
-generated_at: 2026-08-17T09:05:00+02:00
-language: es
-project: app-taller
-evolutivo_id: EVO-001
-history_document: docs/DOC-09-IMPACTO-albara-canvi-client-HIST.md
-history_note: >-
-  este documento no lleva historial de cambios: refleja solo el estado actual, con su version en
-  este front-matter. Si hay versiones futuras, que cambio y por que ira en el fichero -HIST.md,
-  que declara ademas la version del documento que acompana
+generator: A-07 análisis de impacto
+generated_at: 2026-08-22T12:30:00+02:00
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: false   # sin versionar: docs/, automation/ y registro-ids.json
+  commit_sha: b2a8d7706df4fef373b87a144fe4be6cfbc94390
+  working_tree_clean: false
 inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
-    version: 2.0.0
-    hash: sha256:5f46a07a585dbdb991bb5c42f66bec909d43bfe062fbb5c4fb4b0ad1eb3c2634
+    version: 2.1.0
+    hash: sha256:3f418f7bd2f0f6b6a07a7d30b14fba5414a7727f951a42a398bcf94118ea5d77
     present: true
-    usage: >-
-      punto de entrada. affects_requirements [REQ-040, REQ-046], contradicts [REQ-040], los once
-      criterios de aceptacion con su verification_path, el apartado 5 (fuera de alcance) y PD-002
   - id: DOC-02-TECNICA.md
     from: S-01
     version: 1.0.0
     hash: sha256:735feb13b7b0774ca1b370a8d1659ee9c7d145f6d8a52f35dc486491953bd7f1
     present: true
-    usage: >-
-      bloque `graph` (33 componentes, 58 aristas), apartado 4 de acoplamientos entre modulos y
-      apartado 5 de modelo de datos. Es el punto de partida del alcance tecnico
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
     hash: sha256:7d1844156487a62b8936a0d2164ebec043eb7fdb7043d27afdd649316f9b63a0
     present: true
-    usage: >-
-      enunciados y modulo de REQ-040, REQ-046, REQ-042, REQ-041, REQ-027, REQ-011 y REQ-015.
-      Hash identico al que declara DOC-08: no ha cambiado entre las dos lecturas
-  - id: DOC-03-API.md
-    from: S-03
-    present: false
-    hash: null
-    note: >-
-      NO EXISTE. El proyecto no expone OpenAPI (DOC-02 apartado 6, Q-05). El impacto sobre la
-      superficie de API queda DECLARADO COMO NO EVALUADO, no como inexistente. Ver apartado 6
-  - id: DOC-21-GRAPH.json
-    from: S-08
-    present: false
-    hash: null
-    note: >-
-      no existe. El cierre transitivo se ha hecho a mano sobre las aristas de DOC-02, con tope de
-      tres saltos. Ver la nota de metodo del apartado 2
+  - id: DOC-05-PLAN-PRUEBAS.md
+    from: A-03
+    version: 1.6.0
+    hash: sha256:cd248197d27e59d213b0228ccf07178bcf1c13c456549419079f967aa3588926
+    present: true
+  - id: DOC-07-TRAZABILIDAD.md
+    from: A-05
+    version: 1.7.0
+    hash: sha256:d6e7a7a6a139e4bca5f9cb30045bc4221ab1ea9b20ca7108e1c38cf56ba94917
+    present: true
+  - id: DOC-07-MATRIZ.csv
+    from: A-05
+    version: 1.7.0
+    hash: sha256:1676546ad1473a6401ab8aaa6010e246f2f4b2ef4693da37c75c305ec540efb3
+    present: true
+  - id: DOC-14-EXPLORATORIO.md
+    from: A-10
+    version: 1.0.0
+    hash: sha256:447e44d8c89854907a32e552fb32b4b91c1e79c68285f89d6fd9c892011bd090
+    present: true
+  - id: DOC-23-INFORME.md
+    from: S-10
+    version: 2.0.0
+    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    present: true
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
     present: true
-    usage: BUG-002 (el defecto confirmado ejecutando) y BUG-004 (por que los datos siguen ahi)
-  - id: DOC-05-PLAN-PRUEBAS.md
-    from: A-03
-    version: 1.5.0
-    hash: sha256:3ab6925abc0489c7f178c6d2c94cfade700f961e129b0d0e402a0e24367713fd
-    present: true
-    volatile: true
-    usage: >-
-      que casos cuelgan de los requisitos afectados y por que via se ejercen. LEIDO EN CALIENTE:
-      A-03 estaba editando el documento durante esta ejecucion. La version 1.5.0 y el hash son
-      los del momento de la lectura y pueden haber cambiado ya. Este documento NO toca DOC-05
-  - id: DOC-07-MATRIZ.csv
-    from: A-05
-    hash: sha256:1676546ad1473a6401ab8aaa6010e246f2f4b2ef4693da37c75c305ec540efb3
-    present: true
-    usage: >-
-      fuente estable de la traza REQ -> TC, usada para contrastar lo leido en DOC-05 mientras
-      A-03 lo editaba
   - id: codigo-fuente
     from: repositorio
+    version: b2a8d77
+    hash: git:b2a8d7706df4fef373b87a144fe4be6cfbc94390
     present: true
-    usage: >-
-      lectura dirigida para verificar tres cosas que DOC-02 no puede responder por si sola: donde
-      se resuelve el cliente al facturar (REQ-046), tres aristas reales que faltan en el grafo, y
-      el estado de los datos de ejemplo
+  - id: DOC-03-API.md
+    from: S-03
+    present: false
+  - id: DOC-21-GRAPH.json
+    from: S-08
+    present: false
   - id: contexto-confluence
     from: I-02
     present: false
-    note: >-
-      no disponible en esta ejecucion. Si existiera alguna decision de negocio anterior sobre
-      cambio de propietario de vehiculo o sobre facturacion cruzada, no se ha podido consultar
-consumers:
-  - agent: A-08
-    doc: DOC-10
-    note: estimacion. Lee sobre todo el resumen ejecutivo y effort_signal
-  - agent: S-04
-    doc: DOC-11
-    note: plan de implementacion
-  - agent: A-09
-    doc: DOC-12
-    note: regresion
-gate:
-  status: pending
-  owner: peticionario de negocio
-  required: >-
-    hereda el gate de DOC-08: la especificacion no esta validada por el peticionario. Este
-    analisis mide un borrador y lo dice
 ---
 
 # DOC-09 · Análisis de impacto — `EVO-001` · Un albarán no puede cambiar de cliente

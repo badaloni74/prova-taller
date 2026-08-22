@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.6.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.7.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-17T14:05:00+02:00
+generated_at: 2026-08-22T12:20:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,94 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.7.0 — 2026-08-22 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** DOC-05 pasó de **1.5.0 a 1.6.0** y `S-16 · Cascada de obsolescencia`
+volvió a marcar a DOC-07 como obsoleto:
+
+```
+DOC-07 1.6.0 — por DOC-05: declara 1.5.0, actual 1.6.0  [MINOR]
+```
+
+Tercera regeneración consecutiva disparada por una máquina, y la primera en la que el
+documento regenerado descubre que **una de sus propias recomendaciones ha sido atendida**.
+
+**Qué cambia.**
+
+| Qué | 1.6.0 | 1.7.0 |
+|---|---|---|
+| Entrada DOC-04 | 1.2.0 | 1.2.0 (mismo hash) |
+| Entrada DOC-05 | 1.5.0 | **1.6.0** — motivo del disparo |
+| Entrada DOC-14 | no declarada | **1.0.0, nueva** (A-10, exploración libre) |
+| Entrada DOC-23 | no declarada | **2.0.0, nueva** (S-10, suite completa) |
+| Cobertura | 100 % (79/79) | **100 % (79/79), sin cambios** |
+| `DOC-07-MATRIZ.csv` | md5 `087a0377…` | **idéntico, quinta vez consecutiva** |
+| Anomalías bloqueantes | 0 | 0 |
+| Avisos | 27 (17 + 10) | **29 (17 + 12)** |
+| Casos `ui` / `service` | 109 / 1 | **106 / 4** |
+| Requisitos `ui-only` | 78 | **75** |
+| Requisitos con vector inalcanzable por la vía declarada | 4 | **5** |
+| Requisitos con defecto confirmado | 4 | **6** |
+| Front-matter | 184 líneas (12 % del fichero) | **55 líneas** |
+
+**Hallazgos: uno cerrado, tres nuevos.**
+
+- **A-05-11a · CERRADO.** Era el hallazgo principal de 1.6.0: TC-064 declaraba
+  `verification_path: ui` y su primer paso no se podía componer en `FacturaForm`, con lo
+  que un tester lo habría marcado `PASS` sin haber ejercido nada. 1.6.0 recomendó
+  reclasificarlo a `service` —lo que mandaba la propia política de §4.12 de DOC-05— y
+  hacerlo **antes de exportar a Rally**. A-03 lo hizo en DOC-05 1.6.0. Es el **primer
+  hallazgo de este documento que se cierra porque su destinatario lo corrigió**; los
+  cuatro anteriores (A-05-01a, A-05-02, A-05-05, A-05-07) se cerraron por reformulación o
+  absorción. A-03 encontró además dos casos más de la misma familia que A-05 no había
+  visto —**TC-063** y **TC-045**— y los reclasificó también.
+- **A-05-11c · NUEVO.** De `DOC-23-INFORME` 2.0.0 §5: **TC-032, TC-033 y TC-047** siguen
+  declarando `ui` y no tienen vector en la interfaz. A-05 lo verificó en el código
+  (`DataTable.tsx` filtra solo sobre las claves de las columnas declaradas, y el listado
+  de albaranes solo declara `numero`, `estat` y `data`; `AlbaraLiniesSection.tsx` renderiza
+  el campo de precio dentro de un `{tipus === 'ma_obra' && …}`). Es más grave que 11a
+  porque no se resuelve reclasificando: **REQ-025 promete un filtro que la aplicación no
+  tiene**, y ponerlo en verde por servicio haría desaparecer el síntoma. Decisión de
+  producto, no de A-03.
+- **A-05-03b · NUEVO.** De `EXP-007` de `DOC-14-EXPLORATORIO` 1.0.0: **TC-073 y TC-075**
+  llevan el IVA en el nombre, están **en verde** en DOC-23 y no lo comprueban en ningún
+  paso, sobre dos requisitos —REQ-051 y REQ-053— que la aplicación no cumple (la ficha de
+  factura muestra el tipo, `21%`, y no el importe, 20,66 €). Es la primera vez que este
+  documento registra un verde ya producido y ya falso.
+- **A-05-12 · NUEVO.** El bloque de resumen `verification_path` del front-matter de DOC-05
+  1.6.0 sigue declarando `ui: 109, service: 1` mientras sus propios bloques `testcases`
+  dicen 106 y 4. Lo destapó la comprobación de coherencia del §3.1, que **falla por primera
+  vez** desde que se añadió en 1.6.0. No afecta a nada de este documento —A-05 cuenta sobre
+  el YAML y nunca sobre resúmenes— pero mandaría tres casos `Critical` a la cola de
+  automatización equivocada a quien lo leyera. Corrección de **A-03**, tres líneas.
+
+**Correcciones de censo respecto de 1.6.0**, todas anunciadas y ninguna silenciosa:
+
+| Qué decía 1.6.0 | Qué dice 1.7.0 | Por qué |
+|---|---|---|
+| «los 70 casos `Functional` e `Integration` no son el riesgo: si su vector no existiera fallarían de forma ruidosa el primer día» | **falso** | TC-032, TC-033 y TC-047 son `Functional` y no fallaron ruidosamente: **nunca llegaron a escribirse**, y un caso sin escenario no sale rojo en ningún informe |
+| «los cuatro requisitos de A-05-11 son los cuatro `critical`» | 3 `critical` + 2 `high` | los `high` entran por A-05-11c, que es de otra naturaleza |
+| A-05-08b como riesgo razonado sobre el grafo de dependencias | **materializado** | el único rojo de 107 escenarios es TC-048, arrastrado por TC-040 en el carril serial de 17 |
+| «corregir A-05-11 entero llevaría el reparto a 105/5» | reparto real 106/4 | se corrigieron tres casos en vez de uno, y los tres hermanos de 11b siguen sin escribirse |
+
+**Por qué MINOR y no otra cosa.** No es MAJOR porque nada de lo que consumen A-11 y S-07
+queda invalidado: misma cabecera de CSV, mismo mapa requisito → caso, ningún ID movido,
+cobertura en 100 % y cero anomalías bloqueantes. No es PATCH porque se cierra un punto de
+Go/No-Go, nacen tres, cambian seis cifras del resumen y entran dos entradas nuevas en
+`inputs` que S-16 tendrá que vigilar a partir de ahora.
+
+**Cambio de forma: el front-matter baja de 184 líneas a 55.** Llevaba `version_reason`,
+`counts`, `execution`, `automation`, `verification_path` y una nota `usage` por entrada
+—el 12 % del fichero—, duplicando cifras que el cuerpo ya daba con contexto. El contrato
+de A-05 dice que el front-matter declara de dónde viene el documento y nada más. Cada dato
+se ha movido a donde se lee: las cifras a §1 y §5, los matices de cada entrada al apartado
+«Procedencia» del cuerpo, y el motivo del salto de versión a este fichero. **No se ha
+perdido ninguno.**
 
 ---
 
