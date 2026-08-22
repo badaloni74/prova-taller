@@ -9,6 +9,7 @@ import { albaransService } from '../../services/albarans';
 import { vehiclesService } from '../../services/vehicles';
 import { ApiError } from '../../services/api';
 import type { Vehicle } from '../../types/vehicle';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const EMPTY_VALUES = {
   vehicleId: '',
@@ -70,15 +71,7 @@ function AlbaraForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!values.vehicleId) {
-      setErrors({ vehicleId: t('common.required') });
-      return;
-    }
-    setErrors({});
-
+  const submitAlbara = async () => {
     const payload = {
       vehicleId: Number(values.vehicleId),
       data: values.data ? `${values.data}T00:00:00.000Z` : undefined,
@@ -92,7 +85,22 @@ function AlbaraForm() {
       navigate(`/albarans/${albara.id}`);
     } catch (err: unknown) {
       setErrors({ vehicleId: err instanceof ApiError ? err.message : t('albarans.error') });
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitAlbara);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!values.vehicleId) {
+      setErrors({ vehicleId: t('common.required') });
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -111,6 +119,8 @@ function AlbaraForm() {
         onCancel={() => navigate(isEdit ? `/albarans/${id}` : '/albarans')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );

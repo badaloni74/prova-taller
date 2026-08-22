@@ -9,6 +9,7 @@ import { vehiclesService } from '../../services/vehicles';
 import { clientsService } from '../../services/clients';
 import { ApiError } from '../../services/api';
 import type { Client } from '../../types/client';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const EMPTY_VALUES = {
   clientId: '',
@@ -82,20 +83,7 @@ function VehicleForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const newErrors: Record<string, string> = {};
-    if (!values.clientId) newErrors.clientId = t('common.required');
-    if (!values.marca.trim()) newErrors.marca = t('common.required');
-    if (!values.model.trim()) newErrors.model = t('common.required');
-    if (!values.matricula.trim()) newErrors.matricula = t('common.required');
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    setErrors({});
-
+  const submitVehicle = async () => {
     const payload = {
       clientId: Number(values.clientId),
       marca: values.marca,
@@ -118,7 +106,27 @@ function VehicleForm() {
       } else {
         setErrors({ marca: err instanceof ApiError ? err.message : t('vehicles.error') });
       }
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitVehicle);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+    if (!values.clientId) newErrors.clientId = t('common.required');
+    if (!values.marca.trim()) newErrors.marca = t('common.required');
+    if (!values.model.trim()) newErrors.model = t('common.required');
+    if (!values.matricula.trim()) newErrors.matricula = t('common.required');
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -137,6 +145,8 @@ function VehicleForm() {
         onCancel={() => navigate(isEdit ? `/vehicles/${id}` : '/vehicles')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );

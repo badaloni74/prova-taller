@@ -7,6 +7,7 @@ import type { FormField } from '../../components/EntityForm';
 import Spinner from '../../components/Spinner';
 import { clientsService } from '../../services/clients';
 import { ApiError } from '../../services/api';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const EMPTY_VALUES = {
   nom: '',
@@ -55,15 +56,7 @@ function ClientForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!values.nom.trim()) {
-      setErrors({ nom: t('common.required') });
-      return;
-    }
-    setErrors({});
-
+  const submitClient = async () => {
     const payload = {
       nom: values.nom,
       nif: values.nif || null,
@@ -80,7 +73,22 @@ function ClientForm() {
       navigate(`/clients/${client.id}`);
     } catch (err: unknown) {
       setErrors({ nom: err instanceof ApiError ? err.message : t('clients.error') });
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitClient);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!values.nom.trim()) {
+      setErrors({ nom: t('common.required') });
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -99,6 +107,8 @@ function ClientForm() {
         onCancel={() => navigate(isEdit ? `/clients/${id}` : '/clients')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );

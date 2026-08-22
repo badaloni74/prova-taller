@@ -24,10 +24,11 @@ export function useSubmitGuard<Args extends unknown[]>(
           submittingRef.current = false;
           setSubmitting(false);
         }
-      } catch (err) {
+      } catch {
+        // onSubmit ya ha dejado su propio estado de error (p. ej. setErrors);
+        // aquí solo rearmamos el botón para que se pueda reintentar.
         submittingRef.current = false;
         setSubmitting(false);
-        throw err;
       }
     },
     [onSubmit, resetOnSuccess],

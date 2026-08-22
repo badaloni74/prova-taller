@@ -7,6 +7,7 @@ import type { FormField } from '../../components/EntityForm';
 import Spinner from '../../components/Spinner';
 import { personalService } from '../../services/personal';
 import { ApiError } from '../../services/api';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const EMPTY_VALUES = {
   nom: '',
@@ -58,15 +59,7 @@ function PersonalForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!values.nom.trim()) {
-      setErrors({ nom: t('common.required') });
-      return;
-    }
-    setErrors({});
-
+  const submitPersonal = async () => {
     const payload = {
       nom: values.nom,
       telefon: values.telefon || null,
@@ -84,7 +77,22 @@ function PersonalForm() {
       navigate(`/personal/${persona.id}`);
     } catch (err: unknown) {
       setErrors({ nom: err instanceof ApiError ? err.message : t('personal.error') });
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitPersonal);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!values.nom.trim()) {
+      setErrors({ nom: t('common.required') });
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -103,6 +111,8 @@ function PersonalForm() {
         onCancel={() => navigate(isEdit ? `/personal/${id}` : '/personal')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );

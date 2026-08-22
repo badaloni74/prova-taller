@@ -9,6 +9,7 @@ import { nominesService } from '../../services/nomines';
 import { personalService } from '../../services/personal';
 import { ApiError } from '../../services/api';
 import type { Personal } from '../../types/personal';
+import { useSubmitGuard } from '../../hooks/useSubmitGuard';
 
 const currentDate = new Date();
 
@@ -72,21 +73,7 @@ function NominaForm() {
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const newErrors: Record<string, string> = {};
-    if (!values.personalId) newErrors.personalId = t('common.required');
-    if (!values.mes || Number(values.mes) < 1 || Number(values.mes) > 12) {
-      newErrors.mes = t('common.required');
-    }
-    if (!values.anyNomina) newErrors.anyNomina = t('common.required');
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    setErrors({});
-
+  const submitNomina = async () => {
     const payload = {
       personalId: Number(values.personalId),
       mes: Number(values.mes),
@@ -102,7 +89,28 @@ function NominaForm() {
       navigate(`/nomines/${nomina.id}`);
     } catch (err: unknown) {
       setErrors({ personalId: err instanceof ApiError ? err.message : t('nomines.error') });
+      throw err;
     }
+  };
+
+  const { submitting, guardedSubmit } = useSubmitGuard(submitNomina);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+    if (!values.personalId) newErrors.personalId = t('common.required');
+    if (!values.mes || Number(values.mes) < 1 || Number(values.mes) > 12) {
+      newErrors.mes = t('common.required');
+    }
+    if (!values.anyNomina) newErrors.anyNomina = t('common.required');
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+
+    await guardedSubmit();
   };
 
   if (loading) return <Spinner />;
@@ -121,6 +129,8 @@ function NominaForm() {
         onCancel={() => navigate(isEdit ? `/nomines/${id}` : '/nomines')}
         submitLabel={t('common.save')}
         cancelLabel={t('common.cancel')}
+        submitting={submitting}
+        submittingLabel={t('common.saving')}
       />
     </div>
   );
