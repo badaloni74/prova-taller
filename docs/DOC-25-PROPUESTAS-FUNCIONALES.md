@@ -1,53 +1,69 @@
 ---
 doc_id: DOC-25
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES
-version: 1.1.1
+version: 1.2.0
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-17T12:40:00+02:00
+generated_at: 2026-08-23T09:15:00+02:00
 language: es
 history_document: docs/DOC-25-PROPUESTAS-FUNCIONALES-HIST.md
 history_note: >-
   este documento no lleva historial de cambios. Refleja solo el estado actual, con su version
   en este front-matter. Que cambio en cada version, y por que, esta en el fichero -HIST.md
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: false   # sin versionar: docs/, automation/ y registro-ids.json, generados por este ciclo
+  commit_sha: e451ad46934ef0443347f81082f3e519b1838392
+  working_tree_clean: false   # sin versionar en el ambito de este ciclo: docs/, automation/, registro-ids.json y ficheros de sesion
 inputs:
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.1.0
-    hash: sha256:1041cebf287ac1059e63e857c95107dadceaf429f2cd8ec527ac2b4183dc29f5
+    version: 1.1.1
+    hash: sha256:b9070b120a46eb1a4a17f99eb9983270828b597ce41e8d4cda8b8204c7591b8a
     present: true
     usage: >-
       documento anterior. Manda sobre esta ronda: las ocho propuestas FUN-001 a FUN-008 se
       conservan con su numero y su texto, y solo se toca lo que la nueva evidencia obliga a tocar
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.0.0
-    hash: sha256:4e49485c3ad1529b2eee9d56487e188617011d772fe5908740cbed4114f01097
+    version: 1.1.0
+    hash: sha256:0f074e686a5fb700286e8de28f0210a204380423a6a797e7a9e8f3a96384200a
     present: true
-    changed_since_previous_run: false
+    changed_since_previous_run: true
+    previous_version_declared: 1.0.0
+    change_note: >-
+      MINOR sin cambio de contenido de negocio: mismos actores, casos de uso, reglas de negocio
+      y glosario (verificado contra `DOC-01-BASE-ASIS-HIST.md` 1.1.0). Cierra Q-02 (ya resuelta
+      el 2026-08-16, censada como Q-12 en DOC-04 y como BUG-003 candidato en DOC-24) y corrige
+      un comentario del arbol de carpetas. Sin efecto sobre ninguna FUN-nnn
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
-    hash: sha256:7d1844156487a62b8936a0d2164ebec043eb7fdb7043d27afdd649316f9b63a0
+    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
     present: true
     changed_since_previous_run: false
+    hash_changed_note: >-
+      el hash cambia respecto al declarado en 1.1.1 porque el front-matter de DOC-04 se
+      reescribio al resincronizar contra DOC-01 1.1.0 (commit 7bf2947), pero su `version` se
+      mantuvo en 1.2.0 porque A-02 verifico ancla a ancla que ningun REQ, UC ni BR cambio de
+      enunciado. Se trata como sin cambios de contenido
     usage: requisitos REQ-001 a REQ-079, nueve preguntas abiertas y seis respondidas el 2026-08-16
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
-    version: 1.2.0
-    hash: sha256:150240af136497762614c0113c31241d1891dffa62ce5f51c2a5b06cf6b58041
+    version: 1.3.0
+    hash: sha256:90ea9dd6102fbb62aae8d3133b3377a7f85be32181ac0f2a6c9de6c12bd82d15
     present: true
-    changed_since_previous_run: false
-    note: >-
-      fuente principal de este documento. Sigue en 1.2.0 con el mismo hash que se releyo entero
-      en DOC-25 1.1.0: ninguna de las catorce carencias del apartado 6.1 se ha movido
+    changed_since_previous_run: true
+    previous_version_declared: 1.2.0
+    scope: solo §6 (que no puede hacer la aplicacion todavia) y §9 (preguntas abiertas), por contrato
+    change_note: >-
+      1.3.0 añade dos avisos sobre comportamiento ya implementado (guarda de reenvio de SPEC 04,
+      formato de importes/fechas de SPEC 05): no son funcionalidad nueva, son defectos ya
+      corregidos. §6.1 sigue con las mismas catorce carencias, mismo texto. §9 gana una pregunta
+      nueva (Q-30, sobre que ve el usuario ante una anotacion invalida) que es hueco de
+      documentacion, no de producto. Ninguna carencia de §6.1 se ha movido de dueño
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
@@ -57,26 +73,45 @@ inputs:
     note: sigue con BUG-001 a BUG-004; el candidato BUG-005 todavia no esta censado
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 2.0.0
-    hash: sha256:17ab7298e9eb2db441d6d5d5b4b0b8e5b515fe0ddd00fbbc84a004d2bb43991a
+    version: 3.0.0
+    hash: sha256:e70c3786b5dfe8e4f60e5adc0e02ab302cfcc85e657281da2af4b689423604de
     present: true
     changed_since_previous_run: true
-    previous_version_declared: 1.0.0
-    scope: solo el apartado 6, que contiene los dos hallazgos dirigidos a A-15
+    previous_version_declared: 2.0.0
+    scope: solo el apartado 6, que contiene los hallazgos dirigidos a A-15
     change_note: >-
-      motivo de esta ronda. A-12 subio a MAJOR porque el propietario decidio el 2026-08-17:
-      MEJ-001, MEJ-003 y MEJ-005 pasan a accepted; MEJ-002, MEJ-004 y MEJ-006 siguen proposed;
-      ninguna rechazada. Releidos el apartado 6 entero y las fichas de las tres aceptadas para
-      comprobar si alguna cierra una carencia funcional. Ninguna la cierra
+      motivo de esta ronda junto con DOC-01 y DOC-06. MEJ-007 y MEJ-008 pasan a implemented;
+      MEJ-001, MEJ-003 y MEJ-005 siguen accepted sin ejecutar; nace MEJ-009. Releido el apartado
+      6 entero: §6.1 reafirma sin cambios los tres hallazgos de UX (EXP-017, EXP-026, EXP-019)
+      que ya senalaba 2.0.0/2.1.0 y que esta ronda **si** se convierten en propuesta; §6.2
+      reafirma EXP-003 (concurrencia entre pestañas), no evaluado hasta ahora; §6.3 señala por
+      primera vez REQ-025 y REQ-034 sin cumplir en la interfaz
     usage: >-
       se lee unicamente por sus hallazgos §6.1, §6.2 y §6.3, y por el estado de las mejoras que
       atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
+  - id: DOC-14-EXPLORATORIO.md
+    from: A-10
+    version: 2.0.0
+    hash: sha256:4aad4cc90f497f97122a67d75fdabdda6d43e118e6ea139cbc9616c2bfafeb36
+    present: true
+    changed_since_previous_run: true
+    previous_version_declared: null
+    first_read_in: 1.2.0
+    scope: >-
+      solo las fichas EXP-nnn que DOC-16/§6 cita como dirigidas a A-15 (EXP-003, EXP-017,
+      EXP-019, EXP-026), y las dos nuevas del ciclo (EXP-027, EXP-028) para confirmar que
+      ninguna es mia. No se ha auditado el informe entero: sigue sin ser una entrada formal de
+      A-15, solo se abre para verificar lo que DOC-16 cita literalmente
+    usage: >-
+      detalle de reproduccion de los tres hallazgos de UX y del hallazgo de concurrencia que
+      DOC-16 §6.1/§6.2 reenvia a A-15, y verificacion de que EXP-027 (→A-03) y EXP-028
+      (→A-12, ya MEJ-009) no me corresponden
   - id: registro-ids.json
     from: S-12
     present: true
-    hash: sha256:2bf7ab77d6ad3fa562193a8130339e55f6fe4f2ccd1159a600817b3b6b3e3391
-    read_at: 2026-08-17
-    scope: "FUN-001 a FUN-008 censados y en proposed, dueño A-15. next --prefix FUN devuelve FUN-009, no reclamado en esta ronda"
+    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    read_at: 2026-08-23
+    scope: "FUN-001 a FUN-008 censados y en proposed, dueño A-15. next --prefix FUN devuelve FUN-009: reclamado esta ronda para FUN-009 a FUN-012"
   - id: contexto-confluence
     from: I-02
     present: false
@@ -85,25 +120,34 @@ not_read_by_contract:
     from: S-01
     reason: >-
       prohibido para A-15. Las propuestas nacen de lo que el sistema hace para quien lo usa, no
-      de como esta construido. En 1.1.0 figuraba en `inputs` con `used: false` y sin version, y
-      S-16 avisaba de que no podia compararlo. No es una entrada sin version: es una entrada que
-      no existe, porque este documento no lo consume. Sale de `inputs` y queda aqui declarado
+      de como esta construido
+  - id: DOC-07-TRAZABILIDAD.md
+    from: A-05
+    reason: >-
+      no es entrada formal de A-15. Se ha citado puntualmente (§3.11, A-05-11c) solo porque
+      DOC-16/§6.3 remite ahi para el detalle tecnico de REQ-025/REQ-034, y ese detalle es lo que
+      permite decidir si el hallazgo es funcionalidad o defecto. No se ha leido el documento
+      completo ni se trata como fuente de carencias propia
 obsolescence_response:
   raised_by: S-16
-  round: 1.1.1
+  round: 1.2.0
   findings:
-    - finding: "DOC-25 1.1.0 declaraba DOC-16 en 1.0.0 cuando el roadmap iba por 2.0.0"
+    - finding: "DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y DOC-16 en 2.0.0, y los tres habian subido"
       resolved: true
       how: >-
-        relectura del apartado 6 de DOC-16 2.0.0 y de las fichas de MEJ-001, MEJ-003 y MEJ-005.
-        Verificado que §6.1, §6.2 y §6.3 siguen tratando de lo mismo tras el MAJOR: ninguna cita
-        de A-15 apuntaba a otra cosa. Version y hash reales declarados
-    - finding: "DOC-25-HIST no declaraba `version` en su front-matter"
+        releidos DOC-01 1.1.0 (sin cambio de negocio, verificado contra su -HIST), DOC-06 1.3.0
+        (§6 y §9 completos, sin carencias nuevas en §6.1) y DOC-16 3.0.0 (apartado 6 entero).
+        Version y hash reales declarados en cada entrada
+    - finding: "DOC-16 3.0.0 §6.1 reafirma tres hallazgos de UX dirigidos a A-15 (EXP-017, EXP-026, EXP-019) que ninguna ronda de DOC-25 habia convertido en propuesta"
       resolved: true
-      how: "convencion nueva de A-05 adoptada: el -HIST declara la version del documento que acompaña"
-    - finding: "DOC-25 declaraba DOC-02 en `inputs` sin version"
+      how: "nacen FUN-009, FUN-010 y FUN-011. Ver apartado 3"
+    - finding: "DOC-16 3.0.0 §6.2 (EXP-003, concurrencia) y §6.3 (REQ-025/REQ-034 sin cumplir) no habian sido evaluados nunca por A-15"
       resolved: true
-      how: "la entrada sale de `inputs`: A-15 no lee DOC-02, asi que no es una entrada suya. Ver `not_read_by_contract`"
+      how: >-
+        §6.2 da lugar a FUN-012. §6.3 se evalua y **no** da lugar a una FUN-nnn: por el mismo
+        criterio que ya aplica este documento a los avisos en catalan (un requisito vigente no
+        cumplido es defecto, no funcionalidad ausente), se redirige a A-14. Ver apartados 5.4,
+        5.6 y 6
 ---
 
 # DOC-25 · Propuestas de funcionalidad — app-taller
@@ -121,102 +165,99 @@ obsolescence_response:
 
 ## 1. Qué ha cambiado desde la ronda anterior
 
-**Esta ronda no hay propuestas nuevas, y tampoco cambia ninguna de las ocho.**
-Ni de estado, ni de evidencia, ni de tamaño, ni de confianza. Lo que cambia es
-la procedencia y una cita literal. Es la segunda ronda seguida sin propuesta
-nueva, y eso no es una ronda perezosa: es lo que hay que escribir cuando es
-verdad.
+**Nacen cuatro propuestas: `FUN-009` a `FUN-012`.** Las ocho anteriores no
+cambian de estado ni de señal. Es la primera ronda con novedad desde 1.0.0, y
+no sale de una carencia recién descubierta en el manual: sale de tres hallazgos
+que `DOC-16 · Roadmap técnico` lleva **tres rondas** reenviando a este documento
+sin que nadie los convirtiera en propuesta, más uno que nunca se había mirado.
 
-La ha disparado otra vez `S-16 · Cascada de obsolescencia`: este documento
-declaraba `DOC-16-ROADMAP` en **1.0.0** y `A-12 · Mejoras/Roadmap` lo ha llevado
-a **2.0.0**.
+Lo ha disparado `S-16 · Cascada de obsolescencia`: este documento declaraba
+`DOC-01` en 1.0.0, `DOC-06` en 1.2.0 y `DOC-16` en 2.0.0, y los tres habían
+subido a **1.1.0**, **1.3.0** y **3.0.0**.
 
-### 1.1 Qué ha pasado en DOC-16, y qué significa para este documento
+### 1.1 DOC-01 y DOC-04: sin efecto
 
-El 2026-08-17 el propietario del proyecto decidió sobre las seis mejoras
-técnicas: **MEJ-001, MEJ-003 y MEJ-005 pasan a `accepted`**; MEJ-002, MEJ-004 y
-MEJ-006 siguen `proposed`; **ninguna rechazada**. Ese salto a MAJOR es de A-12 y
-lo que decide es trabajo técnico, no producto.
+`DOC-01` sube a 1.1.0 sin cambio de contenido de negocio —mismos actores, casos
+de uso, reglas y glosario, verificado contra su propio `-HIST.md`—: cierra una
+pregunta ya resuelta y corrige un comentario del árbol de carpetas. `DOC-04`
+sigue en 1.2.0; su hash cambió porque el front-matter se reescribió al
+resincronizar contra `DOC-01`, pero A-02 verificó ancla a ancla que ningún
+`REQ-nnn` cambió de enunciado. **Ninguno de los dos mueve nada aquí.**
 
-**Lo que hay que decir con todas las letras: que se hayan aceptado tres mejoras
-técnicas no resuelve ni una sola carencia funcional de este documento.** Las tres
-aceptadas son, en el lenguaje de quien usa la aplicación, invisibles:
+### 1.2 DOC-06: dos avisos nuevos que no son míos
 
-| Mejora aceptada | Qué le cambia al taller | ¿Cierra alguna `FUN-nnn`? |
-|---|---|---|
-| **MEJ-001** · identificadores de prueba en la interfaz | Nada. Su propia ficha dice que «no cambia ni una pantalla, ni un flujo, ni un texto» | No |
-| **MEJ-003** · pruebas automáticas del servidor y CI | Nada visible. Cambia lo que el equipo sabe, no lo que el taller puede hacer | No |
-| **MEJ-005** · estado de base reproducible entre escenarios | Nada. Es un mecanismo del entorno de pruebas, no una copia de seguridad que el taller pueda usar | **No, y conviene no confundirlo con `FUN-002`** |
+`DOC-06` sube a 1.3.0 y añade, en su apartado 6.1, dos avisos sobre
+comportamiento **ya implementado**: la protección contra el doble envío y el
+formato de importes y fechas. No son funcionalidad ausente —son defectos que
+`SPEC 04` y `SPEC 05` ya corrigieron y que el manual todavía no ha limpiado de
+su lista de carencias—, así que no dan lugar a ninguna `FUN-nnn`. El resto de
+§6.1 —las catorce carencias que ya sostenían las ocho propuestas vivas— está
+palabra por palabra igual. §9 gana `Q-30`, un hueco de documentación sobre qué
+ve el usuario ante una anotación inválida: no es de A-15, va a `A-03`/`S-10` como
+ya lo hacían `Q-24` a `Q-29`.
 
-La tercera fila merece el aviso porque es la confusión fácil: MEJ-005 sirve para
-dejar los datos en un estado conocido antes de cada prueba, y `FUN-002` sirve
-para guardar y recuperar el trabajo real del taller. **No son lo mismo.** La
-primera repone datos inventados para que el equipo pueda fiarse de sus pruebas;
-la segunda protege la facturación de un taller que hoy la tiene en un solo
-ordenador. Nadie desde el mostrador puede pedir la primera, y la segunda sigue
-sin existir. **`FUN-002` sigue siendo la primera recomendación de este documento,
-exactamente igual que ayer.**
+### 1.3 DOC-16 3.0.0: tres hallazgos de UX que llevaban desde su ronda 2.0.0 esperando
 
-### 1.2 Las citas a DOC-16: verificadas una a una, ninguna rota
+`DOC-16/§6.1` reafirma, **sin cambios respecto a 2.0.0 y 2.1.0**, tres hallazgos
+de `DOC-14 · Exploración QA` que A-12 clasifica como «funcionalidad, no deuda
+técnica» y que hasta hoy ninguna ronda de este documento había recogido:
 
-Era el riesgo real de un MAJOR y por eso se ha comprobado antes que nada. Este
-documento cita tres apartados de DOC-16 y **los tres siguen tratando de lo mismo
-en 2.0.0**:
+- **`EXP-017`** — se puede abandonar un formulario a medio rellenar sin ningún
+  aviso, y lo escrito se pierde. → **`FUN-009`**.
+- **`EXP-026`** — el diálogo de confirmación de borrado no dice qué registro se
+  va a borrar. → **`FUN-010`**.
+- **`EXP-019`** — las pantallas de error no ofrecen más salida que un reintento
+  que vuelve a fallar. → **`FUN-011`**.
 
-| Cita | Qué era en 1.0.0 | Qué es en 2.0.0 | Estado |
-|---|---|---|---|
-| `DOC-16/§6.1` | Hallazgo a A-15: los mensajes de error llegan siempre en catalán | Lo mismo, ahora marcado **`encaminado`** porque A-12 acepta la lectura de A-15 | **Intacta** |
-| `DOC-16/§6.2` | Hallazgo a A-14: candidato a `BUG-005` por el mismo hecho | Lo mismo, y ahora con dos piezas apuntándolo | **Intacta** |
-| `DOC-16/§6.3` | Hallazgo a A-15: el módulo de *Configuración* | Lo mismo, marcado **`encaminado`** porque ya es `FUN-003` | **Intacta** |
+**Por qué no habían entrado antes.** `DOC-14` no existía cuando se escribieron
+1.0.0 y 1.1.0/1.1.1 de este documento (nació el 2026-08-21, cuatro días después
+de la última ronda de A-15). La única vía por la que estos tres hallazgos podían
+llegar a A-15 era que `A-12` los reenviara desde `DOC-16`, y así lo hizo desde su
+versión 2.0.0/2.1.0 — pero ninguna ronda de A-15 se había ejecutado desde
+entonces hasta ahora. No es un hallazgo perdido: es la primera oportunidad real
+de recogerlo.
 
-**Se corrige, eso sí, una cita literal.** La ficha de `FUN-003` reproducía las
-palabras de A-12 como «un módulo sin desarrollar no es una mejora, es
-funcionalidad», que es como estaban redactadas en 1.0.0. En 2.0.0 la frase es
-**«un módulo sin desarrollar es funcionalidad, no una mejora»**. Dice lo mismo y
-por eso el fondo de `FUN-003` no se mueve, pero una cita entrecomillada tiene que
-decir lo que dice la fuente, y ahora lo dice.
+`DOC-16/§6.2` reafirma también, sin cambios, **`EXP-003`**: dos pestañas
+abiertas sobre la misma ficha, y la que guarda en segundo lugar borra en
+silencio lo que escribió la primera, sin ningún aviso. A-12 lo deja
+explícitamente pendiente de una decisión de negocio —bloqueo con aviso o fusión
+por campos— que no le corresponde a él. Tampoco había sido evaluado nunca por
+A-15. → **`FUN-012`**.
 
-### 1.3 Por qué sigue sin nacer ninguna propuesta
+### 1.4 DOC-16/§6.3: un hallazgo que no se convierte en propuesta
 
-Porque no hay evidencia nueva de la clase que produce propuestas. `DOC-06` sigue
-en **1.2.0** con el mismo hash, y sus catorce carencias del apartado 6.1 —las que
-se repasaron una a una en la ronda anterior— siguen enunciadas igual y siguen
-todas con dueño. `DOC-04` sigue en **1.2.0** con los mismos 79 requisitos y las
-mismas nueve preguntas abiertas. `DOC-24` sigue en **1.0.0** con cuatro defectos.
-**Ninguna fuente de carencias ha cambiado.**
+`DOC-16/§6.3` señala, **por primera vez para A-15**, que `TC-032`, `TC-033` y
+`TC-047` no tienen vector en la interfaz porque `REQ-025` (filtro de albaranes
+por vehículo y por cliente) y `REQ-034`/`BR-ALB-06` (precio informado a mano en
+una línea de pieza) no están construidos, verificado por `A-05` leyendo
+`DataTable.tsx` y `AlbaraLiniesSection.tsx` (`DOC-07/A-05-11c`). A-12 lo etiqueta
+como «funcionalidad ausente» y lo dirige aquí.
 
-Se ha valorado expresamente la única aceptación que podía rozar este documento,
-porque conviene decir por qué no lo roza. **`MEJ-001` va a abrir las pantallas de
-facturas y de albaranes** para ponerles identificadores de prueba, y `FUN-001`
-—entregar la factura— vive en esas mismas pantallas. La tentación sería decir
-«ya que se abren, que salga de ahí la exportación». **No se propone nada por ese
-motivo, y no se propondrá:** aprovechar que alguien va a tocar un fichero no es
-un problema de negocio, es una conveniencia de calendario, y quien la valore es
-`A-07 · Impacto`, no este documento. `FUN-001` se mantiene tal cual, con la misma
-confianza `medium` y el mismo tamaño.
+**Se ha evaluado, y no nace ninguna `FUN-nnn`.** El motivo es el mismo criterio
+que este documento ya aplicaba a los avisos de error en catalán en rondas
+anteriores: `REQ-025` no dice que la interfaz *debería* ofrecer el filtro, dice
+que **lo ofrece**, en presente, como `REQ-034`/`BR-ALB-06` da por hecho que existe
+un campo para informar el precio a mano. Cuando un requisito vigente afirma un
+comportamiento y la aplicación se comporta de otra manera, eso no es un hueco de
+producto por decidir: es algo que no cumple lo que ya se pidió, y el documento
+que le corresponde es `DOC-24-BUGS`, no este. El detalle está en 5.6 y el
+hallazgo, en el apartado 6, dirigido a `A-14`.
 
-Lo único que sí merece apuntarse de ese cruce es una oportunidad barata que ya
-estaba pedida: quien ejecute MEJ-001 tendrá delante la pantalla de facturas, que
-es exactamente donde `DOC-06/Q-21` pregunta si hoy se puede imprimir o exportar.
-Eso **no cambia nada aquí**; queda anotado en el apartado 6, dirigido a `A-03`,
-que es de quien era esa comprobación desde la ronda anterior.
-
-### 1.4 Dos correcciones de procedencia
-
-1. **El fichero `-HIST.md` no declaraba su versión.** Convención nueva, propuesta
-   por `A-05 · Coherencia y trazabilidad` y adoptada: el `-HIST` declara la
-   versión del documento que acompaña. Ya la declara.
-2. **`DOC-02-TECNICA` figuraba en `inputs` sin versión.** Sale de `inputs`, y no
-   por comodidad: **A-15 tiene prohibido leer DOC-02**, así que declararlo como
-   entrada era decir que se consume algo que no se consume. Queda declarado
-   aparte, en `not_read_by_contract`, que es lo que de verdad es.
+**Contradice además a `DOC-06/§3`**, que describe el listado de *Albaranes* como
+«filtrable por vehículo, por cliente y por situación» sin matiz. Esa
+contradicción entre lo que dice el manual y lo que confirma la lectura de código
+más la ejecución de la suite (`DOC-23`) es justo el tipo de discrepancia que
+`A-14` tiene que resolver antes de que nadie vuelva a citar `DOC-06/§3` como si
+fuera cierto sin reservas.
 
 ### 1.5 Lo que no ha cambiado
 
-Las **ocho propuestas**, con su número, su texto, su estado `proposed` y sus
-señales. La **recomendación** del apartado 2, en el mismo orden. Los `REQ-nnn`
-citados, que existen todos y dicen lo mismo. Y el registro de identificadores:
-`FUN-001` a `FUN-008` censados y en `proposed`, sin pedir `FUN-009`.
+Las **ocho propuestas anteriores**, con su número, su texto, su estado
+`proposed` y todas sus señales, salvo el orden de la recomendación (apartado 2),
+que sí se revisa: `FUN-010` entra en el podio y desplaza a `FUN-005` a cuarto
+lugar, por relación valor/esfuerzo, no porque `FUN-005` haya perdido nada. Los
+`REQ-nnn` citados existen todos y dicen lo mismo. `DOC-24` sigue en 1.0.0 con
+cuatro defectos, sin cambios.
 
 Para el detalle de qué cambió en cada versión y por qué,
 **`docs/DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`**.
@@ -224,39 +265,175 @@ Para el detalle de qué cambió en cada versión y por qué,
 ## 2. Recomendación
 
 Las tres primeras por relación entre lo que aportan y lo que cuestan. No es una
-decisión, es un orden de lectura sugerido, y **es el mismo por segunda ronda**:
-nada de lo leído este ciclo lo altera. Que se hayan decidido tres mejoras
-técnicas no reordena esta tabla, porque ninguna de las tres toca lo que el taller
-puede hacer (5.5).
+decisión, es un orden de lectura sugerido, y **cambia por primera vez desde
+1.0.0**: `FUN-010` entra al tercer lugar.
 
 | # | Propuesta | Por qué esta y no otra |
 |---|---|---|
-| 1 | **FUN-002 · Poder guardar una copia de los datos del taller y recuperarla** | Sigue siendo la única propuesta cuyo coste de no hacerla es **perderlo todo**. Toda la facturación vive en un solo ordenador (`DOC-06/§2`) y ningún requisito habla de respaldarla. El manual lo dice sin rodeos: si algo se borra, «no hay forma de saber quién fue ni de recuperarlo». Ninguna de las otras siete sirve de nada si eso pasa, y es la que menos toca lo que ya funciona. **Y no la cubre `MEJ-005`**, la mejora técnica aceptada el 2026-08-17: eso repone datos de prueba, no el trabajo de una mañana del taller (5.5). |
-| 2 | **FUN-001 · Llevarse la factura en papel o en un archivo para dárselo al cliente** | Sigue siendo el hueco más grande del uso diario: la factura se calcula bien y **solo se puede mirar en la pantalla del taller**. **Con un matiz que hay que leer:** `DOC-06/Q-21` deja abierto si hoy existe alguna forma rudimentaria de imprimir, y conviene comprobarlo antes de dimensionar nada. La comprobación está pedida a `A-03` desde hace dos rondas y sigue sin respuesta (apartado 6). Aun así se mantiene la segunda, porque el documento **entregable** no existe en ningún caso: sin los datos fiscales del taller —que es **FUN-003**— no hay factura que dar. Conviene refinarlas juntas. |
-| 3 | **FUN-005 · Que la nómina proponga el salario bruto del empleado** | Sigue siendo la mejor relación valor/tamaño: es **pequeña**, no toca el ciclo del dinero de los clientes y elimina un tecleo manual que se repite cada mes por cada empleado, con su riesgo de errata (`DOC-06/§4/C.5`). El dato ya está en la ficha del empleado y no se usa para nada (`DOC-04/Q-05`). La que antes se nota y menos cuesta. |
+| 1 | **FUN-002 · Poder guardar una copia de los datos del taller y recuperarla** | Sigue siendo la única propuesta cuyo coste de no hacerla es **perderlo todo**. Toda la facturación vive en un solo ordenador (`DOC-06/§2`) y ningún requisito habla de respaldarla. El manual lo dice sin rodeos: si algo se borra, «no hay forma de saber quién fue ni de recuperarlo». Ninguna de las otras sirve de nada si eso pasa, y es la que menos toca lo que ya funciona. **Y no la cubre `MEJ-005`**, la mejora técnica aceptada: eso repone datos de prueba, no el trabajo de una mañana del taller (5.5). |
+| 2 | **FUN-001 · Llevarse la factura en papel o en un archivo para dárselo al cliente** | Sigue siendo el hueco más grande del uso diario: la factura se calcula bien y **solo se puede mirar en la pantalla del taller**. **Con un matiz que hay que leer:** `DOC-06/Q-21` deja abierto si hoy existe alguna forma rudimentaria de imprimir, y conviene comprobarlo antes de dimensionar nada. La comprobación está pedida a `A-03` desde hace tres rondas y sigue sin respuesta (apartado 6). Aun así se mantiene la segunda, porque el documento **entregable** no existe en ningún caso: sin los datos fiscales del taller —que es **FUN-003**— no hay factura que dar. |
+| 3 | **FUN-010 · Que el diálogo de borrado diga qué registro se va a borrar** | **Nueva esta ronda, y entra directa al podio.** Es tan pequeña como `FUN-005` —toca un único diálogo compartido por las seis entidades que se pueden borrar— pero su impacto es mayor: protege una acción **sin vuelta atrás** frente a un error de identificación, y hay evidencia reproducida de que ese error es posible de verdad (dos clientes con el mismo nombre, `EXP-001`/`EXP-026`). Coste bajo, riesgo real que evita: mejor relación que `FUN-005`, que baja al cuarto lugar sin haber perdido nada. |
 
 ## 3. Propuestas nuevas de esta ronda
 
-**Ninguna. Es la segunda ronda seguida, y por un motivo más simple que la
-anterior: ninguna fuente de carencias ha cambiado.**
+**Cuatro: `FUN-009`, `FUN-010`, `FUN-011` y `FUN-012`.** Las cuatro nacen de
+hallazgos que `DOC-16 · Roadmap técnico` dirige explícitamente a A-15 y que
+ninguna ronda anterior había podido evaluar, tal como explica el apartado 1.
+Las ocho anteriores no ganan ni pierden evidencia esta ronda.
 
-En la ronda anterior el manual se había regenerado entero y hubo que repasar
-catorce carencias una a una para concluir que ninguna quedaba sin dueño. Esta vez
-lo que ha cambiado es el roadmap técnico, que **no es fuente de carencias
-funcionales**: registra que tres mejoras técnicas se han decidido. `DOC-06`,
-`DOC-04` y `DOC-24` están donde estaban, con el mismo hash. El apartado 1.3 lo
-detalla.
+`S-12` ha confirmado `FUN-009` como el siguiente libre (`next --prefix FUN` →
+`FUN-009`); se reclaman los cuatro consecutivos, sin dejar huecos.
 
-Conviene decir por qué esto se escribe así en lugar de rellenar el hueco. Este
-documento lo consume negocio y **su utilidad depende de que nadie sospeche que
-está inflado**. Siempre se puede imaginar una funcionalidad más —un panel de
-inicio, un aviso de nóminas sin registrar, un histórico de precios—, y cada una
-de esas invenciones haría más caro leer las ocho que sí tienen detrás a alguien a
-quien le pasa algo. Con ocho propuestas esperando decisión desde hace dos rondas,
-lo que hace falta no es una novena: es que se decidan.
+---
 
-Los identificadores siguen en FUN-008. `S-12` devolvería FUN-009 y **no se le ha
-pedido**, porque no hay nada que numerar.
+### FUN-009 · Avisar antes de perder lo escrito en un formulario sin guardar
+
+`status: proposed` · nace en la ronda de 2026-08-23
+
+**Qué problema resuelve.** Quien está rellenando un formulario —la nota de un
+albarán, la ficha de un cliente, el alta de una pieza— y pulsa por error un
+enlace del menú, o recarga la página, pierde todo lo escrito sin ningún aviso y
+sin forma de recuperarlo. Le pasa a cualquiera que use la aplicación, y le pasa
+justo en los campos de texto libre —las notas de un albarán son donde se
+describe el trabajo hecho— que son los más caros de volver a escribir.
+
+**En qué consiste.** Avisar, antes de abandonar un formulario con cambios sin
+guardar, tanto si se navega a otra sección de la aplicación como si se recarga o
+se cierra la pestaña.
+
+**Qué aporta.** Evita perder tiempo de taller reescribiendo algo que ya se había
+escrito, por un clic que no pretendía perder nada.
+
+**Qué pasa si no se hace.** Se sigue perdiendo contenido sin que nadie se dé
+cuenta hasta que falta.
+
+- **Evidencia:** `DOC-16/§6.1` («EXP-017: aviso al abandonar un formulario con
+  cambios sin guardar»), reproducido y documentado con dos escenarios distintos
+  —navegación interna y recarga— en `DOC-14/EXP-017`. Reenviado por `A-12` desde
+  su ronda 2.0.0/2.1.0 sin que ninguna ronda de A-15 lo hubiera evaluado hasta
+  ahora, tal como explica el apartado 1.3.
+- **Requisitos que tocaría:** ninguno de los 79. Ningún requisito de `DOC-04`
+  menciona la pérdida de datos al navegar, así que no hay nada que reformular,
+  hay algo que añadir.
+- **Contradice:** ninguno.
+- **Tamaño** medium · **impacto** medium · **dificultad** medium ·
+  **valor de negocio** medium · **confianza** high.
+
+---
+
+### FUN-010 · Que el diálogo de confirmación de borrado diga qué registro se va a borrar
+
+`status: proposed` · nace en la ronda de 2026-08-23
+
+**Qué problema resuelve.** El diálogo que pide confirmar un borrado —de
+cliente, vehículo, pieza, albarán, empleado o nómina— es siempre el mismo texto
+genérico: «¿Seguro que quieres eliminar este cliente?». No dice el nombre ni
+ningún otro dato del registro. Cuando hay dos registros parecidos —dos clientes
+con el mismo nombre, algo que la propia aplicación permite— quien borra no
+puede saber con certeza cuál de los dos está a punto de eliminar. Le pasa a
+quien gestiona el listado de clientes, de empleados o de cualquier entidad del
+taller, en el único momento en que un error ya no tiene vuelta atrás.
+
+**En qué consiste.** Incluir el nombre o el identificador visible del registro
+en el texto del diálogo de confirmación de borrado, en las seis entidades que
+se pueden borrar.
+
+**Qué aporta.** Reduce el riesgo de borrar el registro equivocado en una acción
+irreversible, con un cambio pequeño y acotado a un único diálogo.
+
+**Qué pasa si no se hace.** El taller sigue sin poder distinguir con seguridad
+qué va a borrar cuando dos registros se parecen, en la única operación de la
+aplicación que no admite arrepentirse.
+
+- **Evidencia:** `DOC-16/§6.1` («EXP-026: el diálogo de borrado no identifica el
+  registro»), reproducido en `/clients/13` y en `/nomines/6` con dos clientes
+  homónimos (`DOC-14/EXP-026`). El manual avisa por su parte de que «un cliente
+  borrado no se recupera» (`DOC-06`, tarea de baja de cliente), lo que hace más
+  grave la falta de identificación.
+- **Requisitos que tocaría:** REQ-006, REQ-016, REQ-023, REQ-041, REQ-061,
+  REQ-074 — las seis piden «confirmación del usuario» para un borrado, pero
+  ninguna especifica qué debe decir el mensaje.
+- **Contradice:** ninguno. Añadir el nombre del registro no cambia ninguna de
+  las seis reglas: solo precisa el contenido del aviso que ya exigen.
+- **Tamaño** small · **impacto** medium · **dificultad** low ·
+  **valor de negocio** medium · **confianza** high.
+
+---
+
+### FUN-011 · Dar una salida real a una pantalla de «registro no encontrado»
+
+`status: proposed` · nace en la ronda de 2026-08-23
+
+**Qué problema resuelve.** Si alguien abre una ficha que ya no existe —un
+enlace viejo, un registro que se acaba de borrar en otra pestaña—, la pantalla
+se reduce a un mensaje de error y un botón «Volver a intentarlo» que repite la
+misma petición y vuelve a fallar siempre. No hay ningún enlace de vuelta al
+listado. Le pasa a quien llega a una ficha inexistente, y aunque no se queda
+atrapado —el menú lateral sigue funcionando—, el único botón que se le ofrece
+no le sirve de nada.
+
+**En qué consiste.** Cuando el registro no existe, ofrecer una salida que
+funcione —un enlace al listado correspondiente— en vez de, o además de, un
+reintento que no puede tener éxito.
+
+**Qué aporta.** Una pantalla de error que ofrece algo útil en vez de un botón
+que no lleva a ningún sitio.
+
+**Qué pasa si no se hace.** Quien llega a una ficha inexistente tiene que
+recurrir al menú lateral para salir; molesto, pero no bloqueante.
+
+- **Evidencia:** `DOC-16/§6.1` («EXP-019: las pantallas de error no ofrecen
+  salida»), reproducido en `/clients/99999` y al volver atrás tras borrar una
+  nómina (`DOC-14/EXP-019`).
+- **Requisitos que tocaría:** ninguno de los 79.
+- **Contradice:** ninguno.
+- **Tamaño** small · **impacto** low · **dificultad** low ·
+  **valor de negocio** low · **confianza** high.
+
+---
+
+### FUN-012 · Proteger el trabajo cuando dos pestañas editan la misma ficha a la vez
+
+`status: proposed` · nace en la ronda de 2026-08-23
+
+**Qué problema resuelve.** Si alguien tiene la misma ficha abierta en dos
+pestañas —algo tan simple como abrir un cliente, y luego abrir el mismo cliente
+en otra pestaña para consultar algo mientras la primera sigue abierta— y guarda
+en las dos, la segunda en guardar **borra en silencio** lo que había guardado la
+primera. Ninguna de las dos pestañas avisa de nada: la que pierde su cambio
+sigue mostrando la pantalla como si todo hubiera ido bien. Le pasa a quien
+trabaja con varias pestañas abiertas sobre la misma ficha, algo habitual en
+cualquier navegador.
+
+**En qué consiste.** Que el sistema no deje que un guardado borre en silencio
+lo que otro acaba de guardar: avisando de que el registro cambió desde que se
+abrió, o conservando los cambios de ambas pestañas cuando no chocan entre sí.
+**Cuál de las dos formas es la correcta es una decisión de negocio**, no algo
+que este documento deba resolver.
+
+**Qué aporta.** Evita perder trabajo ya guardado sin que nadie se entere de que
+se ha perdido, que es el riesgo más silencioso de los que recoge este
+documento: no hay ningún síntoma visible hasta que alguien nota que un cambio
+que hizo ya no está.
+
+**Qué pasa si no se hace.** El taller sigue expuesto a perder cambios ya
+guardados sin ningún aviso, cada vez que la misma ficha queda abierta en más de
+una pestaña. Es un escenario de un único puesto de trabajo, así que su
+frecuencia real es baja; su coste, cuando ocurre, es alto porque no se detecta.
+
+- **Evidencia:** `DOC-16/§6.2` («EXP-003: dos pestañas sobre la misma ficha, la
+  última que guarda pisa a la otra sin avisar»), reproducido con evidencia de
+  red y de base de datos en `DOC-14/EXP-003`. Ningún requisito de `DOC-04`
+  menciona la concurrencia, y el propio hallazgo señala que ese silencio
+  documental es lo que lo hace relevante. A-12 lo deja pendiente de una
+  decisión de negocio que no le corresponde a él tomar.
+- **Requisitos que tocaría:** ninguno de los 79.
+- **Contradice:** ninguno.
+- **Tamaño** medium · **impacto** high · **dificultad** medium ·
+  **valor de negocio** medium · **confianza** medium — la confianza baja de
+  `high` a `medium` no por dudar de la evidencia, que está reproducida con
+  precisión, sino porque la solución correcta depende de una decisión que
+  todavía no existe y que cambia el tamaño real del trabajo.
 
 ## 4. Propuestas vivas de rondas anteriores
 
@@ -414,16 +591,19 @@ la información que necesita.
 **Estado de la evidencia — dos piezas independientes señalando el mismo hueco.**
 El manual no se limita a decir que la sección no funciona: añade que «de momento
 **no está decidido qué contendrá**», que es literalmente el enunciado de esta
-propuesta visto desde el usuario. Y `A-12` la ha mirado desde el lado técnico y
-**ha decidido no proponer nada**, derivándola aquí con estas palabras: «un módulo
-sin desarrollar es funcionalidad, no una mejora» (`DOC-16/§6.3`, verificado
-contra 2.0.0). En esa versión A-12 marca además su hallazgo como `encaminado`,
-que en su lenguaje quiere decir que lo da por cerrado del lado técnico **porque
-el número ya existe aquí**. Lo que no existe es la decisión.
+propuesta visto desde el usuario. Y `A-12` la miró desde el lado técnico y
+**decidió no proponer nada**, derivándola aquí con estas palabras: «un módulo
+sin desarrollar es funcionalidad, no una mejora» (`DOC-16/§6.3` **en su versión
+2.0.0**, donde marcó además su hallazgo como `encaminado` porque el número ya
+existía aquí). **Nota de esta ronda: `DOC-16` reorganizó su apartado 6 al llegar
+a 3.0.0, y su `§6.3` de hoy trata de otra cosa** —`REQ-025`/`REQ-034`, ver 5.6—,
+no de *Configuración*. La cita queda fechada a la versión donde se hizo para que
+nadie la busque en el lugar equivocado; el fondo de esta propuesta no depende de
+en qué apartado viviera la frase.
 
 - **Evidencia:** `DOC-04/Q-04` («La sección de Configuración aparece en el menú
   pero no está desarrollada y ninguna especificación describe su contenido. ¿Qué
-  debe contener?»), REQ-079, `DOC-06/§3`, `DOC-06/§6.1`, `DOC-16/§6.3`.
+  debe contener?»), REQ-079, `DOC-06/§3`, `DOC-06/§6.1`, `DOC-16 2.0.0/§6.3`.
 - **Requisitos que tocaría:** REQ-079, REQ-050, REQ-076, REQ-078.
 - **Contradice:** **REQ-050**, pero solo en un caso concreto: si el negocio
   decide que el IVA habitual se configure aquí, dejará de ser cierto que «el
@@ -499,9 +679,13 @@ acompaña. Y le da por fin un uso al salario base, que hoy es un dato que se
 rellena para nada.
 
 **Qué pasa si no se hace.** Se sigue tecleando el bruto cada mes. Es la propuesta
-cuyo «no hacerla» duele menos, y por eso está aquí por tamaño, no por urgencia.
+cuyo «no hacerla» duele menos.
 
-**Estado de la evidencia — sin cambios.** Las tres citas siguen exactas.
+**Estado de la evidencia — sin cambios; baja al cuarto lugar de la
+recomendación.** Las tres citas siguen exactas. No pierde ninguna señal: baja en
+el orden del apartado 2 porque `FUN-010`, nueva esta ronda, ofrece un riesgo
+evitado mayor —una acción irreversible mal identificada, frente a un tecleo
+repetitivo— por un coste comparable.
 
 - **Evidencia:** `DOC-04/Q-05` («El empleado guarda fecha de alta y salario base,
   pero la nómina no los usa: el bruto se teclea a mano cada mes»),
@@ -717,71 +901,151 @@ una comprobación pendiente, y se trata en 5.3 y en el apartado 6.
 | **Un aviso de nóminas del mes sin registrar** | Sale de la misma viñeta que FUN-004 —«no te avisa de facturas vencidas, de stock bajo ni de nóminas sin registrar»—. Se ha valorado separarlo y no se hace: nadie ha declarado que al taller se le olviden las nóminas, y trocear una viñeta en tres propuestas para engordar el documento es precisamente lo que lo haría inútil. Si `A-06` ve que el taller lo echa en falta al refinar FUN-004, que salga de ahí. |
 | **Pedidos a proveedores y contabilidad** | `DOC-06/§1` dice que la aplicación no lo hace y no pretende hacerlo. Nada en la documentación indica que el taller lo espere. Sería inventar producto. |
 
-### 5.4 Los dos hallazgos que `A-12` dejó dirigidos aquí
-
-`A-12 · Mejoras/Roadmap` dejó dos cosas a nombre de A-15. Se han valorado las dos
-y **ninguna produce propuesta nueva**. El motivo importa más que la conclusión.
-En DOC-16 **2.0.0** A-12 marca los dos como `encaminado` y acepta expresamente
-esta lectura: «me parece bien y no lo discuto». **Quedan cerrados por ambas
-partes.**
+### 5.4 Dos hallazgos que `A-12` dejó dirigidos aquí en rondas anteriores — cerrados por ambas partes
 
 **Los avisos que salen en catalán no son una funcionalidad ausente: son un
-defecto.** El hecho, tal como lo describe `DOC-16/§6.1`, es que los setenta
-mensajes de error que la aplicación devuelve están escritos en catalán fijo y se
-muestran tal cual, independientemente del idioma elegido. Visto desde quien usa
-la aplicación: alguien que trabaja con la interfaz en castellano guarda un
-cliente sin nombre y recibe el aviso en catalán. **Y `REQ-076` ya dice que la
-interfaz se presenta en castellano mientras el usuario no elija otro idioma.**
-Ahí está la frontera: cuando existe un requisito vigente que dice cómo debe
-comportarse el sistema y el sistema se comporta de otra manera, eso no es algo
-que falte por construir —es algo que no cumple lo que ya se pidió—, y el
-documento que le corresponde es `DOC-24-BUGS`, no este. **A-15 confirma esa
-lectura desde el lado del usuario y no propone nada**; el apartado 6 lo devuelve
-a `A-14`, donde sigue siendo candidato a `BUG-005` y **sigue sin censar** en
-DOC-24 1.0.0. Si al reproducirlo resultara que REQ-076 nunca pretendió alcanzar a
-los avisos, entonces sí habría un hueco de producto que proponer, y volvería aquí
-con evidencia de verdad.
+defecto.** El hecho, documentado en su día por `DOC-16`, es que los mensajes de
+error que la aplicación devuelve están escritos en catalán fijo y se muestran
+tal cual, independientemente del idioma elegido. Visto desde quien usa la
+aplicación: alguien que trabaja con la interfaz en castellano guarda un cliente
+sin nombre y recibe el aviso en catalán. **Y `REQ-076` ya dice que la interfaz
+se presenta en castellano mientras el usuario no elija otro idioma.** Ahí está
+la frontera, y es la misma que aplica el apartado 5.6 de esta ronda: cuando
+existe un requisito vigente que dice cómo debe comportarse el sistema y el
+sistema se comporta de otra manera, eso no es algo que falte por construir —es
+algo que no cumple lo que ya se pidió—, y el documento que le corresponde es
+`DOC-24-BUGS`, no este. **A-15 no propone nada**; sigue siendo candidato a
+`BUG-005` y **sigue sin censar** en `DOC-24` 1.0.0, sin cambios desde la ronda
+anterior. `DOC-16` 3.0.0 ya no repite este hallazgo en su apartado 6 —A-12 lo da
+por completamente encaminado hacia `A-14`—, así que este documento es hoy el
+único lugar donde queda constancia de que sigue abierto; el apartado 6 lo
+recuerda.
 
-**El módulo de Configuración ya es FUN-003.** `A-12` lo derivó aquí con el
-argumento correcto —«un módulo sin desarrollar es funcionalidad, no una mejora»—
-y con la constancia expresa de no haber propuesto nada sobre él. No hace falta un
-`FUN-nnn` nuevo: hace falta que el que existe se decida. El hallazgo está
-incorporado como evidencia adicional de FUN-003, que es lo que corresponde hacer
-con él.
+**El módulo de Configuración ya es FUN-003.** `A-12` lo derivó aquí en rondas
+anteriores con el argumento correcto —«un módulo sin desarrollar es
+funcionalidad, no una mejora»— y con la constancia expresa de no haber propuesto
+nada sobre él. No hace falta un `FUN-nnn` nuevo: hace falta que el que existe se
+decida. `DOC-16` 3.0.0 tampoco repite ya este hallazgo, por el mismo motivo:
+A-12 lo considera encaminado desde que existe `FUN-003`.
 
-### 5.5 Las tres mejoras técnicas aceptadas — ninguna produce propuesta
+### 5.5 Las mejoras técnicas decididas — ninguna produce ni cierra propuesta
 
 Se ha mirado si alguna de las tres decisiones del 2026-08-17 abre un hueco
 funcional o cierra uno. **Ninguna de las dos cosas.** Queda escrito porque en la
-próxima ronda alguien se lo volverá a preguntar.
+próxima ronda alguien se lo volverá a preguntar. Esta ronda se añaden las dos
+que `DOC-16` mueve de estado: `MEJ-007` y `MEJ-008` pasan a `implemented`.
 
 | Decidida | Qué se ha valorado | Conclusión |
 |---|---|---|
-| **MEJ-001** · identificadores de prueba | Va a abrir las pantallas de facturas y albaranes, donde vive `FUN-001`. ¿Aprovechar el viaje? | **No se propone nada.** Aprovechar que alguien va a tocar algo no es un problema de negocio; es calendario, y lo valora `A-07`. La única nota útil —comprobar de paso `DOC-06/Q-21`— va a `A-03` |
+| **MEJ-001** · identificadores de prueba | Va a abrir las pantallas de facturas y albaranes, donde vive `FUN-001`. ¿Aprovechar el viaje? | **No se propone nada.** Aprovechar que alguien va a tocar algo no es un problema de negocio; es calendario, y lo valora `A-07` |
 | **MEJ-003** · pruebas del servidor y CI | ¿Cambia algo que el taller pueda hacer? | **No.** Cambia lo que el equipo sabe. No toca ninguna carencia del apartado 6.1 del manual |
 | **MEJ-005** · estado de base reproducible | ¿Cubre `FUN-002`, la copia de seguridad? | **No, y es la confusión más fácil de este documento.** Repone datos de prueba para el entorno de pruebas; no guarda ni recupera el trabajo real del taller, y no hay forma de pedirlo desde la aplicación |
+| **MEJ-007** *(implemented esta ronda)* · guarda única de reenvío | Es la corrección técnica de `EXP-001`/`EXP-002`, ya verificados en vivo por `DOC-14` 2.0.0. ¿Cierra algo de este documento? | **No.** Ninguna `FUN-nnn`, viva ni nueva, dependía de la guarda de reenvío |
+| **MEJ-008** *(implemented esta ronda)* · formato único de importe y fecha | Es la corrección de `EXP-014`/`EXP-009` (presentación). ¿Cierra algo de este documento? | **No.** Ninguna `FUN-nnn` trataba del formato de importes o fechas |
+| **MEJ-009** *(nueva, proposed)* · aplicar `formatDate` a la fecha de alta de personal | Coste trivial, nace de `EXP-028`. ¿Es esto mío? | **No.** Es consistencia de presentación entre dos pantallas que ya muestran el mismo tipo de dato de forma distinta; no falta ninguna capacidad. A-12 lo clasifica correctamente como mejora técnica |
+
+### 5.6 `REQ-025` y `REQ-034`: dos requisitos vigentes que la interfaz no cumple — no se proponen, van a `A-14`
+
+`DOC-16/§6.3` señala, citando la lectura de código de `A-05` (`DOC-07/A-05-11c`),
+que `AlbaransList.tsx` no ofrece filtro por vehículo ni por cliente —solo busca
+sobre las columnas que pinta, y ninguna es vehículo o cliente— y que
+`AlbaraLiniesSection.tsx` no renderiza ningún campo de precio para las líneas de
+tipo pieza. A-12 etiqueta esto como «funcionalidad ausente» y lo dirige a A-15.
+
+**Se ha evaluado con el mismo criterio que ya aplica el apartado 5.4 a los
+avisos en catalán, y la conclusión es la misma: no se propone.**
+
+- **`REQ-025`** dice, en presente y sin condicional: «El sistema ofrece un
+  listado de albaranes filtrable por vehículo, por cliente y por situación del
+  albarán.» No dice que debería ofrecerlo. Hoy solo ofrece la tercera vía.
+- **`REQ-034`** y `BR-ALB-06` dan por hecho que existe un campo para informar el
+  precio de una línea de pieza a mano —«cuando el usuario **no indica** el
+  precio»— y hoy ese campo no existe en la pantalla para líneas de pieza.
+
+En los dos casos hay un requisito vigente, censado y con prioridad `high`, que
+describe un comportamiento que la aplicación no tiene. **Eso no es un hueco de
+producto por decidir: es algo que no cumple lo que ya se pidió**, exactamente el
+mismo test que separó a `FUN-003` (donde `REQ-079` sí admite honestamente que el
+módulo «está pendiente de desarrollo», sin fingir que ya existe) del candidato a
+`BUG-005`. Aquí no hay ningún «pendiente»: `REQ-025` y `BR-ALB-06` se leen como
+si la capacidad ya estuviera construida.
+
+**Y hay una segunda pieza de evidencia que refuerza esta lectura, no la
+contradicha.** `DOC-06/§3` —fuera del alcance que A-15 puede citar como fuente
+propia, pero visible al leer §6 y §9 alrededor— describe el listado de
+*Albaranes* como «filtrable por vehículo, por cliente y por situación», sin
+matiz. El manual y el requisito coinciden en describir una capacidad que la
+lectura de código de A-05 y la ejecución de la suite (`DOC-23`) confirman que no
+está. Cuando dos fuentes documentales describen algo que el código no hace, no
+es un producto por construir desde cero: es una discrepancia que hay que
+resolver, y ese es el trabajo de `A-14`, no el de proponer una `FUN-nnn` que
+pediría, en el fondo, lo mismo que ya se pidió una vez.
+
+**Si al investigarlo resultara que `REQ-025` y `BR-ALB-06` nunca pretendieron
+llegar a esa capacidad tal como está escrita** —por ejemplo, si el filtro por
+vehículo y cliente se decidió y nunca se construyó, en vez de haberse construido
+mal—, la frontera que marca 5.4 sigue aplicando igual: seguiría siendo un
+requisito vigente incumplido, y el documento que decide qué hacer con un
+requisito vigente incumplido es `DOC-24-BUGS`, no este. El apartado 6 lo dirige
+a `A-14` con el detalle completo.
+
+### 5.7 Tres hallazgos de `DOC-14` dirigidos a A-15 sin pasar por `DOC-16` — fuera de alcance esta ronda, y por qué
+
+Al leer `DOC-14` 2.0.0 para verificar los hallazgos de esta ronda se ha visto que
+tres fichas más —`EXP-022` (el desplegable de vehículos no dice de qué cliente
+es cada uno), `EXP-023` (el listado de nóminas no dice de qué empleado es cada
+una) y `EXP-024` (al emitir una factura, la lista de albaranes pendientes solo
+muestra el número)— declaran `deriva_a: A-15` directamente en el propio informe
+de A-10.
+
+**No se convierten en propuesta esta ronda, y no por falta de mérito aparente.**
+El contrato de A-15 no incluye `DOC-14` como entrada propia: los hallazgos de
+exploración le llegan por la vía que ya ha usado esta ronda para `EXP-017`,
+`EXP-019`, `EXP-026` y `EXP-003` —el triaje que hace `A-12` al escribir `DOC-16`,
+que decide cuáles son deuda técnica y cuáles no—. `DOC-16` 3.0.0 no recoge
+todavía estos tres. Adelantarlos ahora sería saltarse ese triaje y leer `DOC-14`
+como si fuera una entrada formal, que no lo es. Quedan anotados aquí para que no
+se pierdan, y se espera que `DOC-16` los recoja en su próxima ronda si A-12
+concluye lo mismo que para los otros tres.
 
 ## 6. Hallazgos para otras piezas
 
 Esto **no son propuestas** y no debe tratarse como tal. Pertenece a otras piezas.
 
-### Para `A-14 · Defectos` — sigue abierto
+### Para `A-14 · Defectos` — dos candidatos, uno de ellos nuevo
 
-**El candidato a `BUG-005` se confirma desde el lado del usuario.** Los mensajes
-de error llegan siempre en catalán, elija el usuario el idioma que elija, mientras
-REQ-076 dice que la interfaz se presenta en castellano por defecto. A-15 lo ha
-valorado como posible funcionalidad y **concluye que no lo es**: hay un requisito
-vigente que el comportamiento no cumple. **`DOC-24` 1.0.0 sigue sin censarlo**, y
-ahora son dos piezas las que lo señalan: `DOC-16/§6.2` lo mantiene abierto y
-`DOC-16/§6.1` da por buena esta lectura. Origen del hecho: lectura de código en
-`44748fb`, sin reproducir por ninguna de las dos.
+1. **El candidato a `BUG-005` sigue abierto, sin novedad.** Los mensajes de
+   error llegan siempre en catalán, elija el usuario el idioma que elija,
+   mientras REQ-076 dice que la interfaz se presenta en castellano por
+   defecto. A-15 lo valoró como posible funcionalidad y **concluyó que no lo
+   es**: hay un requisito vigente que el comportamiento no cumple. **`DOC-24`
+   1.0.0 sigue sin censarlo.** `DOC-16` 3.0.0 ya no repite este hallazgo en su
+   apartado 6 —A-12 lo da por completamente encaminado hacia A-14 desde su
+   ronda 2.0.0—, así que este documento pasa a ser la única traza activa de que
+   sigue pendiente. Origen del hecho: lectura de código en `44748fb`, sin
+   reproducir todavía por nadie.
+2. **Nuevo — `REQ-025` (filtro de albaranes por vehículo y cliente) y
+   `REQ-034`/`BR-ALB-06` (precio informado a mano en línea de pieza) son
+   requisitos vigentes, prioridad `high`, que la interfaz no cumple.**
+   Verificado por `A-05` leyendo `AlbaransList.tsx` y `AlbaraLiniesSection.tsx`
+   (`DOC-07/A-05-11c`, citado por `DOC-16/§6.3`): el listado de albaranes solo
+   filtra sobre las columnas que pinta (ninguna es vehículo ni cliente) y la
+   línea de pieza no renderiza ningún campo de precio. **`DOC-06/§3` describe
+   la misma capacidad como si existiera**, sin matiz — dos fuentes documentales
+   dan por hecho algo que el código no hace, lo que hace más necesaria la
+   verificación en vivo antes de decidir el alcance de la corrección. A-15
+   valora esto como candidato a defecto y no como funcionalidad ausente, por el
+   mismo criterio que ya aplicó al candidato a `BUG-005`; el razonamiento
+   completo está en el apartado 5.6. Afecta a `TC-032`, `TC-033` y `TC-047`.
 
 ### Para `A-12 · Mejoras/Roadmap` — deuda técnica y fragilidad
 
-Los cuatro de la ronda anterior se han contrastado contra DOC-16 **2.0.0**, que
-es lo que corresponde hacer con un hallazgo enviado: comprobar si ha aterrizado.
-**Los cuatro tienen ya dueño técnico**, así que aquí quedan solo para no perder
-el rastro, no para pedir nada nuevo.
+Los cuatro de rondas anteriores se han contrastado contra `DOC-16` **3.0.0**,
+que es lo que corresponde hacer con un hallazgo enviado: comprobar si ha
+aterrizado. **Los cuatro tienen ya dueño técnico**, así que aquí quedan solo
+para no perder el rastro, no para pedir nada nuevo. Dos de las tres mejoras
+aceptadas que se citaban aquí —`MEJ-007` y `MEJ-008`— ya pasaron a
+`implemented` (5.5); ninguna de las dos cerraba una `FUN-nnn`.
 
 | Hallazgo de A-15 | Dónde ha aterrizado | Estado |
 |---|---|---|
@@ -806,19 +1070,20 @@ documento presionar desde el lado de negocio.
    `MEJ-001`, aceptada el 2026-08-17, va a abrir esas mismas pantallas. Quien
    coordine el trabajo decide si vale la pena mirarlo de paso; **quién lo decide
    es `A-07`, no A-15.**
-2. **`DOC-06/Q-20`**: no se sabe si los listados de piezas, albaranes, facturas,
-   personal y nóminas tienen búsqueda, ordenación y paginación. El apartado 3 del
-   manual solo se las atribuye a *Clientes* y *Vehículos*, y por herencia de
-   REQ-001 y REQ-009, no por haberlo mirado. Si no las tienen, es una propuesta
-   con evidencia para la próxima ronda; si las tienen, es un hueco de DOC-04.
-   Afecta a REQ-018, REQ-025, REQ-052, REQ-056 y REQ-063.
+2. **`DOC-06/Q-20`**: no se sabe si los listados de piezas, facturas, personal y
+   nóminas tienen búsqueda, ordenación y paginación. **La parte de albaranes ya
+   tiene respuesta parcial esta ronda** (apartado 5.6): `DOC-07/A-05-11c`
+   confirma que el listado de albaranes filtra por situación pero no por
+   vehículo ni por cliente, con lectura de código, no por herencia de
+   requisito. Queda por confirmar el resto de listados. Afecta a REQ-018,
+   REQ-052, REQ-056 y REQ-063.
 3. **`DOC-04/Q-08`**: el idioma y el tema por defecto son las dos únicas reglas
    que vienen de una especificación y no del comportamiento observado. No es una
    duda de negocio: se comprueba mirando la aplicación. Afecta a REQ-076 y
    REQ-078. Gana interés porque el candidato a BUG-005 toca el mismo requisito
    desde otro ángulo.
 
-**Las tres siguen sin respuesta**, y la primera lleva dos rondas pedida. No es un
+**Las tres siguen sin respuesta**, y la primera lleva tres rondas pedida. No es un
 reproche: es el dato que explica por qué `FUN-001` conserva confianza `medium`.
 
 ## 7. Bloque estructurado
@@ -827,59 +1092,56 @@ reproche: es el dato que explica por qué `FUN-001` conserva confianza `medium`.
 version: 1
 project: app-taller
 run:
-  date: 2026-08-17
-  previous_doc_version: 1.1.0
-  version_bump: PATCH
+  date: 2026-08-23
+  previous_doc_version: 1.1.1
+  version_bump: MINOR
   version_bump_reason: >-
-    Ninguna propuesta cambia de estado (no es MAJOR) y ninguna cambia de evidencia, de alcance
-    ni de señal (no es MINOR). Lo que cambia es procedencia, una cita literal y el estado de
-    los hallazgos enviados a otras piezas. Un PATCH además no invalida a quien me consuma:
-    DOC-16 2.0.0 me declara en 1.1.0 y por la regla de S-16 un PATCH no obliga a regenerarlo.
-  trigger: "S-16 · cascada de obsolescencia: DOC-25 1.1.0 declaraba DOC-16 1.0.0 y el roadmap iba por 2.0.0"
-  new_proposals_this_round: 0
+    Nacen cuatro propuestas (FUN-009 a FUN-012), lo que por definición es MINOR: nada de lo ya
+    leído deja de ser cierto, y ninguna de las ocho anteriores cambia de estado. No es MAJOR
+    porque ninguna propuesta viva cambia de estado por decisión de negocio.
+  trigger: >-
+    S-16 · cascada de obsolescencia: DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y
+    DOC-16 en 2.0.0, y los tres habían subido a 1.1.0, 1.3.0 y 3.0.0
+  new_proposals_this_round: 4
   new_proposals_note: >-
-    Ninguna, por segunda ronda consecutiva. Ninguna fuente de carencias ha cambiado: DOC-06
-    sigue en 1.2.0, DOC-04 en 1.2.0 y DOC-24 en 1.0.0, los tres con el mismo hash. Lo que ha
-    cambiado es el roadmap técnico, que no es fuente de carencias funcionales. No se ha pedido
-    FUN-009.
-  upstream_change:
-    doc: DOC-16
-    from: 1.0.0
-    to: 2.0.0
-    level: MAJOR
-    what: >-
-      decisión del propietario el 2026-08-17: MEJ-001, MEJ-003 y MEJ-005 pasan a accepted;
-      MEJ-002, MEJ-004 y MEJ-006 siguen proposed; ninguna rechazada
-    effect_on_this_doc: >-
-      ninguno sobre las propuestas. Las tres mejoras aceptadas son trabajo técnico invisible
-      para quien usa la aplicación y no cierran ninguna FUN-nnn. Se ha valorado una a una en 5.5
-citation_fixes:
-  - from: "DOC-16/§6.3 citado como «un módulo sin desarrollar no es una mejora, es funcionalidad»"
-    to: "«un módulo sin desarrollar es funcionalidad, no una mejora»"
-    reason: >-
-      es la redacción literal en DOC-16 2.0.0. Dice lo mismo y no mueve el fondo de FUN-003,
-      pero una cita entrecomillada tiene que decir lo que dice la fuente
+    FUN-009, FUN-010, FUN-011 (de DOC-16/§6.1, hallazgos de UX que A-12 lleva reenviando desde
+    su ronda 2.0.0/2.1.0 sin que ninguna ronda de A-15 los hubiera evaluado, porque DOC-14 nació
+    después de la última ronda de este documento) y FUN-012 (de DOC-16/§6.2, EXP-003,
+    concurrencia entre pestañas, evaluado por primera vez). S-12 confirmó FUN-009 como siguiente
+    libre y se reclaman los cuatro consecutivos.
+  upstream_changes:
+    - doc: DOC-01
+      from: 1.0.0
+      to: 1.1.0
+      level: MINOR
+      what: "cierre de una pregunta ya resuelta y corrección de un comentario del árbol de carpetas, sin cambio de contenido de negocio"
+      effect_on_this_doc: ninguno
+    - doc: DOC-06
+      from: 1.2.0
+      to: 1.3.0
+      level: MINOR
+      what: "dos avisos nuevos en §6.1 sobre comportamiento ya implementado (SPEC 04, SPEC 05); Q-30 nueva en §9, hueco de documentación"
+      effect_on_this_doc: "ninguno. Las catorce carencias que ya sostenían las ocho propuestas vivas siguen palabra por palabra iguales"
+    - doc: DOC-16
+      from: 2.0.0
+      to: 3.0.0
+      level: MAJOR
+      what: "MEJ-007 y MEJ-008 pasan a implemented; nace MEJ-009; §6 reafirma EXP-017/EXP-019/EXP-026 (sin cambios) y EXP-003, y añade por primera vez REQ-025/REQ-034 (§6.3)"
+      effect_on_this_doc: "da lugar a FUN-009, FUN-010, FUN-011 y FUN-012. REQ-025/REQ-034 se evalúan y no producen FUN-nnn: van a A-14 (5.6)"
 citations_verified_unchanged:
   - ref: DOC-16/§6.1
-    note: "hallazgo a A-15 sobre los avisos en catalán; en 2.0.0 sigue en §6.1, ahora marcado `encaminado`"
+    note: "en 3.0.0 pasa a contener los tres hallazgos de UX (EXP-017, EXP-026, EXP-019), reafirmados sin cambios desde 2.0.0/2.1.0. Ya no contiene el hallazgo de los avisos en catalán, que A-12 ha dejado de repetir por darlo por encaminado hacia A-14"
   - ref: DOC-16/§6.2
-    note: "hallazgo a A-14, candidato a BUG-005; en 2.0.0 sigue en §6.2 y sigue abierto"
+    note: "en 3.0.0 pasa a contener EXP-003 (concurrencia), no evaluado hasta ahora por A-15"
   - ref: DOC-16/§6.3
-    note: "hallazgo a A-15 sobre el módulo de Configuración; en 2.0.0 sigue en §6.3, marcado `encaminado` porque ya es FUN-003"
-  - ref: "DOC-06/Q-20, Q-21, Q-22, Q-23 y §6.1"
-    note: "DOC-06 no se ha movido de 1.2.0 ni de hash; verificado por hash, no releído entero"
-provenance_fixes:
-  - what: "el fichero -HIST.md no declaraba `version` en su front-matter"
-    fixed: true
-    how: "declara `version: 1.1.1`, la del documento que acompaña. Convención propuesta por A-05 y adoptada"
-  - what: "DOC-02-TECNICA figuraba en `inputs` con `used: false` y sin versión"
-    fixed: true
-    how: >-
-      sale de `inputs` y pasa a `not_read_by_contract`. No era una entrada sin versión: era una
-      entrada que no debía existir, porque A-15 tiene prohibido leer DOC-02
+    note: "en 3.0.0 pasa a contener REQ-025/REQ-034 (DOC-07/A-05-11c), nuevo para A-15. Ya no contiene el hallazgo del módulo de Configuración, que A-12 da por encaminado desde que existe FUN-003"
+  - ref: "DOC-06/§6.1 y §9"
+    note: "releídos enteros esta ronda, por contrato. Las catorce carencias de §6.1 que sostenían las ocho propuestas anteriores siguen enunciadas igual; §9 gana Q-30, que no es de A-15"
+provenance_fixes: []
 proposals_note: >-
-  Las ocho conservan su número, su texto, su estado y todas sus señales. `evidence_status`
-  describe de qué está respaldada hoy cada una; ninguna ha cambiado en la ronda 1.1.1.
+  Las ocho anteriores conservan su número, su texto, su estado y todas sus señales; solo se
+  actualiza el orden de la recomendación del apartado 2 (FUN-010 entra al tercer lugar). Las
+  cuatro nuevas nacen en `proposed`, con `source: evidence` las cuatro.
 proposals:
   - id: FUN-001
     title: "Llevarse la factura en papel o en un archivo para dárselo al cliente"
@@ -949,12 +1211,14 @@ proposals:
     what: "Decidir qué necesita el taller tener configurado y construirlo: datos del taller para la cabecera de una factura, tipo de IVA habitual, idioma y tema por defecto."
     value: "Hace posible FUN-001 y da un sitio a decisiones que hoy están fijas dentro de la aplicación."
     source: evidence
-    evidence_refs: [DOC-04/Q-04, DOC-06/§3, DOC-06/§6.1, DOC-16/§6.3]
+    evidence_refs: [DOC-04/Q-04, DOC-06/§3, DOC-06/§6.1, "DOC-16 2.0.0/§6.3"]
     evidence_status: >-
-      reforzada por dos vías. DOC-06 1.2.0 §6.1 añade que «de momento no está decidido qué
-      contendrá», y A-12 la deriva expresamente a A-15 en DOC-16 §6.3 sin proponer nada él.
-      Verificado contra DOC-16 2.0.0: el hallazgo sigue en §6.3 y A-12 lo marca `encaminado`
-      porque el número ya existe aquí. Lo que no existe es la decisión.
+      reforzada por dos vías. DOC-06 §6.1 añade que «de momento no está decidido qué contendrá»,
+      y A-12 la derivó expresamente a A-15 en DOC-16 2.0.0 §6.3 sin proponer nada él, marcando su
+      hallazgo `encaminado` porque el número ya existía aquí. Lo que no existe es la decisión.
+      Nota de esta ronda: DOC-16 3.0.0 reorganizó su apartado 6 y su §6.3 actual trata de
+      REQ-025/REQ-034 (ver FUN-009 a FUN-012 y el apartado 5.6 del documento principal), no de
+      Configuración; la cita se fecha a la versión donde se hizo.
     citation_corrected_in_1_1_1: >-
       la cita literal de A-12 era «un módulo sin desarrollar no es una mejora, es funcionalidad»
       (redacción de DOC-16 1.0.0) y es «un módulo sin desarrollar es funcionalidad, no una
@@ -1074,14 +1338,109 @@ proposals:
     confidence: medium
     if_not_done: "Se sigue recontando a mano, que es lo que se hace hoy y funciona mientras el taller sea pequeño."
     enters_cycle_via: A-06
+  - id: FUN-009
+    title: "Avisar antes de perder lo escrito en un formulario sin guardar"
+    status: proposed
+    first_proposed_in: 1.2.0
+    problem: "Quien está rellenando un formulario y navega a otra sección, o recarga la página, pierde lo escrito sin ningún aviso y sin forma de recuperarlo. Es especialmente caro en los campos de texto libre, como las notas de un albarán."
+    what: "Avisar de cambios sin guardar antes de abandonar un formulario, tanto en la navegación interna como al recargar o cerrar la pestaña."
+    value: "Evita perder tiempo de taller reescribiendo algo que ya se había escrito por un clic accidental."
+    source: evidence
+    evidence_refs: [DOC-16/§6.1, DOC-14/EXP-017]
+    origin_note: >-
+      DOC-16 lleva reenviando este hallazgo desde su ronda 2.0.0/2.1.0 sin cambios; es la
+      primera ronda de A-15 que se ejecuta desde que DOC-14 existe (nació el 2026-08-21,
+      después de la última ronda de este documento) y por tanto la primera oportunidad de
+      recogerlo.
+    affects_requirements: []
+    contradicts: []
+    impact: medium
+    difficulty: medium
+    business_value: medium
+    size: medium
+    confidence: high
+    if_not_done: "Se sigue perdiendo contenido sin que nadie se dé cuenta hasta que falta."
+    enters_cycle_via: A-06
+  - id: FUN-010
+    title: "Que el diálogo de confirmación de borrado diga qué registro se va a borrar"
+    status: proposed
+    first_proposed_in: 1.2.0
+    problem: "El diálogo de confirmación de borrado es siempre un texto genérico que no identifica el registro. Cuando hay dos registros parecidos (dos clientes con el mismo nombre, algo que la aplicación permite), quien borra no puede saber con certeza cuál va a eliminar."
+    what: "Incluir el nombre o identificador visible del registro en el texto del diálogo de confirmación de borrado, en las seis entidades que se pueden borrar."
+    value: "Reduce el riesgo de borrar el registro equivocado en una acción irreversible, con un cambio pequeño y acotado a un único diálogo."
+    source: evidence
+    evidence_refs: [DOC-16/§6.1, DOC-14/EXP-026]
+    origin_note: "misma vía que FUN-009: reenviado por DOC-16 desde 2.0.0/2.1.0, primera ronda de A-15 en condiciones de recogerlo."
+    affects_requirements: [REQ-006, REQ-016, REQ-023, REQ-041, REQ-061, REQ-074]
+    contradicts: []
+    impact: medium
+    difficulty: low
+    business_value: medium
+    size: small
+    confidence: high
+    if_not_done: "El taller sigue sin poder distinguir con seguridad qué va a borrar cuando dos registros se parecen, en la única operación que no admite arrepentirse."
+    enters_cycle_via: A-06
+  - id: FUN-011
+    title: "Dar una salida real a una pantalla de registro no encontrado"
+    status: proposed
+    first_proposed_in: 1.2.0
+    problem: "Al abrir una ficha que ya no existe, la pantalla solo ofrece un botón «Volver a intentarlo» que repite la misma petición y vuelve a fallar siempre. No hay enlace de vuelta al listado."
+    what: "Cuando el registro no existe, ofrecer una salida que funcione (un enlace al listado correspondiente) en vez de, o además de, un reintento sin éxito posible."
+    value: "Una pantalla de error que ofrece algo útil en vez de un botón que no lleva a ningún sitio."
+    source: evidence
+    evidence_refs: [DOC-16/§6.1, DOC-14/EXP-019]
+    origin_note: "misma vía que FUN-009 y FUN-010."
+    affects_requirements: []
+    contradicts: []
+    impact: low
+    difficulty: low
+    business_value: low
+    size: small
+    confidence: high
+    if_not_done: "Quien llega a una ficha inexistente recurre al menú lateral para salir; molesto, no bloqueante."
+    enters_cycle_via: A-06
+  - id: FUN-012
+    title: "Proteger el trabajo cuando dos pestañas editan la misma ficha a la vez"
+    status: proposed
+    first_proposed_in: 1.2.0
+    problem: "Si la misma ficha está abierta en dos pestañas y se guarda en las dos, la segunda en guardar borra en silencio lo que había guardado la primera, sin ningún aviso en ninguna de las dos."
+    what: "Que un guardado no borre en silencio lo que otro acaba de guardar: avisando de que el registro cambió, o conservando los cambios de ambas pestañas cuando no chocan. Cuál de las dos formas es correcta lo decide negocio."
+    value: "Evita perder trabajo ya guardado sin que nadie se entere de que se ha perdido: el riesgo más silencioso de los que recoge este documento."
+    source: evidence
+    evidence_refs: [DOC-16/§6.2, DOC-14/EXP-003]
+    origin_note: >-
+      DOC-16 lo deja pendiente de una decisión de negocio (bloqueo con aviso o fusión por
+      campos) desde su ronda 2.0.0/2.1.0; no había sido evaluado nunca por A-15.
+    affects_requirements: []
+    contradicts: []
+    impact: high
+    difficulty: medium
+    business_value: medium
+    size: medium
+    confidence: medium
+    confidence_reason: >-
+      la evidencia está reproducida con precisión (red y base de datos comprobadas), pero la
+      solución correcta depende de una decisión que todavía no existe y que cambia el tamaño
+      real del trabajo.
+    if_not_done: "El taller sigue expuesto a perder cambios ya guardados sin ningún aviso cada vez que la misma ficha queda abierta en más de una pestaña. Escenario de baja frecuencia en un puesto único, coste alto cuando ocurre porque no se detecta."
+    enters_cycle_via: A-06
 considered_and_not_proposed:
   - what: "Los avisos de error llegan siempre en catalán aunque la interfaz esté en castellano"
-    origin: DOC-16/§6.1
+    origin: DOC-16/§6.1 (rondas anteriores; ya no repetido en 3.0.0 por darse por encaminado)
     decision: no_proposal
     why: >-
       REQ-076 ya exige que la interfaz se presente en castellano mientras el usuario no elija
       otro idioma. Cuando existe requisito vigente y el sistema no lo cumple, es defecto y no
-      funcionalidad ausente. Va a A-14 como confirmación del candidato BUG-005.
+      funcionalidad ausente. Va a A-14 como confirmación del candidato BUG-005, todavía sin
+      censar en DOC-24 1.0.0.
+  - what: "REQ-025 (filtro de albaranes por vehículo/cliente) y REQ-034/BR-ALB-06 (precio a mano en línea de pieza) no están construidos en la interfaz"
+    origin: "DOC-16/§6.3, citando DOC-07/A-05-11c"
+    decision: no_proposal
+    why: >-
+      Mismo criterio que los avisos en catalán: los dos requisitos están redactados en presente,
+      no en condicional, y describen una capacidad que la aplicación no tiene. DOC-06/§3
+      describe la misma capacidad como si existiera, lo que refuerza que es una discrepancia
+      a resolver, no un hueco de producto que decidir. Va a A-14. Detalle en 5.6.
   - what: "Corregir una errata de un albarán ya facturado"
     origin: DOC-06/§6.1
     decision: no_proposal
@@ -1094,16 +1453,35 @@ considered_and_not_proposed:
     why: >-
       Sale de la misma viñeta que FUN-004 y nadie ha declarado que al taller se le olviden las
       nóminas. Si A-06 ve que se echa en falta al refinar FUN-004, que salga de ahí.
+  - what: "EXP-022, EXP-023 y EXP-024 (deriva_a: A-15 directo en DOC-14, sin pasar por el triaje de DOC-16)"
+    origin: DOC-14 2.0.0
+    decision: no_proposal
+    why: >-
+      DOC-14 no es entrada formal de A-15; los hallazgos de exploración llegan por el triaje
+      que hace A-12 en DOC-16, que no los recoge todavía en su 3.0.0. Adelantarlos sería
+      saltarse ese triaje. Quedan anotados para que no se pierdan (apartado 5.7).
 findings_for_others:
   - target: A-14
     status: abierto
     note: >-
-      Confirmado desde el lado del usuario que el candidato a BUG-005 es defecto y no
-      funcionalidad: los avisos de error llegan siempre en catalán y REQ-076 dice que la interfaz
-      se presenta en castellano mientras el usuario no elija otro idioma. A-15 lo ha valorado como
-      posible propuesta y no lo propone. DOC-24 1.0.0 sigue sin censarlo. Ahora lo señalan dos
-      piezas: DOC-16 2.0.0 §6.2 lo mantiene abierto y §6.1 da por buena esta lectura. Lectura de
-      código en 44748fb, sin reproducir por ninguna de las dos.
+      Candidato a BUG-005 sin novedad: los avisos de error llegan siempre en catalán y REQ-076
+      dice que la interfaz se presenta en castellano mientras el usuario no elija otro idioma.
+      A-15 lo valoró como posible propuesta y concluyó que es defecto, no funcionalidad. DOC-24
+      1.0.0 sigue sin censarlo. DOC-16 3.0.0 ya no repite este hallazgo en su apartado 6 (lo da
+      por encaminado hacia A-14 desde 2.0.0); este documento es hoy la única traza activa de que
+      sigue pendiente.
+  - target: A-14
+    status: nuevo
+    priority: alta
+    note: >-
+      REQ-025 (filtro de albaranes por vehículo y por cliente) y REQ-034/BR-ALB-06 (precio
+      informado a mano en una línea de pieza) son requisitos vigentes de prioridad high que la
+      interfaz no cumple, verificado por A-05 leyendo AlbaransList.tsx y
+      AlbaraLiniesSection.tsx (DOC-07/A-05-11c, citado por DOC-16/§6.3). DOC-06/§3 describe la
+      misma capacidad como si existiera, sin matiz, lo que añade una discrepancia documental a
+      resolver. A-15 lo valora como candidato a defecto, no como funcionalidad ausente, por el
+      mismo criterio que el candidato a BUG-005 (detalle en 5.6). Afecta a TC-032, TC-033 y
+      TC-047, que hoy no tienen vector en la interfaz por este motivo.
   - target: A-12
     status: recogido_sin_decidir
     landed_in: DOC-16/§3.0, MEJ-004
@@ -1123,46 +1501,47 @@ findings_for_others:
   - target: A-03
     status: abierto
     priority: alta
-    note: "DOC-06/Q-21 lleva dos rondas pedida y sigue sin respuesta: no consta si hoy se puede imprimir o exportar un albarán o una factura. De ello depende cómo se refine FUN-001, segunda propuesta recomendada, y es lo que explica su confianza medium. Si existiera alguna forma de sacar la factura de la pantalla, la propuesta se estrecharía al formato entregable. Afecta a REQ-052 y REQ-053. Nota de oportunidad, no de prioridad: MEJ-001 (accepted) va a abrir esas mismas pantallas; si vale la pena mirarlo de paso lo decide A-07, no A-15."
+    note: "DOC-06/Q-21 lleva tres rondas pedida y sigue sin respuesta: no consta si hoy se puede imprimir o exportar un albarán o una factura. De ello depende cómo se refine FUN-001, segunda propuesta recomendada, y es lo que explica su confianza medium. Si existiera alguna forma de sacar la factura de la pantalla, la propuesta se estrecharía al formato entregable. Afecta a REQ-052 y REQ-053. Nota de oportunidad, no de prioridad: MEJ-001 (accepted) va a abrir esas mismas pantallas; si vale la pena mirarlo de paso lo decide A-07, no A-15."
   - target: A-03
     status: abierto
-    note: "DOC-06/Q-20 pregunta si los listados de piezas, albaranes, facturas, personal y nóminas tienen búsqueda, ordenación y paginación. El apartado 3 de DOC-06 1.2.0 solo se las atribuye a Clientes y Vehículos, y por herencia de REQ-001 y REQ-009, no por haberlo verificado. Si no las tienen, es propuesta con evidencia para la próxima ronda de DOC-25; si las tienen, es un hueco de DOC-04. Afecta a REQ-018, REQ-025, REQ-052, REQ-056 y REQ-063."
+    note: "DOC-06/Q-20 pregunta si los listados de piezas, facturas, personal y nóminas tienen búsqueda, ordenación y paginación. La parte de albaranes queda parcialmente resuelta esta ronda por DOC-07/A-05-11c: filtra por situación pero no por vehículo ni por cliente, verificado en código, no por herencia de requisito. Afecta a REQ-018, REQ-052, REQ-056 y REQ-063."
   - target: A-03
     status: abierto
     note: "DOC-04/Q-08 no es una duda de negocio sino una comprobación: el idioma y el tema por defecto son las dos únicas reglas que vienen de una especificación y no del comportamiento observado. Afecta a REQ-076 y REQ-078, y gana interés porque el candidato a BUG-005 toca REQ-076 desde otro ángulo."
 summary:
-  new: 0
-  still_open: 8
+  new: 4
+  still_open: 12
   rejected_respected: 0
-  by_source: { evidence: 7, opinion: 1 }
-  by_status: { proposed: 8, accepted: 0, rejected: 0, implemented: 0, superseded: 0 }
-  proposals_changed_this_round: 0
-  evidence_changed_this_round: 0
-  citations_verified: 5
-  citations_fixed: 1
-  ids_requested_from_S12: 0
+  by_source: { evidence: 11, opinion: 1 }
+  by_status: { proposed: 12, accepted: 0, rejected: 0, implemented: 0, superseded: 0 }
+  proposals_changed_this_round: 4          # FUN-009 a FUN-012, nuevas. Las ocho anteriores no cambian de señal
+  evidence_changed_this_round: 4
+  citations_verified: 4
+  citations_fixed: 0
+  ids_requested_from_S12: 4                # FUN-009, FUN-010, FUN-011, FUN-012
   not_proposed_already_in_cycle: 6
-  not_proposed_not_mine: 6
-  not_proposed_by_judgement: 6
-  upstream_decisions_evaluated: 3        # MEJ-001, MEJ-003 y MEJ-005; ninguna cierra una FUN-nnn
-  provenance_fixes: 3
-  rounds_without_new_proposals: 2
+  not_proposed_not_mine: 7                 # 6 anteriores + EXP-022/023/024 agrupadas como una entrada
+  not_proposed_by_judgement: 7             # incluye el nuevo redirect a A-14 de REQ-025/REQ-034
+  upstream_decisions_evaluated: 6          # MEJ-001, MEJ-003, MEJ-005, MEJ-007, MEJ-008, MEJ-009; ninguna cierra una FUN-nnn
+  provenance_fixes: 0
+  rounds_without_new_proposals: 0
+  recommendation_order_changed: true       # FUN-010 entra al tercer lugar, FUN-005 baja al cuarto
 ```
 
 ---
 
-**Nota de vigencia.** Este documento se ha escrito sobre `DOC-06-MANUAL-USUARIO`
-**1.2.0**, `DOC-04-FUNCIONAL` **1.2.0**, `DOC-01-BASE-ASIS` **1.0.0**,
-`DOC-24-BUGS` **1.0.0** y el apartado 6 de `DOC-16-ROADMAP` **2.0.0**, en el
-commit `44748fb`. **No se ha leído `DOC-02-TECNICA`**, y no por descuido: el
-contrato de A-15 lo prohíbe. Las versiones y los hashes están en el front-matter
-para que `S-16` pueda comprobarlos sin leer esta línea.
+**Nota de vigencia.** Este documento se ha escrito sobre `DOC-01-BASE-ASIS`
+**1.1.0**, `DOC-04-FUNCIONAL` **1.2.0**, `DOC-06-MANUAL-USUARIO` **1.3.0** (solo
+§6 y §9, por contrato), `DOC-24-BUGS` **1.0.0**, el apartado 6 de
+`DOC-16-ROADMAP` **3.0.0** y las fichas que ese apartado cita de
+`DOC-14-EXPLORATORIO` **2.0.0**, en el commit `e451ad4`. **No se ha leído
+`DOC-02-TECNICA`**, y no por descuido: el contrato de A-15 lo prohíbe. Las
+versiones y los hashes están en el front-matter para que `S-16` pueda
+comprobarlos sin leer esta línea.
 
-**Nada de esto está decidido.** `status: draft`. Las ocho propuestas llevan **dos
-rondas esperando** y **ninguna decisión de negocio ha recaído sobre ellas
-todavía**. El 2026-08-17 se decidieron tres mejoras técnicas; ese mismo día, aquí
-no se decidió nada. Mientras eso no cambie, las próximas rondas de A-15 solo
-podrán repetir lo mismo con la procedencia más fresca, y **un documento que se
-repite deja de leerse**. Prioriza negocio; A-15 solo propone y ordena, y cada
-propuesta entra en el ciclo por `A-06 · Refinamiento`, que es donde se resuelve
-hablando lo que aquí queda ambiguo.
+**Nada de esto está decidido.** `status: draft`. Las doce propuestas —ocho
+esperando desde hace tres rondas, cuatro nacidas hoy— siguen sin que ninguna
+decisión de negocio haya recaído sobre ellas. Prioriza negocio; A-15 solo
+propone y ordena, y cada propuesta entra en el ciclo por
+`A-06 · Refinamiento`, que es donde se resuelve hablando lo que aquí queda
+ambiguo.
