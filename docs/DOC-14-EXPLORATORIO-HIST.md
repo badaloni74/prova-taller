@@ -2,11 +2,11 @@
 doc_id: DOC-14-HIST
 doc_name: DOC-14-EXPLORATORIO-HIST
 of_document: DOC-14-EXPLORATORIO.md
-version: 2.0.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 2.0.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-23T00:00:00+02:00
+generated_at: 2026-08-23T15:10:00+02:00
 ---
 
 # DOC-14-EXPLORATORIO · Historial de versiones
@@ -15,6 +15,41 @@ Historial del documento `docs/DOC-14-EXPLORATORIO.md`. Una entrada por
 versión, de la más nueva a la más antigua. **El documento principal no
 reproduce nada de esto**: refleja solo el estado actual, con su `version`
 en el front-matter.
+
+---
+
+## 2.0.1 — 2026-08-23 — PATCH
+
+**Resincronización de front-matter, sin exploración nueva.** La cascada de
+obsolescencia (`s16-cascada-obsolescencia`) marcó `DOC-14` 2.0.0 como
+caducado únicamente porque su entrada `inputs` para `DOC-16-ROADMAP.md`
+seguía citando la versión `2.1.0`, mientras que `DOC-16` ya había avanzado a
+`3.0.0`. Verificado que `DOC-16` 3.0.0 cita a su vez `DOC-14` 2.0.0 como
+versión vigente en su propia entrada de procedencia: no hay ningún
+hallazgo, decisión ni cambio de roadmap posterior a la sesión que generó
+`DOC-14` 2.0.0 que obligue a volver a explorar la aplicación.
+
+**Qué cambia.**
+
+- Front-matter: la entrada `inputs` de `DOC-16-ROADMAP.md` pasa de
+  `version: 2.1.0` a `version: 3.0.0`, con el `hash` recalculado sobre el
+  fichero actual (`sha256:e70c3786b5dfe8e4f60e5adc0e02ab302cfcc85e657281da2af4b689423604de`).
+  `commit_sha` de `source` se actualiza al `HEAD` tras incorporar los
+  commits de la cascada (`d861654e535d6835b44b263dd24f4ef03b2e5801`).
+- Cuerpo: se añade una nota breve en «Procedencia» explicando que esta
+  versión es una resincronización, no una sesión de exploración.
+- **Nada más cambia.** Ningún `EXP-nnn` se abre, se cierra ni se
+  renumera; ningún hallazgo cambia de severidad, tipo o estado; el bloque
+  estructurado (`cartas`, `hallazgos`, `datos_dejados`) es idéntico al de
+  la versión 2.0.0.
+- No se ha abierto el navegador ni se ha tocado la aplicación durante esta
+  actualización. No se ha creado ni destruido ningún dato.
+
+**Por qué PATCH y no MINOR.** No nace ningún hallazgo, no se cierra
+ninguno, y ningún consumidor obtiene información distinta sobre el estado
+de la aplicación: solo cambia de qué versión de `DOC-16` depende
+formalmente este documento. Es exactamente el caso de «resello de hashes»
+que la propia convención de versionado del proyecto marca como `PATCH`.
 
 ---
 
