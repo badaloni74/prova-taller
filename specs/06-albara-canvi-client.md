@@ -47,7 +47,13 @@ Este spec no introduce ninguna estructura de datos nueva. Reutiliza el modelo ex
 
 ## Plan de implementación
 
-**Pendiente de S-04.** Este spec está aprobado (`Approved`) y con el impacto analizado (`docs/DOC-09-IMPACTO-albara-canvi-client.md`), pero el plan de pasos todavía no se ha escrito. Cuando `s04-plan-implementacion` lo genere (`docs/DOC-11-PLAN-IMPL-albara-canvi-client.md`), sus pasos se copian aquí para que `/spec-impl` los ejecute directamente desde este fichero.
+*(Copiado de `docs/DOC-11-PLAN-IMPL-albara-canvi-client.md`, elaborado por `s04-plan-implementacion`. Sin punto de no retorno.)*
+
+1. **Confirmar que la comprobación de servidor ya existe — no se escribe código.** `server/routes/albarans.js:95-104` ya rechaza con `409` un `PUT` que mueve el albarán al vehículo de un cliente distinto, en el orden correcto (después de comprobar existencia del albarán, que no esté facturado, y que el vehículo exista). Prueba manual: reproducir `DOC-24/BUG-002` contra el servidor en marcha — `PUT` a un vehículo de otro cliente devuelve `409`, no `200`; el resto de rechazos (vehículo inexistente, albarán facturado, cambio simultáneo de fecha/notas) siguen dando su motivo de siempre. Implementa AC-002, AC-004, AC-005, AC-006, AC-008, AC-009 y la mitad de servicio de AC-007.
+
+2. **Ampliar el seed con un segundo vehículo (`DP-001`).** `server/db/seed.js` da hoy un vehículo por cliente. Añadir una segunda entrada en el array `vehicles` para `Anna Puig Ferrer` (`nif: '12345671A'`), cuyo primer vehículo ya abre un albarán pendiente en el seed — así no hace falta crear también el albarán. Prueba manual: `rm -f data/taller.db && npm run seed`; `SELECT client_id, COUNT(*) FROM vehicles GROUP BY client_id HAVING COUNT(*) > 1` devuelve exactamente una fila. Implementa AC-001 y AC-003 (el comportamiento ya existe; faltaba el dato para poder afirmarlo).
+
+3. **Filtrar el selector de vehículo al editar un albarán.** Solo en la rama `isEdit === true` de `AlbaraForm.tsx` (la de creación no cambia — no hay cliente del que mover el trabajo): resolver el `client_id` del vehículo actual (patrón ya usado en `AlbaraDetail.tsx:32-42`) y sustituir `vehiclesService.list()` por `vehiclesService.listByClient(clientId)`, que ya existe en el servicio y en `GET /api/vehicles?client_id=`. Prueba manual: editar el albarán de Anna Puig Ferrer (del paso 2) muestra sus dos vehículos y ninguno más; editar un albarán de un cliente con un solo vehículo lo muestra ya seleccionado; el formulario de creación sigue ofreciendo la lista completa. Implementa AC-010, AC-011 y cierra la mitad de pantalla de AC-007.
 
 ---
 
