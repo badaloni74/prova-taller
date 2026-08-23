@@ -6,7 +6,7 @@ version: 3.0.0        # no se versiona por separado: refleja la versión del doc
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T14:38:00+02:00
+generated_at: 2026-08-23T15:10:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -41,7 +41,47 @@ añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-
 
 ---
 
-## Nota — 2026-08-23 — resincronización de procedencia, sin cambio de versión
+## Nota — 2026-08-23 (2) — resincronización de procedencia, sin cambio de versión
+
+No es una entrada de versión: no hay análisis nuevo que hacer. Se documenta porque
+`S-16 · Cascada de obsolescencia` volvió a marcar `DOC-16` como obsoleto, esta vez por
+depender de una versión superada de `DOC-07-TRAZABILIDAD.md` (1.7.0 → 1.8.0, MINOR).
+
+**Motivo.** `DOC-07` subió a 1.8.0 (commit `de39daf`) porque `S-16` la marcó obsoleta
+por su propia dependencia de `DOC-14` (1.0.0 → 2.0.0, ya incorporada por `DOC-16` en su
+propia versión 3.0.0). Verificado leyendo `DOC-07-TRAZABILIDAD.md` 1.8.0 y su
+`-HIST.md`: el salto trae el cierre de `EXP-007` (A-05-03b deja de tener un defecto de
+sistema vivo; «requisitos con defecto confirmado» baja de 6 a 4) y un hallazgo nuevo,
+`A-05-13`, que formaliza dentro de la trazabilidad lo que `EXP-027` ya decía —los
+`.feature` de `factures`/`nomines` siguen con punto decimal tras `SPEC 05`— y añade que
+`DOC-23` 2.0.0 es un día anterior a que ese spec entrara en `Implemented`.
+
+**Por qué no hay reanálisis.** Ninguno de los dos hechos es nuevo para este documento:
+`DOC-16` 3.0.0 ya citaba el cierre de `EXP-007` como uno de los cuatro hallazgos que
+`DOC-14` 2.0.0 verificó cerrados (apartado 1, tabla de cambios) y ya dedicaba el
+apartado 1.1 (punto 2) y el hallazgo 6.5 a `EXP-027` con la misma severidad `high`,
+dirigido a `A-03`/`S-10`, con el mismo conteo de casos afectados. **`DOC-16` no cita
+`DOC-07` como fuente de evidencia de ningún `MEJ-nnn`** —comprobado: ningún
+`evidence_refs` de la sección estructurada apunta a `DOC-07`; las únicas menciones son
+narrativas (`A-05-06`, `A-05-11c`, las tres aristas de grafo en 5.4/6.3/6.8), ninguna
+tocada por el salto a 1.8.0—, así que no hay evidencia nueva que mueva ninguna mejora,
+ni siquiera `MEJ-009` (que sale de `EXP-028`, no de `EXP-007`). `A-05-13` no es un
+hallazgo distinto de `EXP-027`: es el mismo hecho leído desde la matriz de cobertura.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la versión de
+`DOC-07-TRAZABILIDAD.md` declarada en `inputs` (1.7.0 → 1.8.0), su `hash`
+(`sha256:5cc1a789…` → `sha256:095c6baf…`), el `commit_sha` de `source` y
+`generated_at`. La `version: 3.0.0` del documento principal **no cambia**, mismo
+criterio que la nota anterior de esta misma fecha (resync con `DOC-25` 1.2.0) y que
+`A-05` aplicó al resincronizar `DOC-07` con `DOC-06` 1.3.0. Las menciones en el cuerpo a
+«`DOC-07` 1.7.0» (apartado de Procedencia, 1.4, 5.5) quedan tal cual hasta la próxima
+regeneración con análisis.
+
+**`registro-ids.json` no se toca.** Ningún `MEJ-nnn` nuevo, retirado ni reformulado.
+
+---
+
+## Nota — 2026-08-23 (1) — resincronización de procedencia, sin cambio de versión
 
 No es una entrada de versión: no hay análisis nuevo que hacer. Se documenta porque
 `S-16 · Cascada de obsolescencia` marcó `DOC-16` como obsoleto por depender de una

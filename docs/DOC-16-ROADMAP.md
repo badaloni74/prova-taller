@@ -5,12 +5,12 @@ version: 3.0.0
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T14:38:00+02:00
+generated_at: 2026-08-23T15:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
+  commit_sha: 35e07c8001184f36be61963d648231451db6a8b4
   working_tree_clean: true
 inputs:
   - id: DOC-16-ROADMAP.md
@@ -30,8 +30,8 @@ inputs:
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.7.0
-    hash: sha256:5cc1a789d361eedc26b11e34a57d9b721173ec1ec8e98d6fc656cf2e3418b863
+    version: 1.8.0
+    hash: sha256:095c6baf223b634dc80d00e91b907017166853622df49ce3f9192f5e476ad247
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
