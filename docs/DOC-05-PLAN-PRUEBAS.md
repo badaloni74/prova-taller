@@ -6,14 +6,14 @@ status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-23T09:15:00+02:00
+generated_at: 2026-08-23T15:30:00+02:00
 project: app-taller
 project_code: TALLER
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 7bf2947e0ebbc750de66a0078c218fa23322e47d
+  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
@@ -80,8 +80,8 @@ inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
     present: true
-    version: 2.1.0
-    hash: sha256:3f418f7bd2f0f6b6a07a7d30b14fba5414a7727f951a42a398bcf94118ea5d77
+    version: 2.2.0
+    hash: sha256:028419938b0865b8479518e38ed2c41a6ae6a128c805bf3ef995d4d7dc16b73f
     usage: >-
       origen del campo `verification_path`, que A-06 inventó para los criterios de aceptación de EVO-001
       y que este plan adopta en el contrato `testcases`. También es la evidencia de urgencia de Q-18:
@@ -95,8 +95,8 @@ inputs:
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
     present: true
-    version: 1.1.1
-    hash: sha256:b9070b120a46eb1a4a17f99eb9983270828b597ce41e8d4cda8b8204c7591b8a
+    version: 1.2.0
+    hash: sha256:b4f26c8f2ae7d8f944917bd6770ac52680c3690ee66fbd85b77f8304aef86349
     usage: >-
       segundo testigo de la mitad factual de Q-18: A-15 anotó como `evidence` la misma reproducción de
       A-14. Solo se cita; ninguna `FUN`/`MEJ` de A-15 genera casos en este plan
