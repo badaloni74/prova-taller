@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.7.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.8.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-23T12:10:00+02:00
+generated_at: 2026-08-23T14:40:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,82 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.8.0 — 2026-08-23 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `DOC-14-EXPLORATORIO.md` pasó de **1.0.0 a 2.0.0** y
+`S-16 · Cascada de obsolescencia` volvió a marcar a DOC-07 como obsoleto:
+
+```
+DOC-07 1.7.0 — por DOC-14: declara 1.0.0, actual 2.0.0  [MAJOR]
+```
+
+Cuarta regeneración consecutiva disparada por una máquina, y la primera en la que **ni
+DOC-04 ni DOC-05 cambian de versión de contenido**: el disparo viene de una entrada que
+nunca ha alimentado el JOIN. A-05 verificó, byte a byte, que los bloques `yaml
+requirements` de DOC-04 y los nueve `yaml testcases` de DOC-05 son idénticos a los que
+produjeron el CSV de 1.7.0, así que el JOIN no se recalculó: se confirmó que no hacía
+falta recalcularlo.
+
+**Qué trae DOC-14 2.0.0.** Es, en sus propias palabras, «una ronda de verificación de
+cierre, no una exploración desde cero»: reproduce en vivo `EXP-001`, `EXP-002`, `EXP-007`
+y `EXP-014` (los cuatro se cierran), cierra `EXP-009` a medias, y añade `EXP-027` y
+`EXP-028`.
+
+**Qué cambia.**
+
+| Qué | 1.7.0 | 1.8.0 |
+|---|---|---|
+| Entrada DOC-04 | 1.2.0 (`7d184415…`) | 1.2.0 — **mismo número, hash resincronizado** (`626fdb84…`, resync de front-matter contra DOC-01 1.1.0, sin tocar `requirements`) |
+| Entrada DOC-05 | 1.6.0 (`cd248197…`) | 1.6.0 — **mismo número, hash resincronizado** (`a88ca2aa…`, mismo motivo) |
+| Entrada DOC-14 | 1.0.0 | **2.0.0 — motivo del disparo** |
+| Entrada `registro-ids.json` | 311 anclas | **317** (+6: `FUN` 8→12, `MEJ` 6→8; `REQ`/`TC`/`Q` sin cambios) |
+| `DOC-07-MATRIZ.csv` | md5 `087a0377…` | **idéntico, sexta vez consecutiva** |
+| Cobertura · bloqueantes | 100,00 % · 0 | 100,00 % · 0 — sin cambios |
+| Avisos | 29 (17 + 12) | **30** (17 + 13) — nace A-05-13 |
+| Requisitos con defecto confirmado | 6 | **4** — baja por cierre de `EXP-007` |
+| Front-matter | 55 líneas | 55 líneas — sin cambios |
+
+**Un hallazgo cambia de naturaleza, no se cierra.** `A-05-03b` (TC-073 y TC-075, IVA)
+nació en 1.7.0 como «verde que oculta un defecto vivo»: la ficha de factura no mostraba el
+importe del IVA y los dos casos, aun llamándose por el IVA, tampoco lo comprobaban. `DOC-14`
+2.0.0 confirma que el defecto de sistema está corregido —verificado por A-05 en
+`FacturaDetail.tsx:99-107`, no solo citado—, así que la mitad «engaño sobre el sistema»
+desaparece. La mitad «engaño sobre el caso» **no se ha movido ni una línea**: TC-073 y
+TC-075 siguen sin un solo `Literal:` sobre el importe del IVA, verificado por A-05 sobre
+`factures.feature`. El hallazgo pasa de «verde que oculta un defecto» a «verde que no
+prueba lo que promete sobre un sistema sano» — riesgo de regresión silenciosa, no ya de
+defecto oculto. Es la razón de que «requisitos con defecto confirmado» baje de 6 a 4: el
+censo de A-05-03 nunca incluyó a REQ-051/REQ-053, y ahora el recuento del §1 vuelve a
+coincidir con él.
+
+**Un hallazgo nuevo: A-05-13.** De `EXP-027` de `DOC-14` 2.0.0, que si cita `TC-nnn` de
+DOC-05 y por eso entra en el alcance de A-05 a diferencia de `EXP-028`. `SPEC 05` cambió el
+separador decimal de la aplicación de punto a coma; los `.feature` de `automation/ui/` que
+comprueban importes por su texto literal —`factures.feature`, `nomines.feature`— siguen
+escritos con punto. A-05 lo verificó por su cuenta en `client/src/utils/format.ts`
+(`Intl.NumberFormat('es-ES', …)`) y releyendo los dos casos que ya tenía citados por
+A-05-03b: TC-073 (`33.33`, `40.33`) y TC-075 (`98.40`, `119.06`), los dos con punto. Al
+menos nueve casos están afectados, según el recuento de `DOC-14`, sin cerrar. La
+consecuencia que le da peso propio: `DOC-23-INFORME` 2.0.0 —la única foto de ejecución que
+existe— es del **2026-08-21**, un día **antes** de que `SPEC 05` entrara en `Implemented`
+(2026-08-22), así que su «106 en verde» ya no describe el estado actual de la suite para
+esos casos. No toca la matriz ni el CSV. Corrección de **A-03 / `s10-auto-tcs`**.
+
+**Por qué MINOR y no otra cosa.** No es MAJOR porque nada de lo que consumen A-11 y S-07
+queda invalidado: mismo CSV, mismo mapa requisito → caso, cobertura en 100 % y cero
+bloqueantes. No es PATCH porque una fila del resumen (defecto confirmado) baja de 6 a 4,
+nace un hallazgo con identificador propio y una cifra de ejecución que este documento citaba
+como evidencia (DOC-23) queda señalada como caducada.
+
+**Lo que no cambia y merece constar:** los 79 `REQ-nnn` y los 110 `TC-nnn`, con el mismo
+`text`, `requirement` y `external_id`; los cinco requisitos de A-05-11 (§3.11); los 17
+`critico_caso_unico`; las cinco cifras del alcance de preguntas abiertas (§7.1); las tres
+aristas que faltan en el grafo de DOC-02 (§7.2, de S-01).
 
 ---
 
