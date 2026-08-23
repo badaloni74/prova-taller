@@ -1,41 +1,56 @@
 ---
 doc_id: DOC-09
 doc_name: DOC-09-IMPACTO-albara-canvi-client
-version: 2.0.0
+version: 2.0.1
 status: draft
 generator: A-07 análisis de impacto
-generated_at: 2026-08-22T12:30:00+02:00
+generated_at: 2026-08-23T12:45:22+02:00
+resync_note: >-
+  Resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por DOC-08
+  2.1.0->2.2.0, DOC-02 1.0.0->1.1.0 y DOC-14 1.0.0->2.0.0). Releídas las tres entradas: DOC-08
+  2.2.0 solo resella su propia procedencia y añade un §4.5 que cita los RS-03 a RS-06 que este
+  documento ya aportaba en su 2.0.0, sin tocar ningún AC/Given/When/Then ni affects_requirements;
+  DOC-02 1.1.0 suma dos componentes (use-submit-guard, format-utils) con aristas reales desde
+  albarans-pages, verificadas en AlbaraForm.tsx — use-submit-guard envuelve el submit y
+  format-utils no se usa en ese fichero — sin alterar el comportamiento de AC-002/004/006/007/
+  009/010/011 ni ningún riesgo silencioso de §5; DOC-14 2.0.0 cierra EXP-001/002/007/014 y deja
+  EXP-009 parcial, ninguno relacionado con el área de "cambiar vehículo de un albarán" y ninguno
+  citado en el cuerpo de este documento (grep verificado). Conclusión: sin cambio de contenido.
+  Solo se resincronizan versiones y hashes de este bloque; el cuerpo (secciones 1-7) no se toca.
+  Nota menor no accionada: AlbaraForm.tsx:93-95 citado en RS-06 ha derivado a líneas 86-88 por el
+  import añadido de useSubmitGuard (mismo contenido, sin efecto en el hallazgo); no se corrige
+  aquí por ser puramente cosmético y no formar parte del encargo de este resync
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: b2a8d7706df4fef373b87a144fe4be6cfbc94390
-  working_tree_clean: false
+  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
+  working_tree_clean: true
 inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
-    version: 2.1.0
-    hash: sha256:3f418f7bd2f0f6b6a07a7d30b14fba5414a7727f951a42a398bcf94118ea5d77
+    version: 2.2.0
+    hash: sha256:028419938b0865b8479518e38ed2c41a6ae6a128c805bf3ef995d4d7dc16b73f
     present: true
   - id: DOC-02-TECNICA.md
     from: S-01
-    version: 1.0.0
-    hash: sha256:735feb13b7b0774ca1b370a8d1659ee9c7d145f6d8a52f35dc486491953bd7f1
+    version: 1.1.0
+    hash: sha256:32639b3f515f4780fdaf962513f02abf6f01fa2854b2418c2ef1f2ef864a44ca
     present: true
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
-    hash: sha256:7d1844156487a62b8936a0d2164ebec043eb7fdb7043d27afdd649316f9b63a0
+    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
     present: true
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
     version: 1.6.0
-    hash: sha256:cd248197d27e59d213b0228ccf07178bcf1c13c456549419079f967aa3588926
+    hash: sha256:a88ca2aac68a4b976650ce10fa70832a800568cf4b8efd1e390785a63282674c
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
     version: 1.7.0
-    hash: sha256:d6e7a7a6a139e4bca5f9cb30045bc4221ab1ea9b20ca7108e1c38cf56ba94917
+    hash: sha256:5cc1a789d361eedc26b11e34a57d9b721173ec1ec8e98d6fc656cf2e3418b863
     present: true
   - id: DOC-07-MATRIZ.csv
     from: A-05
@@ -44,8 +59,8 @@ inputs:
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
-    version: 1.0.0
-    hash: sha256:447e44d8c89854907a32e552fb32b4b91c1e79c68285f89d6fd9c892011bd090
+    version: 2.0.0
+    hash: sha256:4aad4cc90f497f97122a67d75fdabdda6d43e118e6ea139cbc9616c2bfafeb36
     present: true
   - id: DOC-23-INFORME.md
     from: S-10
@@ -59,8 +74,8 @@ inputs:
     present: true
   - id: codigo-fuente
     from: repositorio
-    version: b2a8d77
-    hash: git:b2a8d7706df4fef373b87a144fe4be6cfbc94390
+    version: d861654
+    hash: git:d861654e535d6835b44b263dd24f4ef03b2e5801
     present: true
   - id: DOC-03-API.md
     from: S-03
