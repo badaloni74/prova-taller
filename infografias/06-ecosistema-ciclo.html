@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ecosistema de agentes IA — app-taller (ciclo completo)</title>
+<link rel="stylesheet" href="estilo-comun.css">
+<link rel="stylesheet" href="estilo-ecosistema.css">
+<style>
+  .ring{
+    position:relative; max-width:1180px; margin:0 auto 26px;
+    display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,auto);
+    grid-template-areas:
+      "c1 c2 c3"
+      "c8 hub c4"
+      "c7 c6 c5";
+    gap:22px; align-items:stretch;
+  }
+  .ring::before{
+    content:""; position:absolute; inset:9% 9%; border:3px dashed #94a3b8; border-radius:50%; z-index:0;
+  }
+  .rc{grid-area:var(--a); z-index:2}
+  .rc .ecard{height:100%}
+  #c1{--a:c1}#c2{--a:c2}#c3{--a:c3}#c4{--a:c4}#c5{--a:c5}#c6{--a:c6}#c7{--a:c7}#c8{--a:c8}
+  .rhub{grid-area:hub; z-index:3; display:flex; flex-direction:column; gap:10px; align-items:stretch; justify-content:center}
+  .loop-note{
+    grid-area:c8; align-self:end; justify-self:start; font-size:.7rem; color:#7c3aed; font-weight:700;
+    margin-top:-10px; z-index:3;
+  }
+  .human-chip{
+    display:inline-block; background:#fee2e2; border:1px solid #fca5a5; color:#7f1d1d; font-size:.66rem;
+    font-weight:700; border-radius:6px; padding:1px 6px; margin-top:4px;
+  }
+</style>
+</head>
+<body class="eco">
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="05-ecosistema-fases.html">← Vista por fases</a></div>
+
+<h1 class="eco-title">Ciclo de vida — app-taller</h1>
+<p class="eco-subtitle">Ciclo gobernado tipo CI/CD: de la idea al código, con documentación viva, pruebas y mejora continua</p>
+
+<div class="eco-legend">
+  <div class="li">🤖 Robot = Agente</div>
+  <div class="li">📄 Documento = Documento/fichero</div>
+  <div class="li">🛠️ Engranaje = Skill/Command</div>
+  <div class="li">🙋 Validación humana</div>
+  <div class="li">🔗 Trazabilidad</div>
+  <div class="li">♻️ Mejora continua</div>
+</div>
+
+<div class="ring">
+
+  <div class="rc" id="c1"><div class="ecard"><div class="et-name">① Entrada de ideas y demandas</div>
+    <div class="et-desc">🙋 Idea de usuario, o 📄 BUG-nnn/MEJ-nnn/FUN-nnn ya catalogado</div>
+    <div class="et-desc">💻 <b>/spec</b> — aclara ambigüedades y crea la especificación</div>
+  </div></div>
+
+  <div class="rc" id="c2"><div class="ecard"><div class="et-name">② Especificación y planificación</div>
+    <div class="et-desc">📄 specs/SPE-NN.md en Draft, sección a sección</div>
+    <div class="et-desc"><span class="human-chip">🙋 Validación humana</span> Draft → Approved</div>
+  </div></div>
+
+  <div class="rc" id="c3"><div class="ecard"><div class="et-name">③ Implementación</div>
+    <div class="et-desc">💻 <b>/spec-impl</b> — rama Git, un paso cada vez</div>
+    <div class="et-desc"><span class="human-chip">🙋 Validación humana</span> revisa el diff de cada paso</div>
+  </div></div>
+
+  <div class="rc" id="c4"><div class="ecard"><div class="et-name">④ Documentación viva</div>
+    <div class="et-desc">🛠️ S-16 compara versiones y el commit real vs. lo declarado</div>
+    <div class="et-desc">📄 DOC-01/02/04/05/06/07 se regeneran si hace falta</div>
+  </div></div>
+
+  <div class="rc" id="c5"><div class="ecard"><div class="et-name">⑤ Validación y cobertura</div>
+    <div class="et-desc">🤖 A-05 · Trazabilidad — liga requisitos, pruebas y ejecución</div>
+    <div class="et-desc">📄 DOC-07 · sin huecos sin explicar</div>
+  </div></div>
+
+  <div class="rc" id="c6"><div class="ecard"><div class="et-name">⑥ Automatización y ejecución</div>
+    <div class="et-desc">🛠️ s10-auto-tcs genera/amplía Selenium+Cucumber+TestNG</div>
+    <div class="et-desc">📄 DOC-23 · verdes / rojos y su causa raíz</div>
+  </div></div>
+
+  <div class="rc" id="c7"><div class="ecard"><div class="et-name">⑦ QA explorador y mejora</div>
+    <div class="et-desc">🤖 A-10 explora sin guion → DOC-14 (EXP-nnn)</div>
+    <div class="et-desc">🤖 A-12/A-14/A-15 triaje → MEJ / BUG / FUN</div>
+  </div></div>
+
+  <div class="rc" id="c8"><div class="ecard"><div class="et-name">⑧ Comunicación y cierre</div>
+    <div class="et-desc">🗄️ specs/subidas.log, specs/implemented/</div>
+    <div class="et-desc">🖼️ Infografías y referencia-elementos.pdf</div>
+  </div></div>
+  <div class="loop-note">♻️ vuelve al punto ①</div>
+
+  <div class="rhub">
+    <div class="hub-box orq" style="min-width:0"><div class="hname">🤖 A-01 · Orquestador</div><div class="hdesc">Coordina agentes, delega skills y gobierna el flujo</div></div>
+    <div class="hub-box reg" style="min-width:0"><div class="hname">🗄️ Registro central</div><div class="hdesc">registro-ids.json + specs/subidas.log — fuente única de verdad</div></div>
+  </div>
+
+</div>
+
+<div class="eco-footer">
+  <div class="fitem"><div class="ficon">🛡️</div><div class="ftitle">Gobernanza</div><div class="fdesc">Control, visibilidad y cumplimiento de la regla app↔pruebas</div></div>
+  <div class="fitem"><div class="ficon">🔗</div><div class="ftitle">Reutilización</div><div class="fdesc">Activos compartidos: registro de IDs, plan copiado en la spec</div></div>
+  <div class="fitem"><div class="ficon">🏅</div><div class="ftitle">Calidad</div><div class="fdesc">Trazabilidad, pruebas y cobertura en cada vuelta del ciclo</div></div>
+  <div class="fitem"><div class="ficon">📈</div><div class="ftitle">Ahorro y escalabilidad</div><div class="fdesc">Menos retrabajo, más reutilización entre proyectos</div></div>
+</div>
+
+<footer>Infografía 6 — app-taller. Inspirada en el estilo "ecosistema de agentes" (vista circular) aportado por el usuario, con el contenido real de este proyecto. Generado manualmente (2026-08-23).</footer>
+</body>
+</html>

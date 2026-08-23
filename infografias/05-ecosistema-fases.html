@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ecosistema de agentes IA — app-taller (fases)</title>
+<link rel="stylesheet" href="estilo-comun.css">
+<link rel="stylesheet" href="estilo-ecosistema.css">
+</head>
+<body class="eco">
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="06-ecosistema-ciclo.html">Vista circular del ciclo completo →</a></div>
+
+<h1 class="eco-title">Ecosistema de agentes IA — app-taller</h1>
+<p class="eco-subtitle">Flujo de documentos, agentes y skills por fases numeradas</p>
+
+<div class="eco-legend">
+  <div class="li">🤖 Robot = Agente</div>
+  <div class="li">📄 Documento = Documento/fichero</div>
+  <div class="li">🛠️ Engranaje = Skill/Command</div>
+  <div class="li">🙋 Persona = Decisión humana</div>
+</div>
+
+<div class="phase f1">
+  <div class="phase-tag">FASE 1 · Documentación y QA base</div>
+  <div class="phase-cols">
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">1</span><span class="pcol-title">Entradas iniciales</span></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-01 · BASE AS-IS</span></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-02 · TÉCNICA</span></div>
+      <div class="ecard" style="background:#f8fafc;border-color:#cbd5e1;font-size:.72rem;color:#64748b">↑ generados por <b>🛠️ S-01 · skill-doc-base</b>, que escanea el repositorio (client/, server/) una sola vez</div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">2</span><span class="pcol-title">Agente funcional</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-02 · Funcional</span><div class="et-desc">Traduce la base a lenguaje de negocio y crea los requisitos REQ-nnn</div></div>
+      <div class="varrow">↓</div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-04 · FUNCIONAL</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">3</span><span class="pcol-title">Agentes en paralelo</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-03 · Pruebas</span><div class="et-desc">Genera el plan de pruebas TC-nnn</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-05 · PLAN DE PRUEBAS</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-04 · Manual</span><div class="et-desc">Crea el manual de usuario orientado a tareas reales</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-06 · MANUAL DE USUARIO</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">4</span><span class="pcol-title">Trazabilidad</span></div>
+      <div class="ecard"><span class="et-icon">🛠️</span><span class="et-name">S-14 · matriz-trazabilidad</span><div class="et-desc">Cruza REQ↔TC sin IA, detecta anomalías</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-07-MATRIZ.csv</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-05 · Trazabilidad</span><div class="et-desc">Cobertura y narrativa de riesgos</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-07 · TRAZABILIDAD</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">5</span><span class="pcol-title">Resultado Fase 1</span></div>
+      <div class="result-box">
+        <div class="rt">Base documental y QA preparada</div>
+        <ul>
+          <li>DOC-04 · Funcional</li>
+          <li>DOC-05 · Plan de pruebas</li>
+          <li>DOC-06 · Manual de usuario</li>
+          <li>DOC-07 · Trazabilidad</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="hub-row">
+  <div class="hub-box orq"><div class="hname">🤖 A-01 · Orquestador</div><div class="hdesc">Coordina agentes, valida precondiciones y decide el orden. No escribe ningún documento.</div></div>
+  <div class="hub-link"></div>
+  <div class="hub-box reg"><div class="hname">🗄️ Registro central</div><div class="hdesc">registro-ids.json (REQ/TC/UC/BR) + specs/subidas.log (qué se implementó, origen y commits)</div></div>
+</div>
+<div style="display:flex; justify-content:center; gap:280px; margin-bottom:6px">
+  <div class="hub-stem"></div>
+  <div class="hub-stem"></div>
+</div>
+
+<div class="phase f2">
+  <div class="phase-tag">FASE 2 · Especificación, impacto y regresión</div>
+  <div class="phase-cols">
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">6</span><span class="pcol-title">Origen del cambio</span></div>
+      <div class="ecard" style="background:#fdf4ff;border-color:#e9d5ff"><span class="et-icon">🙋</span><span class="et-name">Idea de usuario / BUG-MEJ-FUN</span></div>
+      <div class="ecard"><span class="et-icon">💻</span><span class="et-name">/spec</span><div class="et-desc">Aclara ambigüedades y formaliza la especificación, sección a sección</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">specs/SPE-NN · Draft → Approved</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">7</span><span class="pcol-title">Impacto</span></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">Spec Approved + DOC-02/04</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-07 · Impacto</span><div class="et-desc">Analiza qué se ve afectado si se hace el cambio</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-09 · IMPACTO</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">8</span><span class="pcol-title">Estimación y plan</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-08 · Estimación</span><div class="et-desc">Calcula coste y esfuerzo del cambio</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-10 · ESTIMACIÓN</span></div>
+      <div class="ecard"><span class="et-icon">🛠️</span><span class="et-name">S-04 · plan-implementacion</span><div class="et-desc">Escribe el plan paso a paso</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-11 · PLAN IMPL</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">9</span><span class="pcol-title">Regresión inteligente</span></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-09 + DOC-05</span></div>
+      <div class="ecard"><span class="et-icon">🤖</span><span class="et-name">A-09 · Regresión</span><div class="et-desc">Selecciona el subconjunto de pruebas necesario</div></div>
+      <div class="ecard doc"><span class="et-icon">📄</span><span class="et-name">DOC-12 · REGRESIÓN</span></div>
+    </div>
+
+    <div class="varrow">→</div>
+
+    <div class="pcol">
+      <div class="pcol-head"><span class="step-badge">🏁</span><span class="pcol-title">Resultado Fase 2</span></div>
+      <div class="result-box">
+        <div class="rt">Cambio implementado y trazado</div>
+        <ul>
+          <li>/spec-impl → client/ + server/</li>
+          <li>specs/implemented/ + subidas.log</li>
+          <li>S-16 revisa si docs/ queda obsoleto</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="eco-footer">
+  <div class="fitem"><div class="ficon">🛡️</div><div class="ftitle">Gobernanza</div><div class="fdesc">registro-ids.json nunca renumera; specs/rejected/ solo lo mueve una persona</div></div>
+  <div class="fitem"><div class="ficon">🔗</div><div class="ftitle">Trazabilidad</div><div class="fdesc">Cada spec lleva su Origen (BUG/MEJ/FUN/USER); cada commit queda enlazado en subidas.log</div></div>
+  <div class="fitem"><div class="ficon">♻️</div><div class="ftitle">Reutilización</div><div class="fdesc">DOC-09/10/11/12 y el plan copiado en la spec evitan repetir el análisis</div></div>
+  <div class="fitem"><div class="ficon">📈</div><div class="ftitle">Mejora continua</div><div class="fdesc">S-16 detecta cuándo el código se adelantó a la documentación</div></div>
+</div>
+
+<footer>Infografía 5 — app-taller. Inspirada en el estilo "ecosistema de agentes" aportado por el usuario, con el contenido real de este proyecto. Generado manualmente (2026-08-23).</footer>
+</body>
+</html>
