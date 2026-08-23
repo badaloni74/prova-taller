@@ -272,8 +272,8 @@ la base de datos. Ninguna es una suposición.
 
 | Ancla | Regla | Fuente |
 |---|---|---|
-| BR-SHL-01 | El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones | `specs/01-esquelet-app-taller.md:33`, `:101` |
-| BR-SHL-02 | El tema por defecto sigue la preferencia del sistema operativo, y la elección del usuario se recuerda | `specs/01-esquelet-app-taller.md:34`, `:101` |
+| BR-SHL-01 | El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones | `specs/implemented/SPE-01-esquelet-app-taller.md:33`, `:101` |
+| BR-SHL-02 | El tema por defecto sigue la preferencia del sistema operativo, y la elección del usuario se recuerda | `specs/implemented/SPE-01-esquelet-app-taller.md:34`, `:101` |
 
 ## 5. Glosario de dominio
 
@@ -788,12 +788,12 @@ business_rules:
   - anchor: BR-SHL-01
     statement: El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones
     module: shell
-    source: specs/01-esquelet-app-taller.md:33
+    source: specs/implemented/SPE-01-esquelet-app-taller.md:33
     confidence: high
   - anchor: BR-SHL-02
     statement: El tema por defecto sigue la preferencia del sistema operativo y la elección del usuario se recuerda
     module: shell
-    source: specs/01-esquelet-app-taller.md:34
+    source: specs/implemented/SPE-01-esquelet-app-taller.md:34
     confidence: high
 
 glossary:

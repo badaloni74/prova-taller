@@ -363,10 +363,10 @@ test que ejecutar.
 Es una omisión **deliberada y documentada**, no un descuido: SPEC 01 declara
 «No: tests automatitzats en aquest spec. Muntar Vitest i Playwright mereix un
 spec propi que ho faci una sola vegada per a tota l'app»
-(`specs/01-esquelet-app-taller.md:203`).
+(`specs/implemented/SPE-01-esquelet-app-taller.md:203`).
 
 La verificación hasta ahora ha sido manual, mediante las listas de comprobación
-que cada spec incluye (por ejemplo `specs/01-esquelet-app-taller.md:167-171`).
+que cada spec incluye (por ejemplo `specs/implemented/SPE-01-esquelet-app-taller.md:167-171`).
 
 ## 10. Suposiciones y preguntas abiertas
 

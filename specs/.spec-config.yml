@@ -4,3 +4,8 @@
 #   true  (default) → /spec-impl creates and switches to spec-NN-slug without asking
 #   false           → /spec-impl asks for [y/N] confirmation before creating the branch
 AutoCreateBranch: true
+#
+# ImplementationHistoryFile — /spec-impl appends one line per implemented spec
+# to this file when it closes it out: date, spec, origin (BUG-nnn/MEJ-nnn/
+# FUN-nnn/USER), one-line objective, and the commits that did it.
+ImplementationHistoryFile: specs/subidas.log

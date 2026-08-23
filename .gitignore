@@ -3,4 +3,6 @@ data/
 dist/
 .env
 *.log
+# Excepcion: registro versionado de /spec-impl, no un log descartable.
+!specs/subidas.log
 target/

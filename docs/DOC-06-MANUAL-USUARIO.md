@@ -41,7 +41,7 @@ inputs:
     usage: >-
       fuente de las 32 tareas, de las preguntas frecuentes, de los dos apartados de límites y de la
       tabla de trazabilidad. Sin cambios desde 1.2.0
-  - id: specs/04-proteccio-enviaments-duplicats.md
+  - id: specs/implemented/SPE-04-proteccio-enviaments-duplicats.md
     from: implantación de la app (Estado: Implemented)
     present: true
     usage: >-
@@ -52,7 +52,7 @@ inputs:
       desactualizada. No la dejaba, pero es información nueva y útil para el usuario: se añade en el
       apartado 2 como excepción justificada y anotada, no como cambio de política de fuentes del
       documento
-  - id: specs/05-presentacio-imports-i-dates.md
+  - id: specs/implemented/SPE-05-presentacio-imports-i-dates.md
     from: implantación de la app (Estado: Implemented)
     present: true
     usage: >-

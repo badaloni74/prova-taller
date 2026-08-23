@@ -49,7 +49,7 @@ gate_note: >-
 
 > **Nota de migración (2026-08-23).** La especificación que esta estimación cubre vivía en
 > `docs/DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md` (formato retirado); ahora es
-> `specs/06-albara-canvi-client.md`. El contenido no cambió en la migración, así que esta
+> `specs/SPE-06-albara-canvi-client.md`. El contenido no cambió en la migración, así que esta
 > estimación sigue siendo válida sin regenerar.
 
 # DOC-10 · Estimación y coste — `EVO-001` · Un albarán no puede cambiar de cliente

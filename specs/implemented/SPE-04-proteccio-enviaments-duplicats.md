@@ -1,6 +1,7 @@
 # SPEC 04 — Protecció contra enviaments duplicats
 
 > **Estat:** Implemented
+> **Origen:** MEJ-007
 > **Depèn de:** SPEC 01 (EntityForm i components genèrics), SPEC 02 (línies d'albarà i emissió de factura), SPEC 03 (formularis de Personal i Nòmines)
 > **Data:** 2026-08-22
 > **Objectiu:** Impedir que una segona pulsació del botó d'enviament, mentre la primera petició encara és en vol, creï un registre o una línia duplicats.

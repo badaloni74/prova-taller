@@ -48,7 +48,7 @@ van construir l'app sencera així.
 3. `/spec-impl NN-slug` — branca pròpia, implantació pas a pas amb pausa per
    revisar cada diff
 
-Format de la capçalera d'un spec: veure `specs/03-personal-i-nomines.md`. Els
+Format de la capçalera d'un spec: veure `specs/implemented/SPE-03-personal-i-nomines.md`. Els
 estats es fan servir **en anglès** (`Draft`, `Approved`, `Implemented`), tot i
 que el cos del document està en català.
 

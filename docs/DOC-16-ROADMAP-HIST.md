@@ -123,8 +123,8 @@ hasta la próxima regeneración con análisis, que es cuando corresponde revisar
 **Qué cambia.**
 
 - **Dos mejoras pasan de `proposed` a `implemented`**: `MEJ-007` (guarda de reenvío,
-  construida por `specs/04-proteccio-enviaments-duplicats.md`) y `MEJ-008` (formato único
-  de importe y fecha, construida por `specs/05-presentacio-imports-i-dates.md`). Los dos
+  construida por `specs/implemented/SPE-04-proteccio-enviaments-duplicats.md`) y `MEJ-008` (formato único
+  de importe y fecha, construida por `specs/implemented/SPE-05-presentacio-imports-i-dates.md`). Los dos
   specs citan a `DOC-16` por nombre. Verificado que el problema atacado desapareció de
   verdad: `EXP-001`, `EXP-002`, `EXP-007` y `EXP-014` cierran con red y base de datos
   comprobadas; `EXP-009` cierra solo en su parte de presentación.

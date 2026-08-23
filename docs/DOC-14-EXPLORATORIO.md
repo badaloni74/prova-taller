@@ -44,10 +44,10 @@ inputs:
     from: A-10
     version: 1.0.0
     present: true
-  - id: specs/04-proteccio-enviaments-duplicats.md
+  - id: specs/implemented/SPE-04-proteccio-enviaments-duplicats.md
     from: implantación de la app (Estado: Implemented)
     present: true
-  - id: specs/05-presentacio-imports-i-dates.md
+  - id: specs/implemented/SPE-05-presentacio-imports-i-dates.md
     from: implantación de la app (Estado: Implemented)
     present: true
 ---

@@ -1,6 +1,7 @@
 # SPEC 02 — Nucli operatiu del taller: Vehicles, Peces, Albarans i Factures
 
 > **Estat:** Implemented
+> **Origen:** USER
 > **Depèn de:** SPEC 01 (esquelet de l'app, components genèrics, base de dades, i18n, tema)
 > **Data:** 2026-08-13
 > **Objectiu:** Implementar Vehicles, Peces (amb estoc), Albarans (amb línies de peces i mà d'obra) i Factures (que agrupen albarans amb IVA i numeració correlativa), reutilitzant el patró CRUD i els components genèrics del SPEC 01.

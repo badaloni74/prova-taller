@@ -1,0 +1,20 @@
+# Historial de implementaciones — registro mecánico, generado por /spec-impl
+#
+# Una línea por spec que llega a Implemented, añadida por /spec-impl en el
+# mismo commit que lo marca como implementado y lo mueve a specs/implemented/.
+#
+# Alcance: solo cambios de la aplicación (client/, server/) hechos vía
+# /spec-impl. No se registra nada por regeneración de documentación (docs/
+# DOC-nn) ni por cambios en automation/ui/ (skill s10-auto-tcs) — esos tienen
+# su propio seguimiento (docs/DOC-16, DOC-23, DOC-24, DOC-25). Un commit que
+# toque la app fuera del flujo /spec -> /spec-impl tampoco aparece aquí (hay
+# al menos uno: ed61c24, anterior a la adopción de este registro).
+#
+# Formato de línea:
+#   FECHA=<AAAA-MM-DD> | SPEC=<ruta del spec> | ORIGEN=<BUG-nnn/MEJ-nnn/FUN-nnn/USER, uno o varios separados por coma> | RESUMEN=<objetivo de una frase, copiado literal del spec, sin traducir> | COMMITS=<primero>..<último> (<N> commits)
+
+FECHA=2026-08-13 | SPEC=specs/implemented/SPE-01-esquelet-app-taller.md | ORIGEN=USER | RESUMEN=Muntar l'aplicació local Node+Express+React+SQLite amb navegació lateral, canvi d'idioma català/castellà, tema fosc/clar i el mòdul de Clients complet com a patró CRUD de referència. | COMMITS=704c35c (1 commit)
+FECHA=2026-08-13 | SPEC=specs/implemented/SPE-02-nucli-taller.md | ORIGEN=USER | RESUMEN=Implementar Vehicles, Peces (amb estoc), Albarans (amb línies de peces i mà d'obra) i Factures (que agrupen albarans amb IVA i numeració correlativa), reutilitzant el patró CRUD i els components genèrics del SPEC 01. | COMMITS=8b0bece..88e47d5 (14 commits)
+FECHA=2026-08-14 | SPEC=specs/implemented/SPE-03-personal-i-nomines.md | ORIGEN=USER | RESUMEN=Implementar les entitats Personal i Nòmines del taller, amb el mateix patró CRUD i components genèrics dels SPECs 01/02. | COMMITS=5a18b56..44748fb (7 commits)
+FECHA=2026-08-22 | SPEC=specs/implemented/SPE-04-proteccio-enviaments-duplicats.md | ORIGEN=MEJ-007 | RESUMEN=Impedir que una segona pulsació del botó d'enviament, mentre la primera petició encara és en vol, creï un registre o una línia duplicats. | COMMITS=e7d7ab6..5b471f4 (7 commits)
+FECHA=2026-08-23 | SPEC=specs/implemented/SPE-05-presentacio-imports-i-dates.md | ORIGEN=MEJ-008 | RESUMEN=Unificar la presentació d'imports (coma decimal, milers, símbol €, incloent l'IVA de la factura) i de la data de l'albarà (format llegible) amb un mòdul de format compartit. | COMMITS=3b12202..75b5273 (6 commits)

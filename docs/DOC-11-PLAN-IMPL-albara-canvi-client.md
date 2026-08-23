@@ -33,7 +33,7 @@ inputs:
       bloque `graph`: identificadores de componente citados en este plan (albarans-router,
       albarans-pages, vehicles-router, vehicles-service, db-seed, shared-components,
       factures-router) y sus rutas de fichero
-  - id: specs/06-albara-canvi-client.md
+  - id: specs/SPE-06-albara-canvi-client.md
     from: /spec
     spec_status: Approved
     hash: sha256:4bce9eca9fab0fa0a5ebfccf5b2a109a986a56257917fbc27908f8d11dec126a
@@ -107,7 +107,7 @@ revertible con `git revert`. No hay migración de esquema (`DOC-09` §4.1,
 
 ## 2. Precondiciones
 
-- `specs/06-albara-canvi-client.md` en estado `Approved` — lo está.
+- `specs/SPE-06-albara-canvi-client.md` en estado `Approved` — lo está.
 - Worktree sincronizado con `master` — hecho (`git merge --ff-only master`, fast-forward
   `0c7ca37..b325248`).
 - Tras el paso 2, la base de datos debe resembrarse (`rm -f data/taller.db && npm run seed`)

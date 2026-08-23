@@ -1,6 +1,7 @@
 # SPEC 05 — Presentació d'imports i dates
 
 > **Estat:** Implemented
+> **Origen:** MEJ-008
 > **Depèn de:** SPEC 01 (components genèrics, i18n), SPEC 02 (Peces, Albarans, Factures), SPEC 03 (Personal, Nòmines)
 > **Data:** 2026-08-22
 > **Objectiu:** Unificar la presentació d'imports (coma decimal, milers, símbol €, incloent l'IVA de la factura) i de la data de l'albarà (format llegible) amb un mòdul de format compartit.

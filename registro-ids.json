@@ -587,7 +587,7 @@
       "text": "El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones",
       "type": "business_rule",
       "module": "shell",
-      "source": "specs/01-esquelet-app-taller.md:33",
+      "source": "specs/implemented/SPE-01-esquelet-app-taller.md:33",
       "created": "2026-08-15",
       "status": "active"
     },
@@ -595,7 +595,7 @@
       "text": "El tema por defecto sigue la preferencia del sistema operativo y la elección del usuario se recuerda",
       "type": "business_rule",
       "module": "shell",
-      "source": "specs/01-esquelet-app-taller.md:34",
+      "source": "specs/implemented/SPE-01-esquelet-app-taller.md:34",
       "created": "2026-08-15",
       "status": "active"
     },

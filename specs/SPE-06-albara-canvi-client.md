@@ -1,6 +1,7 @@
 # SPEC 06 — Un albarán no puede cambiar de cliente
 
 > **Estado:** Approved
+> **Origen:** BUG-002
 > **Resuelve:** DOC-04/Q-10 (respondida por negocio el 2026-08-16), BUG-002 (DOC-24, `critical`, reproducido)
 > **Depende de:** SPEC 02 (núcleo del taller: albaranes, vehículos, facturas)
 > **Fecha:** 2026-08-23

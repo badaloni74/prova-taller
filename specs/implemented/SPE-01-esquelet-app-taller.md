@@ -1,6 +1,7 @@
 # SPEC 01 — Esquelet de l'app de taller: navegació, idioma i tema
 
 > **Estat:** Implemented
+> **Origen:** USER
 > **Depèn de:** cap (spec inicial del projecte)
 > **Data:** 2026-08-12
 > **Objectiu:** Muntar l'aplicació local Node+Express+React+SQLite amb navegació lateral, canvi d'idioma català/castellà, tema fosc/clar i el mòdul de Clients complet com a patró CRUD de referència.

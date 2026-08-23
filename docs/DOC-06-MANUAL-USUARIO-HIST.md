@@ -31,8 +31,8 @@ Una entrada por versión, de la más nueva a la más antigua.
   un comentario del árbol de carpetas), así que ninguna tarea se reescribe por
   esta subida.
 - Se leyeron, por instrucción explícita de la cascada de obsolescencia,
-  `specs/04-proteccio-enviaments-duplicats.md` y
-  `specs/05-presentacio-imports-i-dates.md` — ya implementados, aunque no son
+  `specs/implemented/SPE-04-proteccio-enviaments-duplicats.md` y
+  `specs/implemented/SPE-05-presentacio-imports-i-dates.md` — ya implementados, aunque no son
   fuente contractual habitual de este manual. Aportan tres comportamientos
   visibles para el usuario:
   - el botón de guardar se deshabilita y cambia a *Guardando…*/*Desant…*

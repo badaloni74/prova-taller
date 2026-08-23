@@ -145,7 +145,7 @@ son las verdades vigentes.
   consumidor indirecto en `AlbaraLiniesSection.tsx`), y `grep -rl toFixed client/src`
   **no devuelve ninguno** (eran 15 llamadas en 8 ficheros). Ambas cifras se citan en las
   fichas de `MEJ-007` y `MEJ-008`.
-- **`specs/04-proteccio-enviaments-duplicats.md` y `specs/05-presentacio-imports-i-dates.md`**
+- **`specs/implemented/SPE-04-proteccio-enviaments-duplicats.md` y `specs/implemented/SPE-05-presentacio-imports-i-dates.md`**
   — los dos con `Estado: Implemented`, y los dos citan a este documento por su nombre:
   «`docs/DOC-16-ROADMAP.md` ja ho havia censat com **MEJ-007**» y «com **MEJ-008**». Es la
   primera vez que una mejora de este roadmap se ve citada de vuelta desde la
@@ -319,7 +319,7 @@ personal (`EXP-028`, `MEJ-009`).
 | | |
 |---|---|
 | **Estado** | `implemented` — verificado en vivo el 2026-08-23 |
-| **Construida por** | `specs/04-proteccio-enviaments-duplicats.md`, `Estado: Implemented`, que cita esta mejora por nombre |
+| **Construida por** | `specs/implemented/SPE-04-proteccio-enviaments-duplicats.md`, `Estado: Implemented`, que cita esta mejora por nombre |
 | **Verificación de que el problema desapareció** | `DOC-14/EXP-001` y `DOC-14/EXP-002`, ambos `CORREGIDO en v2.0.0`, con panel de red y `GET` de comprobación antes/después |
 
 **Qué se construyó.** `client/src/hooks/useSubmitGuard.ts`, un único hook que bloquea el
@@ -351,7 +351,7 @@ decisión se tomó y se ejecutó como se propuso: un hook, no tres parches.
 | | |
 |---|---|
 | **Estado** | `implemented` — verificado en vivo el 2026-08-23, con un residual pequeño (ver `MEJ-009`) |
-| **Construida por** | `specs/05-presentacio-imports-i-dates.md`, `Estado: Implemented`, que cita esta mejora por nombre |
+| **Construida por** | `specs/implemented/SPE-05-presentacio-imports-i-dates.md`, `Estado: Implemented`, que cita esta mejora por nombre |
 | **Verificación de que el problema desapareció** | `DOC-14/EXP-014` `CORREGIDO en v2.0.0`; `DOC-14/EXP-009` `PARCIALMENTE CORREGIDO en v2.0.0` (presentación cierra, el defecto de fondo no, y no era de esta mejora) |
 
 **Qué se construyó.** `client/src/utils/format.ts`: `formatMoney` sobre
@@ -737,7 +737,7 @@ improvements:
       - DOC-14/EXP-006
       - DOC-05/4.11/familia-literal-del-aviso-25-casos
       - codigo/71-literales-en-server-routes-recontados-en-4526cf0-sin-cambios
-      - specs/01-esquelet-app-taller.md:102
+      - specs/implemented/SPE-01-esquelet-app-taller.md:102
     evidence_change_since_2_1_0: sin cambios
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, api-client]
     impact: medium
@@ -845,7 +845,7 @@ improvements:
   - id: MEJ-007
     title: Una sola guarda contra el reenvío en los tres puntos de escritura del cliente
     status: implemented
-    implemented_via: specs/04-proteccio-enviaments-duplicats.md
+    implemented_via: specs/implemented/SPE-04-proteccio-enviaments-duplicats.md
     implemented_verified_on: 2026-08-23
     what: >-
       Bloquear el envío mientras la petición está en vuelo, en un solo sitio:
@@ -857,7 +857,7 @@ improvements:
     evidence_refs:
       - DOC-14/EXP-002
       - DOC-14/EXP-001
-      - specs/04-proteccio-enviaments-duplicats.md
+      - specs/implemented/SPE-04-proteccio-enviaments-duplicats.md
       - codigo/9-ficheros-importan-useSubmitGuard-en-4526cf0
     components: [shared-components, albarans-pages, factures-pages, clients-pages, vehicles-pages, peces-pages, personal-pages, nomines-pages]
     problem_verified_gone: true
@@ -869,7 +869,7 @@ improvements:
   - id: MEJ-008
     title: Un único sitio donde se dé formato a importes y fechas
     status: implemented
-    implemented_via: specs/05-presentacio-imports-i-dates.md
+    implemented_via: specs/implemented/SPE-05-presentacio-imports-i-dates.md
     implemented_verified_on: 2026-08-23
     what: >-
       client/src/utils/format.ts: formatMoney (Intl.NumberFormat) y formatDate
@@ -882,7 +882,7 @@ improvements:
     evidence_refs:
       - DOC-14/EXP-014
       - DOC-14/EXP-009
-      - specs/05-presentacio-imports-i-dates.md
+      - specs/implemented/SPE-05-presentacio-imports-i-dates.md
       - codigo/0-toFixed-en-client-src-en-4526cf0
     components: [albarans-pages, clients-pages, factures-pages, nomines-pages, peces-pages, personal-pages, shared-components]
     problem_verified_gone: true

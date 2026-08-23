@@ -1,6 +1,7 @@
 # SPEC 03 — Personal i Nòmines del taller
 
 > **Estat:** Implemented
+> **Origen:** USER
 > **Depèn de:** SPEC 01 (esquelet de l'app, components genèrics, base de dades, i18n, tema)
 > **Data:** 2026-08-13
 > **Objectiu:** Implementar les entitats Personal i Nòmines del taller, amb el mateix patró CRUD i components genèrics dels SPECs 01/02.

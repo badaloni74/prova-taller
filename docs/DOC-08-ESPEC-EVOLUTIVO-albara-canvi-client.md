@@ -134,7 +134,7 @@ gate:
 
 > **RETIRADO (2026-08-23).** El formato DOC-08 se ha retirado: los evolutivos se
 > especifican ahora con `/spec` y viven en `specs/`. Este contenido se migró a
-> **`specs/06-albara-canvi-client.md`**, que es la versión viva. Este fichero
+> **`specs/SPE-06-albara-canvi-client.md`**, que es la versión viva. Este fichero
 > se conserva como registro histórico — no lo actualiza nadie a partir de aquí.
 
 # DOC-08 · Especificación de evolutivo — `EVO-001` · Un albarán no puede cambiar de cliente
