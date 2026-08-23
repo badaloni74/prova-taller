@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.8.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.9.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-23T14:40:00+02:00
+generated_at: 2026-08-24T00:20:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,80 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.9.0 — 2026-08-24 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `DOC-23-INFORME.md` subió dos versiones MINOR el mismo día
+—2.0.0 → 2.1.0 → 2.2.0— desde la última lectura de A-05, y `S-16 · Cascada de
+obsolescencia` volvió a marcar a DOC-07 como obsoleto:
+
+```
+DOC-07 1.8.0 — por DOC-23: declara 2.0.0, actual 2.2.0  [MINOR]
+```
+
+Quinta regeneración consecutiva disparada por una máquina. La tarea que dispara este ciclo
+citaba «DOC-23 subió a 2.1.0», pero para cuando A-05 fue a leerlo el repositorio ya estaba
+en 2.2.0: A-05 verificó el estado real con `cascada.js` y con `git log` en vez de fiarse de
+la descripción con la que empezó la tarea, y regeneró contra la versión vigente, no contra
+la citada. `S-16` también marcó `DOC-05` como obsoleto en el mismo ciclo (declara `DOC-23`
+2.1.0, actual 2.2.0) — no es competencia de A-05 corregirlo, y A-05 ha verificado que ese
+resello pendiente no toca ningún `REQ-nnn` ni `TC-nnn`, así que no bloquea esta
+regeneración.
+
+**Qué trae `DOC-23` 2.1.0 y 2.2.0.** 2.1.0 confirmó con una ejecución real —no con lectura
+de código— los hallazgos que 1.8.0 solo podía acotar por abajo: **TC-048** rojo por falta
+de aislamiento con TC-040 (A-05-08b, hipótesis desde 1.4.0), **17 casos** rojos por una
+única causa raíz (`EXP-027`, literales de importe con punto decimal que la pantalla ya no
+produce desde `SPEC 05` — A-05-13, nacido en 1.8.0) y un rojo aislado de infraestructura.
+2.2.0, el mismo día, documenta que los 18 se corrigieron y se reverificaron —commits
+`735ded8` y `5366e18`— y corrige una atribución errónea de la propia 2.1.0 (el rojo de
+infraestructura era `TC-103`, no `TC-029`).
+
+**Qué cambia.**
+
+| Qué | 1.8.0 | 1.9.0 |
+|---|---|---|
+| Entrada DOC-04 | 1.2.0 (`626fdb84…`) | 1.2.0 — sin cambios |
+| Entrada DOC-05 | 1.6.0 (`a88ca2aa…`) | 1.6.0 — **hash resincronizado** (`d338297a…`, resello de procedencia contra DOC-23 2.1.0, sin tocar `requirements`/`testcases`) |
+| Entrada DOC-09 | 2.0.0 | **2.0.2** — resello de PATCH |
+| Entrada DOC-14 | 2.0.0 | **2.0.1** — resello de PATCH |
+| Entrada DOC-23 | 2.0.0 | **2.2.0 — motivo del disparo** |
+| Entrada `registro-ids.json` | 317 anclas | **317 — sin cambios de contenido**, hash resincronizado por el renombrado `SPE-` de los specs |
+| `DOC-07-MATRIZ.csv` | md5 `087a0377…` | **idéntico, séptima vez consecutiva** |
+| Cobertura · bloqueantes | 100,00 % · 0 | 100,00 % · 0 — sin cambios |
+| Avisos | 30 (17 + 13) | **29** (17 + 12) — se cierra A-05-13 |
+| Escenarios en verde (DOC-23) | 106 de 107 | **107 de 107** |
+| Requisitos con defecto confirmado | 4 | 4 — sin cambios |
+
+**Un hallazgo se cierra: A-05-13.** Nacido en 1.8.0 a partir de `EXP-027` de `DOC-14`,
+citaba «al menos nueve» casos con literales de punto decimal obsoletos. `DOC-23` 2.1.0
+cerró la cuenta con ejecución real: 17 exactos. `DOC-23` 2.2.0 documenta la corrección
+(commit `5366e18`), y A-05 la ha verificado directamente sobre los cuatro `.feature`
+afectados —no sobre la declaración de DOC-23—, confirmando el literal con coma decimal y
+el espacio no separable (`U+00A0`) que produce `Intl.NumberFormat('es-ES', …)`. Se cierra
+con un residuo metodológico anotado, no un hallazgo nuevo: la verificación de los 18 casos
+corregidos fue una reejecución dirigida a esos 18, no una pasada completa de los 107; la
+próxima ejecución íntegra queda pendiente de confirmarlo de forma independiente.
+
+**Un hallazgo cambia de forma sin cerrarse: A-05-08b.** El caso concreto que lo demostraba
+—TC-040 contaminando el estoc que TC-048 asumía intacto— está corregido y verificado en
+`DOC-23` 2.2.0. El riesgo estructural que lo sostiene —nadie hace cumplir en tiempo de
+ejecución el orden de aislamiento que S-14 deriva— no se ha tocado, y dos `critical` de
+caso único más (REQ-028, REQ-036) siguen viviendo en el mismo carril sin haber sido puestos
+a prueba. Sigue abierto, con la corrección de fondo en **S-06 / DOC-13**.
+
+**A-05-03b no cambia de fondo, pero su fila de ejecución sí.** TC-073 y TC-075 pasaron por
+rojo en `DOC-23` 2.1.0 (por el mismo `EXP-027`) y vuelven a estar en verde en 2.2.0. La
+mitad del hallazgo que importa a A-03 —ninguno de los dos casos comprueba el IVA que
+anuncian— no se ha movido.
+
+**Pregunta retirada: la 16 de 1.8.0** («¿se actualizan los literales de importe al
+separador decimal vigente?»), contestada que sí y verificada por A-05. No se renumeran las
+que quedan.
 
 ---
 
