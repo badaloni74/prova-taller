@@ -104,14 +104,15 @@ verifiquen.
 
 ## Estat conegut
 
-- **TC-048 vermell** (manca d'aïllament amb TC-040, és la prova, no l'app,
-  `docs/DOC-23-INFORME.md` §4) **i, des del SPEC 05, probablement més.**
-  `EXP-027` (`docs/DOC-14-EXPLORATORIO.md`) confirma en viu que els
-  `.feature` de `factures`/`nomines` (`automation/ui/`) encara validen
+- **TC-048 ja no és vermell** — corregit i verificat (2026-08-23, commit
+  `735ded8`): manca d'aïllament amb TC-040, era la prova, no l'app.
+  **`DOC-23` 2.1.0 confirma 17 vermells nous, tots la mateixa causa
+  (`EXP-027`)**: `factures.feature`/`nomines.feature` encara validen
   literals amb punt decimal (p. ex. `121.00 €`) que ja no coincideixen amb
-  la pantalla — SPEC 05 hi va passar a coma decimal. `DOC-23` 2.0.0 és
-  d'abans del SPEC 05: el seu «106 verds» ja no és fiable. Correspon a
-  `s10-auto-tcs` actualitzar els `.feature` i re-executar la suite.
+  la pantalla des del SPEC 05 (coma decimal). Correspon a `s10-auto-tcs`
+  actualitzar-los i re-executar. Un cas més (`TC-029`) és una fallada
+  puntual d'infraestructura (Chrome no arrenca), no reproduïda de forma
+  fiable — veure `DOC-23` §4.3.
 - Documentació regenerada i al dia amb el codi (2026-08-23): `DOC-01` a
   `DOC-09`, `DOC-14`, `DOC-16` i `DOC-25`. Segueixen totes en `status: draft`
   — cap ha creuat el gate humà d'aprovació.
