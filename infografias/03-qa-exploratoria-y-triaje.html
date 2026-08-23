@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Infografía 3 — QA exploratoria y triaje</title>
+<link rel="stylesheet" href="estilo-comun.css">
+</head>
+<body>
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="02-cambios-app.html">← Infografía 2</a><a href="04-pruebas-automatizadas.html">Infografía 4: Pruebas automatizadas →</a></div>
+<h1>Infografía 3 — QA exploratoria y triaje de hallazgos</h1>
+<p class="subtitle">Cómo un hallazgo de exploración se convierte en un bug confirmado, una mejora, una funcionalidad nueva o una spec.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--agent-bg);border:2px solid var(--agent-bd)">🤖</span> Agente</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--doc-bg);border:2px solid var(--doc-bd)">📄</span> Documento</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--human-bg);border:2px solid var(--human-bd)">🙋</span> Decisión humana</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--store-bg);border:2px solid var(--store-bd)">🗄️</span> Almacén</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--cmd-bg);border:2px solid var(--cmd-bd)">💻</span> Command</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--app-bg);border:2px solid var(--app-bd)">📦</span> Aplicación</div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">1. Explorar la aplicación real</div>
+  <div class="flow" style="align-items:center">
+    <div class="box app" style="width:190px"><div class="head"><span class="icon">📦</span><span class="name">App desplegada</span></div><div class="desc">navegador, sin guion</div></div>
+    <div class="arrow"><div class="label">prueba libre, sin plan previo</div><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-10 · Explorador QA</span></div><div class="desc">No modifica la app ni vuelve a ejecutar las pruebas automatizadas</div></div>
+    <div class="arrow"><div class="label">produce</div><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-14 Exploratorio</span></div><div class="desc">Hallazgos EXP-nnn: qué funciona, qué no, qué hay que revisar</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">2. Triaje — una persona decide dónde va cada hallazgo</div>
+  <div class="flow" style="align-items:center">
+    <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">DOC-14 (EXP-nnn)</span></div></div>
+    <div class="arrow"><div class="label">agrupa y decide</div><div class="line"></div></div>
+    <div class="col">
+      <div class="box human" style="width:220px"><div class="head"><span class="icon">🙋</span><span class="name">Triaje (persona + Claude)</span></div><div class="desc">no es un skill fijo — análisis conjunto</div></div>
+      <div class="box store" style="width:220px"><div class="head"><span class="icon">🗄️</span><span class="name">TRIATGE-DOC-14.md</span></div><div class="desc">registro del estado de cada EXP-nnn</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">3. Cada hallazgo va hacia uno de los cuatro destinos</div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">EXP-nnn (bug)</span></div></div>
+    <div class="arrow"><div class="label">reproduce y confirma</div><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-14 · explorador ejecutor</span></div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-24-BUGS.json</span></div><div class="desc">BUG-nnn, con estado abierto/cerrado</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">EXP-nnn (deuda técnica)</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">+ DOC-07, DOC-24, DOC-16 previo</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-12 · Roadmap</span></div><div class="desc">Prioriza por valor/impacto/dificultad. No propone funcionalidad nueva.</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-16-ROADMAP.md</span></div><div class="desc">MEJ-nnn</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">EXP-nnn (funcionalidad)</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">+ DOC-04, DOC-06, DOC-25 previo</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-15 · Funcionalidad</span></div><div class="desc">Prioriza por valor de negocio. No propone refactors.</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-25-PROPUESTAS.md</span></div><div class="desc">FUN-nnn</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center">
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">EXP-nnn (ya suficientemente claro)</span></div></div>
+    <div class="arrow"><div class="label">directo, sin esperar catalogación</div><div class="line"></div></div>
+    <a href="02-cambios-app.html" style="text-decoration:none"><div class="box cmd"><div class="head"><span class="icon">💻</span><span class="name">/spec</span></div><div class="desc">vuelve a la infografía 2 →</div></div></a>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">4. El círculo se cierra</div>
+  <div class="flow" style="align-items:center">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">BUG-nnn</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">MEJ-nnn</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">FUN-nnn</span></div></div>
+    </div>
+    <div class="arrow"><div class="label">se convierten en el Origen de una spec</div><div class="line"></div></div>
+    <a href="02-cambios-app.html" style="text-decoration:none"><div class="box cmd"><div class="head"><span class="icon">💻</span><span class="name">/spec</span></div><div class="desc">campo Origen: BUG-nnn/MEJ-nnn/FUN-nnn — infografía 2 →</div></div></a>
+  </div>
+  <div class="note">
+    Ejemplo real de este proyecto: <code>MEJ-007</code> y <code>MEJ-008</code> nacieron de <code>EXP-001/002</code>
+    y <code>EXP-009/014</code>, y acabaron siendo el Origen de las specs <code>SPE-04</code> y <code>SPE-05</code>.
+  </div>
+</div>
+
+<footer>Infografía 3 de 4 — app-taller. Generado manualmente (2026-08-23). No se regenera automáticamente.</footer>
+</body>
+</html>

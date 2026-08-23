@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Infografía 2 — Cómo se cambia la app (/spec y /spec-impl)</title>
+<link rel="stylesheet" href="estilo-comun.css">
+</head>
+<body>
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="01-base-documental.html">← Infografía 1</a><a href="03-qa-exploratoria-y-triaje.html">Infografía 3: QA y triaje →</a></div>
+<h1>Infografía 2 — Cómo se crea o se cambia la aplicación</h1>
+<p class="subtitle"><code>/spec</code> escribe la especificación; <code>/spec-impl</code> la implementa. Si la spec cambia un requisito ya documentado (un "evolutivo"), hay un tramo opcional de análisis en medio.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--cmd-bg);border:2px solid var(--cmd-bd)">💻</span> Command</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--agent-bg);border:2px solid var(--agent-bd)">🤖</span> Agente</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--skill-bg);border:2px solid var(--skill-bd)">🛠️</span> Skill</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--doc-bg);border:2px solid var(--doc-bd)">📄</span> Documento</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--human-bg);border:2px solid var(--human-bd)">🙋</span> Decisión humana</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--store-bg);border:2px solid var(--store-bd)">🗄️</span> Almacén</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--app-bg);border:2px solid var(--app-bd)">📦</span> Aplicación</div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">1. Escribir la spec</div>
+  <div class="flow" style="align-items:center">
+    <div class="col">
+      <div class="box human" style="width:190px"><div class="head"><span class="icon">🙋</span><span class="name">Idea del usuario</span></div><div class="desc">Origen: USER</div></div>
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">BUG-nnn / MEJ-nnn / FUN-nnn</span></div><div class="desc">de DOC-24, DOC-16 o DOC-25 — ver infografía 3</div></div>
+    </div>
+    <div class="arrow"><div class="label">entrevista por bloques de preguntas</div><div class="line"></div></div>
+    <div class="box cmd"><div class="head"><span class="icon">💻</span><span class="name">/spec</span></div><div class="desc">Nunca escribe código. Sección a sección, con confirmación del usuario en cada una.</div></div>
+    <div class="arrow"><div class="label">crea</div><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">specs/SPE-NN-slug.md</span></div><div class="desc">Estado: Draft · campo Origen obligatorio · en specs/ raíz</div></div>
+    <div class="arrow"><div class="label">relee y aprueba</div><div class="line"></div></div>
+    <div class="box human"><div class="head"><span class="icon">🙋</span><span class="name">Estado → Approved</span></div><div class="desc">Solo lo hace una persona. /spec-impl se niega si no lo está.</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">2. Tramo opcional — cuando la spec cambia un requisito ya existente (bloque <code>yaml evolutivo</code>)</div>
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">Spec Approved</span></div><div class="desc">con yaml evolutivo</div></div>
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">DOC-02 + DOC-04</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-07 · Impacto</span></div><div class="desc">Qué se rompe si tocamos esto</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-09 Impacto</span></div></div>
+  </div>
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">Spec + DOC-09</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-08 · Estimación</span></div><div class="desc">Juicio puro — lo que menos se calcula</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-10 Estimación</span></div></div>
+  </div>
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">Spec + DOC-09</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-04 · plan-implementacion</span></div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-11 Plan Impl</span></div><div class="desc">pasos → se copian a la sección Plan de la spec</div></div>
+  </div>
+  <div class="flow" style="align-items:center">
+    <div class="col">
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">DOC-09 + DOC-05</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-09 · Regresión</span></div><div class="desc">Qué subconjunto de TC-nnn hay que repasar</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-12 Regresión</span></div></div>
+  </div>
+  <div class="note">Este tramo es opcional y no bloquea /spec-impl — la spec ya lleva el plan copiado. DOC-09/10/12 quedan en <code>docs/</code> como análisis propio, no se duplican en la spec.</div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">3. Implementar</div>
+  <div class="flow" style="align-items:center">
+    <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">Spec Approved</span></div></div>
+    <div class="arrow"><div class="label">rama spec-NN-slug, paso a paso con pausa</div><div class="line"></div></div>
+    <div class="box cmd"><div class="head"><span class="icon">💻</span><span class="name">/spec-impl</span></div><div class="desc">Implementa exactamente el plan. Nunca cambia el alcance por sorpresa.</div></div>
+    <div class="arrow"><div class="label">commit por paso</div><div class="line"></div></div>
+    <div class="box app"><div class="head"><span class="icon">📦</span><span class="name">client/ + server/</span></div><div class="desc">código de la aplicación actualizado</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">4. Al cerrar la spec</div>
+  <div class="flow" style="align-items:center">
+    <div class="box cmd" style="width:190px"><div class="head"><span class="icon">💻</span><span class="name">/spec-impl</span></div><div class="desc">marca Implemented</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="col">
+      <div class="box doc" style="width:220px"><div class="head"><span class="icon">📄</span><span class="name">specs/implemented/</span></div><div class="desc">mueve la spec</div></div>
+      <div class="box store" style="width:220px"><div class="head"><span class="icon">🗄️</span><span class="name">specs/subidas.log</span></div><div class="desc">añade línea: fecha, spec, Origen, resumen, commits</div></div>
+    </div>
+    <div class="arrow"><div class="label">y comprueba</div><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-16 · cascada-obsolescencia</span></div><div class="desc">Compara versiones declaradas vs. reales y el commit del código vs. HEAD</div></div>
+    <div class="arrow"><div class="label">si hace falta, vuelve a</div><div class="line"></div></div>
+    <a href="01-base-documental.html" style="text-decoration:none"><div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-nn afectados</span></div><div class="desc">infografía 1 — se regeneran, no se editan a mano</div></div></a>
+  </div>
+</div>
+
+<footer>Infografía 2 de 4 — app-taller. Generado manualmente (2026-08-23) a partir de los ficheros de agentes/skills/commands del repositorio de herramientas. No se regenera automáticamente.</footer>
+</body>
+</html>

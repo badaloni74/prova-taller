@@ -1,0 +1,73 @@
+/* Estil comu per a totes les infografies del projecte app-taller */
+:root{
+  --agent-bg:#dbeafe; --agent-bd:#2563eb; --agent-fg:#1e3a8a;
+  --skill-bg:#fef3c7; --skill-bd:#d97706; --skill-fg:#78350f;
+  --doc-bg:#dcfce7; --doc-bd:#16a34a; --doc-fg:#14532d;
+  --cmd-bg:#ede9fe; --cmd-bd:#7c3aed; --cmd-fg:#4c1d95;
+  --human-bg:#fee2e2; --human-bd:#dc2626; --human-fg:#7f1d1d;
+  --store-bg:#e5e7eb; --store-bd:#4b5563; --store-fg:#1f2937;
+  --app-bg:#e0f2fe; --app-bd:#0284c7; --app-fg:#075985;
+}
+*{box-sizing:border-box}
+body{
+  font-family:"Segoe UI",Arial,sans-serif; background:#f8fafc; color:#0f172a;
+  margin:0; padding:32px 40px 60px;
+}
+h1{font-size:1.6rem; margin:0 0 4px}
+.subtitle{color:#475569; margin:0 0 28px; font-size:.95rem}
+.legend{
+  display:flex; flex-wrap:wrap; gap:10px 22px; background:#fff; border:1px solid #e2e8f0;
+  border-radius:10px; padding:14px 20px; margin-bottom:34px; font-size:.85rem;
+}
+.legend-item{display:flex; align-items:center; gap:7px}
+.legend-swatch{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:7px; font-size:14px; flex:none;
+}
+.stage{margin-bottom:44px}
+.stage-title{
+  font-size:1.05rem; font-weight:600; margin:0 0 16px; padding-bottom:6px;
+  border-bottom:2px solid #cbd5e1; color:#334155;
+}
+.flow{display:flex; align-items:stretch; flex-wrap:wrap; gap:0; row-gap:22px}
+.col{display:flex; flex-direction:column; gap:14px; justify-content:center}
+.arrow{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-width:70px; padding:0 6px; position:relative;
+}
+.arrow .line{width:100%; height:2px; background:#94a3b8; position:relative}
+.arrow .line::after{
+  content:""; position:absolute; right:-1px; top:50%; transform:translateY(-50%);
+  border-left:9px solid #94a3b8; border-top:6px solid transparent; border-bottom:6px solid transparent;
+}
+.arrow .label{font-size:.68rem; color:#64748b; text-align:center; margin-bottom:4px; max-width:140px}
+.box{
+  border-radius:10px; border:2px solid; padding:10px 14px; width:210px;
+  box-shadow:0 1px 2px rgba(0,0,0,.05); background:#fff;
+}
+.box .head{display:flex; align-items:center; gap:8px; margin-bottom:3px}
+.box .icon{font-size:19px; line-height:1}
+.box .name{font-weight:700; font-size:.86rem}
+.box .desc{font-size:.72rem; color:#334155; line-height:1.35}
+.box.agent{background:var(--agent-bg); border-color:var(--agent-bd)}
+.box.agent .name{color:var(--agent-fg)}
+.box.skill{background:var(--skill-bg); border-color:var(--skill-bd)}
+.box.skill .name{color:var(--skill-fg)}
+.box.doc{background:var(--doc-bg); border-color:var(--doc-bd)}
+.box.doc .name{color:var(--doc-fg)}
+.box.cmd{background:var(--cmd-bg); border-color:var(--cmd-bd)}
+.box.cmd .name{color:var(--cmd-fg)}
+.box.human{background:var(--human-bg); border-color:var(--human-bd)}
+.box.human .name{color:var(--human-fg)}
+.box.store{background:var(--store-bg); border-color:var(--store-bd)}
+.box.store .name{color:var(--store-fg)}
+.box.app{background:var(--app-bg); border-color:var(--app-bd)}
+.box.app .name{color:var(--app-fg)}
+.note{
+  background:#fffbeb; border:1px dashed #d97706; border-radius:8px; padding:10px 14px;
+  font-size:.78rem; color:#78350f; margin-top:8px; max-width:900px;
+}
+.nav{margin-bottom:28px; font-size:.85rem}
+.nav a{color:#2563eb; text-decoration:none; margin-right:16px}
+.nav a:hover{text-decoration:underline}
+footer{margin-top:40px; font-size:.72rem; color:#94a3b8}

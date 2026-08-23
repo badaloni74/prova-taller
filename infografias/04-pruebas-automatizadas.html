@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Infografía 4 — Pruebas automatizadas</title>
+<link rel="stylesheet" href="estilo-comun.css">
+</head>
+<body>
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="03-qa-exploratoria-y-triaje.html">← Infografía 3</a></div>
+<h1>Infografía 4 — Pruebas automatizadas</h1>
+<p class="subtitle">De DOC-05 al código Selenium+Cucumber+TestNG, y de la ejecución al informe que decide si el rojo es de la app o de la prueba.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--skill-bg);border:2px solid var(--skill-bd)">🛠️</span> Skill</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--doc-bg);border:2px solid var(--doc-bd)">📄</span> Documento</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--app-bg);border:2px solid var(--app-bd)">📦</span> Aplicación / código de pruebas</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--human-bg);border:2px solid var(--human-bd)">🙋</span> Decisión humana</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--cmd-bg);border:2px solid var(--cmd-bd)">💻</span> Command</div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">1. Generar o ampliar la automatización</div>
+  <div class="flow" style="align-items:center">
+    <div class="col">
+      <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">DOC-05 Plan Pruebas</span></div><div class="desc">TC-nnn con verification_path</div></div>
+      <div class="box app" style="width:190px"><div class="head"><span class="icon">📦</span><span class="name">App real</span></div><div class="desc">DOM inspeccionado antes de escribir locators</div></div>
+    </div>
+    <div class="arrow"><div class="label">patrón BasePO / StepDef genérico</div><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">s10-auto-tcs (S-10)</span></div><div class="desc">Inventaría antes de generar — no duplica lo que ya pasa en verde</div></div>
+    <div class="arrow"><div class="label">genera/amplía</div><div class="line"></div></div>
+    <div class="box app"><div class="head"><span class="icon">📦</span><span class="name">automation/ui/</span></div><div class="desc">Java 21, Selenium, Cucumber, TestNG</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">2. Ejecutar la suite completa</div>
+  <div class="flow" style="align-items:center">
+    <div class="box app" style="width:190px"><div class="head"><span class="icon">📦</span><span class="name">automation/ui/</span></div></div>
+    <div class="arrow"><div class="label">build de producción servido en estático, reseed antes</div><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-10 (ejecución + diagnóstico)</span></div><div class="desc"><code>mvn test</code> contra el build real</div></div>
+    <div class="arrow"><div class="label">produce</div><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-23-INFORME.md</span></div><div class="desc">Verdes/rojos por módulo, causa raíz de cada rojo</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">3. Un rojo en DOC-23 no se corrige solo</div>
+  <div class="flow" style="align-items:center; margin-bottom:16px">
+    <div class="box doc" style="width:190px"><div class="head"><span class="icon">📄</span><span class="name">DOC-23 — caso FALLADO</span></div></div>
+    <div class="arrow"><div class="label">lee el informe</div><div class="line"></div></div>
+    <div class="box human"><div class="head"><span class="icon">🙋</span><span class="name">"Doctor QA TC" (persona)</span></div><div class="desc">Decide: ¿es la app o es la prueba?</div></div>
+  </div>
+  <div class="flow" style="align-items:stretch; gap:40px">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px">
+      <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">Es la prueba</span></div><div class="desc">.feature mal escrito, sin aislamiento, literal desactualizado</div></div>
+      <div style="font-size:1.3rem">↓</div>
+      <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">s10-auto-tcs corrige</span></div><div class="desc">Nunca quien mantiene la app — regla que no se negocia</div></div>
+    </div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px">
+      <div class="box app"><div class="head"><span class="icon">📦</span><span class="name">Es la app</span></div><div class="desc">bug real de comportamiento</div></div>
+      <div style="font-size:1.3rem">↓</div>
+      <a href="02-cambios-app.html" style="text-decoration:none"><div class="box cmd"><div class="head"><span class="icon">💻</span><span class="name">/spec → /spec-impl</span></div><div class="desc">nunca s10-auto-tcs — infografía 2 →</div></div></a>
+    </div>
+  </div>
+  <div class="note">
+    Ejemplo real de este proyecto (2026-08-23): <code>TC-048</code> fallaba por falta de aislamiento con
+    <code>TC-040</code> — era la prueba, la corrigió <code>s10-auto-tcs</code>. En paralelo, la misma
+    ejecución destapó dos cosas más: <code>EXP-027</code> (formato de decimales con punto en lugar de coma
+    en <code>factures.feature</code>/<code>nomines.feature</code>) y una fixture de datos que había que crear
+    manualmente antes de la suite — ninguna de las dos es un defecto de la aplicación.
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">Disponible pero aún no utilizado en este proyecto</div>
+  <div class="flow" style="align-items:center">
+    <div class="box doc" style="width:190px; opacity:.55"><div class="head"><span class="icon">📄</span><span class="name">Criterios con verification_path: service</span></div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box skill" style="opacity:.55"><div class="head"><span class="icon">🛠️</span><span class="name">S-17 · api-qa</span></div><div class="desc">Genera colecciones Postman — la contraparte de S-10 para reglas que la interfaz no permite ni intentar</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc" style="width:190px; opacity:.55"><div class="head"><span class="icon">📄</span><span class="name">DOC-26 (aún no existe)</span></div><div class="desc"><code>automation/api/</code> ya existe, vacía</div></div>
+  </div>
+</div>
+
+<footer>Infografía 4 de 4 — app-taller. Generado manualmente (2026-08-23). No se regenera automáticamente.</footer>
+</body>
+</html>

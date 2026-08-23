@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mapa general del proceso — app-taller</title>
+<link rel="stylesheet" href="estilo-comun.css">
+</head>
+<body>
+<h1>Mapa general — cómo se construye, se documenta y se prueba la app-taller</h1>
+<p class="subtitle">Visión de conjunto de las 4 infografías detalladas. Cada caja grande es un proceso propio con su propio diagrama.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--agent-bg);border:2px solid var(--agent-bd)">🤖</span> Agente (conversacional, Claude Code)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--skill-bg);border:2px solid var(--skill-bd)">🛠️</span> Skill (proceso/script, a menudo sin IA)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--cmd-bg);border:2px solid var(--cmd-bd)">💻</span> Command (slash-command)</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--doc-bg);border:2px solid var(--doc-bd)">📄</span> Documento generado</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--store-bg);border:2px solid var(--store-bd)">🗄️</span> Almacén de datos</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--human-bg);border:2px solid var(--human-bd)">🙋</span> Decisión humana</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--app-bg);border:2px solid var(--app-bd)">📦</span> Aplicación (client/server) o pruebas</div>
+</div>
+
+<div class="stage">
+  <div class="flow" style="align-items:center">
+
+    <div class="box store" style="width:170px"><div class="head"><span class="icon">📁</span><span class="name">Código del repositorio</span></div><div class="desc">client/, server/</div></div>
+    <div class="arrow"><div class="label">se escanea una vez</div><div class="line"></div></div>
+
+    <div class="col">
+      <a href="01-base-documental.html" style="text-decoration:none">
+        <div class="box skill" style="width:230px"><div class="head"><span class="icon">1️⃣</span><span class="name">Base documental</span></div><div class="desc">S-01 escanea el código → DOC-01/02. A-01 despacha A-02..A-05/S-14 → DOC-04, DOC-05, DOC-06, DOC-07. <b>Ver infografía 1 →</b></div></div>
+      </a>
+    </div>
+
+    <div class="arrow"><div class="label">DOC-04 es la base de todo cambio</div><div class="line"></div></div>
+
+    <div class="col">
+      <a href="02-cambios-app.html" style="text-decoration:none">
+        <div class="box cmd" style="width:230px"><div class="head"><span class="icon">2️⃣</span><span class="name">Cambios en la app</span></div><div class="desc">/spec crea la especificación, opcionalmente A-07/A-08/S-04/A-09 la analizan, /spec-impl la implementa. <b>Ver infografía 2 →</b></div></div>
+      </a>
+    </div>
+
+    <div class="arrow"><div class="label">cambia client/server</div><div class="line"></div></div>
+
+    <div class="box app" style="width:170px"><div class="head"><span class="icon">📦</span><span class="name">Aplicación actualizada</span></div><div class="desc">client/, server/</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="flow" style="align-items:center">
+    <div class="box app" style="width:170px"><div class="head"><span class="icon">📦</span><span class="name">Aplicación en marcha</span></div><div class="desc">desplegada en local</div></div>
+    <div class="arrow"><div class="label">se navega en vivo</div><div class="line"></div></div>
+
+    <div class="col">
+      <a href="03-qa-exploratoria-y-triaje.html" style="text-decoration:none">
+        <div class="box agent" style="width:250px"><div class="head"><span class="icon">3️⃣</span><span class="name">QA exploratoria y triaje</span></div><div class="desc">A-10 explora y encuentra EXP-nnn. Se reparten hacia BUG (A-14), MEJ (A-12), FUN (A-15) o una spec nueva. <b>Ver infografía 3 →</b></div></div>
+      </a>
+    </div>
+
+    <div class="arrow"><div class="label">BUG/MEJ/FUN alimentan</div><div class="line"></div></div>
+
+    <div class="box cmd" style="width:170px"><div class="head"><span class="icon">💻</span><span class="name">/spec</span></div><div class="desc">Origen: BUG-nnn / MEJ-nnn / FUN-nnn / USER — vuelve a la infografía 2</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="flow" style="align-items:center">
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-05</span></div><div class="desc">plan de pruebas (TC-nnn)</div></div>
+    <div class="arrow"><div class="label">+ la app real</div><div class="line"></div></div>
+
+    <div class="col">
+      <a href="04-pruebas-automatizadas.html" style="text-decoration:none">
+        <div class="box skill" style="width:230px"><div class="head"><span class="icon">4️⃣</span><span class="name">Pruebas automatizadas</span></div><div class="desc">s10-auto-tcs construye y ejecuta Selenium+Cucumber+TestNG → DOC-23. <b>Ver infografía 4 →</b></div></div>
+      </a>
+    </div>
+
+    <div class="arrow"><div class="label">detecta regresiones</div><div class="line"></div></div>
+
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-23</span></div><div class="desc">informe de ejecución — lo que dispara la siguiente corrección</div></div>
+  </div>
+</div>
+
+<div class="note">
+  Este mapa muestra solo las conexiones principales entre los 4 procesos. Cada infografía detallada tiene
+  su propio diagrama con todos los elementos, entradas y salidas. El documento <code>referencia-elementos.pdf</code>
+  (en la misma carpeta) explica la función de cada uno.
+</div>
+
+<footer>Generado manualmente a partir de la revisión de agentes, skills y commands del repositorio de herramientas (2026-08-23). No se regenera automáticamente.</footer>
+</body>
+</html>

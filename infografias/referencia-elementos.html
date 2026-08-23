@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<title>Referencia de elementos — app-taller</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  *{box-sizing:border-box}
+  body{font-family:"Segoe UI",Arial,sans-serif; color:#0f172a; font-size:10.3pt; line-height:1.42}
+  h1{font-size:17pt; margin:0 0 2mm}
+  .subtitle{color:#475569; font-size:9.5pt; margin:0 0 6mm}
+  h2{
+    font-size:12.5pt; margin:9mm 0 3mm; padding-bottom:1.2mm; border-bottom:1.6pt solid #cbd5e1; color:#1e293b;
+    page-break-after:avoid;
+  }
+  table{width:100%; border-collapse:collapse; margin-bottom:2mm}
+  th{
+    text-align:left; font-size:8.3pt; text-transform:uppercase; letter-spacing:.03em;
+    color:#64748b; padding:1.5mm 2mm; border-bottom:1pt solid #cbd5e1;
+  }
+  td{padding:2mm 2mm; border-bottom:0.5pt solid #e2e8f0; vertical-align:top; font-size:9.4pt}
+  tr{page-break-inside:avoid}
+  .icon-col{width:7mm; font-size:12pt; text-align:center}
+  .id-col{width:30mm; font-weight:700}
+  .id-col .sub{font-weight:400; color:#64748b; font-size:8.3pt; display:block}
+  .io{font-size:8.6pt; color:#475569; margin-top:.8mm}
+  .io b{color:#1e293b}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:2mm 8mm; background:#f8fafc; border:0.5pt solid #e2e8f0;
+    border-radius:2mm; padding:3mm 5mm; margin-bottom:6mm; font-size:9pt;
+  }
+  .legend span{margin-right:1.5mm}
+  .badge-agent{color:#1e3a8a}
+  .badge-skill{color:#78350f}
+  .badge-doc{color:#14532d}
+  .badge-cmd{color:#4c1d95}
+  .badge-human{color:#7f1d1d}
+  .badge-store{color:#1f2937}
+  .badge-app{color:#075985}
+  .dim{opacity:.6; font-style:italic}
+  footer{margin-top:10mm; font-size:7.8pt; color:#94a3b8}
+</style>
+</head>
+<body>
+
+<h1>Referencia de elementos del proceso — app-taller</h1>
+<p class="subtitle">Qué es y para qué sirve cada pieza que aparece en las infografías (00 a 04). Un elemento, una fila, sin duplicar lo que ya dice el diagrama visualmente.</p>
+
+<div class="legend">
+  <span>💻 <b class="badge-cmd">Command</b> — slash-command que ejecuta directamente Claude Code</span>
+  <span>🤖 <b class="badge-agent">Agente</b> — pieza conversacional con IA</span>
+  <span>🛠️ <b class="badge-skill">Skill</b> — proceso o script, a menudo sin IA</span>
+  <span>📄 <b class="badge-doc">Documento</b> — fichero generado</span>
+  <span>🗄️ <b class="badge-store">Almacén de datos</b></span>
+  <span>🙋 <b class="badge-human">Decisión humana</b></span>
+  <span>📦 <b class="badge-app">Aplicación / código de pruebas</b></span>
+</div>
+
+<h2>💻 Commands</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">💻</td><td class="id-col">/spec</td><td>Diseña una especificación section por sección, con preguntas antes de escribir nada. Nunca escribe código.
+<div class="io"><b>Entrada:</b> una idea del usuario, o ficheros de tareas (BUG-nnn/MEJ-nnn/FUN-nnn). <b>Salida:</b> <code>specs/SPE-NN-slug.md</code> en estado Draft, con el campo Origen relleno.</div></td></tr>
+<tr><td class="icon-col">💻</td><td class="id-col">/spec-impl</td><td>Implementa una spec ya aprobada, paso a paso, con pausa para revisar cada diff. Se niega a arrancar si el estado no es Approved.
+<div class="io"><b>Entrada:</b> <code>specs/*.md</code> en Approved. <b>Salida:</b> cambios en <code>client/</code> y <code>server/</code>, la spec movida a <code>specs/implemented/</code>, una línea nueva en <code>specs/subidas.log</code>, y dispara la comprobación de <code>S-16</code>.</div></td></tr>
+</table>
+
+<h2>🤖 Agentes</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-01<span class="sub">Orquestador</span></td><td>Router de la Fase 1: decide qué agente llamar y con qué contexto. No escribe ningún documento, solo verifica precondiciones y despacha.</td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-02<span class="sub">Funcional</span></td><td>Traduce la base AS-IS a requisitos formales.
+<div class="io"><b>Entrada:</b> DOC-01. <b>Salida:</b> DOC-04 (crea los <code>REQ-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-03<span class="sub">Pruebas</span></td><td>Diseña el plan de pruebas con bloque YAML estructurado.
+<div class="io"><b>Entrada:</b> DOC-04. <b>Salida:</b> DOC-05 (crea los <code>TC-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-04<span class="sub">Manual</span></td><td>Escribe el manual de usuario organizado por tareas reales, no por menús.
+<div class="io"><b>Entrada:</b> DOC-01 + DOC-04. <b>Salida:</b> DOC-06.</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-05<span class="sub">Trazabilidad</span></td><td>Cruza requisitos y casos de prueba; en una segunda pasada (tras la Fase 3) añade ejecución real y narrativa de riesgos.
+<div class="io"><b>Entrada:</b> DOC-04 + DOC-05 (+ DOC-07-MATRIZ). <b>Salida:</b> DOC-07-TRAZABILIDAD.md.</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-07<span class="sub">Impacto</span></td><td>Responde "qué se rompe si tocamos esto" antes de estimar o planificar un cambio.
+<div class="io"><b>Entrada:</b> spec Approved (con bloque evolutivo) + DOC-02/DOC-04. <b>Salida:</b> DOC-09.</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-08<span class="sub">Estimación</span></td><td>Estima el coste de un cambio ya impactado. Es la pieza cuya salida menos se puede derivar de un cálculo — juicio puro.
+<div class="io"><b>Entrada:</b> spec + DOC-09. <b>Salida:</b> DOC-10.</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-09<span class="sub">Regresión</span></td><td>Decide qué subconjunto de pruebas ya existentes basta para cubrir un cambio.
+<div class="io"><b>Entrada:</b> DOC-09 + DOC-05. <b>Salida:</b> DOC-12.</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-10<span class="sub">Explorador QA</span></td><td>Navega la aplicación desplegada probando cosas sin guion, buscando defectos que el plan de pruebas no cubre. No modifica la app ni re-ejecuta la suite automatizada.
+<div class="io"><b>Entrada:</b> la app en vivo. <b>Salida:</b> DOC-14 (crea los <code>EXP-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-12<span class="sub">Roadmap</span></td><td>Propone mejoras técnicas (deuda, refactors) priorizadas por valor/impacto/dificultad. No propone funcionalidad nueva.
+<div class="io"><b>Entrada:</b> deuda técnica, DOC-07, DOC-24, roadmap previo. <b>Salida:</b> DOC-16 (crea los <code>MEJ-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-14<span class="sub">explorador ejecutor</span></td><td>Reproduce y confirma como bug real una troballa de exploración.
+<div class="io"><b>Entrada:</b> EXP-nnn candidato a bug. <b>Salida:</b> DOC-24-BUGS.json (crea los <code>BUG-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col">A-15<span class="sub">Funcionalidad</span></td><td>Propone funcionalidad completamente nueva, priorizada por valor de negocio. No propone refactors.
+<div class="io"><b>Entrada:</b> casos de uso, DOC-04, DOC-06, propuestas previas. <b>Salida:</b> DOC-25 (crea los <code>FUN-nnn</code>).</div></td></tr>
+<tr><td class="icon-col">🤖</td><td class="id-col dim">A-06<span class="sub">retirado</span></td><td class="dim">Antes entrevistaba peticiones de negocio y producía DOC-08. Retirado: su función la cubre ahora <code>/spec</code> (Sección 5b del bloque evolutivo).</td></tr>
+</table>
+
+<h2>🛠️ Skills</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-01<span class="sub">skill-doc-base</span></td><td>Escanea el repositorio una sola vez y reparte lo encontrado entre negocio y técnica. No modifica código.
+<div class="io"><b>Entrada:</b> el repositorio. <b>Salida:</b> DOC-01 + DOC-02, y asigna anclas nuevas en <code>registro-ids.json</code>.</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-04<span class="sub">plan-implementacion</span></td><td>Escribe el plan de implementación paso a paso de un cambio ya impactado.
+<div class="io"><b>Entrada:</b> spec + DOC-09. <b>Salida:</b> DOC-11 (sus pasos se copian a la sección Plan de la spec).</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-10<span class="sub">skill-auto-tcs</span></td><td>Genera y amplía el proyecto de automatización Selenium+Cucumber+TestNG, y ejecuta la suite completa. Solo toca <code>automation/ui/</code>, nunca <code>client/</code> ni <code>server/</code>.
+<div class="io"><b>Entrada:</b> DOC-05 + la app real. <b>Salida:</b> <code>automation/ui/</code> y DOC-23.</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-12<span class="sub">registro-ids</span></td><td>Gobierna <code>registro-ids.json</code> de forma determinista: reserva identificadores libres, nunca renumera ni reutiliza.
+<div class="io"><b>Entrada/salida:</b> <code>registro-ids.json</code>, consultado por A-02/A-03 al crear <code>REQ-nnn</code>/<code>TC-nnn</code>.</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-14<span class="sub">matriz-trazabilidad</span></td><td>Sin IA: cruza requisitos y casos de prueba mediante un JOIN determinista sobre sus bloques YAML, y detecta anomalías (casos huérfanos, referencias rotas).
+<div class="io"><b>Entrada:</b> DOC-04 + DOC-05. <b>Salida:</b> DOC-07-MATRIZ.csv.</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col">S-16<span class="sub">cascada-obsolescencia</span></td><td>Sin IA: compara la versión que cada documento declaró haber consumido contra la versión real, y el <code>commit_sha</code> de DOC-01/DOC-02 contra el HEAD real del código. Da el orden de regeneración.
+<div class="io"><b>Entrada:</b> el front-matter de todos los DOC-nn + git HEAD. <b>Salida:</b> informe de obsolescencia (no un documento nuevo).</div></td></tr>
+<tr><td class="icon-col">🛠️</td><td class="id-col dim">S-17<span class="sub">api-qa · disponible, no usada</span></td><td class="dim">Genera colecciones Postman que validan la capa de servicio — la contraparte de S-10 para lo que la interfaz no permite ejercer. <code>automation/api/</code> ya existe en este proyecto pero está vacía; DOC-26 aún no se ha generado.</td></tr>
+</table>
+
+<h2>📄 Documentos</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-01</td><td>Qué hace la aplicación en lenguaje de negocio: propósito, actores, casos de uso, reglas de negocio, glosario.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-02</td><td>La misma base contada en términos técnicos: stack, arquitectura, componentes, modelo de datos, testing existente.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-04</td><td>Requisitos funcionales numerados (<code>REQ-nnn</code>). La columna vertebral de la que cuelga todo lo demás.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-05</td><td>Plan de pruebas: los casos (<code>TC-nnn</code>) que verifican cada requisito.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-06</td><td>Manual de usuario, organizado por tareas.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-07<span class="sub">.md + .csv</span></td><td>Trazabilidad y cobertura: qué requisito tiene qué pruebas, y qué falta.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col dim">DOC-08<span class="sub">retirado</span></td><td class="dim">Formato antiguo de especificación de evolutivos. Migrado a <code>specs/SPE-06-albara-canvi-client.md</code>; se conserva solo como registro histórico.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-09</td><td>Análisis de impacto de un cambio concreto antes de tocar nada.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-10</td><td>Estimación de esfuerzo de ese mismo cambio.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-11</td><td>Plan de implementación paso a paso de ese cambio.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-12</td><td>Selección de regresión: qué pruebas ya existentes hay que repetir.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-14</td><td>Informe de exploración QA libre: hallazgos <code>EXP-nnn</code>.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-16</td><td>Roadmap técnico: mejoras propuestas <code>MEJ-nnn</code>.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-23</td><td>Informe de ejecución de la suite automatizada: qué pasa, qué falla y por qué.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-24</td><td>Defectos confirmados (<code>BUG-nnn</code>) con su estado.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">DOC-25</td><td>Propuestas funcionales nuevas (<code>FUN-nnn</code>) priorizadas por valor.</td></tr>
+<tr><td class="icon-col">📄</td><td class="id-col">specs/SPE-NN</td><td>La especificación de un cambio: qué se construye, con qué plan, con qué criterios de aceptación. Estado Draft → Approved → Implemented.</td></tr>
+</table>
+
+<h2>🗄️ Almacenes de datos</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">🗄️</td><td class="id-col">registro-ids.json</td><td>El mapa de todos los identificadores asignados (<code>REQ</code>, <code>TC</code>, <code>UC</code>, <code>BR</code>) y su texto ancla. Gobernado por S-12; los identificadores solo se añaden, nunca se renumeran ni reutilizan.</td></tr>
+<tr><td class="icon-col">🗄️</td><td class="id-col">specs/subidas.log</td><td>Una línea por spec implementada: fecha, spec, Origen (BUG/MEJ/FUN/USER), objetivo, commits. Lo mantiene solo <code>/spec-impl</code>, nunca por documentación ni pruebas.</td></tr>
+<tr><td class="icon-col">🗄️</td><td class="id-col">TRIATGE-DOC-14.md</td><td>El estado de cada hallazgo <code>EXP-nnn</code>: a qué destino se envió y por qué. No lo genera ningún skill fijo — es trabajo conjunto de la persona y Claude.</td></tr>
+</table>
+
+<h2>🙋 Decisiones humanas</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">🙋</td><td class="id-col">Aprobar la spec</td><td>Cambiar el estado de Draft a Approved. Solo lo hace una persona, tras releer la spec — <code>/spec-impl</code> se niega a arrancar si no está.</td></tr>
+<tr><td class="icon-col">🙋</td><td class="id-col">Triaje de DOC-14</td><td>Decidir a qué destino va cada hallazgo de exploración (bug, mejora, funcionalidad, o spec directa).</td></tr>
+<tr><td class="icon-col">🙋</td><td class="id-col">"Doctor QA TC"</td><td>Ante un caso en rojo de DOC-23, decide si el defecto está en la aplicación o en la propia prueba — nunca lo decide el mismo agente/skill que podría tocar ambas zonas.</td></tr>
+</table>
+
+<h2>📦 Aplicación y código de pruebas</h2>
+<table>
+<tr><th class="icon-col"></th><th class="id-col">Elemento</th><th>Función</th></tr>
+<tr><td class="icon-col">📦</td><td class="id-col">client/ + server/</td><td>El código de la aplicación en sí. Solo lo toca <code>/spec-impl</code>.</td></tr>
+<tr><td class="icon-col">📦</td><td class="id-col">automation/ui/</td><td>El proyecto Java de pruebas automatizadas (Selenium+Cucumber+TestNG). Solo lo toca <code>s10-auto-tcs</code>.</td></tr>
+<tr><td class="icon-col">📦</td><td class="id-col dim">automation/api/</td><td class="dim">Carpeta ya creada para las colecciones Postman de S-17; vacía por ahora.</td></tr>
+</table>
+
+<footer>Generado manualmente el 2026-08-23 a partir de la revisión de los agentes, skills y commands del repositorio de herramientas (<code>Eines-Prototip-Taller-Mecanic</code>). No forma parte del canon DOC-nn y no se regenera automáticamente. Acompaña a las infografías 00–04 de esta misma carpeta.</footer>
+
+</body>
+</html>

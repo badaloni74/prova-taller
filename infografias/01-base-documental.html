@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Infografía 1 — Base documental (Fase 0 y Fase 1)</title>
+<link rel="stylesheet" href="estilo-comun.css">
+</head>
+<body>
+<div class="nav"><a href="00-mapa-general.html">← Mapa general</a><a href="02-cambios-app.html">Infografía 2: Cambios en la app →</a></div>
+<h1>Infografía 1 — La base documental (Fase 0 y Fase 1)</h1>
+<p class="subtitle">De dónde salen DOC-01, DOC-02, DOC-04, DOC-05, DOC-06 y DOC-07. Se hace una vez por proyecto, y de nuevo tras cambios estructurales.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--agent-bg);border:2px solid var(--agent-bd)">🤖</span> Agente</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--skill-bg);border:2px solid var(--skill-bd)">🛠️</span> Skill</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--doc-bg);border:2px solid var(--doc-bd)">📄</span> Documento</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--store-bg);border:2px solid var(--store-bd)">🗄️</span> Almacén</div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">Fase 0 — Escanear el código una sola vez</div>
+  <div class="flow" style="align-items:center">
+    <div class="box store" style="width:170px"><div class="head"><span class="icon">📁</span><span class="name">Repositorio</span></div><div class="desc">client/, server/, README, config</div></div>
+    <div class="arrow"><div class="label">una sola pasada</div><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-01 · skill-doc-base</span></div><div class="desc">No toca código. Reparte lo encontrado entre negocio y técnica.</div></div>
+    <div class="arrow"><div class="label">produce</div><div class="line"></div></div>
+    <div class="col">
+      <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-01 Base AS-IS</span></div><div class="desc">Propósito, actores, casos de uso, reglas de negocio, glosario — en lenguaje de negocio</div></div>
+      <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-02 Técnica</span></div><div class="desc">Stack, arquitectura, componentes, modelo de datos, testing existente</div></div>
+    </div>
+    <div class="arrow"><div class="label">asigna anclas nuevas en</div><div class="line"></div></div>
+    <div class="box store"><div class="head"><span class="icon">🗄️</span><span class="name">registro-ids.json</span></div><div class="desc">ACT-nn, UC-nnn, BR-nnn — nunca se renumeran</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">Fase 1 — Documentación funcional y plan de pruebas (orquestada por A-01)</div>
+  <div class="flow" style="align-items:center; margin-bottom:18px">
+    <div class="box agent" style="width:600px"><div class="head"><span class="icon">🤖</span><span class="name">A-01 · Orquestador</span></div><div class="desc">Verifica precondiciones (Fase 0 hecha), decide qué agente llamar y con qué contexto. <b>No escribe ningún documento.</b></div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-01</span></div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-02 · Funcional</span></div><div class="desc">Traduce el AS-IS a requisitos. No lee DOC-02.</div></div>
+    <div class="arrow"><div class="label">crea REQ-nnn</div><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-04 Funcional</span></div><div class="desc">Requisitos REQ-nnn — la columna vertebral de todo lo que viene después</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-04</span></div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-03 · Pruebas</span></div><div class="desc">Diseña el plan de pruebas con bloque YAML estructurado</div></div>
+    <div class="arrow"><div class="label">crea TC-nnn</div><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-05 Plan Pruebas</span></div><div class="desc">Casos TC-nnn, consumidos por S-14/S-10 y, en el futuro, S-07 (Rally)</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-01</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-04</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-04 · Manual</span></div><div class="desc">Escribe por tareas reales, no por menús. No lee DOC-02.</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-06 Manual Usuario</span></div></div>
+  </div>
+
+  <div class="flow" style="align-items:center; margin-bottom:14px">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-04</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-05</span></div></div>
+    </div>
+    <div class="arrow"><div class="label">JOIN determinista</div><div class="line"></div></div>
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-14 · matriz-trazabilidad</span></div><div class="desc">Sin IA — cruza REQ↔TC por bloque YAML, detecta anomalías</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-07-MATRIZ.csv</span></div><div class="desc">Tabla exportable REQ×TC</div></div>
+  </div>
+
+  <div class="flow" style="align-items:center">
+    <div class="col">
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-04 + DOC-05</span></div></div>
+      <div class="box doc" style="width:170px"><div class="head"><span class="icon">📄</span><span class="name">DOC-07-MATRIZ</span></div></div>
+    </div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box agent"><div class="head"><span class="icon">🤖</span><span class="name">A-05 · Trazabilidad</span></div><div class="desc">Pasada pre: cobertura. Pasada post (tras Fase 3): añade ejecución/resultado real</div></div>
+    <div class="arrow"><div class="line"></div></div>
+    <div class="box doc"><div class="head"><span class="icon">📄</span><span class="name">DOC-07 Trazabilidad</span></div><div class="desc">Narrativa: requisitos sin prueba, cobertura, riesgos</div></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-title">Gobernanza transversal (no es un paso de la cadena, la sostiene)</div>
+  <div class="flow" style="align-items:center">
+    <div class="box skill"><div class="head"><span class="icon">🛠️</span><span class="name">S-12 · registro-ids</span></div><div class="desc">Reserva REQ-nnn/TC-nnn/UC-nnn/BR-nnn de forma determinista, nunca reutiliza ni renumera</div></div>
+    <div class="arrow"><div class="label">leído y escrito por</div><div class="line"></div></div>
+    <div class="box store"><div class="head"><span class="icon">🗄️</span><span class="name">registro-ids.json</span></div></div>
+    <div class="arrow"><div class="label">consultado al crear</div><div class="line"></div></div>
+    <div class="col">
+      <div class="box agent" style="width:160px"><div class="head"><span class="icon">🤖</span><span class="name">A-02</span></div></div>
+      <div class="box agent" style="width:160px"><div class="head"><span class="icon">🤖</span><span class="name">A-03</span></div></div>
+    </div>
+  </div>
+  <div class="note">
+    Esta base se regenera entera (no se edita a mano) cuando el código cambia lo suficiente.
+    <b>S-16 · Cascada de obsolescencia</b> (ver infografía 2) es quien detecta cuándo hay que
+    volver a pasar por aquí.
+  </div>
+</div>
+
+<footer>Infografía 1 de 4 — app-taller. Generado manualmente (2026-08-23) a partir de los ficheros de agentes/skills del repositorio de herramientas. No se regenera automáticamente.</footer>
+</body>
+</html>
