@@ -31,7 +31,7 @@ a `docs/DOC-16-ROADMAP.md` 2.1.0.
 | Spec | Hallazgos | Objectiu en una frase | Mida |
 |---|---|---|---|
 | **06 · Context als llistats i desplegables** | EXP-010, EXP-022, EXP-023, EXP-024 | Mostrar la informació necessària per triar bé on avui només hi ha un identificador | Petit-mitjà |
-| **07 · Missatges, confirmacions i rutes desconegudes** | EXP-008, EXP-017, EXP-018, EXP-019, EXP-026 | Que l'aplicació digui sempre què passa, què s'esborrarà i com sortir-ne | Mitjà |
+| **07 · Missatges i confirmacions** | EXP-008, EXP-018 | Que l'aplicació digui sempre què passa quan una ruta no existeix o es retira una línia | Petit |
 | **08 · Coherència visual i accessibilitat** | EXP-011, EXP-012, EXP-013, EXP-020, EXP-021 | Que l'aplicació es llegeixi bé en tema fosc, en mòbil i amb lector de pantalla | Mitjà |
 | **09 · Idioma dels avisos del servidor** | EXP-006 | Que els avisos d'error surtin en l'idioma triat per l'usuari | Mitjà — servidor + i18n, 5 mòduls |
 
@@ -54,7 +54,7 @@ encaixa també **BUG-003** de `docs/DOC-24-BUGS.json`, encara obert.
 | **EXP-025** | **A-04** (manual) | El manual descriu comportament d'stock ja corregit. És documentació, no codi |
 | **TC-048** | **s10-auto-tcs** | La causa és TC-040, que no neteja. És la prova, no l'app |
 | **TC-073, TC-075** | **s10-auto-tcs** | Han de reforçar-se quan SPEC 05 mostri l'IVA. Ara passen sense comprovar-lo (`EXP-007`, i `A-05-03b` a DOC-07 1.7.0) |
-| EXP-017, EXP-019, EXP-026 | **A-15** | A-12 els ha revisat i són funcionalitat, no deute tècnic |
+| EXP-017, EXP-019, EXP-026 | **A-15** | Etiquetats `mejora` a DOC-14, no `defecto`; A-12 els ha revisat i són funcionalitat, no deute tècnic (DOC-16 §6.1). Corregit: la primera versió d'aquest triatge els llistava també al SPEC 07, on no pertanyen |
 
 ## Ordre suggerit
 
