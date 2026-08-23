@@ -1,12 +1,13 @@
 ---
 doc_id: DOC-06
 doc_name: DOC-06-MANUAL-USUARIO
-version: 1.2.0
+version: 1.3.0
 status: draft
 generator: A-04 manual de usuario
 generator_version: "1.2"
-generated_at: 2026-08-16T23:40:00+02:00
+generated_at: 2026-08-23T00:00:00+02:00
 language: es
+history: docs/DOC-06-MANUAL-USUARIO-HIST.md
 source:
   repo_path: C:\Claude\appdani
   vcs: git
@@ -15,13 +16,20 @@ source:
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.0.0
-    hash: sha256:4e49485c3ad1529b2eee9d56487e188617011d772fe5908740cbed4114f01097
+    version: 1.1.0
+    hash: null
+    hash_status: not_computed_by_A-04
+    hash_note: >-
+      A-04 no dispone de shell en esta ejecución y no inventa un hash. DOC-01 subió de 1.0.0 a 1.1.0
+      (commit 7c5c39f, rama master) sin cambio de contenido de negocio: mismos actores, casos de uso y
+      reglas de negocio, verificado ancla a ancla por A-02 al resincronizar DOC-04 (commit 7bf2947, que
+      se quedó en 1.2.0 sin cambios de contenido, solo front-matter). Lo único que cambió en DOC-01 fue
+      cerrar una pregunta ya resuelta (Q-02, renumerada Q-12 en el registro global) y corregir un
+      comentario del árbol de carpetas. Sin efecto sobre ninguna tarea de este manual
     usage: >-
       fuente del manual junto con DOC-04. De aquí salen el glosario del apartado 7, los nombres de las
       ocho secciones del menú, los flujos detallados de línea de pieza, retirada de línea, emisión de
-      factura y registro de nómina, y la ausencia de identificación del apartado 2. Sin cambios de
-      versión desde 1.0.0 de este documento
+      factura y registro de nómina, y la ausencia de identificación del apartado 2
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
@@ -32,36 +40,55 @@ inputs:
       declara hoy el hash de DOC-04 1.2.0. Que lo rellene S-12 al censar, o I-02 antes de publicar
     usage: >-
       fuente de las 32 tareas, de las preguntas frecuentes, de los dos apartados de límites y de la
-      tabla de trazabilidad. Las 32 tareas se han derivado contra esta versión, no contra ninguna anterior
+      tabla de trazabilidad. Sin cambios desde 1.2.0
+  - id: specs/04-proteccio-enviaments-duplicats.md
+    from: implantación de la app (Estado: Implemented)
+    present: true
+    usage: >-
+      NO es fuente contractual habitual de DOC-06, que solo consume DOC-01 y DOC-04. Se lee en esta
+      revisión por instrucción explícita del agente que encarga la resincronización de la cascada, para
+      comprobar si el comportamiento que introduce —el botón de guardar se deshabilita y muestra
+      «Desant…»/«Guardando…» mientras la petición está en vuelo— dejaba alguna instrucción del manual
+      desactualizada. No la dejaba, pero es información nueva y útil para el usuario: se añade en el
+      apartado 2 como excepción justificada y anotada, no como cambio de política de fuentes del
+      documento
+  - id: specs/05-presentacio-imports-i-dates.md
+    from: implantación de la app (Estado: Implemented)
+    present: true
+    usage: >-
+      Misma excepción justificada que la anterior. Confirma tres cambios visibles para el usuario: los
+      importes se muestran con coma decimal y separador de miles (p. ej. `1.360,00 €`), la ficha de la
+      factura muestra ahora el importe del IVA en euros además del porcentaje, y la fecha del albarán se
+      muestra como DD/MM/AAAA en vez de una marca de tiempo ISO. Los tres se reflejan en el apartado 2 y
+      en las tareas A.16 y A.17
   - id: registro-ids.json
     from: S-12
     present: true
     usage: censo de identificadores. De aquí sale qué números `Q-nnn` están ocupados y quién es el dueño de cada uno
     note: >-
       leído el 2026-08-16. Q-01 a Q-15 de DOC-04, Q-16 a Q-19 de DOC-05, Q-20 a Q-29 de este documento.
-      Máximo ocupado Q-29. Q-30 se reclama en esta revisión y está pendiente de confirmación de S-12
+      Máximo ocupado Q-29. Q-30 se reclama en la revisión 1.2.0 y está pendiente de confirmación de S-12
   - id: DOC-02-TECNICA.md
     from: S-01
     used: false
     reason: prohibido para A-04; el manual no describe cómo está construido el sistema
 regeneration:
   full_regeneration: true
-  regenerated_against: DOC-04-FUNCIONAL 1.2.0
+  regenerated_against: DOC-01-BASE-ASIS 1.1.0 + DOC-04-FUNCIONAL 1.2.0
   previous_version_used_as_source: false
-  previous_version_note: >-
-    1.1.0 no es fuente de contenido. Lo único que se conserva de ella es la numeración de las preguntas
-    propias Q-20 a Q-29 y la tabla de equivalencia con la numeración de 1.0.0, porque hay documentos que
-    ya citan esos números
-  supersedes_obsolescence_warning: >-
-    queda cerrada la advertencia de vigencia que arrastraban 1.0.0 y 1.1.0. Este documento ya está
-    derivado de DOC-04 1.2.0
+  reason: >-
+    cascada de obsolescencia: DOC-01 subió de 1.0.0 a 1.1.0. El contenido de negocio no cambió (ver
+    hash_note de DOC-01 arriba), así que esta revisión no reescribe las 32 tareas ni la trazabilidad;
+    solo actualiza el front-matter y añade las tres piezas de información nuevas que sí son visibles
+    para el usuario y que no venían de DOC-01/DOC-04 sino de los specs 04 y 05, ya implementados
 revision_note: >-
-  Regeneración completa contra DOC-04 1.2.0. Cambian tres cosas de contenido respecto a 1.1.0: las
-  tareas A.10 y A.11 recogen la reformulación de REQ-031 en DOC-04 1.1.0, el apartado 6 se parte en
-  límites de hoy y cambios ya decididos para recoger las seis respuestas de negocio del 2026-08-16, y
-  el apartado 5 gana dos preguntas frecuentes derivadas de esas mismas reglas. Las seis respuestas no
-  entran en ninguna tarea: describen hacia dónde va la aplicación, no lo que hace hoy. Los
-  identificadores de tarea A.1 a D.2 y las preguntas Q-20 a Q-29 no se mueven.
+  Regeneración de front-matter contra DOC-01 1.1.0 (sin cambio de contenido de negocio) y de contenido
+  contra los specs 04 y 05, ya implementados, por instrucción explícita de la cascada de obsolescencia.
+  Se añaden en el apartado 2 dos avisos nuevos (protección de doble envío, formato de importes y
+  fechas), se amplía «Qué ves al terminar» de las tareas A.16 y A.17 con el importe del IVA en euros, y
+  se actualiza la pregunta frecuente del IVA. El resto del contenido no cambia. El historial completo de
+  versiones, incluida la saga de renumeración de preguntas de 1.0.0 a 1.1.0, se ha movido a
+  docs/DOC-06-MANUAL-USUARIO-HIST.md; este documento ya no lo reproduce.
 ---
 
 # DOC-06 · Manual de usuario — app-taller
@@ -133,6 +160,18 @@ paso dice «guarda» o «confirma» sin dar el nombre exacto del botón es porqu
 nombre no está recogido en la documentación de la que nace este manual, y
 preferimos no inventártelo: lo verás en pantalla, y queda anotado en las
 preguntas abiertas del apartado 9.
+
+**Mientras guardas, no hace falta pulsar dos veces.** Cuando confirmas
+cualquier formulario, o cuando añades una línea a un albarán, el botón
+correspondiente se deshabilita al momento y cambia su texto a *Guardando…* (o
+*Desant…* en catalán) mientras la aplicación procesa tu petición. Es la señal
+de que ya se ha registrado tu pulsación: no vuelvas a pulsarlo, y espera a que
+se reactive o a que la pantalla cambie sola.
+
+**Cómo se muestran los importes y las fechas.** Los importes en euros llevan
+coma para los decimales y punto para separar los miles, por ejemplo
+`1.360,00 €`. Las fechas se muestran como día/mes/año, por ejemplo
+`21/08/2026`.
 
 **Este manual cuenta lo que la aplicación hace hoy.** Hay seis cambios ya
 decididos por el taller que todavía no están hechos. No están en las tareas
@@ -622,9 +661,10 @@ cliente.
   `2026/F-0012`—, que no eliges tú;
 - la **base**, que es la suma de cantidad × precio de todas las líneas de todos
   los albaranes que has agrupado;
-- el **IVA** aplicado sobre esa base;
+- el **IVA**: el tipo que has aplicado y, además, su importe en euros;
 - el **total**, que es la base más el IVA;
-- los tres importes **redondeados a dos decimales**.
+- los importes **redondeados a dos decimales**, con coma decimal y separador de
+  miles —por ejemplo `1.360,00 €`.
 
 Y, en el mismo momento, **todos esos albaranes pasan a facturado** y quedan
 enlazados a la factura. Emitir la factura y marcar los albaranes van juntos: o
@@ -661,8 +701,10 @@ una factura antes de cobrarla.
 2. Abre la factura que buscas.
 
 **Qué ves al terminar.** El detalle de la factura: los **albaranes que agrupa**,
-la **base**, el **IVA** y el **total**, redondeados a dos decimales. También
-llegas a la factura desde la ficha del cliente, donde aparecen todas las suyas.
+la **base**, el **IVA** —el tipo que se aplicó y, además, su importe en euros— y
+el **total**. Los tres importes están redondeados a dos decimales, con coma
+decimal y separador de miles —por ejemplo `1.360,00 €`. También llegas a la
+factura desde la ficha del cliente, donde aparecen todas las suyas.
 
 **Si los importes no te cuadran.** La base sale de sumar cantidad × precio de
 todas las líneas de todos los albaranes agrupados. El precio que cuenta es el que
@@ -1111,7 +1153,9 @@ hay ningún recuento ni ningún filtro que te dé el total de lo pendiente. Est�
 decidido que lo haya, y lo mismo para las nóminas pendientes de pago: apartado 6.2.
 
 **¿Qué IVA me va a aplicar?**
-El que indiques al emitir la factura. Si no indicas ninguno, el **21 %**.
+El que indiques al emitir la factura. Si no indicas ninguno, el **21 %**. La
+factura te muestra el tipo aplicado y, además, su importe en euros: no hace
+falta que lo calcules tú restando la base del total.
 
 **¿Puedo juntar en una factura los albaranes de dos clientes?**
 No. Todos los albaranes de una misma factura tienen que ser del mismo cliente.
@@ -1335,33 +1379,16 @@ el manual —un manual necesita nombrar cosas que la documentación no nombra—
 ### 9.1 Cómo están numeradas
 
 `Q-nnn` es **un contador único de todo el proyecto**, compartido con S-01, A-02 y
-A-03. Los números de las preguntas propias de este manual —`Q-20` a `Q-29`— los
-concedió el registro en la revisión 1.1.0, después de que la 1.0.0 los hubiera
-numerado por su cuenta y chocara con diecinueve identificadores ajenos. **En esta
-regeneración no se mueve ninguno**, y se conserva la tabla de equivalencia con la
-numeración de 1.0.0 porque hay documentos que todavía citan aquellos números.
+A-03. Las preguntas propias de este manual son `Q-20` a `Q-30`.
 
-**Tabla de equivalencia**, para quien haya citado los números de 1.0.0:
+**La renumeración de 1.0.0 a 1.1.0, la tabla de equivalencia y el aviso a quien
+cite versiones anteriores de este manual están en el histórico**, no aquí:
+`docs/DOC-06-MANUAL-USUARIO-HIST.md`. Este documento refleja solo el estado
+actual y no reproduce esa saga.
 
-| En 1.0.0 | Desde 1.1.0 | De qué trata |
-|---|---|---|
-| `DOC-06/Q-01` … `DOC-06/Q-13` | `DOC-04/Q-01` … `DOC-04/Q-13`, **mismo número, otro dueño** | Las trece heredadas. No eran propias: eran las de DOC-04. Se citan en 9.2 con el número **de su dueño**, A-02 |
-| `DOC-06/Q-14` | **`Q-24`** | Nombres de los botones de guardar, cancelar y confirmar |
-| `DOC-06/Q-15` | **`Q-25`** | Textos de los mensajes de error |
-| `DOC-06/Q-16` | **`Q-26`** | Cómo se editan y se borran las fichas |
-| `DOC-06/Q-17` | **`Q-27`** | La pantalla de emisión de factura |
-| `DOC-06/Q-18` | **`Q-28`** | Dónde está el conmutador de pago |
-| `DOC-06/Q-19` | **`Q-29`** | La lista completa de datos de cliente y de empleado |
-| `DOC-06/Q-20` … `DOC-06/Q-23` | **`Q-20` … `Q-23`** | Sin colisión: conservan su número. `Q-21` y `Q-22` son la evidencia de `FUN-001` y `FUN-002` |
-
-**Aviso a quien cite este manual.** `DOC-25` cita en su apartado de descartes el
-rango `DOC-06/Q-14` a `DOC-06/Q-20`, que es numeración de 1.0.0: hoy corresponde
-a `Q-24` a `Q-29` más `Q-20`. Las citas de `DOC-06/Q-21` y `DOC-06/Q-22` de ese
-mismo documento sí son correctas y siguen apuntando a lo que apuntaban.
-
-**Una pregunta nueva en esta revisión: `Q-30`.** Nace de la reformulación de
-REQ-031 y está pendiente de que S-12 la confirme; la orden está en el bloque de
-9.5. Es la única de este apartado que no estaba en 1.1.0.
+**La única pregunta propia nacida después de esa renumeración es `Q-30`.** Nace
+de la reformulación de REQ-031 y está pendiente de que S-12 la confirme; la
+orden está en el bloque de 9.5.
 
 **Nota de formato, deliberada. No reordenar.** En las tablas de 9.2 los
 identificadores ajenos se escriben `DOC-04/Q-nn` y `DOC-05/Q-nn`, con el
@@ -1474,8 +1501,8 @@ es este bloque**.
 version: 1
 owner: A-04
 document: DOC-06-MANUAL-USUARIO
-document_version: 1.2.0
-generated_at: 2026-08-16
+document_version: 1.3.0
+generated_at: 2026-08-23
 numbering:
   source: S-12
   registry: registro-ids.json
@@ -1750,10 +1777,13 @@ summary:
 
 ---
 
-**Nota de vigencia.** Este manual **sí** está derivado de `DOC-04-FUNCIONAL.md`
-**1.2.0** y de `DOC-01-BASE-ASIS.md` **1.0.0**, que son sus dos únicas fuentes.
-Queda cerrada la advertencia que arrastraban 1.0.0 y 1.1.0, que se habían escrito
-contra DOC-04 1.0.0.
+**Nota de vigencia.** Este manual está derivado de `DOC-04-FUNCIONAL.md`
+**1.2.0** y de `DOC-01-BASE-ASIS.md` **1.1.0**, que son sus dos únicas fuentes de
+contenido. DOC-01 subió de 1.0.0 a 1.1.0 sin cambio de contenido de negocio (ver
+`inputs` en el front-matter), así que esta regeneración no reescribe ninguna
+tarea por esa subida; los cambios de contenido de esta versión vienen de dos
+comportamientos ya implementados en la aplicación —protección de doble envío y
+formato de importes y fechas— que no tienen todavía requisito propio en DOC-04.
 
 **Cuándo vuelve a quedar obsoleto.** Si DOC-01 o DOC-04 suben de versión MINOR o
 MAJOR, hay que rehacerlo entero: la versión anterior no es fuente de nada. Si para
