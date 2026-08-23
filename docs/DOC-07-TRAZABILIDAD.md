@@ -4,12 +4,12 @@ doc_name: DOC-07-TRAZABILIDAD
 version: 1.7.0
 status: draft
 generator: A-05 coherencia y trazabilidad
-generated_at: 2026-08-22T12:20:00+02:00
+generated_at: 2026-08-23T12:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: b2a8d7706df4fef373b87a144fe4be6cfbc94390
+  commit_sha: 5601ac6305ff2f3868f016ee754fe0587e92677c
   working_tree_clean: false
 inputs:
   - id: DOC-04-FUNCIONAL.md
@@ -26,8 +26,8 @@ inputs:
     hash: sha256:afca8a7f31c6da308a6c7060e52beda89419727ed4278787b87ab2ea1f232b3f
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
-    version: 1.2.0
-    hash: sha256:150240af136497762614c0113c31241d1891dffa62ce5f51c2a5b06cf6b58041
+    version: 1.3.0
+    hash: sha256:90ea9dd6102fbb62aae8d3133b3377a7f85be32181ac0f2a6c9de6c12bd82d15
   - id: DOC-09-IMPACTO-albara-canvi-client.md
     from: A-07
     version: 2.0.0
