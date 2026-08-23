@@ -1,16 +1,16 @@
 ---
 doc_id: DOC-14
 doc_name: DOC-14-EXPLORATORIO
-version: 2.0.0
+version: 2.0.1
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-23T12:20:00+02:00
+generated_at: 2026-08-23T15:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 737b9c7425e6f6aa36f476fe62d28c7891efbb5b
+  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta sesión
 inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
@@ -38,8 +38,8 @@ inputs:
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 2.1.0
-    hash: sha256:467fe9dfceb63ecec0f8af13626519d5ff5ba2647e24ab3f93b6e4e5e71a1169
+    version: 3.0.0
+    hash: sha256:e70c3786b5dfe8e4f60e5adc0e02ab302cfcc85e657281da2af4b689423604de
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
     version: 1.0.0
@@ -55,6 +55,19 @@ inputs:
 # DOC-14 · Informe de exploración QA · app-taller
 
 ## Procedencia
+
+**Nota de la version 2.0.1 (resincronizacion, sin exploracion nueva).** La
+cascada de obsolescencia marco este documento como caducado unicamente
+porque citaba `DOC-16-ROADMAP.md` en version 2.1.0 y la version vigente ya
+era 3.0.0 -- `DOC-16` 3.0.0 cita a su vez `DOC-14` 2.0.0 como version
+vigente, asi que no hay ningun hallazgo de `DOC-16` posterior a la sesion
+que genero esta version. No se ha vuelto a explorar la aplicacion ni se ha
+abierto el navegador: la aplicacion no ha cambiado desde la sesion de
+2.0.0. Este cambio se limita a actualizar `version` y `hash` de la entrada
+`DOC-16-ROADMAP.md` en el front-matter y a dejar constancia en
+`DOC-14-EXPLORATORIO-HIST.md`. El resto del cuerpo de este documento --
+hallazgos, cartas, preguntas abiertas -- es identico al de la version
+2.0.0.
 
 **Por qué existe esta versión.** El encargo de esta sesión es concreto:
 verificar en vivo, reproduciendo exactamente los pasos que documentó
