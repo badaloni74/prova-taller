@@ -1,30 +1,34 @@
 ---
 doc_id: DOC-09
 doc_name: DOC-09-IMPACTO-albara-canvi-client
-version: 2.0.1
+version: 2.0.2
 status: draft
 generator: A-07 análisis de impacto
-generated_at: 2026-08-23T12:45:22+02:00
+generated_at: 2026-08-23T16:20:00+02:00
 resync_note: >-
-  Resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por DOC-08
-  2.1.0->2.2.0, DOC-02 1.0.0->1.1.0 y DOC-14 1.0.0->2.0.0). Releídas las tres entradas: DOC-08
-  2.2.0 solo resella su propia procedencia y añade un §4.5 que cita los RS-03 a RS-06 que este
-  documento ya aportaba en su 2.0.0, sin tocar ningún AC/Given/When/Then ni affects_requirements;
-  DOC-02 1.1.0 suma dos componentes (use-submit-guard, format-utils) con aristas reales desde
-  albarans-pages, verificadas en AlbaraForm.tsx — use-submit-guard envuelve el submit y
-  format-utils no se usa en ese fichero — sin alterar el comportamiento de AC-002/004/006/007/
-  009/010/011 ni ningún riesgo silencioso de §5; DOC-14 2.0.0 cierra EXP-001/002/007/014 y deja
-  EXP-009 parcial, ninguno relacionado con el área de "cambiar vehículo de un albarán" y ninguno
-  citado en el cuerpo de este documento (grep verificado). Conclusión: sin cambio de contenido.
-  Solo se resincronizan versiones y hashes de este bloque; el cuerpo (secciones 1-7) no se toca.
-  Nota menor no accionada: AlbaraForm.tsx:93-95 citado en RS-06 ha derivado a líneas 86-88 por el
-  import añadido de useSubmitGuard (mismo contenido, sin efecto en el hallazgo); no se corrige
-  aquí por ser puramente cosmético y no formar parte del encargo de este resync
+  Resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por DOC-07
+  1.7.0->1.8.0, MINOR). Releída la entrada DOC-07 1.8.0 en su HIST: el salto lo dispara
+  DOC-14 2.0.0 (ya incorporada al DOC-09 en el resync anterior), no un recálculo del JOIN
+  REQ<->TC — DOC-04 y DOC-05 mantienen el mismo contenido. Lo que cambia en 1.8.0: se cierra
+  A-05-03b (EXP-007, IVA no visible en factura, corregido en FacturaDetail.tsx:99-107) y nace
+  A-05-13 (EXP-027, separador decimal, afecta TC-073/TC-075 de factures.feature y
+  nomines.feature) y DOC-23 queda señalado como stale por ser anterior a SPEC 05. Ninguno de
+  los tres toca el área de este documento: grep sobre la sección 1.8.0 del HIST confirma cero
+  menciones a REQ-040, REQ-046, TC-055 o TC-064, que son los únicos elementos de DOC-07 que
+  este documento cita (§§3, 6, bloque estructurado). El recuento "requisitos con defecto
+  confirmado" baja de 6 a 4 por ese cierre, pero el propio HIST aclara que ese censo nunca
+  incluyó REQ-040/046. DOC-07-MATRIZ.csv no cambia (mismo md5, "sexta vez consecutiva" según
+  su HIST) y su hash en este bloque ya coincidía con el fichero actual, así que no se toca esa
+  entrada. Conclusión: sin cambio de contenido para el área "cambiar vehículo de un albarán a
+  otro cliente". Se resincroniza solo la entrada DOC-07-TRAZABILIDAD.md (version y hash) de
+  este bloque; el cuerpo (secciones 1-7) no se toca. No existe DOC-09-IMPACTO-albara-canvi-
+  client-HIST.md y este resync no lo crea: sigue sin haber un patrón de fichero de historia
+  independiente para este documento, la procedencia de sus resyncs vive en este mismo campo.
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
+  branch: worktree-agent-a42de18b55a86e842
+  commit_sha: 35e07c8001184f36be61963d648231451db6a8b4
   working_tree_clean: true
 inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
@@ -49,8 +53,8 @@ inputs:
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.7.0
-    hash: sha256:5cc1a789d361eedc26b11e34a57d9b721173ec1ec8e98d6fc656cf2e3418b863
+    version: 1.8.0
+    hash: sha256:095c6baf223b634dc80d00e91b907017166853622df49ce3f9192f5e476ad247
     present: true
   - id: DOC-07-MATRIZ.csv
     from: A-05
