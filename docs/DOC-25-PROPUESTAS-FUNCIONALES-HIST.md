@@ -1,17 +1,13 @@
 ---
 doc_id: DOC-25-HIST
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES-HIST
+of_document: DOC-25-PROPUESTAS-FUNCIONALES.md
 main_document: docs/DOC-25-PROPUESTAS-FUNCIONALES.md
-version: 1.1.1
-version_note: >-
-  este fichero declara la version del documento que acompaña, no una numeracion propia.
-  Convencion propuesta por A-05 · Coherencia y trazabilidad y adoptada tras el aviso
-  `sin_version` de S-16 sobre DOC-25-HIST. En 1.1.0 la version figuraba como `current_version`,
-  que S-16 no lee: el campo se llama `version`
+version: 1.2.0        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-17T12:40:00+02:00
+generated_at: 2026-08-23T09:15:00+02:00
 language: es
 purpose: >-
   historial de versiones de DOC-25. El documento principal refleja solo el estado actual y no
@@ -30,6 +26,108 @@ Una entrada por versión, de la más nueva a la más antigua.
 | **MAJOR** | Una propuesta cambia de estado por decisión de negocio, se retira o se sustituye por otra. Cambia lo que el lector puede dar por decidido |
 | **MINOR** | Nacen propuestas nuevas, o cambia la evidencia, el alcance o una señal (`confidence`, `size`, `impact`) de alguna viva. Nada de lo ya leído deja de ser cierto |
 | **PATCH** | Correcciones que no tocan el fondo de ninguna propuesta: citas rotas, erratas, procedencia |
+
+---
+
+## 1.2.0 — 2026-08-23 · MINOR
+
+**Nacen cuatro propuestas: `FUN-009`, `FUN-010`, `FUN-011` y `FUN-012`. Las ocho
+anteriores no cambian de estado ni de señal.** Primera novedad de propuestas
+desde 1.0.0.
+
+### Por qué se regenera
+
+`S-16 · Cascada de obsolescencia` disparó la ronda: `DOC-25` 1.1.1 declaraba
+`DOC-01` en 1.0.0, `DOC-06` en 1.2.0 y `DOC-16` en 2.0.0, y los tres habían
+subido a **1.1.0**, **1.3.0** y **3.0.0**. El worktree estaba además catorce
+commits por detrás de `master` y se hizo `git merge --ff-only master` antes de
+leer nada.
+
+### Por qué MINOR y no MAJOR ni PATCH
+
+**No es MAJOR** porque ninguna de las ocho propuestas anteriores cambia de
+estado: las ocho siguen en `proposed`, y ninguna decisión de negocio ha
+recaído sobre ellas. **No es PATCH** porque nacen cuatro propuestas nuevas, que
+por definición de esta misma tabla es MINOR.
+
+### Qué ha cambiado
+
+**1 · `DOC-01` 1.1.0 y `DOC-06` 1.3.0, sin efecto sobre este documento.**
+`DOC-01` sube sin cambio de contenido de negocio (mismos actores, casos de
+uso, reglas y glosario), verificado contra su propio `-HIST.md`. `DOC-06` sube
+y añade en §6.1 dos avisos sobre comportamiento ya implementado por `SPEC 04`
+y `SPEC 05` (protección de doble envío, formato de importes/fechas): no son
+funcionalidad ausente, son defectos ya corregidos que el manual todavía no ha
+limpiado de su lista. Las catorce carencias que sostenían las ocho propuestas
+vivas siguen palabra por palabra iguales. §9 gana `Q-30`, hueco de
+documentación ajeno a A-15.
+
+**2 · `DOC-16` 3.0.0 reafirma tres hallazgos de UX que llevaban desde su ronda
+2.0.0 sin que A-15 los hubiera podido evaluar, y nacen tres propuestas.**
+`DOC-14 · Exploración QA` no existía cuando se escribieron las rondas 1.0.0 y
+1.1.0/1.1.1 de este documento (nació el 2026-08-21); la única vía por la que
+sus hallazgos podían llegar a A-15 era el triaje de `A-12` en `DOC-16`, y
+`DOC-16` los reenvió desde su versión 2.0.0/2.1.0 sin que ninguna ronda de
+A-15 se hubiera ejecutado desde entonces. Es la primera oportunidad real de
+recogerlos, no un hallazgo perdido.
+
+| Origen | Nace |
+|---|---|
+| `EXP-017` — formulario abandonado sin aviso | `FUN-009` |
+| `EXP-026` — diálogo de borrado sin identificar el registro | `FUN-010` |
+| `EXP-019` — pantalla de error sin salida | `FUN-011` |
+
+**3 · `DOC-16/§6.2` reafirma `EXP-003` (concurrencia entre pestañas), no
+evaluado nunca por A-15, y nace `FUN-012`.** Dos pestañas sobre la misma
+ficha, y la que guarda en segundo lugar borra en silencio lo que había
+guardado la primera. `A-12` lo deja pendiente de una decisión de negocio
+—bloqueo con aviso o fusión por campos— que no le corresponde tomar a él;
+tampoco a A-15, que lo traslada como propuesta con `confidence: medium`
+precisamente porque el tamaño real depende de esa decisión.
+
+**4 · `DOC-16/§6.3` señala por primera vez `REQ-025` y `REQ-034`/`BR-ALB-06`
+sin cumplir en la interfaz, y no nace ninguna `FUN-nnn`.** `A-05`
+(`DOC-07/A-05-11c`, citado por `DOC-16`) verificó leyendo `AlbaransList.tsx` y
+`AlbaraLiniesSection.tsx` que el listado de albaranes no filtra por vehículo
+ni por cliente y que la línea de pieza no tiene campo de precio manual. `A-12`
+lo etiqueta como «funcionalidad ausente» y lo dirige a A-15; **A-15 no está de
+acuerdo con esa clasificación** y aplica el mismo criterio que ya usaba con
+los avisos de error en catalán: los dos requisitos están redactados en
+presente, no en condicional, así que un comportamiento distinto no es un
+hueco de producto por decidir, es un requisito vigente incumplido. Se
+redirige a `A-14` como candidato a defecto, reforzado por que `DOC-06/§3`
+describe la misma capacidad como si existiera. Detalle en el documento
+principal, apartado 5.6.
+
+**5 · Se anota, sin proponer nada, que `DOC-14` deriva tres hallazgos más
+directamente a A-15** (`EXP-022`, `EXP-023`, `EXP-024`) **sin haber pasado
+por el triaje de `DOC-16`.** `DOC-14` no es entrada formal de A-15; adelantar
+estos tres sería saltarse la vía por la que le llegan los hallazgos de
+exploración. Quedan anotados para no perderlos (apartado 5.7 del documento
+principal) a la espera de que `DOC-16` los recoja.
+
+**6 · La recomendación cambia de orden por primera vez desde 1.0.0.**
+`FUN-010` entra al tercer lugar: mismo tamaño que `FUN-005` pero protege una
+acción irreversible frente a un error de identificación ya reproducido
+(`EXP-001`/`EXP-026`, dos clientes homónimos). `FUN-005` baja al cuarto lugar
+sin perder ninguna señal.
+
+**7 · `MEJ-007` y `MEJ-008` pasan a `implemented` en `DOC-16` 3.0.0; nace
+`MEJ-009`.** Ninguna de las tres cierra ni abre una `FUN-nnn`: las dos
+primeras son correcciones técnicas ya reflejadas en propuestas que no
+dependían de ellas, y la tercera es consistencia de presentación entre dos
+pantallas, no una capacidad ausente.
+
+**8 · Registro de identificadores.** `S-12 next --prefix FUN` devolvió
+`FUN-009`; se reclamaron los cuatro consecutivos (`FUN-009` a `FUN-012`) y se
+sincronizó `registro-ids.json` con `sync --block propuestas`.
+
+### Qué no ha cambiado
+
+Las ocho propuestas anteriores, con su número, su texto, su estado `proposed`
+y todas sus señales, salvo el orden de la recomendación (punto 6). `DOC-04`
+sigue en 1.2.0, sin cambio de enunciado en ningún `REQ-nnn` verificado ancla a
+ancla por A-02. `DOC-24` sigue en 1.0.0 con cuatro defectos.
 
 ---
 

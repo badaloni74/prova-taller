@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-22T19:29:37.918Z",
+  "updated_at": "2026-08-23T12:19:10.717Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -2868,6 +2868,46 @@
       "impact": "medium",
       "difficulty": "low",
       "size": "small"
+    },
+    "FUN-009": {
+      "text": "Avisar antes de perder lo escrito en un formulario sin guardar",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-23",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "medium"
+    },
+    "FUN-010": {
+      "text": "Que el diálogo de confirmación de borrado diga qué registro se va a borrar",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-23",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "small"
+    },
+    "FUN-011": {
+      "text": "Dar una salida real a una pantalla de registro no encontrado",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-23",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "low",
+      "size": "small"
+    },
+    "FUN-012": {
+      "text": "Proteger el trabajo cuando dos pestañas editan la misma ficha a la vez",
+      "type": "functional_proposal",
+      "document": "DOC-25-PROPUESTAS-FUNCIONALES.md",
+      "created": "2026-08-23",
+      "status": "proposed",
+      "source": "evidence",
+      "business_value": "medium",
+      "size": "medium"
     }
   }
 }
