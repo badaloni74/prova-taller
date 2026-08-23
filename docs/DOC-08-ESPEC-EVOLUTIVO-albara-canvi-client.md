@@ -1,11 +1,11 @@
 ---
 doc_id: DOC-08
 doc_name: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client
-version: 2.1.0
+version: 2.2.0
 status: draft
 generator: A-06 refinamiento / intake
 generator_version: "1.0"
-generated_at: 2026-08-17T13:55:00+02:00
+generated_at: 2026-08-23T13:10:00+02:00
 language: es
 project: app-taller
 evolutivo_id: EVO-001
@@ -16,26 +16,37 @@ history_note: >-
   declara ademas la version del documento que acompana en el campo `version` (asi lo lee S-16;
   corregido en 2.1.0 tras su aviso `sin_version`)
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: false   # sin versionar: docs/, automation/ y registro-ids.json, generados por este ciclo
+  commit_sha: 5601ac6305ff2f3868f016ee754fe0587e92677c
+  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt; ajenos a este ciclo
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
-    hash: sha256:7d1844156487a62b8936a0d2164ebec043eb7fdb7043d27afdd649316f9b63a0
+    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
     present: true
     usage: >-
       pregunta Q-10 respondida el 2026-08-16, requisitos vigentes REQ-040, REQ-046, REQ-042,
       REQ-041, REQ-027, REQ-011 y REQ-015
+    resello_note: >-
+      version igual (1.2.0), hash distinto: A-02 resincronizo su entrada DOC-01 (1.0.0 -> 1.1.0)
+      sin cambiar el contenido de negocio de DOC-04. Confirmado por A-02: ningun REQ-nnn citado
+      aqui cambia de enunciado
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.0.0
-    hash: sha256:4e49485c3ad1529b2eee9d56487e188617011d772fe5908740cbed4114f01097
+    version: 1.1.0
+    hash: sha256:0f074e686a5fb700286e8de28f0210a204380423a6a797e7a9e8f3a96384200a
     present: true
     usage: UC-ALB-06, UC-ALB-07, UC-VEH-04, BR-ALB-01, BR-ALB-03, ACT-01 y el glosario
+    updated_in: 2.2.0
+    previous_version: 1.0.0
+    obsolescence_note: >-
+      S-16 marco esta entrada como caducada (1.0.0 declarado, 1.1.0 vigente). Releido: el salto
+      cierra una Q-02 ya recogida en DOC-04 desde 1.2.0 y corrige el arbol comentado de DOC-01
+      6; ningun actor, caso de uso, regla de negocio ni glosario cambia de enunciado. Resello sin
+      efecto sobre este documento
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
@@ -44,44 +55,53 @@ inputs:
     usage: BUG-002, evidencia de que el hueco existe en el sistema desplegado
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
-    version: 1.5.0
-    hash: sha256:f2e13dbc75e4a3d78d1ed48288217f2f47a16e1e25262ae08de8488273281e1c
+    version: 1.6.0
+    hash: sha256:a88ca2aac68a4b976650ce10fa70832a800568cf4b8efd1e390785a63282674c
     present: true
     added_in: 2.0.0
-    updated_in: 2.1.0
-    previous_version: 1.4.1
+    updated_in: 2.2.0
+    previous_version: 1.5.0
     usage: >-
       Q-18, cerrada el 2026-08-17 en dos mitades (apartado 6.5 de DOC-05); la politica del
       apartado 4.12 —un caso va por servicio solo cuando el vector no existe en la interfaz—;
-      el campo `verification_path` de los 110 casos y el precedente de TC-041. Solo se cita:
-      este documento no toca DOC-05
+      el campo `verification_path` de los 110 casos. Solo se cita: este documento no toca DOC-05
     obsolescence_note: >-
-      la 2.0.0 declaraba 1.4.1 cuando DOC-05 ya iba por 1.5.0. Lo detecto S-16 · Cascada de
-      obsolescencia y se corrige aqui: el resello no es cosmetico, porque entre 1.4.1 y 1.5.0
-      Q-18 paso de `open` a `answered` y eso es justamente lo que sostenia el apartado 4.2
+      S-16 marco esta entrada como caducada (1.5.0 declarado, 1.6.0 vigente); el salto SI toca
+      contenido citado aqui: el Anexo de la 1.6.0 reclasifica TC-045, TC-063 y TC-064 de `ui` a
+      `service` (S-10 confirmo empiricamente que el formulario correspondiente no permite componer
+      el intento). TC-041 deja de ser "el unico caso de servicio" del plan; ahora son cuatro. Se
+      corrige en 3 y 4.1, donde este documento citaba esa cifra
   - id: DOC-09-IMPACTO-albara-canvi-client.md
     from: A-07
-    version: 1.0.0
-    hash: sha256:efcf62b82a986c02d9b838c7e5bbf7142e22ed4b63a6402f3ce92bacd2f39d5c
+    version: 2.0.0
+    hash: sha256:8503bcb7cca8c28344f1ae5a6694bdf230808f50bac540f0881d2bcd44b128aa
     present: true
     added_in: 2.1.0
+    updated_in: 2.2.0
+    previous_version: 1.0.0
     usage: >-
-      tres hallazgos que tocan a este documento: la confirmacion en codigo de que REQ-046 se
-      refuerza (factures.js:72-77), los datos de ejemplo que dan un vehiculo por cliente
-      (seed.js:33-39) y el dimensionado de PD-002 (vehicles.js:93). Se cita, no se copia
+      1.0.0 aporto tres hallazgos ya incorporados en 2.1.0 (REQ-046 confirmado en codigo,
+      datos de ejemplo, dimensionado de PD-002). 2.0.0 anade el analisis tecnico de componentes
+      (no es materia de A-06) y cuatro riesgos silenciosos nuevos, RS-03 a RS-06, que se citan
+      en el apartado 4.5. Se cita, no se copia
     boundary_note: >-
       DOC-09 es consumidor de este documento y aqui se lee de vuelta. A-06 no toca DOC-09 ni
       asume su analisis tecnico: solo recoge lo que afecta a que sus criterios sean
       verificables y a la procedencia que declara
+    accuracy_caveat: >-
+      la 2.0.0 de DOC-09 declara consumir DOC-05 1.6.0 pero su cuerpo (aviso de 3, coverage_note
+      del bloque yaml) sigue citando la transicion 1.4.1->1.5.0 y las cifras 109 ui / 1 service,
+      previas a la reclasificacion de TC-045/TC-063/TC-064. No se hereda esa cifra aqui: se ha
+      verificado directamente contra DOC-05 1.6.0 (ver arriba)
   - id: registro-ids.json
     from: S-12
     present: true
-    hash: sha256:afca8a7f31c6da308a6c7060e52beda89419727ed4278787b87ab2ea1f232b3f
-    updated_in: 2.1.0
+    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    updated_in: 2.2.0
     usage: >-
       reserva del identificador EVO-001 (`next --prefix EVO`). Desde la 2.0.0 EVO-001 esta
-      censado: S-12 ya conoce el bloque `evolutivo` y el registro va por 311 anclas. En 2.1.0
-      solo se resella el hash: no se ha pedido ningun identificador nuevo
+      censado: S-12 ya conoce el bloque `evolutivo`. En 2.2.0 solo se resella el hash tras la
+      actividad de otros agentes: no se ha pedido ningun identificador nuevo
   - id: contexto-confluence
     from: I-02
     present: false
@@ -142,6 +162,35 @@ criterios de aceptación ya no valen para las dos formas posibles, sino para esa
 **Lo que no ha cambiado en la 2.1.0.** El comportamiento pedido, los once criterios en lo que
 exigen, `affects_requirements`, `contradicts`, `PD-002` y `PD-003` —las dos siguen abiertas— y
 el `gate`, que sigue **`pending`**: la validación es del peticionario de negocio.
+
+**Qué ha cambiado en la 2.2.0.** `S-16 · Cascada de obsolescencia` marcó esta versión como
+caducada por tres entradas de procedencia. Se ha releído cada una antes de tocar nada, y
+**ninguna cambia el `Dado`/`Cuando`/`Entonces` de ningún criterio ni sus precondiciones de
+datos**: no ha hecho falta entrevista.
+
+1. **`DOC-01` 1.0.0 → 1.1.0.** Resello sin efecto. El salto cierra una pregunta ya recogida en
+   `DOC-04` desde 1.2.0 y corrige el árbol de documentos de `DOC-01` §6; ningún actor, caso de
+   uso, regla de negocio ni entrada del glosario cambia de enunciado. Confirmado por A-02 al
+   resincronizar `DOC-04`, que por eso tampoco sube de versión (sigue en 1.2.0), aunque su hash
+   cambia porque su propia entrada de `DOC-01` se resella.
+2. **`DOC-05` 1.5.0 → 1.6.0.** Esta sí toca algo citado aquí. El Anexo de la 1.6.0 reclasifica
+   `TC-045`, `TC-063` y `TC-064` de `verification_path: ui` a `service`, porque `S-10` intentó
+   automatizarlos por interfaz y confirmó lo que `DOC-07` ya apuntaba: los formularios
+   correspondientes no permiten componer el intento. Efecto sobre este documento: la frase «la
+   vía de servicio era la excepción de un solo caso (`TC-041`)» del apartado 4.1 deja de ser
+   cierta —ahora son cuatro— y la nota sobre `TC-064` del apartado 3 queda corregida. Ninguno de
+   los once criterios de `EVO-001` cambia: `TC-041`, `TC-045`, `TC-063` y `TC-064` no son casos
+   de este evolutivo, son precedente y contexto.
+3. **`DOC-09` 1.0.0 → 2.0.0.** La 1.0.0 ya se había incorporado en la 2.1.0. La 2.0.0 añade el
+   análisis de componentes de A-07 —que no es materia de A-06— y cuatro riesgos silenciosos
+   nuevos, `RS-03` a `RS-06`, que se resumen en el apartado **4.5 (nuevo)**. Los cuatro son
+   avisos de implementación para S-04 y A-08: ninguno exige un criterio nuevo, un cambio de vía
+   ni una precondición distinta, porque lo que describen ya está cubierto por el comportamiento
+   observable que los criterios existentes exigen (el motivo correcto en AC-006/AC-009, que no
+   se guarde nada a medias en AC-004, el texto del mensaje ya declarado como pendiente y no
+   bloqueante en 6.1). Se declara también una discrepancia: `DOC-09` 2.0.0 dice consumir `DOC-05`
+   1.6.0 pero su propio texto sigue citando cifras de la 1.5.0 (109 `ui` / 1 `service`); este
+   documento no hereda esa cifra y usa la comprobada directamente contra `DOC-05` 1.6.0.
 
 ---
 
@@ -210,9 +259,13 @@ nuevo y la regla lo da por bueno; con el evolutivo, no puede llegar así.
 
 Queda escrito aquí porque **cambia el peso de la afirmación, no la afirmación**: lo que en la
 1.0.0 era una lectura funcional de A-06 tiene ahora una línea de código detrás. Lo demás de
-ese hallazgo —que el único caso de REQ-046, `TC-064`, declara una vía que no puede
+ese hallazgo —que el único caso de REQ-046, `TC-064`, declaraba una vía que no podía
 ejecutar— es de A-03 y de A-07, y **no se recoge aquí como si fuera un efecto de este
-evolutivo**: no lo es, es estado actual.
+evolutivo**: no lo es, es estado actual. **Corregido en la 2.2.0:** `DOC-05` 1.6.0 (2026-08-21,
+anterior a esta versión) ya reclasificó `TC-064` —junto con `TC-045` y `TC-063`— de
+`verification_path: ui` a `service`, tras confirmarlo `S-10` empíricamente. La ceguera de
+clasificación está corregida; que exista ya cobertura automatizada real es otra cosa, y sigue
+sin ser competencia de este documento.
 
 **Requisitos vigentes que este evolutivo NO cambia, pero que condicionan su comportamiento**
 —van aquí porque A-07 los va a encontrar en el mismo recorrido y conviene que sepa que están
@@ -451,8 +504,9 @@ Filtrar el desplegable **cambia lo que el usuario puede intentar**, y con ello c
 dónde se puede probar cada cosa. **Cuatro criterios dejan de ser alcanzables desde la
 interfaz** —AC-002, AC-004, AC-007 y AC-009— y otros dos solo lo son en parte —AC-006 y
 AC-008—. No es que hayan dejado de importar: es que el intento ya no se puede ni formular en
-pantalla. Es la misma situación de `TC-041`, hoy el único caso de `DOC-05` que no se ejecuta
-entero por la interfaz.
+pantalla. Es la misma situación de `TC-041`, el primer caso de `DOC-05` que no se pudo ejecutar
+entero por la interfaz —desde `DOC-05` 1.6.0 (2026-08-21) le acompañan `TC-045`, `TC-063` y
+`TC-064`, reclasificados por el mismo motivo (§4.2, nota de la 2.2.0)—.
 
 | AC | Qué comprueba | Vía | ¿Alcanzable desde la interfaz? |
 |---|---|---|---|
@@ -584,13 +638,33 @@ Las dos cifras miden cosas distintas —el cambio y su verificación— y **ning
 la estimación**. A-06 no toca su `scope` por esto: cambiarlo sería estimar, y además borraría
 de dónde viene el número. Quien traduzca esto a esfuerzo es A-08, leyendo las dos.
 
+### 4.5 Cuatro riesgos silenciosos de `DOC-09` 2.0.0 *(nuevo en 2.2.0)*
+
+`DOC-09` 2.0.0 dedica su apartado 5 a seis riesgos que no producen ningún error y cambian el
+comportamiento en silencio. `RS-01` y `RS-02` ya estaban recogidos aquí desde la 2.1.0 (la
+doble protección del apartado 4.2 y el refuerzo de REQ-046 del apartado 3). Los otros cuatro
+son nuevos y se citan aquí **solo para que quien implemente y quien diseñe (S-04) los tengan
+delante**; ninguno reformula un criterio, le cambia la vía de comprobación o le añade una
+precondición, porque lo que describen ya está exigido por el comportamiento observable que los
+criterios ya piden:
+
+| Riesgo | Qué dice `DOC-09` | Por qué no toca ningún criterio de este documento |
+|---|---|---|
+| **RS-03** | `AlbaraForm` sirve a la vez para crear y editar; el filtro de `AC-010` solo debe aplicarse al editar. Si alguien lo extiende al alta o lo retira de la edición, ninguna de las dos cosas dará error | Crear un albarán sigue **fuera de alcance** (punto 1, más abajo): no hay cliente del que mover el trabajo. `RS-03` no pide un criterio nuevo, avisa de un riesgo de refactor futuro para S-04 |
+| **RS-04** | Si la comprobación nueva se coloca en el orden equivocado dentro del `PUT`, el cambio se rechaza igual pero con el motivo equivocado, y nada lo detecta hoy (cobertura automatizada 0 %) | `AC-006` y `AC-009` **ya exigen** el motivo correcto, no solo el rechazo. El riesgo es de implementación (dónde se coloca la comprobación, que es de S-04), no de especificación |
+| **RS-05** | La atomicidad que exige `AC-004` se cumple hoy por accidente estructural —un único `UPDATE` sin transacción—, no por diseño | `AC-004` exige el resultado observable (nada se guarda a medias), no cómo se logra. Que hoy sea casual es una advertencia para S-04 si el guardado deja de ser una sola sentencia |
+| **RS-06** | El mensaje de rechazo heredará la convención ya existente en la aplicación: literales del servidor en catalán con independencia del idioma de la interfaz, y el `catch` de `AlbaraForm` asigna cualquier error al campo de vehículo | El apartado **6.1** ya declara el texto exacto del mensaje como **decidido que no se decide aquí**, y no bloquea ningún criterio. `RS-06` no abre una decisión nueva: precisa la que ya estaba pendiente y sin inventar |
+
 ## 5. Fuera de alcance
 
 Lo que se ha mirado y **no** entra en `EVO-001`, para no discutirlo la semana que viene:
 
 1. **Abrir el albarán ya no se toca.** Elegir el vehículo al crear un albarán (`UC-ALB-02`)
    no es un cambio de cliente: no hay nada de lo que mover el trabajo. La regla nueva actúa
-   solo sobre la modificación de un albarán que ya existe.
+   solo sobre la modificación de un albarán que ya existe. **Desde la 2.2.0:** `DOC-09` (`RS-03`)
+   avisa de que el formulario de alta y el de edición son el mismo componente, así que esta
+   frontera es de comportamiento, no de pantalla —unificar el filtro en cualquier dirección
+   rompería algo sin dar error—. No cambia el alcance, precisa por qué conviene respetarlo.
 2. **Cambiar el cliente propietario de un vehículo** (`UC-VEH-04`, REQ-015) sigue permitido
    tal como está hoy. Este evolutivo **no lo toca**, aunque por ahí se llega al mismo
    resultado: si un vehículo con albaranes pendientes cambia de dueño, esos albaranes se
@@ -641,7 +715,11 @@ consecuencia sobre `DOC-05/Q-18` en 4.2.
 **Lo que la decisión no dice, y aquí no se ha inventado:** el texto exacto del mensaje de
 rechazo, y si el desplegable filtrado debe explicar de algún modo por qué no están los demás
 vehículos. Ninguna de las dos cosas hace falta para comprobar ningún criterio: si alguna
-importa, se pide y se refina en otra pasada.
+importa, se pide y se refina en otra pasada. **`DOC-09` (`RS-06`, 2.2.0)** precisa que, si no se
+decide nada, el mensaje heredará la convención ya existente en la aplicación —catalán fijo,
+con independencia del idioma de la interfaz— y se mostrará bajo el campo de vehículo sea cual
+sea su motivo real. Sigue sin bloquear ningún criterio; queda dicho para que quien decida sepa
+qué hereda por omisión.
 
 ### 6.2 Pendientes
 
@@ -697,7 +775,8 @@ scope_source: >-
   declarado por A-02 en DOC-04 6.2 para el evolutivo de Q-10. No es una estimacion de A-06;
   estimar es de A-08
 scope_vs_impact_note: >-
-  DOC-09 1.0.0 declara effort_signal: medium y NO contradice este scope. A-07 dice que el
+  DOC-09 declara effort_signal: medium desde su 1.0.0, y su 2.0.0 lo mantiene sin cambios. NO
+  contradice este scope. A-07 dice que el
   codigo por si solo seria small y coincide con lo declarado aqui; lo que empuja a medium es el
   coste de verificarlo (seis criterios por via de servicio con cobertura automatizada 0%, los
   datos de ejemplo del apartado 4.3 y la proteccion partida en dos componentes). Miden cosas
@@ -730,12 +809,34 @@ related_questions:
       datos y efectos laterales: dejan de ser inautomatizables
     still_true: >-
       la regla sigue implementada dos veces (filtro de pantalla y comprobacion al guardar). DOC-09
-      confirma que ese patron YA divergio en este repositorio con REQ-046 y TC-064. AC-007 sigue
-      siendo el criterio que lo impide dar por terminado con solo filtrar
+      confirmo que ese patron YA divergio en este repositorio con REQ-046 y TC-064 -declarado
+      entonces como service en el plan sin poder ejecutarse por interfaz-. Corregido en DOC-05
+      1.6.0 (2026-08-21): TC-064 paso de ui a service, resuelto por el mismo motivo. AC-007 sigue
+      siendo el criterio que impide dar por terminado con solo filtrar
     vocabulary_note: >-
       A-03 clasifica el vector y A-06 el criterio completo: TC-041 es service alli y seria mixta
       aqui (cf. AC-008). Divergencia declarada en ambos lados; manda el vocabulario de A-03 cuando
       se escriban los casos
+doc09_v2_review:
+  added_in: 2.2.0
+  reviewed_version: 2.0.0
+  conclusion: >-
+    ningun Dado/Cuando/Entonces ni ninguna precondicion de datos cambia. No se ha celebrado
+    entrevista porque no hay ambiguedad de negocio que resolver: los hallazgos nuevos son de
+    implementacion (S-04/A-08) o correcciones de cifras ya citadas (DOC-05)
+  doc05_correction: >-
+    DOC-05 paso de 1.5.0 a 1.6.0 (2026-08-21, anterior a esta version): TC-045, TC-063 y TC-064
+    reclasificados de verification_path ui a service. TC-041 deja de ser el unico caso de
+    servicio del plan. Corregido en 3 y 4.1
+  silent_risks_cited: [RS-03, RS-04, RS-05, RS-06]
+  silent_risks_note: >-
+    RS-01 y RS-02 ya estaban incorporados desde la 2.1.0. Los cuatro nuevos se citan en 4.5 y no
+    generan criterios, precondiciones ni cambios de via: son avisos de implementacion para S-04
+    y de fiabilidad para A-08
+  doc09_accuracy_caveat: >-
+    DOC-09 2.0.0 declara consumir DOC-05 1.6.0 pero su propio cuerpo (aviso de la seccion 3 y el
+    bloque coverage_note) sigue citando la transicion 1.4.1->1.5.0 y las cifras 109 ui / 1
+    service, previas a la reclasificacion. Este documento no hereda esa cifra
 acceptance_criteria:
   - id: AC-001
     given: un albaran pendiente de facturar, abierto sobre el vehiculo V1 del cliente C
@@ -971,16 +1072,18 @@ consumers:
   - agent: A-07
     doc: DOC-09
     note: >-
-      analisis de impacto. YA ESCRITO: DOC-09 1.0.0, sobre la 2.0.0 de este documento. Sus
-      hallazgos que tocan a A-06 estan recogidos en 3 (REQ-046 confirmado en codigo), 4.3 (datos
-      de ejemplo) y 5.2 / PD-002 (dimensionado). Su effort_signal: medium no contradice el scope
-      declarado aqui: ver scope_vs_impact_note
-    consumed_version: 2.0.0
-    consumed_hash: sha256:5f46a07a585dbdb991bb5c42f66bec909d43bfe062fbb5c4fb4b0ad1eb3c2634
+      analisis de impacto. YA ESCRITO: DOC-09 2.0.0, sobre la 2.1.0 de este documento (su propio
+      input lo declara asi). Los hallazgos de su 1.0.0 que tocan a A-06 ya estaban recogidos desde
+      la 2.1.0: 3 (REQ-046 confirmado en codigo), 4.3 (datos de ejemplo) y 5.2 / PD-002
+      (dimensionado). Su effort_signal: medium no contradice el scope declarado aqui: ver
+      scope_vs_impact_note
+    consumed_version: 2.1.0
+    consumed_hash: sha256:3f418f7bd2f0f6b6a07a7d30b14fba5414a7727f951a42a398bcf94118ea5d77
     revisit: >-
-      2.1.0 no cambia ningun comportamiento exigido ni el reparto de vias, asi que el analisis de
-      DOC-09 sigue siendo valido. Lo unico que le afecta es que AC-010 lleva ahora en su `given`
-      la precondicion de datos que el propio DOC-09 pedia
+      2.2.0 no cambia ningun comportamiento exigido ni el reparto de vias: la relectura de DOC-09
+      2.0.0 (4.5) solo anade riesgos de implementacion (RS-03 a RS-06) que no reformulan ningun
+      criterio. Se corrige ademas una cifra que DOC-09 2.0.0 hereda sin actualizar: TC-041 ya no es
+      el unico caso de servicio de DOC-05 desde su 1.6.0 (ver inputs y 4.1)
   - agent: A-08
     doc: DOC-10
     note: >-

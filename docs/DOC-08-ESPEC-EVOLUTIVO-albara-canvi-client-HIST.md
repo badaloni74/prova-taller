@@ -2,20 +2,20 @@
 doc_id: DOC-08-HIST
 doc_name: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client-HIST
 main_document: docs/DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
-version: 2.1.0
+version: 2.2.0
 version_note: >-
   este fichero declara la version del documento que acompana, no una numeracion propia.
   Convencion propuesta por A-05 · Coherencia y trazabilidad y adoptada el 2026-08-17. En 2.0.0
   la version figuraba como `document_version` y `current_version`, y **S-16 no lee ninguno de
   los dos**: aviso `sin_version` sobre este fichero. El campo se llama `version`. Es la misma
   correccion que DOC-25-PROPUESTAS-FUNCIONALES-HIST.md aplico antes por el mismo aviso
-document_version: 2.1.0     # alias historico de `version`; se mueven juntos
-current_version: 2.1.0      # alias historico de `version`; se mueven juntos
+document_version: 2.2.0     # alias historico de `version`; se mueven juntos
+current_version: 2.2.0      # alias historico de `version`; se mueven juntos
 evolutivo_id: EVO-001
 status: draft
 generator: A-06 refinamiento / intake
 generator_version: "1.0"
-generated_at: 2026-08-17T13:55:00+02:00
+generated_at: 2026-08-23T13:10:00+02:00
 language: es
 purpose: >-
   historial de versiones de este DOC-08. El documento principal refleja solo el estado actual y no
@@ -39,6 +39,46 @@ son los criterios de aceptación:
 La escala es la misma idea que A-15 usa en `DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, traducida a
 lo que aquí manda: allí el disparador de MAJOR es que una propuesta cambie de estado por
 decisión de negocio; aquí, que lo haga una decisión pendiente.
+
+---
+
+## 2.2.0 — 2026-08-23
+
+**MINOR.** Ningún comportamiento pedido cambia, ningún criterio se reformula, cambia de vía o
+gana o pierde una precondición. `S-16 · Cascada de obsolescencia` marcó la 2.1.0 como caducada
+por tres entradas de procedencia; se releyeron las tres antes de tocar nada, siguiendo el
+contrato de A-06: **entrevistar solo si algo cambia el `Dado`/`Cuando`/`Entonces` o las
+precondiciones**. No hizo falta entrevista.
+
+**Por qué MINOR y no MAJOR.** Ninguna decisión pendiente se resuelve —`PD-002` y `PD-003`
+siguen abiertas—, y ningún criterio deja de significar lo que significaba.
+
+**Por qué MINOR y no PATCH.** Porque no es solo resello de hashes: nace un apartado nuevo
+(4.5) con información que antes no estaba, y dos afirmaciones del documento —una en el
+apartado 3, otra en el 4.1— quedan corregidas porque el hecho que citaban cambió realmente.
+
+**Qué cambia**
+
+| Dónde | Cambio |
+|---|---|
+| Front-matter, `DOC-01` | 1.0.0 → 1.1.0. **Resello sin efecto sobre el fondo**: A-02 confirma que ningún actor, caso de uso, regla de negocio ni entrada del glosario cambia de enunciado; el salto cierra una pregunta ya recogida en `DOC-04` y corrige el árbol de documentos de `DOC-01` §6 |
+| Front-matter, `DOC-04` | Mismo `version` (1.2.0), hash distinto: se resincronizó tras el resello de `DOC-01`, sin cambio de contenido de negocio |
+| Front-matter, `DOC-05` | 1.5.0 → 1.6.0. **Este sí toca contenido citado.** El Anexo de la 1.6.0 reclasifica `TC-045`, `TC-063` y `TC-064` de `verification_path: ui` a `service`, confirmado empíricamente por `S-10` |
+| **Apartado 3** (corregido) | La nota sobre `TC-064` («declara una vía que no puede ejecutar») pasa a pretérito y se añade que `DOC-05` 1.6.0 ya lo reclasificó a `service` el 2026-08-21, antes de esta versión. La clasificación está corregida; que exista cobertura automatizada real es otra cosa y sigue sin ser competencia de A-06 |
+| **Apartado 4.1** (corregido) | La frase «`TC-041`, hoy el único caso de `DOC-05` que no se ejecuta entero por la interfaz» deja de ser cierta: desde `DOC-05` 1.6.0 le acompañan `TC-045`, `TC-063` y `TC-064`. Ninguno es caso de `EVO-001`; son precedente y contexto, no cambia ningún criterio |
+| **Apartado 4.5** (nuevo) | Cita los cuatro riesgos silenciosos nuevos de `DOC-09` 2.0.0 —`RS-03` a `RS-06`— y dice, uno por uno, por qué ninguno reformula un criterio: lo que describen ya está exigido por el comportamiento observable que los criterios ya piden. Son avisos de implementación para S-04 y de fiabilidad para A-08, no ambigüedad de negocio |
+| Apartado 5, punto 1 | Se añade una frase citando `RS-03` (el formulario de alta y el de edición son el mismo componente): precisa por qué la frontera «crear ≠ editar» importa, no cambia el alcance |
+| Apartado 6.1 | Se añade una frase citando `RS-06` (el mensaje heredará catalán fijo y se mostrará bajo el campo de vehículo si no se decide nada): precisa el pendiente ya declarado, no abre uno nuevo ni lo bloquea |
+| Front-matter, `DOC-09` | 1.0.0 → 2.0.0. Los hallazgos de la 1.0.0 ya estaban incorporados desde la 2.1.0; se añade `accuracy_caveat`: la 2.0.0 de `DOC-09` declara consumir `DOC-05` 1.6.0 pero su propio cuerpo sigue citando cifras de la 1.5.0 (109 `ui` / 1 `service`). No se hereda esa cifra: se verificó directamente contra `DOC-05` 1.6.0 |
+| Bloque `evolutivo` (yaml), `related_questions.Q-18.still_true` | Se añade que `DOC-05` 1.6.0 ya corrigió la clasificación de `TC-064` |
+| Bloque `evolutivo` (yaml) | Nuevo `doc09_v2_review`: conclusión explícita de por qué no hizo falta entrevista, la corrección de `DOC-05`, los cuatro `RS-nn` citados y el `accuracy_caveat` sobre `DOC-09` |
+| `consumers.A-07` | `consumed_version` pasa de 2.0.0 a 2.1.0 —era un dato desactualizado: `DOC-09` 2.0.0 declara haber leído la 2.1.0 de este documento, no la 2.0.0—, y el `revisit` se reescribe para la 2.2.0 |
+| Front-matter, `registro-ids.json` | Se resella el hash tras la actividad de otros agentes. No se ha pedido ningún identificador nuevo a S-12 |
+
+**Qué NO cambia.** El comportamiento pedido, los once criterios en lo que exigen, sus vías de
+comprobación, sus precondiciones de datos (`DP-001` a `DP-003`), `affects_requirements`,
+`contradicts`, `scope`, `PD-002` y `PD-003` —siguen abiertas y sin bloquear— y el `gate`, que
+sigue **`pending`**.
 
 ---
 
