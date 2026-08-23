@@ -39,6 +39,47 @@ nominal.
 
 ---
 
+## Nota — 2026-08-23 — resincronización de procedencia (DOC-08, DOC-25), sin cambio de versión
+
+No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico
+byte a byte al de 1.6.0. Se documenta porque `S-16 · Cascada de obsolescencia`
+marcó este documento como obsoleto por depender de versiones superadas de
+`DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md` (2.1.0 → 2.2.0) y de
+`DOC-25-PROPUESTAS-FUNCIONALES.md` (1.1.1 → 1.2.0).
+
+**Motivo — DOC-08 2.1.0 → 2.2.0 (MINOR).** Según su propio
+`DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client-HIST.md`, ninguno de los once
+criterios de aceptación de `EVO-001` se reformula, cambia de vía de
+comprobación o gana/pierde una precondición; lo que cambia es procedencia
+propia (dos afirmaciones corregidas en sus apartados 3 y 4.1) y un apartado
+nuevo (4.5) que cita riesgos de `DOC-09`. Este plan **no deriva ningún caso**
+de `DOC-08`: lo cita solo como origen del vocabulario `verification_path`
+(`interfaz`/`servicio`/`mixta` ↔ `ui`/`service`/`mixed`, apartado 4.12) y como
+evidencia de urgencia de `Q-18` sobre `AC-002`, `AC-004`, `AC-007` y `AC-009`.
+Los cuatro criterios citados no cambian de enunciado ni de vía en 2.2.0.
+
+**Motivo — DOC-25 1.1.1 → 1.2.0 (MINOR).** Nacen cuatro propuestas nuevas
+(`FUN-009` a `FUN-012`); las ocho anteriores no cambian de estado, evidencia ni
+señal. Este plan cita `DOC-25` únicamente como segundo testigo de la mitad
+factual de `Q-18` (la reproducción de `BUG-003` que A-15 anotó como
+`evidence`), y declara expresamente que «ninguna FUN/MEJ de A-15 genera casos
+en este plan». Las cuatro propuestas nuevas no alteran esa cita.
+
+**Consecuencia sobre este plan.** Ningún `TC-nnn`, `requirement`, `steps` ni
+campo de `automation` o aislamiento cambia. No hace falta releer `DOC-04` ni
+reconciliar ningún caso.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la
+versión y el `hash` de las dos entradas de `inputs` (`DOC-08` y `DOC-25`), el
+`commit_sha` de `source` y `generated_at`. Los 110 `TC-nnn`, sus `steps`, sus
+`requirement`, `automation` y campos de aislamiento quedan exactamente como en
+1.6.0.
+
+**`registro-ids.json` no se toca.** No hay `TC-nnn` nuevo, retirado ni
+reformulado.
+
+---
+
 ## Nota — 2026-08-23 — resincronización de procedencia, sin cambio de versión
 
 No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico
