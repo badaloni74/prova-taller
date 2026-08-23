@@ -1,21 +1,22 @@
 ---
 doc_id: DOC-01
 doc_name: DOC-01-BASE-ASIS
-version: 1.0.0
+version: 1.1.0
 status: draft
+history: DOC-01-BASE-ASIS-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-15T17:37:09+02:00
+generated_at: 2026-08-23T00:38:21+02:00
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: true
+  commit_sha: 90b24b861bd4d0a366e1dab28308868e7190ae9d
+  working_tree_clean: false   # specs/, docs/, TRIATGE-DOC-14.md y ficheros de sesion sin versionar en el ambito de este ciclo
 inputs:
   - id: registro-ids.json
-    present: false
-    hash: null
+    present: true
+    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
 ---
 
 # DOC-01 · Base AS-IS — app-taller
@@ -321,7 +322,7 @@ appdani/
 │     ├─ numbering.js      # La numeración anual de albaranes y facturas
 │     └─ seed.js           # Datos de ejemplo para probar la aplicación
 ├─ data/                   # El fichero con todos los datos reales del taller
-└─ specs/                  # Las tres especificaciones con las que se construyó la aplicación
+└─ specs/                  # Las cinco especificaciones con las que se construyó y se ha ido corrigiendo la aplicación
 ```
 
 ## 7. Cobertura y exclusiones
@@ -348,12 +349,13 @@ pantallas y tiene casos de uso y reglas propias, así que se cuenta como módulo
 | ID | Pregunta o suposición | Bloquea | A quién preguntar |
 |---|---|---|---|
 | Q-01 | La pieza guarda `cost` además de `preu`, pero `cost` no interviene en ningún cálculo. ¿Es margen previsto para más adelante, o un dato solo informativo? | Glosario, BR-FAC-05 | Negocio |
-| Q-02 | Al añadir una línea de pieza el stock se descuenta sin comprobar que haya suficiente: puede quedar **negativo**. ¿Es una decisión consciente (el taller apunta lo que gasta aunque el stock esté mal) o falta una regla? | UC-ALB-03, BR-ALB-08 | Negocio |
 | Q-03 | El campo `unitat` de la pieza no se usa en ningún cálculo ni validación. ¿Qué uso se le quiere dar? | Glosario | Negocio |
 | Q-04 | *Configuración* aparece en el menú pero no está implementado y ningún spec describe su contenido. ¿Qué debe contener? | UC-SHL-03 | Negocio |
 | Q-05 | El empleado guarda `data_alta` y `salari_base`, pero la nómina no los usa: el bruto se teclea a mano cada mes. ¿Se espera que el salario base proponga el bruto? | UC-NOM-02, BR-NOM-05 | Negocio |
 | Q-06 | Una factura no se puede modificar ni anular, y sus albaranes quedan bloqueados para siempre. ¿Cómo se corrige en el taller una factura emitida por error? | UC-FAC-01, BR-ALB-03 | Negocio |
 | Q-07 | Los albaranes no tienen ningún estado intermedio entre *pendiente* y *facturado* (por ejemplo, «en curso» o «cerrado»). ¿El taller trabaja así, o falta reflejar un paso real? | UC-ALB-02, BR-ALB-02 | Negocio |
+
+**La antigua Q-02** («¿stock negativo es decisión consciente o falta una regla?») **ya no es una pregunta abierta**: negocio la resolvió el 2026-08-16 (recogida como `Q-12` en `DOC-04`, alcance «precio, coste y stock de pieza, precio de línea de albarán y precio por hora de mano de obra deben ser siempre positivos»). La decisión existe; su implementación todavía no —está censada como `BUG-003`, abierto, en `docs/DOC-24-BUGS.json`—. No se repite aquí porque repetir una pregunta ya contestada es el error que esta regeneración existe para evitar.
 
 ## 9. Bloque estructurado
 
@@ -861,9 +863,6 @@ open_questions:
   - id: Q-01
     question: La pieza guarda cost además de preu, pero cost no interviene en ningún cálculo. ¿Es margen previsto o dato informativo?
     blocks: BR-FAC-05
-  - id: Q-02
-    question: Al añadir una línea de pieza el stock se descuenta sin comprobar que haya suficiente, por lo que puede quedar negativo. ¿Es una decisión consciente o falta una regla?
-    blocks: BR-ALB-08
   - id: Q-03
     question: El campo unitat de la pieza no se usa en ningún cálculo ni validación. ¿Qué uso se le quiere dar?
     blocks: glossary.Unitat

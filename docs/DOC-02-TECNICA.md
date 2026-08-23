@@ -1,21 +1,22 @@
 ---
 doc_id: DOC-02
 doc_name: DOC-02-TECNICA
-version: 1.0.0
+version: 1.1.0
 status: draft
+history: DOC-02-TECNICA-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-15T17:37:09+02:00
+generated_at: 2026-08-23T00:38:21+02:00
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: true
+  commit_sha: 90b24b861bd4d0a366e1dab28308868e7190ae9d
+  working_tree_clean: false   # specs/, docs/, TRIATGE-DOC-14.md y ficheros de sesion sin versionar en el ambito de este ciclo
 inputs:
   - id: registro-ids.json
-    present: false
-    hash: null
+    present: true
+    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
 ---
 
 # DOC-02 · Documentación técnica — app-taller
@@ -135,6 +136,8 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 | `shared-components` | ui | shell | `client/src/components/` | DataTable, EntityForm, ConfirmDialog, Toast, EmptyState, ErrorState, Spinner, ThemeToggle, LanguageSwitcher |
 | `i18n` | infra | shell | `client/src/i18n/index.ts` | Inicialización de i18next y persistencia del idioma |
 | `use-theme` | ui | shell | `client/src/hooks/useTheme.ts` | Estado del tema, clase `dark` en `<html>` y persistencia |
+| `use-submit-guard` | ui | shell | `client/src/hooks/useSubmitGuard.ts` | Bloquea reenvíos mientras una petición está en vuelo; decide si se rearma en éxito o solo en error |
+| `format-utils` | ui | shell | `client/src/utils/format.ts` | `formatMoney`/`formatDate`: único punto de formato de importes y fechas del cliente |
 | `api-client` | infra | shell | `client/src/services/api.ts` | `fetch` envuelto, conversión snake↔camel, `ApiError` |
 | `clients-service` | infra | clients | `client/src/services/clients.ts` | Llamadas tipadas a `/api/clients` |
 | `vehicles-service` | infra | vehicles | `client/src/services/vehicles.ts` | Llamadas tipadas a `/api/vehicles` |
@@ -205,6 +208,23 @@ aristas que S-08 usa sin inferencia.
 | `personal-service` | `api-client` | calls | `client/src/services/personal.ts` |
 | `nomines-service` | `api-client` | calls | `client/src/services/nomines.ts` |
 | `api-client` | `server-app` | calls | `client/src/services/api.ts:43` (HTTP `/api/*`) |
+| `clients-pages` | `use-submit-guard` | calls | `client/src/pages/clients/ClientForm.tsx` |
+| `vehicles-pages` | `use-submit-guard` | calls | `client/src/pages/vehicles/VehicleForm.tsx` |
+| `peces-pages` | `use-submit-guard` | calls | `client/src/pages/peces/PecaForm.tsx` |
+| `personal-pages` | `use-submit-guard` | calls | `client/src/pages/personal/PersonalForm.tsx` |
+| `nomines-pages` | `use-submit-guard` | calls | `client/src/pages/nomines/NominaForm.tsx` |
+| `albarans-pages` | `use-submit-guard` | calls | `client/src/pages/albarans/AlbaraForm.tsx`, `AlbaraLiniesSection.tsx` |
+| `factures-pages` | `use-submit-guard` | calls | `client/src/pages/factures/FacturaForm.tsx` |
+| `clients-pages` | `format-utils` | calls | `client/src/pages/clients/ClientDetail.tsx` |
+| `albarans-pages` | `format-utils` | calls | `client/src/pages/albarans/AlbaraLiniesSection.tsx`, `AlbaraDetail.tsx`, `AlbaransList.tsx` |
+| `factures-pages` | `format-utils` | calls | `client/src/pages/factures/FacturaDetail.tsx`, `FacturesList.tsx` |
+| `nomines-pages` | `format-utils` | calls | `client/src/pages/nomines/NominaDetail.tsx`, `NominesList.tsx` |
+| `peces-pages` | `format-utils` | calls | `client/src/pages/peces/PecaDetail.tsx`, `PecesList.tsx` |
+| `personal-pages` | `format-utils` | calls | `client/src/pages/personal/PersonalDetail.tsx` |
+
+**`vehicles-pages` es el único módulo de páginas que no llama a `format-utils`**:
+no presenta ningún importe, así que no había ningún `toFixed` que sustituir.
+Sí usa `use-submit-guard`, como los otros seis.
 
 **Acoplamientos entre módulos de negocio.** Los routers cruzan la frontera de su
 propio módulo para aplicar reglas de integridad:
@@ -438,6 +458,14 @@ components:
     layer: ui
     module: shell
     path: client/src/hooks/useTheme.ts
+  - id: use-submit-guard
+    layer: ui
+    module: shell
+    path: client/src/hooks/useSubmitGuard.ts
+  - id: format-utils
+    layer: ui
+    module: shell
+    path: client/src/utils/format.ts
   - id: api-client
     layer: infra
     module: shell
@@ -674,6 +702,45 @@ edges:
   - from: nomines-router
     to: personal-router
     type: reads
+  - from: clients-pages
+    to: use-submit-guard
+    type: calls
+  - from: vehicles-pages
+    to: use-submit-guard
+    type: calls
+  - from: peces-pages
+    to: use-submit-guard
+    type: calls
+  - from: personal-pages
+    to: use-submit-guard
+    type: calls
+  - from: nomines-pages
+    to: use-submit-guard
+    type: calls
+  - from: albarans-pages
+    to: use-submit-guard
+    type: calls
+  - from: factures-pages
+    to: use-submit-guard
+    type: calls
+  - from: clients-pages
+    to: format-utils
+    type: calls
+  - from: albarans-pages
+    to: format-utils
+    type: calls
+  - from: factures-pages
+    to: format-utils
+    type: calls
+  - from: nomines-pages
+    to: format-utils
+    type: calls
+  - from: peces-pages
+    to: format-utils
+    type: calls
+  - from: personal-pages
+    to: format-utils
+    type: calls
 
 entities:
   - id: Client
