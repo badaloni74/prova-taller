@@ -1,3 +1,14 @@
+---
+doc_id: DOC-14-HIST
+doc_name: DOC-14-EXPLORATORIO-HIST
+of_document: DOC-14-EXPLORATORIO.md
+version: 2.0.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+status: draft
+generator: A-10 explorador QA
+generator_version: "1.0"
+generated_at: 2026-08-23T00:00:00+02:00
+---
+
 # DOC-14-EXPLORATORIO · Historial de versiones
 
 Historial del documento `docs/DOC-14-EXPLORATORIO.md`. Una entrada por
