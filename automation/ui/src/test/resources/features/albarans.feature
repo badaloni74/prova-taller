@@ -427,7 +427,7 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
     Y se muestra la pantalla "Piezas"
     Y se pulsa en "Fila: <pieza>"
     Entonces se muestra la pantalla "PiezaDetalle"
-    Y se valida "Literal: <precioCatalogo> €"
+    Y se valida "Literal: <precioCatalogo> €"
     Cuando se navega a "/albarans"
     Y se muestra la pantalla "Albaranes"
     Y se pulsa en "Boton: Nuevo albarán"
@@ -443,7 +443,7 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
 
     Ejemplos:
       | matricula | pieza          | precioCatalogo |
-      | 2345FGH   | Filtre d'oli    | 8.50           |
+      | 2345FGH   | Filtre d'oli    | 8,50           |
 
   @TC-051 @doc05 @high
   Esquema del escenario: TC-051 Rechazar una línea de mano de obra sin descripción

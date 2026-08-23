@@ -18,11 +18,11 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoEsperado> €"
+    Y se valida "Literal: <netoEsperado> €"
 
     Ejemplos:
       | empleado        | mes | anyo | bruto   | deducciones | netoEsperado |
-      | Laia Muñoz Sala | 3   | 2026 | 1200.00 | 150.00      | 1050.00      |
+      | Laia Muñoz Sala | 3   | 2026 | 1200.00 | 150.00      | 1.050,00     |
 
   @TC-089 @doc05 @critical
   Esquema del escenario: TC-089 Registrar una nómina desde la ficha del empleado
@@ -38,11 +38,11 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoEsperado> €"
+    Y se valida "Literal: <netoEsperado> €"
 
     Ejemplos:
       | empleado        | mes | anyo | bruto   | deducciones | netoEsperado |
-      | Laia Muñoz Sala | 4   | 2026 | 1300.00 | 100.00      | 1200.00      |
+      | Laia Muñoz Sala | 4   | 2026 | 1300.00 | 100.00      | 1.200,00     |
 
   @TC-090 @doc05 @critical
   Esquema del escenario: TC-090 Rechazar una nómina sin empleado existente
@@ -127,11 +127,11 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoEsperado> €"
+    Y se valida "Literal: <netoEsperado> €"
 
     Ejemplos:
       | empleado        | mes | anyo | bruto    | deducciones | netoEsperado |
-      | Laia Muñoz Sala | 6   | 2026 | 1000.00  | 200.00      | 800.00       |
+      | Laia Muñoz Sala | 6   | 2026 | 1000.00  | 200.00      | 800,00       |
 
   @TC-099 @doc05 @critical
   Esquema del escenario: TC-099 Al cambiar el bruto, el neto consultado cambia con él
@@ -146,17 +146,17 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoInicial> €"
+    Y se valida "Literal: <netoInicial> €"
     Cuando se pulsa en "Boton: Editar"
     Entonces se muestra la pantalla "NominaForm"
     Cuando se rellena "Campo: Salario bruto" con "<brutoNuevo>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoNuevo> €"
+    Y se valida "Literal: <netoNuevo> €"
 
     Ejemplos:
       | empleado        | mes | anyo | brutoInicial | deducciones | netoInicial | brutoNuevo | netoNuevo |
-      | Laia Muñoz Sala | 7   | 2026 | 900.00       | 100.00      | 800.00      | 1000.00    | 900.00    |
+      | Laia Muñoz Sala | 7   | 2026 | 900.00       | 100.00      | 800,00      | 1000.00    | 900,00    |
 
   @TC-100 @doc05 @critical
   Esquema del escenario: TC-100 El neto se presenta con dos decimales
@@ -171,11 +171,11 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoEsperado> €"
+    Y se valida "Literal: <netoEsperado> €"
 
     Ejemplos:
       | empleado        | mes | anyo | bruto   | deducciones | netoEsperado |
-      | Laia Muñoz Sala | 8   | 2026 | 1500.00 | 200.50      | 1299.50      |
+      | Laia Muñoz Sala | 8   | 2026 | 1500.00 | 200.50      | 1.299,50     |
 
   @TC-087 @doc05 @medium
   Esquema del escenario: TC-087 Listar nóminas de la más reciente a la más antigua
@@ -273,13 +273,13 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se rellena "Campo: Deducciones" con "<deducciones>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <bruto> €"
-    Y se valida "Literal: <deducciones> €"
-    Y se valida "Literal: <neto> €"
+    Y se valida "Literal: <brutoMostrado> €"
+    Y se valida "Literal: <deduccionesMostrado> €"
+    Y se valida "Literal: <neto> €"
 
     Ejemplos:
-      | empleado        | mes | anyo | bruto   | deducciones | neto   |
-      | Laia Muñoz Sala | 9   | 2026 | 1400.00 | 180.00      | 1220.00 |
+      | empleado        | mes | anyo | bruto   | deducciones | brutoMostrado | deduccionesMostrado | neto     |
+      | Laia Muñoz Sala | 9   | 2026 | 1400.00 | 180.00      | 1.400,00      | 180,00               | 1.220,00 |
 
   @TC-101 @doc05 @medium
   Esquema del escenario: TC-101 Modificar los datos de una nómina registrada
@@ -299,11 +299,11 @@ Característica: Nóminas — casos críticos de DOC-05 (REQ prioridad critical)
     Cuando se rellena "Campo: Deducciones" con "<deduccionesNuevas>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "NominaDetalle"
-    Y se valida "Literal: <netoNuevo> €"
+    Y se valida "Literal: <netoNuevo> €"
 
     Ejemplos:
       | empleado        | mes | anyo | bruto   | deduccionesIniciales | deduccionesNuevas | netoNuevo |
-      | Laia Muñoz Sala | 10  | 2026 | 1000.00 | 100.00                | 150.00             | 850.00    |
+      | Laia Muñoz Sala | 10  | 2026 | 1000.00 | 100.00                | 150.00             | 850,00    |
 
   @TC-102 @doc05 @high
   Esquema del escenario: TC-102 Marcar una nómina como pagada y devolverla a pendiente

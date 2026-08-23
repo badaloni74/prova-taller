@@ -40,12 +40,12 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Casilla: única"
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
-    Y se valida "Literal: <baseEsperada> €"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <baseEsperada> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | descripcion         | horas | precioHora | baseEsperada | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | TC-060 automatizado | 1     | 100.00     | 100.00        | 121.00        |
+      | 8001TST   | Autoescola Vilanova | TC-060 automatizado | 1     | 100.00     | 100,00        | 121,00        |
 
   @TC-061 @doc05 @critical
   Esquema del escenario: TC-061 La emisión solo ofrece albaranes pendientes del cliente elegido
@@ -162,12 +162,12 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Casilla: única"
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
-    Y se valida "Literal: <baseEsperada> €"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <baseEsperada> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | tipoLinea | pieza              | cantidad | baseEsperada | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | Pieza     | Bugies (joc de 4)  | 2        | 56.00         | 67.76         |
+      | 8001TST   | Autoescola Vilanova | Pieza     | Bugies (joc de 4)  | 2        | 56,00         | 67,76         |
 
   @TC-070 @doc05 @critical
   Esquema del escenario: TC-070 La base agrega las líneas de todos los albaranes de la factura
@@ -205,12 +205,12 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Casilla: todas"
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
-    Y se valida "Literal: <baseEsperada> €"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <baseEsperada> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | descripcion1         | descripcion2         | horas | precioHora | baseEsperada | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | TC-070 automatizado 1| TC-070 automatizado 2| 1     | 100.00     | 200.00        | 242.00        |
+      | 8001TST   | Autoescola Vilanova | TC-070 automatizado 1| TC-070 automatizado 2| 1     | 100.00     | 200,00        | 242,00        |
 
   @TC-071 @doc05 @critical
   Esquema del escenario: TC-071 Sin indicar tipo de IVA, la factura aplica el 21 por ciento
@@ -237,11 +237,11 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
     Y se valida "Literal: 21%"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | descripcion         | horas | precioHora | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | TC-071 automatizado | 1     | 100.00     | 121.00        |
+      | 8001TST   | Autoescola Vilanova | TC-071 automatizado | 1     | 100.00     | 121,00        |
 
   @TC-072 @doc05 @critical
   Esquema del escenario: TC-072 El tipo de IVA indicado se aplica en lugar del 21 por ciento
@@ -268,11 +268,11 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
     Y se valida "Literal: <iva>%"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | descripcion         | horas | precioHora | iva | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | TC-072 automatizado | 1     | 100.00     | 10  | 110.00        |
+      | 8001TST   | Autoescola Vilanova | TC-072 automatizado | 1     | 100.00     | 10  | 110,00        |
 
   @TC-067 @doc05 @high
   Esquema del escenario: TC-067 La factura recibe número automático con formato año/F-nnnn
@@ -377,12 +377,12 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Y se pulsa en "Casilla: única"
     Y se pulsa en "Boton: Crea la factura"
     Entonces se muestra la pantalla "FacturaDetalle"
-    Y se valida "Literal: <baseEsperada> €"
-    Y se valida "Literal: <totalEsperado> €"
+    Y se valida "Literal: <baseEsperada> €"
+    Y se valida "Literal: <totalEsperado> €"
 
     Ejemplos:
       | matricula | cliente             | descripcion         | horas | precioHora | baseEsperada | totalEsperado |
-      | 8001TST   | Autoescola Vilanova | TC-073 automatizado | 1     | 33.33      | 33.33         | 40.33         |
+      | 8001TST   | Autoescola Vilanova | TC-073 automatizado | 1     | 33.33      | 33,33         | 40,33         |
 
   @TC-074 @doc05 @high
   Esquema del escenario: TC-074 Listar facturas con número, estado de pago y total
@@ -398,7 +398,7 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
 
     Ejemplos:
       | factura       | total    |
-      | 2026/F-0001   | 119.06 € |
+      | 2026/F-0001   | 119,06 € |
 
   @TC-075 @doc05 @high
   Esquema del escenario: TC-075 El detalle de la factura muestra albaranes, base, IVA y total
@@ -407,12 +407,12 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Cuando se navega a "/factures/1"
     Y se muestra la pantalla "FacturaDetalle"
     Y se valida "Literal: <albaran>"
-    Y se valida "Literal: <base> €"
-    Y se valida "Literal: <total> €"
+    Y se valida "Literal: <base> €"
+    Y se valida "Literal: <total> €"
 
     Ejemplos:
       | factura       | albaran      | base  | total  |
-      | 2026/F-0001   | 2026/A-0002  | 98.40 | 119.06 |
+      | 2026/F-0001   | 2026/A-0002  | 98,40 | 119,06 |
 
   @TC-076 @doc05 @high
   Esquema del escenario: TC-076 Marcar una factura como pagada

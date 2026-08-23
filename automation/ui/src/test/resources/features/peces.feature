@@ -104,11 +104,11 @@ Característica: Piezas — casos críticos restantes de DOC-05 (REQ prioridad c
     Y se rellena "Campo: Stock" con "<stockNuevo>"
     Y se pulsa en "Boton: Guardar"
     Entonces se muestra la pantalla "PiezaDetalle"
-    Y se valida "Literal: <precioNuevo>"
+    Y se valida "Literal: <precioMostrado>"
 
     Ejemplos:
-      | pieza                          | precioNuevo | stockNuevo |
-      | Pastilles de fre davanteres    | 49.90       | 19         |
+      | pieza                          | precioNuevo | stockNuevo | precioMostrado |
+      | Pastilles de fre davanteres    | 49.90       | 19         | 49,90          |
 
   @TC-030 @doc05 @medium
   Esquema del escenario: TC-030 Dar de baja una pieza no utilizada en ningún albarán
