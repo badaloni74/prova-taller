@@ -104,9 +104,21 @@ verifiquen.
 
 ## Estat conegut
 
-- **1 cas vermell:** TC-048, per manca d'aïllament amb TC-040 (és la prova, no
-  l'app). Detall a `docs/DOC-23-INFORME.md` §4.
-- **26 troballes obertes** a `docs/DOC-14-EXPLORATORIO.md`, en estat `draft`, a
-  l'espera de revisió humana. Tres d'elles (EXP-004, EXP-005, EXP-015) esperen
-  resposta de negoci i **no s'han de tocar** fins llavors.
+- **TC-048 vermell** (manca d'aïllament amb TC-040, és la prova, no l'app,
+  `docs/DOC-23-INFORME.md` §4) **i, des del SPEC 05, probablement més.**
+  `EXP-027` (`docs/DOC-14-EXPLORATORIO.md`) confirma en viu que els
+  `.feature` de `factures`/`nomines` (`automation/ui/`) encara validen
+  literals amb punt decimal (p. ex. `121.00 €`) que ja no coincideixen amb
+  la pantalla — SPEC 05 hi va passar a coma decimal. `DOC-23` 2.0.0 és
+  d'abans del SPEC 05: el seu «106 verds» ja no és fiable. Correspon a
+  `s10-auto-tcs` actualitzar els `.feature` i re-executar la suite.
+- Documentació regenerada i al dia amb el codi (2026-08-23): `DOC-01` a
+  `DOC-09`, `DOC-14`, `DOC-16` i `DOC-25`. Segueixen totes en `status: draft`
+  — cap ha creuat el gate humà d'aprovació.
+- **26 troballes originals de `DOC-14`**: 4 tancades i verificades en viu
+  (`EXP-001/002/007/014`), 1 parcial (`EXP-009` — presentació corregida,
+  el bug de pèrdua d'hora en guardar segueix obert), 2 noves (`EXP-027`,
+  `EXP-028`). Tres (`EXP-004`, `EXP-005`, `EXP-015`) esperen resposta de
+  negoci i **no s'han de tocar** fins llavors.
 - **BUG-003 i BUG-004** de `docs/DOC-24-BUGS.json` segueixen oberts.
+  `BUG-003` ja té decisió de negoci (2026-08-16, Q-12), pendent d'implantar.
