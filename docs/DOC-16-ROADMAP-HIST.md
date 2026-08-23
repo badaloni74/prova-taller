@@ -6,7 +6,7 @@ version: 3.0.0        # no se versiona por separado: refleja la versión del doc
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T16:40:00+02:00
+generated_at: 2026-08-23T14:38:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -38,6 +38,39 @@ señalan como reconstruidas para que nadie las tome por notas escritas en su mom
 histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
 añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
 `DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## Nota — 2026-08-23 — resincronización de procedencia, sin cambio de versión
+
+No es una entrada de versión: no hay análisis nuevo que hacer. Se documenta porque
+`S-16 · Cascada de obsolescencia` marcó `DOC-16` como obsoleto por depender de una
+versión superada de `DOC-25-PROPUESTAS-FUNCIONALES.md`.
+
+**Motivo.** `DOC-25-PROPUESTAS-FUNCIONALES.md` pasó de 1.1.1 a 1.2.0 (commit
+`3f10869`): nacen `FUN-009` a `FUN-012` a partir de los hallazgos que este mismo
+documento —`DOC-16` 3.0.0, apartado 6— ya le había dirigido (`EXP-017`, `EXP-026`,
+`EXP-019` del apartado 6.1, y el detalle técnico de `REQ-025`/`REQ-034` del apartado
+6.3). `DOC-25` 1.2.0 cita explícitamente `DOC-16` 3.0.0 como versión actual y no
+introduce ningún hallazgo que este documento no conociera ya.
+
+**Por qué no hay reanálisis.** El contenido de `DOC-16` no depende de lo que `A-15`
+haga con los hallazgos que le manda: `DOC-25` es un consumidor de este documento en
+el apartado 6, no una entrada que alimente el análisis de deuda técnica, cobertura o
+defectos de las secciones 1 a 5. Que `FUN-009` a `FUN-012` existan ahora no cambia
+ninguna evidencia (`DOC-24`, `DOC-07`, `DOC-14`, `DOC-02`) sobre la que se sostienen
+las mejoras `MEJ-nnn`.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la versión de
+`DOC-25-PROPUESTAS-FUNCIONALES.md` declarada en `inputs` (1.1.1 → 1.2.0), su `hash`
+(`sha256:b9070b12…` → `sha256:b4f26c8f…`), el `commit_sha` de `source` y
+`generated_at`. La `version: 3.0.0` del documento principal **no cambia**: no hay
+contenido nuevo que numerar, siguiendo el mismo criterio que `A-05` aplicó al
+resincronizar `DOC-07` con `DOC-06` 1.3.0 (commit `8c4086c`). Las menciones en el
+cuerpo a «`DOC-25` 1.1.1» (apartados de procedencia, 6.1 y hallazgos) quedan tal cual
+hasta la próxima regeneración con análisis, que es cuando corresponde revisarlas.
+
+**`registro-ids.json` no se toca.** Ningún `MEJ-nnn` nuevo, retirado ni reformulado.
 
 ---
 

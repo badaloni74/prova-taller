@@ -5,12 +5,12 @@ version: 3.0.0
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T16:40:00+02:00
+generated_at: 2026-08-23T14:38:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 4526cf0589ba5666e9c897510e4c41dea987d442
+  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
   working_tree_clean: true
 inputs:
   - id: DOC-16-ROADMAP.md
@@ -50,8 +50,8 @@ inputs:
     present: true
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.1.1
-    hash: sha256:b9070b120a46eb1a4a17f99eb9983270828b597ce41e8d4cda8b8204c7591b8a
+    version: 1.2.0
+    hash: sha256:b4f26c8f2ae7d8f944917bd6770ac52680c3690ee66fbd85b77f8304aef86349
     present: true
   - id: registro-ids.json
     from: S-12
