@@ -39,6 +39,42 @@ nominal.
 
 ---
 
+## Nota — 2026-08-23 — resincronización de procedencia (DOC-23), sin cambio de versión
+
+No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico
+byte a byte al de 1.6.0. Se documenta porque `S-16 · Cascada de obsolescencia`
+marcó este documento como obsoleto por depender de una versión superada de
+`DOC-23-INFORME.md` (2.0.0 → 2.1.0, MINOR).
+
+**Motivo.** `DOC-23` 2.1.0 es una ejecución real de la suite, no una
+reescritura de contenido. Aporta tres hechos: (a) `TC-048` quedó corregido —se
+aisló `TC-040`, que arrastraba estoc consumido, con el mismo patrón que ya
+usan TC-053/TC-054, commit `735ded8`—; (b) 17 rojos nuevos con una sola causa
+raíz, `EXP-027`: los `.feature` de `facturas.feature`/`nomines.feature` siguen
+comprobando literales de importe con punto decimal que la pantalla ya no
+muestra desde el SPEC 05; y (c) un fallo aislado de infraestructura en
+`TC-029` (`SessionNotCreated` al arrancar Chrome), no reproducible de forma
+fiable.
+
+**Consecuencia sobre este plan.** Ningún `TC-nnn`, `requirement`, `steps` ni
+campo de `automation` o aislamiento cambia. Los tres hechos de localización
+que sostienen los `automation.grade` —formulario de línea sin `id`,
+desplegable de pieza por `fetch`, campos de `EntityForm` con `id` estable— no
+dependen del separador decimal que motiva `EXP-027`, así que ningún `grade` ni
+`reason` se reevalúa. La vigilancia de verdes/rojos de ejecución vive en
+`DOC-23`, no en este plan (apartado 6.4).
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la
+versión y el `hash` de la entrada `DOC-23-INFORME.md` de `inputs` (2.0.0 →
+2.1.0), su `usage`, el `commit_sha` de `source` y `generated_at`. Los 110
+`TC-nnn`, sus `steps`, sus `requirement`, `automation` y campos de aislamiento
+quedan exactamente como en 1.6.0.
+
+**`registro-ids.json` no se toca.** No hay `TC-nnn` nuevo, retirado ni
+reformulado.
+
+---
+
 ## Nota — 2026-08-23 — resincronización de procedencia (DOC-08, DOC-25), sin cambio de versión
 
 No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico

@@ -6,15 +6,15 @@ status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-23T15:30:00+02:00
+generated_at: 2026-08-23T23:41:00+02:00
 project: app-taller
 project_code: TALLER
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
-  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
+  commit_sha: 6852cd05f39eba71681d13cf42ea7a7613368f7b
+  working_tree_clean: false   # modificados sin commitear: los 4 .feature de automation/ui/ (fuera del alcance de A-03, propiedad de s10-auto-tcs); sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, infografias/FLUJO-COMPLETO.md, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
@@ -69,14 +69,17 @@ inputs:
     path_changed_on: 2026-08-21
     from: S-10
     present: true
-    version: 2.0.0
-    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    version: 2.1.0
+    hash: sha256:303d46f0d9de2d4f3bdd13ffe4f24425f23b9b8aa7601b7c0013ff3b1ce03e39
     derived_from_version: 1.0.0
     usage: >-
       evidencia de campo del grado de automatización de los 110 casos y del incidente TC-040/TC-048
-      que motiva los campos de aislamiento, que 2.0.0 sigue documentando con su causa raíz. No modifica
-      ningún caso; solo justifica `automation.grade` y `automation.reason`. Procedencia detallada de
-      los tres hechos de localización en el apartado «Procedencia»
+      que motiva los campos de aislamiento. 2.1.0 confirma con ejecución real que TC-048 quedó
+      corregido (aislado del consumo de estoc de TC-040, commit 735ded8) y diagnostica 17 rojos
+      nuevos con causa raíz única —EXP-027, literales de importe con punto en vez de coma decimal en
+      los `.feature` de facturas/nóminas— que no toca ningún `automation.grade` ni `reason` de este
+      plan: ninguno de los tres hechos de localización que los sostienen depende del separador
+      decimal. No modifica ningún caso. Procedencia detallada en el apartado «Procedencia»
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
     present: true
@@ -4460,6 +4463,28 @@ La entrada declaraba además `present: true` **sin `version`**, y S-16 avisaba
 (`entrada_sin_version`). Una entrada sin versión queda exenta del control de
 obsolescencia sin que nadie lo note, que es peor que declararla mal. Ahora
 declara `version: 2.0.0` con su hash.
+
+**Resello del 2026-08-23 · DOC-23 2.0.0 → 2.1.0.** `S-16` volvió a marcar este
+documento por la misma causa de siempre —una entrada de `inputs` con versión
+superada— y otra vez la revisión se cierra sin tocar el bloque `testcases`.
+`DOC-23` 2.1.0 aporta tres hechos, todos de **ejecución**, no de contenido: (a)
+`TC-048` quedó corregido —se aisló `TC-040`, que arrastraba estoc consumido, con
+el mismo patrón que ya usan TC-053/TC-054, commit `735ded8`—; (b) una ejecución
+real confirma **17 rojos con una sola causa raíz**, `EXP-027`: los `.feature` de
+`facturas.feature` y `nomines.feature` (y un escenario de `peces.feature`) siguen
+comprobando literales de importe con punto decimal (`"800.00 €"`) que la pantalla
+ya no muestra desde el SPEC 05 (`"800,00 €"`); y (c) un fallo aislado de
+infraestructura en `TC-029` (`SessionNotCreated` al arrancar Chrome), no
+reproducible de forma fiable y sin relación con la aplicación ni con la prueba.
+Ninguno de los tres cambia un `TC-nnn`, un `step`, una prioridad ni un campo de
+aislamiento: el AS-IS que este plan describe no se ha movido, y la vigilancia de
+la ejecución en verde/rojo vive en `DOC-23`, no aquí (apartado 6.4). Los tres
+hechos de localización que sostienen los `automation.grade` —formulario de línea
+sin `id`, desplegable de pieza por `fetch`, campos de `EntityForm` con `id`
+estable— tampoco cambian: ninguno depende del separador decimal que motiva
+`EXP-027`. **No sube la versión** por el mismo motivo que el resello anterior: lo
+único que cambia es de dónde dice este plan que viene la evidencia, no lo que
+afirma.
 
 **El aviso `entrada_sin_version` que queda, y por qué se queda.** Tras este
 resello S-16 sigue emitiendo un aviso sobre este documento: `DOC-23 sin version
