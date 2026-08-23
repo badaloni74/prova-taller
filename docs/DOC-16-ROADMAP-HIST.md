@@ -1,3 +1,29 @@
+---
+doc_id: DOC-16-HIST
+doc_name: DOC-16-ROADMAP-HIST
+of_document: DOC-16-ROADMAP.md
+version: 3.0.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+status: draft
+generator: A-12 mejoras/roadmap
+generator_version: "1.1"
+generated_at: 2026-08-23T16:40:00+02:00
+project: app-taller
+project_code: TALLER
+purpose: >-
+  Historial de versiones de DOC-16. El documento principal refleja solo el estado
+  actual; todo lo que cambió en cada versión, por qué subió el número y qué mejoras
+  cambiaron de estado vive aquí. La **procedencia** —el bloque `inputs` con versión y
+  hash de cada entrada— NO está aquí: se queda en el documento principal, porque es lo
+  que `S-16 · Cascada de obsolescencia` necesita leer para calcular qué ha quedado
+  obsoleto.
+reconstruction_note: >-
+  Este fichero nace en 2.1.0. Las entradas de 2.0.0 y 1.0.0 están reconstruidas a
+  partir del propio DOC-16 y son fieles a lo que allí consta, pero no se escribieron en
+  su momento; se señalan como reconstruidas. Hasta esta versión (3.0.0) el fichero no
+  llevaba front-matter, excepción histórica documentada más abajo: se corrige aquí para
+  seguir el mismo patrón que DOC-05-HIST, DOC-07-HIST, DOC-08-HIST y DOC-25-HIST.
+---
+
 # DOC-16-ROADMAP · Historial de versiones
 
 Historial del documento `docs/DOC-16-ROADMAP.md`. Una entrada por versión, de la más nueva
@@ -8,6 +34,49 @@ estado actual, con su `version` en el front-matter.
 lo declaraban como fichero hermano y **no llegó a escribirse**; sus entradas están
 reconstruidas a partir del propio documento y son fieles a lo que allí consta, pero se
 señalan como reconstruidas para que nadie las tome por notas escritas en su momento.
+**Hasta la versión 3.0.0 este fichero no llevaba front-matter propio** —excepción
+histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
+añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
+`DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## 3.0.0 — 2026-08-23 — MAJOR
+
+**Ronda de verificación de cierre, no ronda de análisis desde cero.** Se ejecuta porque
+`S-16` marca `DOC-16` como obsoleto por `DOC-02` (1.0.0 → 1.1.0, MINOR) y `DOC-14` (1.0.0
+→ 2.0.0, MAJOR).
+
+**Qué cambia.**
+
+- **Dos mejoras pasan de `proposed` a `implemented`**: `MEJ-007` (guarda de reenvío,
+  construida por `specs/04-proteccio-enviaments-duplicats.md`) y `MEJ-008` (formato único
+  de importe y fecha, construida por `specs/05-presentacio-imports-i-dates.md`). Los dos
+  specs citan a `DOC-16` por nombre. Verificado que el problema atacado desapareció de
+  verdad: `EXP-001`, `EXP-002`, `EXP-007` y `EXP-014` cierran con red y base de datos
+  comprobadas; `EXP-009` cierra solo en su parte de presentación.
+- **Una mejora nueva**: `MEJ-009` (aplicar `formatDate` a `Personal.dataAlta`), de
+  `DOC-14/EXP-028`, identificador pedido a `S-12`. Tamaño trivial, `low`/`low`/`low`.
+- **Ninguna otra mejora cambia de estado.** `MEJ-001`, `MEJ-003` y `MEJ-005` siguen
+  `accepted` sin haber entrado en `A-07`, seis días después de la decisión. `MEJ-002`,
+  `MEJ-004` y `MEJ-006` siguen `proposed`, **sin evidencia nueva esta ronda**: se dice así
+  en vez de fabricar movimiento.
+- **El worktree de esta ronda estaba desactualizado respecto a `master`** (mismo
+  merge-base que su propia `HEAD`, doce commits detrás) y se avanzó en fast-forward antes
+  de leer nada; sin eso se habría regenerado sobre `DOC-02` y `DOC-14` en 1.0.0.
+- **Ninguna cifra de código requirió corrección**: `server/routes/` no se ha tocado desde
+  la verificación de 2.1.0 (`b2a8d77`), así que 893 líneas, 86 `res.status` y 71 literales
+  siguen siendo correctos.
+- **Dos hallazgos nuevos para `A-03`/`S-10`**: `DOC-14/EXP-027` (`high`, los `.feature` de
+  `factures`/`nomines` validan literales con punto decimal que ya no coinciden con la
+  pantalla) y la constatación de que `CLAUDE.md` ya no describe el estado exacto de la
+  suite.
+- **Se añade el front-matter de este fichero**, siguiendo el patrón de `DOC-05-HIST` y
+  `DOC-07-HIST`.
+
+**Por qué MAJOR.** Dos mejoras cambian de significado —de `proposed` a `implemented`—,
+el mismo tipo de cambio que 2.0.0 marcó como invalidante cuando fue de `proposed` a
+`accepted`.
 
 ---
 
