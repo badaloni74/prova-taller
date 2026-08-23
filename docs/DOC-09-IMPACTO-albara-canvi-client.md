@@ -92,6 +92,11 @@ inputs:
     present: false
 ---
 
+> **Nota de migración (2026-08-23).** La especificación que este documento analiza vivía en
+> `docs/DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md` (formato retirado); ahora es
+> `specs/06-albara-canvi-client.md`. El contenido no cambió en la migración, así que este
+> análisis sigue siendo válido sin regenerar.
+
 # DOC-09 · Análisis de impacto — `EVO-001` · Un albarán no puede cambiar de cliente
 
 > Qué se rompe si cambiamos esto. Este documento **no estima** (eso es A-08),
