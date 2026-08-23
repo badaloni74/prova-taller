@@ -5,21 +5,24 @@ version: 1.2.0
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-16T09:57:05+02:00
+generated_at: 2026-08-23T08:48:39+02:00
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
-  working_tree_clean: false   # solo hay sin versionar docs/ y registro-ids.json, generados por este ciclo
+  commit_sha: 88af6e74a8873ea07ee44a149bdb51f77a2319ba
+  working_tree_clean: false   # ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/ y promptDashboard.txt sin versionar, fuera del alcance de este ciclo
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.0.0
-    hash: sha256:4e49485c3ad1529b2eee9d56487e188617011d772fe5908740cbed4114f01097
+    version: 1.1.0
+    hash: sha256:0f074e686a5fb700286e8de28f0210a204380423a6a797e7a9e8f3a96384200a
+    present: true
   - id: registro-ids.json
     from: S-01
-    hash: sha256:4c8313ad9d7ff2d2e0093f6857e5000a5791c2cbc233a271fbf134b769e86eba   # estado consultado en esta revisión; cambia respecto a 1.1.0 porque A-03 registró los TC-nnn de DOC-05, no porque haya cambiado ningún REQ-nnn
+    version: "1"
+    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    present: true
   - id: DOC-03-API.md
     from: S-03
     present: false
@@ -30,7 +33,6 @@ inputs:
     from: humano
     present: true
     received_on: 2026-08-16
-    scope: "Respuesta a 6 de las 15 preguntas abiertas. No modifica el AS-IS ni ningún enunciado."
 ---
 
 # DOC-04 · Documentación funcional — app-taller
@@ -38,26 +40,66 @@ inputs:
 > Qué debe cumplir la aplicación, en lenguaje de negocio. Cada requisito nace de
 > un ancla `UC-nnn` o `BR-nnn` de `DOC-01-BASE-ASIS.md`, que es su única fuente.
 > Este documento no describe cómo está construido el sistema ni cómo se prueba.
+>
+> **Este documento no lleva historial de cambios.** Refleja solo el estado
+> actual, con su `version` en el front-matter. El historial está en
+> **`docs/DOC-04-FUNCIONAL-HIST.md`**.
+>
+> `status: draft`. 79 requisitos activos, ninguno deprecado.
 
-> **Qué cambia en 1.2.0.** El negocio ha respondido a **seis** de las quince
-> preguntas abiertas (Q-02, Q-06, Q-10, Q-12, Q-14 y Q-15) el **2026-08-16**.
-> Las seis respuestas confirman que el comportamiento actual es un **hueco que
-> debe cambiar**; ninguna dice que sea intencionado. Por tanto **el AS-IS no ha
-> cambiado**: los 79 requisitos siguen describiendo el sistema que existe hoy y
-> **ningún enunciado se ha reformulado**, ningún identificador se ha renumerado y
-> no hay requisitos nuevos ni eliminados. Lo único que cambia es el **estado de
-> esas seis preguntas**, que pasan de `open` a `answered` con la decisión de
-> negocio registrada y con una petición de evolutivo asociada que entrará por la
-> Fase 2 (A-06 → DOC-08). Las nueve restantes siguen abiertas. Ver el apartado 6.
+## Procedencia
 
-> **Qué cambia en 1.1.0.** A petición de A-03, se revisan los tres requisitos de
-> vocabulario cerrado que solo se podían comprobar mirando una lista de opciones.
-> **REQ-031** se reformula porque DOC-01 sí sostiene qué ocurre cuando la regla se
-> rompe. **REQ-055** y **REQ-073** se mantienen tal cual: DOC-01 no documenta
-> ninguna consecuencia observable de que el estado de pago sea otro valor, y
-> enunciarla sería inventarla. Quedan bloqueados por las preguntas **Q-14** y
-> **Q-15**, nuevas en esta revisión y dirigidas al negocio. Los otros 76
-> requisitos no se han tocado y ningún identificador se ha renumerado.
+Cómo se ha usado cada entrada en este ciclo, y por qué la versión del documento
+no cambia aunque se haya regenerado.
+
+**Motivo del ciclo.** `DOC-01-BASE-ASIS.md` pasó de **1.0.0** a **1.1.0**
+(commit `7c5c39f`). Antes de escribir una sola línea se ha comprobado si ese
+cambio afecta a algo que este documento declare:
+
+- **Diff de anclas.** Las 77 anclas `UC-nnn`/`BR-nnn` de DOC-01 1.1.0 son
+  exactamente las mismas 77 de 1.0.0, mismo texto, mismo módulo — comprobado
+  ancla a ancla, no solo por recuento.
+- **Diff completo de fichero.** DOC-01 1.1.0 difiere de 1.0.0 en 39 líneas y
+  ninguna es de negocio: (1) su propio front-matter (`commit_sha`,
+  `generated_at`, el hash de `registro-ids.json` que declara como entrada);
+  (2) el árbol comentado de la sección 6, que pasa de citar tres
+  especificaciones a cinco porque se implementaron `SPEC 04
+  use-submit-guard` y `SPEC 05 format-utils`; (3) el cierre de su antigua
+  `Q-02` («¿el stock puede quedar negativo?»), resuelta por negocio el
+  2026-08-16 y ya recogida en este documento desde la versión 1.2.0 como
+  `Q-02` (bloquea REQ-035) y `Q-12` (bloquea REQ-019 y el resto de importes),
+  pendiente de implementación como `BUG-003` en `docs/DOC-24-BUGS.json`.
+  Ningún actor, caso de uso, regla de negocio ni término de glosario cambia
+  de texto.
+- **Consecuencia.** Ningún `REQ-nnn` se añade, se elimina ni cambia de
+  enunciado, prioridad, confianza o ancla de origen. El bloque `requirements`
+  del apartado 7 es idéntico byte a byte al de la versión 1.2.0 publicada el
+  2026-08-16. Se aplica la regla de regeneración: *bloques de negocio
+  idénticos y prosa equivalente → ninguna versión de contenido nueva*. Este
+  ciclo actualiza solo la procedencia: `inputs[DOC-01-BASE-ASIS.md].version`
+  1.0.0 → 1.1.0, su `hash`, el `commit_sha` de `source` y `generated_at`.
+  Detalle completo del porqué en `docs/DOC-04-FUNCIONAL-HIST.md`, nota del
+  2026-08-23.
+
+**Qué se ha leído de cada entrada, y qué falta.**
+
+- **`DOC-01-BASE-ASIS.md` 1.1.0** — secciones 1 a 5 (propósito, actores, casos
+  de uso, reglas de negocio, glosario) y el bloque `inventory` de la sección
+  9, que es la semilla de todos los `REQ-nnn`. **No se ha leído la sección 6**
+  (árbol) **ni `DOC-02-TECNICA.md`**: la documentación funcional se escribe
+  desde la verdad de negocio, no desde la implementación.
+- **`registro-ids.json`** — 79 anclas `REQ-001` a `REQ-079` ya registradas por
+  A-02, con `text`, `module` y `source_anchors` idénticos a los de este
+  documento. No se ha añadido ni deprecado ninguna: no había nada que
+  registrar en este ciclo.
+- **`DOC-03-API.md`** — no existe en este proyecto (no hay `S-03`). Declarado
+  `present: false`.
+- **Contexto de Confluence (`I-02`)** — `DOC-18-CONFLUENCE-SYNC.json` no
+  existe. Declarado `present: false`.
+- **Respuestas de negocio** — el lote de seis respuestas del 2026-08-16 que
+  produjo la versión 1.2.0. No hay respuestas nuevas en este ciclo; se declara
+  sin `version` porque no es un documento versionado sino un registro puntual
+  de decisión, ya íntegramente incorporado al apartado 6.
 
 ## 1. Propósito funcional del sistema
 
