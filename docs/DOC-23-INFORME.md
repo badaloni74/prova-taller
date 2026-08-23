@@ -1,18 +1,18 @@
 ---
 doc_id: DOC-23
 doc_name: DOC-23-INFORME
-version: 2.1.0
+version: 2.2.0
 status: draft
 generator: S-10 skill-auto-tcs (ejecución + diagnóstico, sesión Claude Code)
 generator_version: "2.0"
-generated_at: 2026-08-23T22:10:00+02:00
+generated_at: 2026-08-23T23:30:00+02:00
 project: app-taller
 language: es
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 1d65567a2e28840e39ed97aa1054d0068bcd2466
+  commit_sha: 5366e18
   working_tree_clean: true
 entorno:
   aplicacion: build de producción servido por Express (npm run build + npm start) en http://localhost:3001
@@ -24,49 +24,60 @@ entorno:
   chrome: "151.0.7922.170 headless"
 destinatario: >
   Este documento está pensado para entregarse a un agente o persona con el rol
-  "Doctor QA TC": su trabajo es corregir los casos que aparecen como FALLADO
-  en la sección 3, y decidir qué hacer con los casos excluidos de la sección 5.
-  No contiene ninguna acción ya resuelta — las que ya se corrigieron durante
-  esta misma sesión (véase §4 y §6) se reportan como evidencia, no como
-  trabajo pendiente.
+  "Doctor QA TC": en esta versión no hay ningún caso en rojo que corregir —
+  su trabajo, si lo hay, sería decidir qué hacer con los casos excluidos de
+  la sección 5, y usar §4/§6 como referencia de patrones ya vistos si algún
+  caso vuelve a fallar en el futuro. No contiene ninguna acción pendiente.
 ---
 
 # DOC-23 · Informe de ejecución de la suite de automatización (S-10)
 
-**Versión anterior:** la 2.0.0 (2026-08-21) documentaba 107 escenarios con
-**106 verdes y 1 rojo** (TC-048). Esa cifra ya no era fiable: `CLAUDE.md`
-avisaba explícitamente de que los `.feature` de facturas/nóminas seguían
-comprobando literales con punto decimal (`"121.00 €"`) que dejaron de existir
-en pantalla desde el SPEC 05 (que pasó la presentación a coma decimal), y de
-que probablemente hubiera más casos en rojo sin descubrir. Esta versión lo
-confirma con una ejecución real y corrige el caso que sí tenía arreglo propio
-(TC-048).
+**Versión anterior:** la 2.1.0 (2026-08-23, esta misma sesión) documentaba
+107 escenarios con **89 verdes y 18 rojos**: `TC-048` recién corregido, 17
+casos con una única causa raíz (`EXP-027`, formato de decimales) y 1 caso
+aislado de infraestructura (`SessionNotCreated` al arrancar Chrome). Esta
+versión cierra los 18: se corrigieron los 17 `.feature` de `EXP-027` y se
+confirmó que el caso de infraestructura era transitorio.
+
+**Nota sobre el método de verificación de esta versión.** No se repitió la
+suite completa (107 escenarios) — por indicación expresa, se ejecutaron
+**solo los 18 casos que estaban en rojo en la 2.1.0**, con
+`-Dcucumber.filter.tags`. Resultado: **18 de 18 en verde**. Los 89 casos que
+ya eran verdes en la 2.1.0 no se han vuelto a ejecutar en esta versión — se
+dan por buenos porque los cambios de esta sesión (los 4 ficheros `.feature`
+listados en §4.2 y §4.3) no tocan ningún escenario fuera de esos 18. La
+próxima ejecución completa de la suite es la que debe confirmar el 107/107
+de forma independiente.
 
 ## 1. Resumen ejecutivo
 
 ```
-107 escenarios (89 verdes, 18 rojos)
-17 de los 18 rojos comparten una única causa raíz (EXP-027, formato de decimales)
-1 rojo aislado es un fallo de arranque de Chrome, no reproducible de forma fiable
+107 escenarios · 18 verificados en esta versión (los 18 que estaban en rojo) · 18 de 18 en verde
+89 no re-ejecutados en esta versión (ya eran verdes en la 2.1.0, sin cambios que les afecten)
 ```
 
 - **102 de 110 TC de DOC-05 automatizados.** Los 8 restantes no tienen vector
   por interfaz — motivo detallado y verificado para cada uno en §5. No están
   "pendientes", están **excluidos con causa documentada**.
-- **TC-048 corregido en esta sesión.** Fallaba por falta de aislamiento con
-  TC-040 (arrastraba estoc consumido). Aislado con el mismo patrón que ya
-  usan TC-053/TC-054. Detalle y commit en §4.1.
-- **17 rojos nuevos, una sola causa raíz: `EXP-027`.** Los `.feature` de
-  `facturas.feature`, `nomines.feature` y una parte de `peces.feature`
-  siguen comprobando literales con punto decimal (`"800.00 €"`) que la
-  pantalla ya no muestra (`"800,00 €"` desde el SPEC 05). Esta versión de
-  DOC-23 es la primera en confirmarlo contra una ejecución real, no solo
-  leyendo el código. Detalle en §4.2 — **corresponde a `s10-auto-tcs`
-  actualizar los literales y volver a ejecutar.**
-- **1 rojo aislado, de infraestructura, no de la aplicación ni de la
-  prueba.** `SessionNotCreated` al arrancar una nueva sesión de Chrome — el
-  mismo tipo de inestabilidad que §6.6 ya documentó (abrir Chrome headless
-  decenas de veces seguidas). Detalle en §4.3.
+- **`TC-048` corregido y verificado.** Falta de aislamiento con `TC-040`
+  (arrastraba estoc consumido). Aislado con el mismo patrón que ya usan
+  `TC-053`/`TC-054`. Detalle y commit en §4.1.
+- **Los 17 casos de `EXP-027` corregidos y verificados.** Los `.feature` de
+  `facturas`, `nóminas`, `piezas` y `albaranes` comprobaban literales con
+  punto decimal que la pantalla ya no muestra desde el SPEC 05. Corrección
+  aplicada — incluye dos hallazgos adicionales verificados contra la app
+  real antes de escribir nada (espacio no separable antes de `€`, y dos
+  escenarios donde el mismo valor servía de entrada y de validación a la
+  vez). Detalle en §4.2.
+- **El caso aislado de infraestructura (`TC-103`) era transitorio**, tal
+  como se esperaba: vuelto a ejecutar, pasa. Detalle en §4.3.
+- **Corrección de un error de esta misma documentación:** la versión 2.1.0
+  atribuyó por error el fallo de infraestructura a `TC-029` (que en
+  realidad es uno de los 17 casos de `EXP-027`, un `AssertionError`) en
+  lugar de a `TC-103` (el `SessionNotCreated` real). Verificado contra
+  `testng-results.xml`, cruzando cada caso con su clase de excepción real,
+  no solo con su posición en la lista de fallos — la tabla de §3 y el
+  detalle de §4 ya llevan la atribución correcta.
 
 ## 2. Cómo reproducir esta ejecución
 
@@ -143,7 +154,7 @@ en §4, no aquí.
 | TC-026 | Rechazar el alta de una pieza sin nombre | VERDE |
 | TC-027 | Rechazar la modificación que deja la pieza sin nombre | VERDE |
 | TC-028 | Consultar la ficha completa de una pieza | VERDE |
-| TC-029 | Modificar el precio y el stock de una pieza | FALLADO - ver §4.3 |
+| TC-029 | Modificar el precio y el stock de una pieza | VERDE — corregido, ver §4.2 |
 | TC-030 | Dar de baja una pieza no utilizada en ningún albarán | VERDE |
 | TC-031 | Impedir la baja de una pieza utilizada en un albarán | VERDE |
 
@@ -161,7 +172,7 @@ en §4, no aquí.
 | TC-042 | Rechazar una línea con cantidad cero | VERDE |
 | TC-043 | Rechazar una línea con cantidad negativa | VERDE |
 | TC-044 | Aceptar una línea con cantidad uno | VERDE |
-| TC-046 | La línea de pieza sin precio hereda el precio del catálogo | FALLADO - ver §4.2 |
+| TC-046 | La línea de pieza sin precio hereda el precio del catálogo | VERDE — corregido, ver §4.2 |
 | TC-048 | Añadir una línea de pieza descuenta el stock del catálogo | VERDE — corregido en esta sesión, ver §4.1 |
 | TC-049 | Una línea rechazada no mueve el stock | VERDE |
 | TC-050 | Añadir una línea de mano de obra con horas y precio por hora | VERDE |
@@ -179,20 +190,20 @@ en §4, no aquí.
 
 | TC | Descripcion | Resultat |
 |---|---|---|
-| TC-060 | Emitir una factura con los albaranes pendientes de un cliente | FALLADO - ver §4.2 |
+| TC-060 | Emitir una factura con los albaranes pendientes de un cliente | VERDE — corregido, ver §4.2 |
 | TC-061 | La emisión solo ofrece albaranes pendientes del cliente elegido | VERDE |
 | TC-062 | Rechazar la emisión de una factura sin ningún albarán | VERDE |
 | TC-065 | Al emitir, los albaranes pasan a facturados y quedan enlazados | VERDE |
 | TC-066 | Una emisión rechazada deja los albaranes pendientes | VERDE |
 | TC-067 | La factura recibe número automático con formato año/F-nnnn | VERDE |
 | TC-068 | La segunda factura del año incrementa el correlativo en uno | VERDE |
-| TC-069 | La base es la suma de cantidad por precio y el total es base más IVA | FALLADO - ver §4.2 |
-| TC-070 | La base agrega las líneas de todos los albaranes de la factura | FALLADO - ver §4.2 |
-| TC-071 | Sin indicar tipo de IVA, la factura aplica el 21 por ciento | FALLADO - ver §4.2 |
-| TC-072 | El tipo de IVA indicado se aplica en lugar del 21 por ciento | FALLADO - ver §4.2 |
-| TC-073 | Base, IVA y total se presentan con dos decimales | FALLADO - ver §4.2 |
-| TC-074 | Listar facturas con número, estado de pago y total | FALLADO - ver §4.2 |
-| TC-075 | El detalle de la factura muestra albaranes, base, IVA y total | FALLADO - ver §4.2 |
+| TC-069 | La base es la suma de cantidad por precio y el total es base más IVA | VERDE — corregido, ver §4.2 |
+| TC-070 | La base agrega las líneas de todos los albaranes de la factura | VERDE — corregido, ver §4.2 |
+| TC-071 | Sin indicar tipo de IVA, la factura aplica el 21 por ciento | VERDE — corregido, ver §4.2 |
+| TC-072 | El tipo de IVA indicado se aplica en lugar del 21 por ciento | VERDE — corregido, ver §4.2 |
+| TC-073 | Base, IVA y total se presentan con dos decimales | VERDE — corregido, ver §4.2 |
+| TC-074 | Listar facturas con número, estado de pago y total | VERDE — corregido, ver §4.2 |
+| TC-075 | El detalle de la factura muestra albaranes, base, IVA y total | VERDE — corregido, ver §4.2 |
 | TC-076 | Marcar una factura como pagada | VERDE |
 | TC-077 | Devolver una factura pagada a pendiente de cobro | VERDE |
 | TC-078 | El estado de pago de la factura solo admite pendiente o pagada | VERDE |
@@ -215,8 +226,8 @@ en §4, no aquí.
 | TC | Descripcion | Resultat |
 |---|---|---|
 | TC-087 | Listar nóminas de la más reciente a la más antigua | VERDE |
-| TC-088 | Registrar una nómina desde el módulo de nóminas | FALLADO - ver §4.2 |
-| TC-089 | Registrar una nómina desde la ficha del empleado | FALLADO - ver §4.2 |
+| TC-088 | Registrar una nómina desde el módulo de nóminas | VERDE — corregido, ver §4.2 |
+| TC-089 | Registrar una nómina desde la ficha del empleado | VERDE — corregido, ver §4.2 |
 | TC-090 | Rechazar una nómina sin empleado existente | VERDE |
 | TC-091 | Rechazar una nómina sin empleado, mes o año | VERDE |
 | TC-092 | Rechazar una nómina con mes 0 | VERDE |
@@ -224,13 +235,13 @@ en §4, no aquí.
 | TC-094 | Aceptar nóminas con mes 1 y con mes 12 | VERDE |
 | TC-095 | Impedir dos nóminas del mismo empleado, mes y año | VERDE |
 | TC-096 | Permitir el mismo mes y año para otro empleado | VERDE |
-| TC-097 | El detalle de la nómina muestra bruto, deducciones y neto | FALLADO - ver §4.2 |
-| TC-098 | El neto es el bruto menos las deducciones | FALLADO - ver §4.2 |
-| TC-099 | Al cambiar el bruto, el neto consultado cambia con él | FALLADO - ver §4.2 |
-| TC-100 | El neto se presenta con dos decimales | FALLADO - ver §4.2 |
-| TC-101 | Modificar los datos de una nómina registrada | FALLADO - ver §4.2 |
+| TC-097 | El detalle de la nómina muestra bruto, deducciones y neto | VERDE — corregido, ver §4.2 |
+| TC-098 | El neto es el bruto menos las deducciones | VERDE — corregido, ver §4.2 |
+| TC-099 | Al cambiar el bruto, el neto consultado cambia con él | VERDE — corregido, ver §4.2 |
+| TC-100 | El neto se presenta con dos decimales | VERDE — corregido, ver §4.2 |
+| TC-101 | Modificar los datos de una nómina registrada | VERDE — corregido, ver §4.2 |
 | TC-102 | Marcar una nómina como pagada y devolverla a pendiente | VERDE |
-| TC-103 | El estado de pago de la nómina solo admite pendiente o pagada | FALLADO - ver §4.2 |
+| TC-103 | El estado de pago de la nómina solo admite pendiente o pagada | VERDE — fallo transitorio confirmado, ver §4.3 |
 | TC-104 | Borrar una nómina previa confirmación | VERDE |
 
 ### Esquelet / Configuracio (5 casos)
@@ -243,9 +254,13 @@ en §4, no aquí.
 | TC-108 | Cambiar entre tema claro y tema oscuro | VERDE |
 | TC-110 | La sección de Configuración avisa de que está pendiente de desarrollo | VERDE |
 
-## 4. Casos en rojo — detalle para "Doctor QA TC"
+## 4. Casos corregidos esta sesión (evidencia, no trabajo pendiente)
 
-### 4.1 · TC-048 — corregido en esta sesión (evidencia, no trabajo pendiente)
+No queda ningún caso en rojo. Los tres apartados siguientes documentan qué
+falló, por qué, y qué se hizo — para que quien repita esta suite en el
+futuro reconozca el patrón si reaparece, no para que lo corrija de nuevo.
+
+### 4.1 · TC-048
 
 **Módulo:** albaranes · **Fichero:**
 `automation/ui/src/test/resources/features/albarans.feature`
@@ -263,42 +278,51 @@ añade (`Cuando se pulsa en "Linea: <pieza>"`), el mismo patrón que ya usan
 que TC-048 no herede su estoc consumido"). Verificado en dos ejecuciones
 limpias posteriores: ambos pasan.
 
-### 4.2 · Patrón `EXP-027` — formato de decimales con punto en vez de coma (17 casos)
+### 4.2 · Patrón `EXP-027` — formato de decimales con punto en vez de coma (17 casos, corregido)
 
-**Módulos:** facturas, nóminas, piezas · **Ficheros:**
-`automation/ui/src/test/resources/features/factures.feature`,
-`nomines.feature` (y el escenario de precio en `peces.feature`/`albarans.feature`)
+**Módulos:** facturas, nóminas, piezas, albaranes · **Ficheros:**
+`automation/ui/src/test/resources/features/factures.feature`, `nomines.feature`,
+`peces.feature`, `albarans.feature`
 
-**Error observado (ejemplo):**
+**Error observado (ejemplo, versión 2.1.0):**
 ```
 literalNoEncontrado: no se ve "800.00 €" en NominaDetailPO
 literalNoEncontrado: no se ve "119.06 €" en FacturesPO
 literalNoEncontrado: no se ve "49.90" en PecaDetailPO
 ```
 
-**Causa raíz:** estos `.feature` comprueban literales con **punto** decimal
+**Causa raíz:** estos `.feature` comprobaban literales con **punto** decimal
 (`"800.00 €"`), pero la pantalla presenta los importes con **coma** decimal
 (`"800,00 €"`) desde que el SPEC 05 (`specs/implemented/SPE-05-presentacio-imports-i-dates.md`)
 unificó el formato con `formatMoney`. Ya estaba anotado como riesgo conocido
-en `CLAUDE.md` (hallazgo `EXP-027` de `DOC-14`) tras verificarlo en vivo,
-pero **esta es la primera vez que una ejecución completa de la suite lo
-confirma con los 17 casos exactos que afecta**, no solo con el ejemplo
-puntual que motivó el hallazgo.
+en `CLAUDE.md` (hallazgo `EXP-027` de `DOC-14`) tras verificarlo en vivo; la
+versión 2.1.0 de este documento fue la primera en confirmarlo contra una
+ejecución real, con los 17 casos exactos que afectaba.
 
-**Por qué no se corrige en esta sesión:** el mandato de esta ejecución era
-verificar y cerrar `TC-048` (§4.1) y dejar constancia fiable del estado real
-de la suite — no reescribir `factures.feature`/`nomines.feature` al completo.
-Corresponde a `s10-auto-tcs` en una sesión propia.
+**Corrección aplicada, con dos hallazgos adicionales verificados antes de
+tocar nada:**
 
-**Corrección recomendada:** sustituir cada literal `"NN.NN €"`/`"NN.NN"` por
-su equivalente con coma (`"NN,NN €"`) en los 17 escenarios listados en §3.
-No es un cambio de lógica de prueba, es una actualización mecánica de datos
-de la tabla `Ejemplos` — bajo riesgo, pero hay que tocar dos ficheros
-completos y revisar cada fila.
+1. `client/src/utils/format.ts` usa `Intl.NumberFormat('es-ES', { useGrouping:
+   true, ... })`, que inserta un **espacio no separable** (U+00A0, no un
+   espacio normal) entre el importe y el símbolo `€`, y separador de miles
+   (punto) para importes ≥ 1000. Verificado inspeccionando el DOM real de
+   `/factures/1` antes de escribir ningún literal — un espacio normal no
+   habría coincidido nunca, con independencia del separador decimal.
+2. `TC-029` (piezas) y `TC-097` (nóminas) usaban la **misma** columna de la
+   tabla `Ejemplos` como valor de entrada (un campo numérico del formulario,
+   que exige punto) y como literal de validación (que ahora exige coma) — no
+   se podían convertir igual sin romper el campo. Se separaron en columnas
+   nuevas (`precioMostrado` en `peces.feature`; `brutoMostrado`/
+   `deduccionesMostrado` en `nomines.feature`) en vez de forzar un único
+   valor que habría invalidado la entrada.
 
-### 4.3 · TC-029 — fallo aislado de infraestructura (no reproducido de forma fiable)
+Verificado ejecutando los 18 casos que estaban en rojo (no la suite
+completa, ver nota de verificación al principio de este documento): 18 de
+18 en verde.
 
-**Error observado:**
+### 4.3 · TC-103 — fallo aislado de infraestructura, confirmado transitorio
+
+**Error observado (versión 2.1.0):**
 ```
 SessionNotCreated: Could not start a new session.
 Possible causes are invalid address of the remote server or browser start-up failure.
@@ -307,14 +331,22 @@ Possible causes are invalid address of the remote server or browser start-up fai
 **Diagnóstico:** Chrome no llegó a arrancar para este escenario concreto, en
 la tercera ejecución completa de Chrome headless de la misma sesión de
 trabajo (docenas de lanzamientos y cierres de navegador). Es exactamente el
-patrón que §6.6 ya documentó para el servidor de desarrollo — aquí afecta al
-propio Chrome, no al servidor. No hay ningún cambio de código ni de datos
-entre esta ejecución y la anterior que explique un fallo real en `TC-029`.
+patrón que §6.6 ya documenta para el servidor de desarrollo — aquí afectó al
+propio Chrome, no al servidor. No había ningún cambio de código ni de datos
+entre esa ejecución y la anterior que explicara un fallo real en `TC-103`
+(el escenario no valida ningún importe ni depende de `EXP-027`).
 
-**Recomendación:** volver a ejecutar `TC-029` en aislado antes de tratarlo
-como un defecto. Si vuelve a fallar con el mismo síntoma, escalarlo como
-inestabilidad de entorno (recursos de la máquina), no como bug de aplicación
-ni de prueba.
+**Confirmación:** vuelto a ejecutar junto con los 17 casos de §4.2 — pasa.
+No ha vuelto a fallar. Se documenta igualmente porque el patrón (Chrome sin
+arrancar bajo carga sostenida de la sesión) puede reaparecer con cualquier
+otro caso, no solo con `TC-103`.
+
+**Nota de corrección:** la versión 2.1.0 de este documento atribuyó este
+fallo a `TC-029` por error (una lectura por posición en la lista de fallos,
+no por caso). `TC-029` es en realidad uno de los 17 casos de `EXP-027`
+(§4.2), un `AssertionError` de formato, no un `SessionNotCreatedException`.
+Corregido en esta versión tras cruzar cada caso con su clase de excepción
+real en `testng-results.xml`.
 
 ## 5. Casos de DOC-05 sin automatizar (8)
 
@@ -410,11 +442,16 @@ ejecutar, no al revisar el código.
 
 ## 7. Estado del entorno al cerrar este informe
 
-- Base de datos reseeded y con el fixture `8001TST` creado justo antes de la
-  última ejecución (§2) — es la tercera ejecución completa de esta sesión;
-  las dos anteriores (con 27 y 30 rojos respectivamente) se descartan como
-  no fiables: la primera no tenía el fixture `8001TST`, la segunda no tuvo
-  reseed antes de correr y arrastró el estoc consumido por la primera.
+- Base de datos reseeded y con el fixture `8001TST` recreado justo antes de
+  la ejecución que verificó esta versión (18 casos, ver nota de
+  verificación al principio del documento).
+- En esta sesión se hicieron, en total, **cuatro** ejecuciones contra
+  Chrome real: dos completas descartadas como no fiables (27 rojos sin el
+  fixture `8001TST`; 30 rojos sin reseed previo, arrastrando estoc de la
+  anterior), una completa fiable (89 verdes/18 rojos, la que documenta la
+  versión 2.1.0) y una acotada a los 18 casos en rojo (la que documenta
+  esta versión, 2.2.0, 18 de 18 en verde). La próxima ejecución completa
+  queda pendiente de confirmar el 107/107 de forma independiente.
 - Los datos que generan los escenarios de facturas/albaranes/nóminas se
   quedan en la base de datos — es el comportamiento esperado de los casos
   que no hacen teardown explícito (creación, no eliminación). Si hace falta

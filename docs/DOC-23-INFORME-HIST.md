@@ -2,11 +2,11 @@
 doc_id: DOC-23-HIST
 doc_name: DOC-23-INFORME-HIST
 of_document: DOC-23-INFORME.md
-version: 2.1.0        # no se versiona por separado: refleja la versión del documento que historia
+version: 2.2.0        # no se versiona por separado: refleja la versión del documento que historia
 status: draft
 generator: S-10 skill-auto-tcs (ejecución + diagnóstico, sesión Claude Code)
 generator_version: "2.0"
-generated_at: 2026-08-23T22:10:00+02:00
+generated_at: 2026-08-23T23:30:00+02:00
 project: app-taller
 purpose: >-
   Historial de versiones de DOC-23. El documento principal refleja solo el estado
@@ -29,6 +29,37 @@ nueva a la más antigua. **El documento principal no reproduce nada de esto**: r
 solo el estado de la última ejecución, con su `version` en el front-matter.
 
 ---
+
+## 2.2.0 — 2026-08-23 — MINOR
+
+**Qué cambia.** Se cierran los 18 casos en rojo de la 2.1.0. 89 verdes + 18 verdes
+= 107/107, verificado ejecutando solo los 18 casos que estaban en rojo (no la suite
+completa, por indicación expresa) con `-Dcucumber.filter.tags`.
+
+- **Los 17 casos de `EXP-027` corregidos.** Aplicado el cambio mecánico (punto →
+  coma) en `factures.feature`, `nomines.feature`, `peces.feature` y
+  `albarans.feature`, más dos hallazgos verificados contra la app real antes de
+  tocar nada: (a) `formatMoney` inserta un espacio no separable (U+00A0) antes de
+  `€`, no un espacio normal — un literal con espacio normal nunca habría
+  coincidido, con independencia del separador decimal; (b) `TC-029` y `TC-097`
+  usaban la misma columna de `Ejemplos` como valor de entrada (campo numérico) y
+  de validación (texto mostrado) — se separaron en columnas nuevas en vez de
+  forzar un valor que habría roto el campo del formulario.
+- **`TC-103` confirmado transitorio.** Vuelto a ejecutar junto con los 17
+  anteriores, pasa. No ha vuelto a fallar.
+- **Se corrige un error de la propia 2.1.0:** atribuía el `SessionNotCreated` a
+  `TC-029` en vez de a `TC-103` (una lectura por posición en la lista de fallos,
+  no por caso). Corregido cruzando cada caso con su clase de excepción real en
+  `testng-results.xml`. `TC-029` es, y siempre fue, uno de los 17 casos de
+  `EXP-027` (`AssertionError`, no `SessionNotCreatedException`).
+- **Nota de alcance:** los 89 casos que ya eran verdes en la 2.1.0 no se han
+  vuelto a ejecutar en esta versión — se dan por buenos porque ningún cambio de
+  esta sesión toca escenarios fuera de los 18 corregidos. La próxima ejecución
+  completa de la suite debe confirmar el 107/107 de forma independiente.
+
+**Por qué MINOR y no PATCH.** Cambia el resultado sustantivo de 17 escenarios
+(de rojo a verde) y la atribución de causa de un caso — no es solo texto
+reformulado.
 
 ## 2.1.0 — 2026-08-23 — MINOR
 
