@@ -6,7 +6,7 @@ version: 1.7.0        # no se versiona por separado: refleja la versión del doc
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-22T12:20:00+02:00
+generated_at: 2026-08-23T12:10:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,55 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## Nota — 2026-08-23 — resincronización de procedencia, sin cambio de versión
+
+No es una entrada de versión: el JOIN de este ciclo —el bloque `requirements` de
+DOC-04 cruzado contra los nueve bloques `testcases` de DOC-05— es idéntico byte a
+byte al de 1.7.0. Se documenta porque `S-16 · Cascada de obsolescencia` marcó este
+documento como obsoleto por depender de una versión superada de
+`DOC-06-MANUAL-USUARIO.md`.
+
+**Motivo.** `DOC-06-MANUAL-USUARIO.md` pasó de 1.2.0 a 1.3.0 (commit `348a697`,
+resincronización de A-04 tras el ciclo que también movió `DOC-01-BASE-ASIS.md` a
+1.1.0). Es un salto de contenido real, no cosmético: DOC-06 1.3.0 documenta dos
+avisos nuevos en el manual y amplía las tareas A.16 y A.17 con el importe del IVA
+en euros y el formato de importes/fechas, leídos de los SPECs 04 y 05 ya
+implementados (protección de doble envío, `formatMoney`/`formatDate`). Detalle
+completo en `DOC-06-MANUAL-USUARIO-HIST.md`, entrada 1.3.0.
+
+**Por qué no mueve la matriz.** Ninguno de los dos SPECs toca `DOC-04-FUNCIONAL.md`
+ni `DOC-05-PLAN-PRUEBAS.md` — los dos siguen en 1.2.0 y 1.6.0, resincronizados por su
+cuenta contra DOC-01 1.1.0 sin cambio de contenido (ver sus respectivos `-HIST.md`,
+entradas del 2026-08-23). Ejecutado `node matriz.js --doc04 ... --doc05 ...` sobre
+los ficheros actuales: **79 requisitos, 110 casos, cobertura 100 %, 0 GAP PLAN, 0
+bloqueantes**, y el CSV resultante es **idéntico byte a byte** al `DOC-07-MATRIZ.csv`
+ya publicado — sexta vez consecutiva. DOC-06 no alimenta el JOIN: entra en este
+documento como fuente de la magnitud ⑤ (escena no documentada) y de los hallazgos
+A-05-09 y A-05-10, ninguno de los cuales se recalcula en este ciclo.
+
+**Lo que este ciclo no hace, y por qué.** DOC-06 1.3.0 documenta que la ficha de
+factura ahora muestra el importe del IVA en euros además del porcentaje — el mismo
+dato cuya ausencia en pantalla sostiene el hallazgo **A-05-03b** (§3.4 del documento
+principal, TC-073 y TC-075). Esta resincronización es deliberadamente de
+front-matter: no se ha vuelto a reproducir `/factures/1` ni a releer
+`FacturaForm.tsx` para confirmar si el defecto sigue vivo, así que A-05-03b se deja
+**tal cual estaba en 1.7.0** y no se cierra por esta vía. Corresponde a la próxima
+regeneración completa —cuando DOC-04 o DOC-05 cambien de versión de contenido, o
+cuando se decida reabrir la verificación en vivo— reproducir la pantalla y
+contrastarla contra el `"iva_import"` de la API antes de tocar el diagnóstico.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la versión de
+`DOC-06-MANUAL-USUARIO.md` declarada en `inputs` (1.2.0 → 1.3.0), su `hash`
+(`sha256:150240af…` → `sha256:90ea9dd6…`), el `commit_sha` de `source` y
+`generated_at`. La `version: 1.7.0` del documento principal **no cambia**: no hay
+contenido nuevo que numerar, siguiendo el mismo criterio que A-02 y A-03 aplicaron
+en `DOC-04-FUNCIONAL-HIST.md` y `DOC-05-PLAN-PRUEBAS-HIST.md` el mismo día.
+
+**`registro-ids.json` no se toca.** Ningún `REQ-nnn` ni `TC-nnn` nuevo, retirado ni
+reformulado.
 
 ---
 
