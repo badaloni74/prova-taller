@@ -1,3 +1,14 @@
+---
+doc_id: DOC-01-HIST
+doc_name: DOC-01-BASE-ASIS-HIST
+of_document: DOC-01-BASE-ASIS.md
+version: 1.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+status: draft
+generator: S-01 skill-doc-base
+generator_version: "2.0"
+generated_at: 2026-08-23T00:38:21+02:00
+---
+
 # DOC-01-BASE-ASIS · Historial de versiones
 
 Historial del documento `docs/DOC-01-BASE-ASIS.md`. Una entrada por versión, de la más nueva

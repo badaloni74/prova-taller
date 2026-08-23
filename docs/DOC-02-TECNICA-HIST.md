@@ -1,3 +1,14 @@
+---
+doc_id: DOC-02-HIST
+doc_name: DOC-02-TECNICA-HIST
+of_document: DOC-02-TECNICA.md
+version: 1.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+status: draft
+generator: S-01 skill-doc-base
+generator_version: "2.0"
+generated_at: 2026-08-23T00:38:21+02:00
+---
+
 # DOC-02-TECNICA · Historial de versiones
 
 Historial del documento `docs/DOC-02-TECNICA.md`. Una entrada por versión, de la más nueva
