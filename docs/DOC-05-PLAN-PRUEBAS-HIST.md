@@ -39,6 +39,43 @@ nominal.
 
 ---
 
+## Nota — 2026-08-23 — resincronización de procedencia, sin cambio de versión
+
+No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico
+byte a byte al de 1.6.0. Se documenta porque `S-16 · Cascada de obsolescencia`
+marcó este documento como obsoleto por depender de una versión superada de
+`DOC-01-BASE-ASIS.md`.
+
+**Motivo.** `DOC-01-BASE-ASIS.md` pasó de 1.0.0 a 1.1.0 (commit `7c5c39f`),
+resincronización que `A-02` ya conciliara con `DOC-04-FUNCIONAL.md` (que
+permanece en 1.2.0 — ver `DOC-04-FUNCIONAL-HIST.md`, nota del 2026-08-23).
+Releído DOC-01 1.1.0 completo: los 77 anclas `UC-nnn`/`BR-nnn` conservan el
+mismo texto y módulo que en 1.0.0; lo único que cambia es el propio
+front-matter de DOC-01, el árbol comentado de su sección 6 (pasa de citar tres
+especificaciones a cinco, por SPEC 04 y SPEC 05 ya implementadas) y el cierre
+de su antigua `Q-02`, ya recogida en DOC-04 desde 1.2.0. Ningún actor, caso de
+uso ni regla de negocio cambia de enunciado.
+
+**Consecuencia sobre este plan.** Este documento no lee DOC-01 directamente
+para redactar casos —su fuente única declarada es DOC-04 (ver apartado 1)—,
+así que la resincronización de DOC-01 solo llega aquí como entrada de
+procedencia informativa (`usage: consulta de glosario y de contexto de
+módulo`). Como DOC-04 no cambió de versión ni de contenido, ningún
+`REQ-nnn` referenciado por los 110 `TC-nnn` cambia de enunciado, módulo,
+prioridad o confianza. Se aplica la misma regla que en DOC-04: *fuente
+idéntica en contenido → ninguna versión de contenido nueva*.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la
+versión de `DOC-01-BASE-ASIS.md` declarada en `inputs` (1.0.0 → 1.1.0), su
+`hash` (`sha256:4e49485c...` → `sha256:0f074e686a...`), el `commit_sha` de
+`source` y `generated_at`. Los 110 `TC-nnn`, sus `steps`, sus `requirement`,
+`automation` y campos de aislamiento quedan exactamente como en 1.6.0.
+
+**`registro-ids.json` no se toca.** No hay `TC-nnn` nuevo, retirado ni
+reformulado.
+
+---
+
 ## 1.6.0 — 2026-08-21 · MINOR
 
 **Fidelidad:** primaria.

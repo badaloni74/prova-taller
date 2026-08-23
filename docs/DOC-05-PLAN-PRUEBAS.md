@@ -6,14 +6,14 @@ status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-22T10:40:00+02:00
+generated_at: 2026-08-23T09:15:00+02:00
 project: app-taller
 project_code: TALLER
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: b2a8d7706df4fef373b87a144fe4be6cfbc94390
+  commit_sha: 7bf2947e0ebbc750de66a0078c218fa23322e47d
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
@@ -130,9 +130,13 @@ inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
     present: true
-    version: 1.0.0
-    hash: sha256:4e49485c3ad1529b2eee9d56487e188617011d772fe5908740cbed4114f01097
-    usage: consulta de glosario y de contexto de módulo
+    version: 1.1.0
+    hash: sha256:0f074e686a5fb700286e8de28f0210a204380423a6a797e7a9e8f3a96384200a
+    usage: >-
+      consulta de glosario y de contexto de módulo. Resincronizado el 2026-08-23 desde 1.0.0: releído
+      completo y contrastado ancla a ancla, sin ningún cambio de actor, caso de uso ni regla de negocio
+      (solo front-matter propio, árbol comentado de la sección 6 y cierre de la antigua Q-02, ya recogida
+      en DOC-04 desde 1.2.0). Ningún caso de este plan se ha reescrito. Detalle en DOC-05-PLAN-PRUEBAS-HIST.md
   - id: DOC-03-API.md
     from: S-03
     present: false
