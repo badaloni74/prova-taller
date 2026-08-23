@@ -120,11 +120,16 @@ inputs:
       resuelve PD-001 y solo PD-001: el desplegable de vehiculos del albaran filtra por el
       cliente actual. No toca PD-002 ni PD-003, que siguen abiertas
 gate:
-  status: pending
+  status: approved
   owner: peticionario de negocio
   required: >-
     el peticionario valida que esta especificacion refleja lo que pidio. A-07 y A-08 pueden
     trabajar sobre el borrador, pero nada se implementa antes de esa validacion
+  approved_at: "2026-08-23"
+  note: >-
+    Aprobado tras revisar el resumen de la 2.2.0: el comportamiento pedido, los once
+    criterios y las dos decisiones pendientes no bloqueantes (PD-002, PD-003). Ninguna
+    ambiguedad reabierta.
 ---
 
 # DOC-08 · Especificación de evolutivo — `EVO-001` · Un albarán no puede cambiar de cliente
@@ -1065,9 +1070,14 @@ pending_decisions:
     blocks: []
     note: si la respuesta es conservar las lineas, es otra historia y otro DOC-08
 gate:
-  status: pending
+  status: approved
   owner: peticionario de negocio
   required: el peticionario valida que esta especificacion refleja lo que pidio
+  approved_at: "2026-08-23"
+  note: >-
+    Aprobado por el peticionario tras revisar el resumen de esta version (2.2.0): el
+    comportamiento pedido, los once criterios y las dos decisiones pendientes no
+    bloqueantes (PD-002, PD-003). No se ha reabierto ninguna ambiguedad.
 consumers:
   - agent: A-07
     doc: DOC-09
