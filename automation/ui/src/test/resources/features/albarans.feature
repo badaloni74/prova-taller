@@ -49,10 +49,16 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
     Y se rellena "Campo: Cantidad" con "<cantidad>"
     Y se pulsa en "Boton: Añadir línea"
     Entonces se valida "Lineas: <lineasEsperadas>"
+    # Aislamiento: retira la línea añadida para no dejar estoc consumido de
+    # cara a otros escenarios del mismo fichero (TC-048 asumía "Filtre
+    # d'aire" con estoc intacto y fallaba en suite completa; patrón ya
+    # probado en TC-053/TC-054).
+    Cuando se pulsa en "Linea: <pieza>"
+    Entonces se valida "Lineas: <lineasTrasRetirar>"
 
     Ejemplos:
-      | matricula | tipoLinea | pieza         | cantidad | lineasEsperadas |
-      | 2345FGH   | Pieza     | Filtre d'aire | 2        | 1               |
+      | matricula | tipoLinea | pieza         | cantidad | lineasEsperadas | lineasTrasRetirar |
+      | 2345FGH   | Pieza     | Filtre d'aire | 2        | 1               | 0                 |
 
   @TC-042 @doc05 @critical
   Esquema del escenario: TC-042 Rechazar una línea con cantidad cero
