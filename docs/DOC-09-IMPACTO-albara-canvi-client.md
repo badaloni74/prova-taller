@@ -1,35 +1,35 @@
 ---
 doc_id: DOC-09
 doc_name: DOC-09-IMPACTO-albara-canvi-client
-version: 2.0.2
+version: 2.0.3
 status: draft
 generator: A-07 análisis de impacto
-generated_at: 2026-08-23T16:20:00+02:00
+generated_at: 2026-08-24T09:30:00+02:00
 resync_note: >-
-  Resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por DOC-07
-  1.7.0->1.8.0, MINOR). Releída la entrada DOC-07 1.8.0 en su HIST: el salto lo dispara
-  DOC-14 2.0.0 (ya incorporada al DOC-09 en el resync anterior), no un recálculo del JOIN
-  REQ<->TC — DOC-04 y DOC-05 mantienen el mismo contenido. Lo que cambia en 1.8.0: se cierra
-  A-05-03b (EXP-007, IVA no visible en factura, corregido en FacturaDetail.tsx:99-107) y nace
-  A-05-13 (EXP-027, separador decimal, afecta TC-073/TC-075 de factures.feature y
-  nomines.feature) y DOC-23 queda señalado como stale por ser anterior a SPEC 05. Ninguno de
-  los tres toca el área de este documento: grep sobre la sección 1.8.0 del HIST confirma cero
-  menciones a REQ-040, REQ-046, TC-055 o TC-064, que son los únicos elementos de DOC-07 que
-  este documento cita (§§3, 6, bloque estructurado). El recuento "requisitos con defecto
-  confirmado" baja de 6 a 4 por ese cierre, pero el propio HIST aclara que ese censo nunca
-  incluyó REQ-040/046. DOC-07-MATRIZ.csv no cambia (mismo md5, "sexta vez consecutiva" según
-  su HIST) y su hash en este bloque ya coincidía con el fichero actual, así que no se toca esa
-  entrada. Conclusión: sin cambio de contenido para el área "cambiar vehículo de un albarán a
-  otro cliente". Se resincroniza solo la entrada DOC-07-TRAZABILIDAD.md (version y hash) de
-  este bloque; el cuerpo (secciones 1-7) no se toca. No existe DOC-09-IMPACTO-albara-canvi-
-  client-HIST.md y este resync no lo crea: sigue sin haber un patrón de fichero de historia
-  independiente para este documento, la procedencia de sus resyncs vive en este mismo campo.
+  Segundo resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por
+  DOC-07 1.8.0->1.9.0 y DOC-23 2.0.0->2.2.0, ambos MINOR). Leído DOC-07 1.9.0 y su HIST: el
+  salto entero lo dispara DOC-23-INFORME.md, que subió dos MINOR el mismo día (2.0.0->2.1.0
+  ->2.2.0) por una re-ejecución de la suite, no por ningún cambio en DOC-04 o DOC-05. El
+  propio HIST de DOC-07 1.9.0 lo confirma con evidencia byte a byte: el bloque `yaml
+  requirements` de DOC-04 y los nueve `yaml testcases` de DOC-05 son idénticos a los que
+  produjeron el CSV de la versión anterior, y DOC-07-MATRIZ.csv sale con el mismo md5
+  (séptima vez consecutiva). Y DOC-23 2.1.0/2.2.0, leído directamente, documenta que los 18
+  escenarios que estaban en rojo (17 de EXP-027, separador decimal, más TC-103 aislado de
+  infraestructura) quedaron corregidos y verificados en verde — cero menciones a REQ-040,
+  REQ-046, TC-055 o TC-064, que son los únicos elementos de DOC-07/DOC-23 que este documento
+  cita (§§3, 6, bloque estructurado). Conclusión: sin cambio de contenido para el área
+  "cambiar vehículo de un albarán a otro cliente". Se resincronizan solo las entradas
+  DOC-07-TRAZABILIDAD.md y DOC-23-INFORME.md (version y hash) de este bloque; el cuerpo
+  (secciones 1-7) no se toca. Sube de PATCH (2.0.2->2.0.3), mismo criterio que el resello
+  anterior. Sigue sin existir DOC-09-IMPACTO-albara-canvi-client-HIST.md y este resync
+  tampoco lo crea: no hay un patrón de fichero de historia independiente para este
+  documento, la procedencia de sus resyncs vive en este mismo campo.
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: worktree-agent-a42de18b55a86e842
-  commit_sha: 35e07c8001184f36be61963d648231451db6a8b4
-  working_tree_clean: true
+  branch: master
+  commit_sha: 7f2000feb41ca90e13794e3ad81b80c86fd7e2d2
+  working_tree_clean: true   # sin cambios sobre ficheros versionados; sin versionar (ajeno a este documento): ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
@@ -53,8 +53,8 @@ inputs:
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.8.0
-    hash: sha256:095c6baf223b634dc80d00e91b907017166853622df49ce3f9192f5e476ad247
+    version: 1.9.0
+    hash: sha256:7094bd372aa179e964c56049abfeaacb1609cb4eb6f5bf2ede16639cae987cf8
     present: true
   - id: DOC-07-MATRIZ.csv
     from: A-05
@@ -68,8 +68,8 @@ inputs:
     present: true
   - id: DOC-23-INFORME.md
     from: S-10
-    version: 2.0.0
-    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    version: 2.2.0
+    hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
     present: true
   - id: DOC-24-BUGS.json
     from: A-14
