@@ -9,3 +9,4 @@ target/
 
 # Cache del control de resincronizacion: se reconstruye desde .resync-watermark
 PENDIENTE-RESINCRONIZAR.md
+automation/api/newman/
