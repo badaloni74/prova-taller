@@ -1,16 +1,16 @@
 ---
 doc_id: DOC-07
 doc_name: DOC-07-TRAZABILIDAD
-version: 1.9.0
+version: 1.9.1
 status: draft
 generator: A-05 coherencia y trazabilidad
-generated_at: 2026-08-24T00:20:00+02:00
+generated_at: 2026-08-24T11:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: d9ccd37f346d6c9c64dce9394e171d4fdca22bfc
-  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, infografias/FLUJO-COMPLETO.md, promptDashboard.txt
+  commit_sha: be656fd4bb9be1534b4a47b43a345317d37d4574
+  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
@@ -34,8 +34,8 @@ inputs:
     hash: sha256:c9921bfab17bde391290a3f58f8b3037ec3e78fcfc4bed0608c0b29ee937e1f9
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
-    version: 2.0.1
-    hash: sha256:5e9ada5afdf97e3a88ff2d67b2ab5ed3a48052cd72ce51eaa640b231e8cb499f
+    version: 2.1.0
+    hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
   - id: DOC-23-INFORME.md
     from: S-10
     version: 2.2.0
@@ -154,7 +154,7 @@ tampoco lo hace el cierre de A-05-13: cambian lo que el 100 % significa, no cuá
 | `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.6.0** (mismo número; **hash resincronizado** contra `DOC-23` 2.1.0, ver abajo) | JOIN posible; sin cambio de contenido versionado |
 | `registro-ids.json` | presente, 317 anclas — 79 REQ, 110 TC, 29 Q, 12 FUN, 8 MEJ, 1 EVO, todas sin cambios desde 1.8.0; hash resincronizado por el renombrado `SPE-` de los specs | verificación de anclas y del censo de `Q-nnn` |
 | `docs/DOC-23-INFORME.md` | presente, **v2.2.0** (era 2.0.0; pasó por 2.1.0 el mismo día) | **no toca la matriz**; motivo de esta regeneración; cierra TC-048 y los 17 de `EXP-027`, corrige una atribución de la propia 2.1.0 |
-| `docs/DOC-14-EXPLORATORIO.md` | presente, v2.0.1 (era 2.0.0; **resello de patch**, cita a `DOC-16` 3.0.0, sin nueva exploración) | **no toca la matriz** |
+| `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (era 2.0.1; resincronización dirigida contra `DOC-23` 2.2.0, sin exploración nueva; cierra `EXP-027`) | **no toca la matriz** — ver nota de 1.9.1 en `DOC-07-TRAZABILIDAD-HIST.md` |
 | `docs/DOC-09-IMPACTO-…md` | presente, v2.0.2 (era 2.0.0; **resello de patch**) | **no toca la matriz**; A-05-11a sigue cerrado |
 | `docs/DOC-06-MANUAL-USUARIO.md` | presente, v1.3.0 (mismo número; **hash resincronizado**, renombrado `SPE-` de los specs que cita) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10 |
 | `docs/DOC-24-BUGS.json` | presente, v1.0.0 (mismo hash) | **no toca la matriz**; alimenta A-05-03 |
@@ -305,6 +305,20 @@ agente sin comprobarlo en el código.
 A-05**: se han vuelto a leer para comprobarlo, no se han dado por buenos por inercia.
 `DOC-06` 1.3.0 y `DOC-24` 1.0.0 cambian de hash o se mantienen por motivos ya descritos en
 §2 (renombrado de rutas `SPE-` el primero; sin cambios el segundo).
+
+**1.9.1 — `DOC-14` sube de 2.0.1 a 2.1.0 (MINOR en su propio ciclo) y A-05 confirma que,
+para este documento, es de nuevo un resello de procedencia.** El único cambio de contenido
+de `DOC-14` 2.1.0 es que `EXP-027` pasa de `abierto` a `estado: corregido`, citando como
+prueba de cierre `DOC-23-INFORME` 2.2.0 (`testng-results.xml`, 18 de 18 en verde) — la
+misma evidencia que este documento ya conocía y había verificado por su cuenta, código en
+mano, al cerrar **A-05-13** en 1.9.0 (§3.13) y al reverificar **A-05-03b** (§3.4). DOC-07 no
+cita en ningún punto el campo `estado` de `EXP-027` en `DOC-14` como prueba de nada —cita a
+`DOC-14` 2.0.0 solo como **origen** del hallazgo (§3.13, «Origen: `EXP-027` de
+`DOC-14-EXPLORATORIO` 2.0.0»)—, así que no hay ninguna afirmación en este documento que
+`DOC-14` 2.1.0 sostenga y que antes no sostuviera ya `DOC-23` verificado en código. El JOIN
+no se ha vuelto a ejecutar porque ninguna de sus dos entradas (DOC-04, DOC-05) se ha movido,
+y el CSV sigue siendo el mismo byte a byte. Detalle en `DOC-07-TRAZABILIDAD-HIST.md`,
+entrada 1.9.1.
 
 **`registro-ids.json`** no lleva versión propia como fichero de datos que es; se declara
 con la del ciclo (1.6.0) y con su hash, que es lo que S-16 compara. Su hash cambia desde

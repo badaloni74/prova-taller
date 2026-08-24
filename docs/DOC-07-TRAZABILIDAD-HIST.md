@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.9.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.9.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-24T00:20:00+02:00
+generated_at: 2026-08-24T11:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,48 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.9.1 — 2026-08-24 · PATCH
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `S-16 · Cascada de obsolescencia` volvió a marcar a DOC-07 como
+obsoleto tras regenerar 1.9.0 el mismo día:
+
+```
+DOC-07 1.9.0 — por DOC-14: declara 2.0.1, actual 2.1.0  [MINOR]
+```
+
+`DOC-14-EXPLORATORIO.md` subió de 2.0.1 a 2.1.0 (MINOR en su propio ciclo, no PATCH: A-10
+lo justifica porque cambia contenido sustantivo, no solo front-matter) al cerrar formalmente
+`EXP-027` —de `abierto` a `estado: corregido`— citando `DOC-23-INFORME` 2.2.0 como prueba.
+
+**Por qué PATCH y no MINOR ni "sin cambio de versión".** A-05 ha comprobado, no asumido,
+que el cambio de `DOC-14` no aporta nada que este documento no supiera ya: `EXP-027` es el
+origen histórico de **A-05-13**, cerrado en 1.9.0 con evidencia propia —`DOC-23` 2.1.0/2.2.0
+verificada directamente sobre los cuatro `.feature` afectados y sobre
+`client/src/utils/format.ts`, no sobre la declaración de `DOC-14`— y con **A-05-03b**
+reverificado en verde por el mismo motivo (§3.4). DOC-07 nunca cita el campo `estado` de
+`EXP-027` en `DOC-14` como prueba de un hallazgo propio; solo cita a `DOC-14` 2.0.0 como
+**origen** del hallazgo (§3.13). El JOIN no se ha vuelto a ejecutar: ni DOC-04 ni DOC-05 han
+cambiado de versión, así que no hay contenido de matriz que numerar. Es el mismo criterio
+que ya se aplicó a los resellos de `DOC-09` y del propio `DOC-14` dentro del ciclo de 1.9.0.
+
+**Qué cambia.**
+
+| Qué | 1.9.0 | 1.9.1 |
+|---|---|---|
+| Entrada DOC-14 | 2.0.1 (`5e9ada5a…`) | **2.1.0** (`f1449e13…`) — cierra `EXP-027` en su propio informe |
+| `DOC-07-MATRIZ.csv` | md5 `087a0377…` | idéntico — no se ha vuelto a ejecutar el JOIN |
+| Cobertura · bloqueantes · avisos | 100,00 % · 0 · 29 | sin cambios |
+| A-05-13, A-05-03b | cerrado / reverificado en 1.9.0 | sin cambios: ninguna evidencia nueva que no tuviera ya |
+
+**Nada se abre ni se cierra en este documento.** Es una resincronización de procedencia
+pura: el front-matter (versión y hash de la entrada `DOC-14`, `commit_sha` de `source`,
+`generated_at`) y una nota breve en «Procedencia» del documento principal explicando por
+qué el cambio de `DOC-14` no obliga a tocar ningún hallazgo ni la matriz.
 
 ---
 
