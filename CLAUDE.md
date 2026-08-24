@@ -118,7 +118,7 @@ barrejar clients en una factura). Cobreix 4 dels 110 casos de DOC-05
 de `automation/ui/`.
 
 ```bash
-cd automation/api && newman run collection.json -e environments/local.json
+cd automation/api && newman run tallerMecaniccollection.json -e environments/tallerMecanicEnvironmentLocal.json
 ```
 
 ```bash

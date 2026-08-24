@@ -31,7 +31,7 @@ Requiere el servidor arrancado (`npm run dev -w server` o `npm start`, puerto
 
 ```bash
 cd automation/api
-newman run collection.json -e environments/local.json
+newman run tallerMecaniccollection.json -e environments/tallerMecanicEnvironmentLocal.json
 ```
 
 Verificado en este entorno: **3 ejecuciones consecutivas, 29 peticiones, 31
