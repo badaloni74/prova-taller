@@ -39,6 +39,43 @@ nominal.
 
 ---
 
+## Nota — 2026-08-24 — resincronización de procedencia (DOC-23 2.2.0), sin cambio de versión
+
+No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico
+byte a byte al de 1.6.0. Se documenta porque `S-16 · Cascada de obsolescencia`
+marcó este documento como obsoleto por depender de una versión superada de
+`DOC-23-INFORME.md` (2.1.0 → 2.2.0, MINOR).
+
+**Motivo.** `DOC-23` 2.2.0 cierra los 18 escenarios que estaban en rojo en
+2.1.0 (re-ejecutados, no la suite completa): los 17 casos de `EXP-027`
+(literales de importe con punto en vez de coma) quedaron corregidos y
+verificados en verde, y el fallo aislado de infraestructura
+(`SessionNotCreated` al arrancar Chrome) se confirmó transitorio. `DOC-23`
+2.2.0 también corrige una atribución errónea de su propia 2.1.0: el fallo de
+infraestructura era de `TC-103`, no de `TC-029` como decía la nota de este
+plan sobre el resello anterior — corregido ahí mismo, en la nota nueva del
+apartado «Procedencia», dejando la nota original de la 2.1.0 intacta como
+registro de lo que se sabía entonces.
+
+**Consecuencia sobre este plan.** Ningún `TC-nnn`, `requirement`, `steps` ni
+campo de `automation` o aislamiento cambia. Los tres hechos de localización
+que sostienen los `automation.grade` no dependen del separador decimal ni del
+arranque de Chrome, así que ningún `grade` ni `reason` se reevalúa. La
+vigilancia de verdes/rojos de ejecución sigue viviendo en `DOC-23`, no en
+este plan (apartado 6.4).
+
+**Qué se actualiza.** Solo el front-matter del documento principal: la
+versión y el `hash` de la entrada `DOC-23-INFORME.md` de `inputs` (2.1.0 →
+2.2.0), su `usage`, el `commit_sha`/`working_tree_clean` de `source` y
+`generated_at`, y una nota de corrección en el apartado «Procedencia». Los 110
+`TC-nnn`, sus `steps`, sus `requirement`, `automation` y campos de aislamiento
+quedan exactamente como en 1.6.0.
+
+**`registro-ids.json` no se toca.** No hay `TC-nnn` nuevo, retirado ni
+reformulado.
+
+---
+
 ## Nota — 2026-08-23 — resincronización de procedencia (DOC-23), sin cambio de versión
 
 No es una entrada de versión: el bloque `testcases` de este ciclo es idéntico

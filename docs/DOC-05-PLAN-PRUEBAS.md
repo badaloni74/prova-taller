@@ -6,15 +6,15 @@ status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-23T23:41:00+02:00
+generated_at: 2026-08-24T09:15:00+02:00
 project: app-taller
 project_code: TALLER
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 6852cd05f39eba71681d13cf42ea7a7613368f7b
-  working_tree_clean: false   # modificados sin commitear: los 4 .feature de automation/ui/ (fuera del alcance de A-03, propiedad de s10-auto-tcs); sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, infografias/FLUJO-COMPLETO.md, promptDashboard.txt
+  commit_sha: d9ccd37f346d6c9c64dce9394e171d4fdca22bfc
+  working_tree_clean: true   # sin cambios sobre ficheros versionados; sin versionar (ajeno a este documento): ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
@@ -69,17 +69,20 @@ inputs:
     path_changed_on: 2026-08-21
     from: S-10
     present: true
-    version: 2.1.0
-    hash: sha256:303d46f0d9de2d4f3bdd13ffe4f24425f23b9b8aa7601b7c0013ff3b1ce03e39
+    version: 2.2.0
+    hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
     derived_from_version: 1.0.0
     usage: >-
       evidencia de campo del grado de automatización de los 110 casos y del incidente TC-040/TC-048
-      que motiva los campos de aislamiento. 2.1.0 confirma con ejecución real que TC-048 quedó
-      corregido (aislado del consumo de estoc de TC-040, commit 735ded8) y diagnostica 17 rojos
+      que motiva los campos de aislamiento. 2.1.0 confirmó con ejecución real que TC-048 quedó
+      corregido (aislado del consumo de estoc de TC-040, commit 735ded8) y diagnosticó 17 rojos
       nuevos con causa raíz única —EXP-027, literales de importe con punto en vez de coma decimal en
-      los `.feature` de facturas/nóminas— que no toca ningún `automation.grade` ni `reason` de este
-      plan: ninguno de los tres hechos de localización que los sostienen depende del separador
-      decimal. No modifica ningún caso. Procedencia detallada en el apartado «Procedencia»
+      los `.feature` de facturas/nóminas— y un fallo aislado de infraestructura. 2.2.0 cierra los 18:
+      los 17 `.feature` de EXP-027 quedaron corregidos y verificados en verde, y el fallo aislado se
+      confirmó transitorio (y su atribución, corregida de TC-029 a TC-103). Ninguno de estos hechos
+      toca un `automation.grade` ni un `reason` de este plan: los tres hechos de localización que los
+      sostienen no dependen del separador decimal ni del arranque de Chrome. No modifica ningún caso.
+      Procedencia detallada en el apartado «Procedencia»
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
     from: A-06
     present: true
@@ -4485,6 +4488,31 @@ estable— tampoco cambian: ninguno depende del separador decimal que motiva
 `EXP-027`. **No sube la versión** por el mismo motivo que el resello anterior: lo
 único que cambia es de dónde dice este plan que viene la evidencia, no lo que
 afirma.
+
+**Resello del 2026-08-24 · DOC-23 2.1.0 → 2.2.0.** `S-16` volvió a marcar este
+documento por la misma causa —una entrada de `inputs` con versión superada— y
+otra vez la revisión se cierra sin tocar el bloque `testcases`. `DOC-23` 2.2.0
+no repitió la suite completa, solo los 18 escenarios que estaban en rojo en
+2.1.0, con resultado **18 de 18 en verde**: los 17 `.feature` de `EXP-027` se
+corrigieron (más dos hallazgos verificados antes de tocar nada: el espacio no
+separable U+00A0 antes de `€`, y dos escenarios que usaban la misma columna de
+`Ejemplos` como valor de entrada y de validación), y el fallo aislado de
+infraestructura (`SessionNotCreated` al arrancar Chrome) se confirmó
+transitorio al volver a ejecutarlo. `DOC-23` 2.2.0 también corrige una
+atribución errónea de la propia 2.1.0: el fallo de infraestructura era de
+`TC-103`, no de `TC-029` como decía la nota de este plan sobre el resello
+anterior (más arriba, «2.1.0 aporta tres hechos... un fallo aislado de
+infraestructura en `TC-029`»). Esa nota se deja tal cual —es el registro de lo
+que se sabía en aquel resello, no una afirmación sobre hoy—; queda corregida
+aquí, en la nota vigente. Ninguno de los tres hechos de localización que
+sostienen los `automation.grade` —formulario de línea sin `id`, desplegable de
+pieza por `fetch`, campos de `EntityForm` con `id` estable— depende del
+separador decimal ni del arranque de Chrome, así que ningún `grade` ni
+`reason` se reevalúa, y ningún `TC-nnn`, `step`, prioridad o campo de
+aislamiento cambia. **No sube la versión**, por el mismo motivo que los dos
+reselos anteriores: lo único que cambia es de dónde dice este plan que viene
+la evidencia y —esta vez además— una corrección de esa misma procedencia, no
+lo que el plan afirma sobre los 110 casos.
 
 **El aviso `entrada_sin_version` que queda, y por qué se queda.** Tras este
 resello S-16 sigue emitiendo un aviso sobre este documento: `DOC-23 sin version
