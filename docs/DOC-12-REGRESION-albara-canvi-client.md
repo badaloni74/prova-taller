@@ -1,17 +1,39 @@
 ---
 doc_id: DOC-12
 doc_name: DOC-12-REGRESION-albara-canvi-client
-version: 1.0.0
+version: 1.0.1
 status: draft
 generator: A-09 regresión inteligente
-generated_at: 2026-08-23T17:32:00+00:00
+generated_at: 2026-08-24T09:45:00+00:00
 project: app-taller
+resync_note: >-
+  Resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por
+  DOC-07 1.8.0->1.9.0, MINOR). Leído DOC-07-TRAZABILIDAD.md 1.9.0 completo y su
+  -HIST.md: el salto entero lo dispara DOC-23-INFORME.md, que subió dos MINOR el
+  mismo día (2.0.0->2.1.0->2.2.0) por una re-ejecución de la suite -no por ningún
+  cambio en DOC-04 o DOC-05-, y el propio HIST de DOC-07 1.9.0 lo confirma con
+  evidencia byte a byte: el bloque `yaml requirements` de DOC-04 y los nueve `yaml
+  testcases` de DOC-05 son idénticos a los que produjeron el CSV de la versión
+  anterior, y DOC-07-MATRIZ.csv sale con el mismo md5 (séptima vez consecutiva, sin
+  cambio de version tampoco en la entrada que este documento ya declaraba, 1.7.0).
+  No me fío de que otro agente (A-07) ya diera este mismo salto por un resello:
+  he verificado directamente contra el propio DOC-12 los dos hechos de DOC-07 que
+  cita -la fila de BUG-002 (§1, antes "línea 498") y "Requisitos critical sin
+  ningún caso Critical: 0 de 35" (§2, antes "línea 393")- y los dos siguen
+  presentes con el mismo contenido en 1.9.0 (ahora en las líneas 506 y 401
+  respectivamente; el desplazamiento de +8 líneas viene de que el censo de avisos
+  de DOC-07 bajó de 30 a 29 con el cierre de A-05-13 y reordenó texto anterior a
+  esas dos citas, no de un cambio de fondo). No se toca ninguna otra sección: la
+  selección de 30 casos, los huecos de §5 y el bloque estructurado de §7 no
+  dependían de ningún otro dato de DOC-07 más allá de esos dos. Sube de PATCH
+  (1.0.0->1.0.1). Este documento no lleva -HIST.md independiente; la procedencia
+  de sus resyncs vive en este mismo campo, mismo patrón que DOC-09.
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: worktree-agent-a479b252487473048
-  commit_sha: b325248946c22fd06c9d1afdac65c56560a2b8bf
-  working_tree_clean: true
+  branch: master
+  commit_sha: 3606266549b2d5e52656c949beb8703125c7b16a
+  working_tree_clean: false   # sin versionar (ajeno a este documento): ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-09-IMPACTO-albara-canvi-client.md
     from: A-07
@@ -37,12 +59,14 @@ inputs:
     usage: contraste de REQ->TC y de prioridad requisito/caso, no sustituye a DOC-05
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.8.0
-    hash: sha256:095c6baf223b634dc80d00e91b907017166853622df49ce3f9192f5e476ad247
+    version: 1.9.0
+    hash: sha256:7094bd372aa179e964c56049abfeaacb1609cb4eb6f5bf2ede16639cae987cf8
     present: true
     usage: >-
       evidencia de BUG-002 (§1 de este documento) y de la ausencia del patrón
-      "critical cubierto solo por High" en el alcance de este evolutivo
+      "critical cubierto solo por High" en el alcance de este evolutivo. Resello
+      1.8.0->1.9.0: ambas citas verificadas de nuevo contra el texto de 1.9.0, sin
+      cambio de contenido (ver resync_note)
   - id: DOC-20-RALLY-STATE.json
     from: I-01
     present: false
