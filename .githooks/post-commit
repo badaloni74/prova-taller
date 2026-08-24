@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Alimenta PENDIENTE-RESINCRONIZAR.md. Nunca debe hacer fallar el commit.
+exec "$(git rev-parse --show-toplevel)/.githooks/registrar-pendiente.sh"

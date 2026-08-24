@@ -6,3 +6,6 @@ dist/
 # Excepcion: registro versionado de /spec-impl, no un log descartable.
 !specs/subidas.log
 target/
+
+# Cache del control de resincronizacion: se reconstruye desde .resync-watermark
+PENDIENTE-RESINCRONIZAR.md
