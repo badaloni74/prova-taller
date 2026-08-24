@@ -3,11 +3,11 @@ doc_id: DOC-25-HIST
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES-HIST
 of_document: DOC-25-PROPUESTAS-FUNCIONALES.md
 main_document: docs/DOC-25-PROPUESTAS-FUNCIONALES.md
-version: 1.2.0        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
+version: 1.2.1        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-23T09:15:00+02:00
+generated_at: 2026-08-24T11:00:00+02:00
 language: es
 purpose: >-
   historial de versiones de DOC-25. El documento principal refleja solo el estado actual y no
@@ -26,6 +26,59 @@ Una entrada por versión, de la más nueva a la más antigua.
 | **MAJOR** | Una propuesta cambia de estado por decisión de negocio, se retira o se sustituye por otra. Cambia lo que el lector puede dar por decidido |
 | **MINOR** | Nacen propuestas nuevas, o cambia la evidencia, el alcance o una señal (`confidence`, `size`, `impact`) de alguna viva. Nada de lo ya leído deja de ser cierto |
 | **PATCH** | Correcciones que no tocan el fondo de ninguna propuesta: citas rotas, erratas, procedencia |
+
+---
+
+## 1.2.1 — 2026-08-24 · PATCH
+
+**Resello de procedencia contra `DOC-14-EXPLORATORIO` 2.1.0. Ninguna propuesta
+cambia: ni de estado, ni de evidencia, ni de señal.**
+
+### Por qué se regenera
+
+Lo detectó **`S-16 · Cascada de obsolescencia`**: `DOC-25` 1.2.0 declaraba
+`DOC-14` en `2.0.0`, y el informe había subido a `2.1.0` (a través de una
+versión intermedia `2.0.1`, resello puro del propio `DOC-14` contra `DOC-16`).
+El salto de `2.0.0` a `2.1.0` cierra formalmente `EXP-027` —de `abierto` a
+`corregido`— porque `A-10` verificó que `DOC-23` 2.2.0 confirma en verde los
+`.feature` de `automation/ui` que antes citaban literales con punto decimal
+(`121.00 €`) contra una pantalla que ya usa coma decimal desde `SPEC 05`.
+
+### Por qué PATCH y no MINOR ni MAJOR
+
+**No es MAJOR** porque ninguna de las doce propuestas cambia de estado.
+**No es MINOR** porque se comprobó, propuesta por propuesta, que ninguna
+`FUN-nnn` cita `EXP-027` en su `evidence_refs` ni depende de su estado
+—abierto o corregido— para sostener su justificación. La única mención que
+este documento le hacía a `EXP-027` era de procedencia: en el `scope`/`usage`
+de la entrada de `DOC-14` en el front-matter, donde se dejaba constancia de
+que ese hallazgo deriva a `A-03`/`S-10` (es un desajuste entre los `.feature`
+de automatización y la pantalla, no una carencia funcional de la aplicación)
+y no a `A-15`. Esa conclusión era cierta con `EXP-027` abierto y sigue siendo
+cierta corregido: no hay nada que una propuesta de A-15 pudiera haber dado
+por sentado y que ahora deje de serlo. Es, por tanto, un resello puro.
+
+### Qué ha cambiado
+
+Solo la entrada `DOC-14-EXPLORATORIO.md` en `inputs`: versión `2.0.0 →
+2.1.0`, hash recalculado sobre el fichero actual
+(`sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee`), y
+una nota de cambio (`change_note`) que deja explícita la comprobación hecha.
+`commit_sha` de `source` se actualiza al `HEAD` tras la cascada
+(`2bbd4fe689b5f9f637d0c822bf4f0b0c81d3b93b`). El bloque `obsolescence_response`
+del front-matter pasa a reflejar esta ronda (`round: 1.2.1`) y archiva el de
+`1.2.0` bajo `history`, siguiendo el mismo criterio de «solo estado actual»
+que aplica al resto del documento.
+
+### Qué no ha cambiado
+
+Las **doce propuestas**, con su número, su texto, su estado `proposed` y
+todas sus señales. La **recomendación** del apartado 2, en el mismo orden
+desde 1.2.0. El apartado 5.7 —que ya citaba `EXP-022`, `EXP-023` y `EXP-024`
+como hallazgos de `DOC-14` sin pasar por el triaje de `DOC-16`— no se toca:
+`EXP-027` no está entre ellos y su cierre no cambia el criterio de por qué
+esos tres siguen fuera de alcance. `DOC-01`, `DOC-04`, `DOC-06`, `DOC-16` y
+`DOC-24` siguen en las versiones declaradas en `1.2.0`, sin cambios.
 
 ---
 

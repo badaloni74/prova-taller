@@ -1,11 +1,11 @@
 ---
 doc_id: DOC-25
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES
-version: 1.2.0
+version: 1.2.1
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-23T09:15:00+02:00
+generated_at: 2026-08-24T11:00:00+02:00
 language: es
 history_document: docs/DOC-25-PROPUESTAS-FUNCIONALES-HIST.md
 history_note: >-
@@ -15,16 +15,16 @@ source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: e451ad46934ef0443347f81082f3e519b1838392
+  commit_sha: 2bbd4fe689b5f9f637d0c822bf4f0b0c81d3b93b
   working_tree_clean: false   # sin versionar en el ambito de este ciclo: docs/, automation/, registro-ids.json y ficheros de sesion
 inputs:
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.1.1
-    hash: sha256:b9070b120a46eb1a4a17f99eb9983270828b597ce41e8d4cda8b8204c7591b8a
+    version: 1.2.0
+    hash: sha256:b4f26c8f2ae7d8f944917bd6770ac52680c3690ee66fbd85b77f8304aef86349
     present: true
     usage: >-
-      documento anterior. Manda sobre esta ronda: las ocho propuestas FUN-001 a FUN-008 se
+      documento anterior. Manda sobre esta ronda: las doce propuestas FUN-001 a FUN-012 se
       conservan con su numero y su texto, y solo se toca lo que la nueva evidencia obliga a tocar
   - id: DOC-01-BASE-ASIS.md
     from: S-01
@@ -91,21 +91,29 @@ inputs:
       atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
-    version: 2.0.0
-    hash: sha256:4aad4cc90f497f97122a67d75fdabdda6d43e118e6ea139cbc9616c2bfafeb36
+    version: 2.1.0
+    hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
     present: true
     changed_since_previous_run: true
-    previous_version_declared: null
+    previous_version_declared: 2.0.0
     first_read_in: 1.2.0
     scope: >-
       solo las fichas EXP-nnn que DOC-16/§6 cita como dirigidas a A-15 (EXP-003, EXP-017,
       EXP-019, EXP-026), y las dos nuevas del ciclo (EXP-027, EXP-028) para confirmar que
       ninguna es mia. No se ha auditado el informe entero: sigue sin ser una entrada formal de
       A-15, solo se abre para verificar lo que DOC-16 cita literalmente
+    change_note: >-
+      resello puro de procedencia. 2.0.0 -> 2.1.0 (via 2.0.1) es A-10 resincronizando su propia
+      entrada de DOC-23 (2.0.0 -> 2.2.0) y cerrando EXP-027 (abierto -> corregido) porque S-10
+      ya corrigio los .feature de automation/ui que citaban literales con punto decimal. Releidas
+      las doce FUN-nnn de este documento: ninguna cita EXP-027 ni depende de su estado. La unica
+      mencion que este documento le hacia era en este mismo campo `scope`/`usage`, para confirmar
+      que derivaba a A-03 y no a A-15 -algo que ya era cierto con EXP-027 abierto y lo sigue
+      siendo corregido-. Sin efecto sobre ninguna FUN-nnn ni sobre el apartado 5.7
     usage: >-
       detalle de reproduccion de los tres hallazgos de UX y del hallazgo de concurrencia que
-      DOC-16 §6.1/§6.2 reenvia a A-15, y verificacion de que EXP-027 (→A-03) y EXP-028
-      (→A-12, ya MEJ-009) no me corresponden
+      DOC-16 §6.1/§6.2 reenvia a A-15, y verificacion de que EXP-027 (→A-03, ya corregido en
+      2.1.0) y EXP-028 (→A-12, ya MEJ-009) no me corresponden
   - id: registro-ids.json
     from: S-12
     present: true
@@ -130,24 +138,37 @@ not_read_by_contract:
       completo ni se trata como fuente de carencias propia
 obsolescence_response:
   raised_by: S-16
-  round: 1.2.0
+  round: 1.2.1
   findings:
-    - finding: "DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y DOC-16 en 2.0.0, y los tres habian subido"
+    - finding: "DOC-25 1.2.0 declaraba DOC-14 en 2.0.0, y DOC-14 habia subido a 2.1.0 (via 2.0.1)"
       resolved: true
       how: >-
-        releidos DOC-01 1.1.0 (sin cambio de negocio, verificado contra su -HIST), DOC-06 1.3.0
-        (§6 y §9 completos, sin carencias nuevas en §6.1) y DOC-16 3.0.0 (apartado 6 entero).
-        Version y hash reales declarados en cada entrada
-    - finding: "DOC-16 3.0.0 §6.1 reafirma tres hallazgos de UX dirigidos a A-15 (EXP-017, EXP-026, EXP-019) que ninguna ronda de DOC-25 habia convertido en propuesta"
-      resolved: true
-      how: "nacen FUN-009, FUN-010 y FUN-011. Ver apartado 3"
-    - finding: "DOC-16 3.0.0 §6.2 (EXP-003, concurrencia) y §6.3 (REQ-025/REQ-034 sin cumplir) no habian sido evaluados nunca por A-15"
-      resolved: true
-      how: >-
-        §6.2 da lugar a FUN-012. §6.3 se evalua y **no** da lugar a una FUN-nnn: por el mismo
-        criterio que ya aplica este documento a los avisos en catalan (un requisito vigente no
-        cumplido es defecto, no funcionalidad ausente), se redirige a A-14. Ver apartados 5.4,
-        5.6 y 6
+        releido DOC-14 2.1.0 y su -HIST.md: el unico cambio de fondo es que EXP-027 pasa de
+        abierto a corregido, porque S-10 ya corrigio los .feature de automation/ui que
+        DOC-23 2.2.0 confirma en verde. Verificado ancla a ancla que ninguna de las doce
+        FUN-nnn de este documento cita EXP-027 ni depende de su estado -la unica mencion era
+        de procedencia (scope/usage de la propia entrada), no evidencia de ninguna propuesta.
+        Resello puro: version y hash reales declarados, sin tocar ninguna FUN-nnn ni el cuerpo
+        del documento
+  history:
+    - round: 1.2.0
+      findings:
+        - finding: "DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y DOC-16 en 2.0.0, y los tres habian subido"
+          resolved: true
+          how: >-
+            releidos DOC-01 1.1.0 (sin cambio de negocio, verificado contra su -HIST), DOC-06 1.3.0
+            (§6 y §9 completos, sin carencias nuevas en §6.1) y DOC-16 3.0.0 (apartado 6 entero).
+            Version y hash reales declarados en cada entrada
+        - finding: "DOC-16 3.0.0 §6.1 reafirma tres hallazgos de UX dirigidos a A-15 (EXP-017, EXP-026, EXP-019) que ninguna ronda de DOC-25 habia convertido en propuesta"
+          resolved: true
+          how: "nacen FUN-009, FUN-010 y FUN-011. Ver apartado 3"
+        - finding: "DOC-16 3.0.0 §6.2 (EXP-003, concurrencia) y §6.3 (REQ-025/REQ-034 sin cumplir) no habian sido evaluados nunca por A-15"
+          resolved: true
+          how: >-
+            §6.2 da lugar a FUN-012. §6.3 se evalua y **no** da lugar a una FUN-nnn: por el mismo
+            criterio que ya aplica este documento a los avisos en catalan (un requisito vigente no
+            cumplido es defecto, no funcionalidad ausente), se redirige a A-14. Ver apartados 5.4,
+            5.6 y 6
 ---
 
 # DOC-25 · Propuestas de funcionalidad — app-taller
@@ -164,6 +185,23 @@ obsolescence_response:
 > `DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`.
 
 ## 1. Qué ha cambiado desde la ronda anterior
+
+**Nota de la versión 1.2.1 (resello de procedencia, sin cambio de fondo).**
+`S-16 · Cascada de obsolescencia` marcó este documento como caducado porque
+declaraba `DOC-14-EXPLORATORIO.md` en `2.0.0` y el informe había subido a
+`2.1.0`: A-10 cerró formalmente `EXP-027` (de `abierto` a `corregido`), porque
+`DOC-23` 2.2.0 confirma que los `.feature` de `automation/ui` que citaban
+literales con punto decimal ya están corregidos. Se ha comprobado, propuesta
+por propuesta, que ninguna de las doce `FUN-nnn` cita `EXP-027` ni depende de
+su estado: la única mención que este documento le hacía era de procedencia,
+en el `scope`/`usage` de la propia entrada de `DOC-14` en el front-matter, para
+confirmar que ese hallazgo deriva a `A-03` y no a `A-15` — algo que ya era
+cierto con `EXP-027` abierto y sigue siéndolo corregido. **No cambia ninguna
+propuesta, ni la recomendación, ni ningún hallazgo del apartado 6.** Solo se
+actualizan versión y hash de la entrada de `DOC-14` en `inputs`. Detalle en
+`DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, entrada `1.2.1`.
+
+### Ronda anterior (1.2.0)
 
 **Nacen cuatro propuestas: `FUN-009` a `FUN-012`.** Las ocho anteriores no
 cambian de estado ni de señal. Es la primera ronda con novedad desde 1.0.0, y
@@ -1092,13 +1130,15 @@ reproche: es el dato que explica por qué `FUN-001` conserva confianza `medium`.
 version: 1
 project: app-taller
 run:
-  date: 2026-08-23
-  previous_doc_version: 1.1.1
-  version_bump: MINOR
+  date: 2026-08-24
+  previous_doc_version: 1.2.0
+  version_bump: PATCH
   version_bump_reason: >-
-    Nacen cuatro propuestas (FUN-009 a FUN-012), lo que por definición es MINOR: nada de lo ya
-    leído deja de ser cierto, y ninguna de las ocho anteriores cambia de estado. No es MAJOR
-    porque ninguna propuesta viva cambia de estado por decisión de negocio.
+    Resello de procedencia: DOC-14 subió de 2.0.0 a 2.1.0 (cierre formal de EXP-027, de
+    abierto a corregido). Ninguna FUN-nnn citaba EXP-027 ni dependía de su estado -verificado
+    una a una-, así que no hay evidencia, alcance ni señal que cambie en ninguna propuesta.
+    Solo se actualiza versión y hash de la entrada DOC-14 en `inputs`. Ronda anterior
+    (1.1.1 -> 1.2.0, MINOR, 2026-08-23): nacen cuatro propuestas (FUN-009 a FUN-012).
   trigger: >-
     S-16 · cascada de obsolescencia: DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y
     DOC-16 en 2.0.0, y los tres habían subido a 1.1.0, 1.3.0 y 3.0.0
@@ -1509,7 +1549,7 @@ findings_for_others:
     status: abierto
     note: "DOC-04/Q-08 no es una duda de negocio sino una comprobación: el idioma y el tema por defecto son las dos únicas reglas que vienen de una especificación y no del comportamiento observado. Afecta a REQ-076 y REQ-078, y gana interés porque el candidato a BUG-005 toca REQ-076 desde otro ángulo."
 summary:
-  new: 4
+  new: 0
   still_open: 12
   rejected_respected: 0
   by_source: { evidence: 11, opinion: 1 }
