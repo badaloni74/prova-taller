@@ -67,8 +67,9 @@ assignat.
 | DOC-07 | Traçabilitat i cobertura | A-05 |
 | DOC-14 | Informe d'exploració QA `EXP-nnn` | A-10 |
 | DOC-16 | Roadmap tècnic `MEJ-nnn` | A-12 |
-| DOC-23 | Informe d'execució de la suite | S-10 |
+| DOC-23 | Informe d'execució de la suite (UI) | S-10 |
 | DOC-24 | Defectes confirmats `BUG-nnn` | A-14 |
+| DOC-26 | Col·lecció Postman de capa de servei (`automation/api/`) | S-17 |
 | DOC-25 | Propostes funcionals `FUN-nnn` | A-15 |
 
 `registro-ids.json` governa els identificadors (`REQ`, `TC`, `UC`, `BR`) i el
@@ -82,6 +83,17 @@ desfasats. La skill `s16-cascada-obsolescencia` calcula quins.
 
 `automation/ui/` — Selenium + Cucumber + TestNG, patró BasePO / StepDef genèric
 / arguments `Tipus: Valor`. Cobreix **102 dels 110 casos de DOC-05**.
+
+`automation/api/` — col·lecció Postman (S-17, DOC-26) que valida la capa de
+servei: regles de negoci que la interfície no permet ni intentar (línies amb
+un tipus que el desplegable no ofereix, facturar un albarà ja facturat,
+barrejar clients en una factura). Cobreix 4 dels 110 casos de DOC-05
+(`verification_path: service`). S'executa amb `newman`, no duplica cap cas
+de `automation/ui/`.
+
+```bash
+cd automation/api && newman run collection.json -e environments/local.json
+```
 
 ```bash
 export JAVA_HOME="C:\Program Files\Java\jdk-21.0.9.10-hotspot"

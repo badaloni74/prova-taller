@@ -1,0 +1,973 @@
+{
+  "info": {
+    "name": "Taller API · Casos de servicio (DOC-26)",
+    "description": "Colección Postman generada por S-17 · api-qa. Ejerce los 4 casos de docs/DOC-05-PLAN-PRUEBAS.md marcados verification_path: service (TC-041, TC-045, TC-063, TC-064): reglas de negocio que la interfaz no permite ni intentar formular. Ejecutar de arriba a abajo, con newman o el runner de Postman: cada carpeta encadena _setup → TC-nnn → _teardown en orden, usando variables de entorno para pasar ids entre peticiones. Ver README.md para detalles de procedencia, aislamiento y hallazgos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "_setup (fixtures compartidas)",
+      "item": [
+        {
+          "name": "_setup · Obtener dos vehículos de clientes distintos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles",
+              "host": [
+                "{{baseUrl}}/vehicles"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"hay al menos dos vehículos en la base sembrada\", () => {",
+                  "  const vehicles = pm.response.json();",
+                  "  pm.expect(vehicles.length).to.be.at.least(2);",
+                  "});",
+                  "const vehicles = pm.response.json();",
+                  "const vA = vehicles[0];",
+                  "const vB = vehicles.find(v => v.client_id !== vA.client_id);",
+                  "pm.test(\"los dos vehículos elegidos pertenecen a clientes distintos\", () => {",
+                  "  pm.expect(vB, \"no se ha encontrado un segundo vehículo de otro cliente\").to.not.be.undefined;",
+                  "});",
+                  "pm.environment.set(\"vehicleAId\", vA.id);",
+                  "pm.environment.set(\"clientAId\", vA.client_id);",
+                  "pm.environment.set(\"vehicleBId\", vB.id);",
+                  "pm.environment.set(\"clientBId\", vB.client_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Obtener una pieza con stock (Filtre d'oli)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/peces",
+              "host": [
+                "{{baseUrl}}/peces"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const peces = pm.response.json();",
+                  "const peca = peces.find(p => p.referencia === 'FO-100') || peces[0];",
+                  "pm.test(\"existe al menos una pieza con stock positivo\", () => {",
+                  "  pm.expect(peca.estoc).to.be.above(0);",
+                  "});",
+                  "pm.environment.set(\"pecaId\", peca.id);",
+                  "pm.environment.set(\"pecaPreu\", peca.preu);",
+                  "pm.environment.set(\"pecaEstocInicial\", peca.estoc);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Albarans",
+      "item": [
+        {
+          "name": "_setup · Crear albarán pendiente para TC-041",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-041\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"el albarán se crea pendiente y sin líneas\", () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "  pm.expect(body.linies).to.have.lengthOf(0);",
+                  "});",
+                  "pm.environment.set(\"albaran041Id\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Añadir línea de pieza al albarán de TC-041",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}/linies",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}/linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"peca\",\n  \"peca_id\": \"{{pecaId}}\",\n  \"quantitat\": 1\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"la línea de pieza se registra con el precio de catálogo\", () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  const linia = body.linies.find(l => l.tipus === 'peca');",
+                  "  pm.expect(Number(linia.preu)).to.eql(Number(pm.environment.get(\"pecaPreu\")));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Añadir línea de mano de obra al albarán de TC-041",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}/linies",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}/linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"ma_obra\",\n  \"descripcio\": \"Revisió general\",\n  \"quantitat\": 1,\n  \"preu\": 35\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"el albarán de partida queda con exactamente dos líneas\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.linies).to.have.lengthOf(2);",
+                  "});",
+                  "const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "pm.environment.set(\"baseEsperada041\", base.toFixed(2));",
+                  "pm.environment.set(\"lineaPecaId041\", body.linies.find(l => l.tipus === 'peca').id);",
+                  "pm.environment.set(\"lineaMaObraId041\", body.linies.find(l => l.tipus === 'ma_obra').id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-041 · Rechazar anotación de tipo inválido enviada directamente al servicio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}/linies",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}/linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"recanvi\",\n  \"descripcio\": \"Recanvi divers\",\n  \"quantitat\": 1,\n  \"preu\": 30\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-041 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-041 · datos: avisa de que el tipo debe ser pieza o mano de obra\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('El camp tipus ha de ser \"peca\" o \"ma_obra\"');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-041 · Verificar que el albarán conserva sus líneas y su base tras el rechazo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-041 · efecto lateral: el albarán sigue con exactamente sus dos líneas de partida\", () => {",
+                  "  pm.expect(body.linies).to.have.lengthOf(2);",
+                  "  pm.expect(body.linies.some(l => l.tipus === 'recanvi')).to.eql(false);",
+                  "});",
+                  "pm.test(\"TC-041 · efecto lateral: la base no ha cambiado\", () => {",
+                  "  const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "  pm.expect(base.toFixed(2)).to.eql(pm.environment.get(\"baseEsperada041\"));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar las líneas y el albarán de TC-041 (restaura el stock de la pieza)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}/linies/{{lineaPecaId041}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}/linies/{{lineaPecaId041}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · borrar la línea de pieza restaura el stock\", () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().linies.some(l => l.id == pm.environment.get(\"lineaPecaId041\"))).to.eql(false);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar la línea de mano de obra y el albarán vacío de TC-041",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}/linies/{{lineaMaObraId041}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}/linies/{{lineaMaObraId041}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán queda vacío\", () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().linies).to.have.lengthOf(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán vacío de TC-041",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran041Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran041Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-041 queda borrado\", () => {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear albarán pendiente vacío para TC-045",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-045\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"el albarán se crea pendiente y sin líneas\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(pm.response.json().linies).to.have.lengthOf(0);",
+                  "});",
+                  "pm.environment.set(\"albaran045Id\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-045 · Rechazar línea de pieza que no existe en el catálogo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran045Id}}/linies",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran045Id}}/linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"peca\",\n  \"peca_id\": 999999,\n  \"quantitat\": 1\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-045 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-045 · datos: avisa de que la pieza no existe\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('La peça indicada no existeix');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-045 · Verificar que el albarán no registra ninguna línea",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran045Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran045Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-045 · efecto lateral: el albarán sigue sin ninguna línea\", () => {",
+                  "  pm.expect(pm.response.json().linies).to.have.lengthOf(0);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán de TC-045",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaran045Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaran045Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-045 queda borrado\", () => {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Factures",
+      "item": [
+        {
+          "name": "_setup · Obtener el número de facturas existentes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"facturaCountInicial\", pm.response.json().length);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear un albarán del cliente A y facturarlo, para TC-063",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-063 (se factura)\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"albaranFacturadoId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Emitir la factura del albarán anterior",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"albara_ids\": [\n    \"{{albaranFacturadoId}}\"\n  ]\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_setup · la factura se emite correctamente\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "});",
+                  "pm.environment.set(\"facturaSetupId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear un segundo albarán pendiente del mismo cliente A, para TC-063",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-063 (pendent)\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_setup · el segundo albarán queda pendiente\", () => {",
+                  "  pm.expect(pm.response.json().estat).to.eql('pendent');",
+                  "});",
+                  "pm.environment.set(\"albaranPendentClienteAId\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-063 · Rechazar la emisión con un albarán ya facturado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"albara_ids\": [\n    \"{{albaranFacturadoId}}\",\n    \"{{albaranPendentClienteAId}}\"\n  ]\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-063 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-063 · datos: avisa de que todos los albaranes deben estar pendientes\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"Tots els albarans han d'estar pendents de facturar\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaranFacturadoId}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaranFacturadoId}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-063 · efecto lateral: el albarán sigue facturado con la misma factura\", () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.estat).to.eql('facturat');",
+                  "  pm.expect(String(body.factura_id)).to.eql(String(pm.environment.get(\"facturaSetupId\")));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-063 · Verificar que no se ha creado ninguna factura nueva",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-063 · efecto lateral: el número de facturas es el inicial + 1 (solo la del _setup)\", () => {",
+                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\")) + 1;",
+                  "  pm.expect(pm.response.json().length).to.eql(esperado);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el segundo albarán del cliente A (sigue pendiente)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaranPendentClienteAId}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaranPendentClienteAId}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán pendiente de TC-063 queda borrado\", () => {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear un albarán pendiente del cliente A, para TC-064",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-064 (cliente A)\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"albaranClienteA064Id\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear un albarán pendiente del cliente B, para TC-064",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}/albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleBId}}\",\n  \"notes\": \"Fixture S-17 · TC-064 (cliente B)\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"albaranClienteB064Id\", pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-064 · Rechazar la emisión con albaranes de dos clientes distintos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"albara_ids\": [\n    \"{{albaranClienteA064Id}}\",\n    \"{{albaranClienteB064Id}}\"\n  ]\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-064 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-064 · datos: avisa de que todos los albaranes deben ser del mismo cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql('Tots els albarans han de ser del mateix client');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-064 · Verificar que los dos albaranes siguen pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaranClienteA064Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaranClienteA064Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-064 · efecto lateral: el albarán del cliente A sigue pendiente\", () => {",
+                  "  pm.expect(pm.response.json().estat).to.eql('pendent');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-064 · Verificar que no se ha creado ninguna factura nueva",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/factures",
+              "host": [
+                "{{baseUrl}}/factures"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-064 · efecto lateral: el número de facturas sigue siendo el inicial + 1 (solo la del _setup de TC-063)\", () => {",
+                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\")) + 1;",
+                  "  pm.expect(pm.response.json().length).to.eql(esperado);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán pendiente del cliente A de TC-064",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaranClienteA064Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaranClienteA064Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán del cliente A queda borrado\", () => {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán pendiente del cliente B de TC-064",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{albaranClienteB064Id}}",
+              "host": [
+                "{{baseUrl}}/albarans/{{albaranClienteB064Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán del cliente B queda borrado\", () => {",
+                  "  pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
