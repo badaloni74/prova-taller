@@ -1,17 +1,17 @@
 ---
 doc_id: DOC-16
 doc_name: DOC-16-ROADMAP
-version: 3.0.0
+version: 3.0.1
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T15:10:00+02:00
+generated_at: 2026-08-24T11:30:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 35e07c8001184f36be61963d648231451db6a8b4
-  working_tree_clean: true
+  commit_sha: 4384a96d110216fd0907f8a1d36cf42f7a3b0e39
+  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta resincronización
 inputs:
   - id: DOC-16-ROADMAP.md
     from: A-12
@@ -30,18 +30,18 @@ inputs:
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.8.0
-    hash: sha256:095c6baf223b634dc80d00e91b907017166853622df49ce3f9192f5e476ad247
+    version: 1.9.0
+    hash: sha256:7094bd372aa179e964c56049abfeaacb1609cb4eb6f5bf2ede16639cae987cf8
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
-    version: 2.0.0
-    hash: sha256:4aad4cc90f497f97122a67d75fdabdda6d43e118e6ea139cbc9616c2bfafeb36
+    version: 2.1.0
+    hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
     present: true
   - id: DOC-23-INFORME.md
     from: S-10
-    version: 2.0.0
-    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    version: 2.2.0
+    hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
     present: true
   - id: DOC-24-BUGS.json
     from: A-14

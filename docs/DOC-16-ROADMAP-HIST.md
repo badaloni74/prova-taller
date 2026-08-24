@@ -2,11 +2,11 @@
 doc_id: DOC-16-HIST
 doc_name: DOC-16-ROADMAP-HIST
 of_document: DOC-16-ROADMAP.md
-version: 3.0.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 3.0.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-23T15:10:00+02:00
+generated_at: 2026-08-24T11:30:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -38,6 +38,84 @@ señalan como reconstruidas para que nadie las tome por notas escritas en su mom
 histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
 añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
 `DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## 3.0.1 — 2026-08-24 — PATCH
+
+**Resincronización de procedencia, sin ronda de análisis.** `S-16 · Cascada de
+obsolescencia` volvió a marcar `DOC-16` como obsoleto por tres entradas a la vez:
+
+```
+DOC-07: declara 1.8.0, actual 1.9.0  [MINOR]
+DOC-14: declara 2.0.0, actual 2.1.0  [MINOR]
+DOC-23: declara 2.0.0, actual 2.2.0  [MINOR]
+```
+
+**Motivo, comprobado documento a documento, no asumido.**
+
+- **`DOC-23` 2.0.0 → 2.2.0.** Dos ejecuciones reales de la suite (no de código
+  leído): 2.1.0 confirmó `TC-048` corregido y 18 casos nuevos en rojo, todos con
+  la misma causa raíz (`EXP-027`, 17 casos) más un rojo aislado de
+  infraestructura (`TC-103`); 2.2.0 documenta que los 18 se corrigieron y
+  reverificaron (commits `735ded8` y `5366e18`), dejando la suite en 107/107.
+- **`DOC-14` 2.0.0 → 2.1.0.** Resincronización dirigida de `A-10` contra `DOC-23`
+  2.2.0: `EXP-027` pasa de `abierto` a `corregido` (`corregido_en: 2026-08-24`),
+  citando la reejecución de `DOC-23` como prueba de cierre en vez de reproducir
+  el defecto a mano. Ningún otro `EXP-nnn` cambia. Hubo una 2.0.1 intermedia
+  (`PATCH`, resync de la cita a `DOC-16` 2.1.0→3.0.0, sin tocar ningún hallazgo).
+- **`DOC-07` 1.8.0 → 1.9.0.** `A-05` confirmó, byte a byte, que el CSV de la
+  matriz sale con el mismo md5 y que los bloques `yaml requirements`/`yaml
+  testcases` de `DOC-04`/`DOC-05` no cambian: el salto es trazabilidad pura del
+  cierre de `EXP-027` (formalizado como `A-05-13`, que se cierra) y de `TC-048`
+  (que cierra la mitad concreta de `A-05-08b`, sin cerrar el hallazgo entero).
+  0 GAP PLAN y 100,00 % de cobertura no cambian.
+
+**Comprobado contra el propio contenido de `DOC-16`, no dado por supuesto: ningún
+`MEJ-nnn` cambia de estado.** `EXP-027` nunca se convirtió en una mejora de este
+roadmap — es, y sigue siendo, un hallazgo dirigido a `A-03`/`S-10` (apartado 6.5,
+`findings_for_others`), porque el defecto no estaba en la aplicación sino en los
+`.feature` de `automation/ui/`. Revisados uno a uno los nueve `MEJ-nnn`:
+ninguno cita `DOC-07`, `DOC-14` ni `DOC-23` en su `evidence_refs` por algo que
+haya cambiado en este salto. En concreto:
+
+- **`MEJ-008`** (implementada) menciona `EXP-027` solo en su `residual_note`,
+  como confirmación de un riesgo que la propia ficha ya había anticipado por
+  escrito; el hallazgo nunca fue parte de lo que `MEJ-008` tenía que cerrar.
+- **`MEJ-005`** (aceptada) cita a `TC-048` como ejemplo narrativo de por qué
+  hace falta un estado de base reproducible; `TC-048` ya estaba corregido antes
+  de esta ronda (`DOC-23` 2.1.0) y este salto no cambia esa mejora ni su
+  justificación de fondo — la necesidad de un estado de base reproducible entre
+  escenarios no depende de si hay 0 o 18 casos en rojo hoy.
+- Ninguna otra mejora (`MEJ-001` a `MEJ-004`, `MEJ-006`, `MEJ-007`, `MEJ-009`)
+  menciona `EXP-027`, `TC-048` ni ninguno de los 18 casos.
+
+**Qué se actualiza.** Solo el front-matter del documento principal: las tres
+entradas de `inputs` (`DOC-07` 1.8.0→1.9.0, `DOC-14` 2.0.0→2.1.0, `DOC-23`
+2.0.0→2.2.0, hashes recalculados), el `commit_sha` de `source` y
+`generated_at`. **El cuerpo no se toca.** Quedan, a propósito, menciones ya
+desactualizadas hasta la próxima regeneración con análisis: «`DOC-14` 2.0.0»
+(Procedencia, 1.1 a 1.4, 3.3, 5.1, 5.6), «`DOC-23` sigue en 2.0.0» (3.3, fila de
+`MEJ-005`) y `EXP-027` descrito como hallazgo abierto para `A-03` (6.5 punto 1,
+bloque `findings_for_others`) cuando ya está cerrado. Es el mismo criterio que
+las dos notas de 2026-08-23 de más abajo, y el mismo que `A-05` aplicó al
+resincronizar `DOC-07` con `DOC-06` 1.3.0: un resello de procedencia no
+reescribe un análisis que no se ha vuelto a hacer.
+
+**Por qué PATCH y no «sin cambio de versión».** Las dos notas anteriores de este
+mismo fichero (2026-08-23) dejaron la versión en 3.0.0 sin incrementarla,
+razonando que «no hay contenido nuevo que numerar». Esta vez se numera, en
+línea con lo que ya hacen los documentos vecinos de esta misma cascada para
+resincronizaciones puramente de procedencia (`DOC-14` 2.0.0→2.0.1,
+`DOC-09` 2.0.2→2.0.3): un `PATCH` explícito deja rastro de que hubo una
+resincronización real, con su propio commit y su propia fecha, en vez de que el
+número se quede fijo indefinidamente mientras las notas se acumulan debajo. No
+es `MINOR` porque ningún `MEJ-nnn` cambia de estado, tamaño, prioridad ni
+evidencia citable — el criterio que la propia tarea de esta ronda pedía
+verificar contra el contenido, no asumir.
+
+**`registro-ids.json` no se toca.** Ningún `MEJ-nnn` nuevo, retirado ni
+reformulado.
 
 ---
 
