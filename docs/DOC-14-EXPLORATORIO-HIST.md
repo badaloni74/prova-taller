@@ -2,11 +2,11 @@
 doc_id: DOC-14-HIST
 doc_name: DOC-14-EXPLORATORIO-HIST
 of_document: DOC-14-EXPLORATORIO.md
-version: 2.0.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 2.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-23T15:10:00+02:00
+generated_at: 2026-08-24T10:00:00+02:00
 ---
 
 # DOC-14-EXPLORATORIO · Historial de versiones
@@ -17,6 +17,41 @@ reproduce nada de esto**: refleja solo el estado actual, con su `version`
 en el front-matter.
 
 ---
+
+## 2.1.0 — 2026-08-24 — MINOR
+
+**Resincronización dirigida contra `DOC-23-INFORME.md` 2.2.0, sin
+exploración nueva del navegador.** La cascada de obsolescencia marcó
+`DOC-14` 2.0.1 como caducado porque su entrada `inputs` para `DOC-23`
+seguía citando `2.0.0`, mientras que la vigente ya es `2.2.0` (dos saltos:
+`2.0.0 → 2.1.0` cerró `TC-048` y confirmó 18 casos en rojo por `EXP-027`/
+`TC-103`; `2.1.0 → 2.2.0` corrigió los 17 `.feature` de `EXP-027` y
+confirmó `TC-103` transitorio, dejando la suite en 107/107).
+
+**Por qué MINOR y no PATCH.** A diferencia de la 2.0.1 (front-matter puro),
+esta sí cambia el contenido sustantivo: `EXP-027` es el único hallazgo de
+este informe que citaba una cifra de ejecución de la suite en vez de
+observación directa, y esa cifra cambió de verdad. Se comprobó, hallazgo
+por hallazgo, que ningún otro `EXP-nnn` depende de `DOC-23` de la misma
+forma.
+
+**Qué cambia.**
+
+- `EXP-027` pasa de `abierto` a `estado: corregido`, con `corregido_en:
+  2026-08-24` y `corregido_en_version: 2.1.0`. Su ficha añade una nota de
+  verificación de cierre que cita `DOC-23` 2.2.0 §4.2/§4.3
+  (`testng-results.xml`: 18 de 18 casos re-ejecutados en verde) en vez de
+  reproducir el defecto a mano — el trabajo de corrección y su prueba son
+  de `A-03`/`S-10`, zona que este informe no toca. `deriva_a` pasa de
+  `A-03` a `null` (ya no pendiente).
+- Resumen ejecutivo actualizado: de 4 a 5 hallazgos corregidos, de 24 a 23
+  abiertos, de 3 a 2 `high` abiertos.
+- Front-matter: entrada `inputs` de `DOC-23-INFORME.md` de `version: 2.0.0`
+  a `version: 2.2.0` con hash recalculado; `commit_sha` de `source`
+  actualizado al `HEAD` tras la cascada (`f3b91fb908ce5d118dd8ff47e07eb21b1a2b7d7e`).
+- Se anota, sin corregirlo (no es competencia de A-10), que `CLAUDE.md`
+  sigue describiendo un estado intermedio de la suite en vez del ya
+  cerrado.
 
 ## 2.0.1 — 2026-08-23 — PATCH
 

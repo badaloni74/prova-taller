@@ -1,16 +1,16 @@
 ---
 doc_id: DOC-14
 doc_name: DOC-14-EXPLORATORIO
-version: 2.0.1
+version: 2.1.0
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-23T15:10:00+02:00
+generated_at: 2026-08-24T10:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: d861654e535d6835b44b263dd24f4ef03b2e5801
+  commit_sha: f3b91fb908ce5d118dd8ff47e07eb21b1a2b7d7e
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta sesión
 inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
@@ -22,8 +22,8 @@ inputs:
     version: null
   - id: DOC-23-INFORME.md
     from: S-10
-    version: 2.0.0
-    hash: sha256:1ba0743c9461ac60f35a00ccc42f12dbaeac25f40d99992bd469d6efe968208e
+    version: 2.2.0
+    hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
@@ -55,6 +55,33 @@ inputs:
 # DOC-14 · Informe de exploración QA · app-taller
 
 ## Procedencia
+
+**Nota de la versión 2.1.0 (resincronización dirigida, sin exploración nueva del
+navegador).** La cascada de obsolescencia marcó esta versión como caducada
+porque su entrada `inputs` para `DOC-23-INFORME.md` seguía citando la
+versión `2.0.0`, mientras que la vigente ya es `2.2.0` — dos saltos:
+`2.0.0 → 2.1.0` cerró `TC-048` y confirmó los 18 casos en rojo de
+`EXP-027`/`TC-103`; `2.1.0 → 2.2.0` corrigió los 17 `.feature` de
+`EXP-027` y confirmó que `TC-103` era transitorio, dejando la suite con
+los 18 casos que estaban en rojo re-ejecutados y en verde (los otros 89, ya
+verdes antes, no se han vuelto a ejecutar por no verse afectados).
+
+A diferencia del resello anterior (2.0.1, sobre `DOC-16`), este sí obliga a
+revisar contenido, no solo metadatos: se ha comprobado, hallazgo por
+hallazgo, si alguno de este informe se apoyaba en las cifras de ejecución
+de `DOC-23` en vez de en observación directa. Todos, salvo uno, son de
+exploración manual/visual —consola, red, pantalla— independientes de si la
+suite automatizada pasa o falla. La excepción es `EXP-027`: su objeto es
+exactamente ese estado de los `.feature` frente a la pantalla, y `DOC-23`
+2.2.0 documenta en sus §4.2 y §4.3 que ya se corrigió y se verificó (18 de
+18 casos en verde, contrastado contra `testng-results.xml`). Por eso
+`EXP-027` pasa a `estado: corregido` en esta versión —ver su ficha y el
+bloque estructurado, más abajo— sin que haya hecho falta abrir el
+navegador: la evidencia de cierre es el propio trabajo de verificación que
+ya hizo `S-10` y que `DOC-23` documenta, no una reproducción nueva de
+A-10. Ningún otro `EXP-nnn` cambia de estado, severidad o tipo; ninguna
+carta se repite; no se ha tocado la aplicación ni creado ni destruido
+ningún dato en esta actualización.
 
 **Nota de la version 2.0.1 (resincronizacion, sin exploracion nueva).** La
 cascada de obsolescencia marco este documento como caducado unicamente
@@ -157,12 +184,15 @@ las toca, y repetirlas no habría descubierto nada nuevo.
 
 ## 1 · Resumen ejecutivo
 
-**28 hallazgos en total** a lo largo de las dos sesiones de exploración
-(26 de `DOC-14` 1.0.0 más `EXP-027` y `EXP-028`, nuevos en esta). De ellos,
-**4 se cierran en esta versión, verificados en vivo**: `EXP-001`,
-`EXP-002`, `EXP-007` y `EXP-014`. Quedan **24 hallazgos abiertos**: 17
-`defecto`, 7 `mejora`, 0 `duda`. Por severidad, de los abiertos: **0
-`critical`**, **3 `high`**, **17 `medium`** y **4 `low`**.
+**28 hallazgos en total** a lo largo de las tres sesiones de exploración o
+resincronización (26 de `DOC-14` 1.0.0 más `EXP-027` y `EXP-028`, nuevos en
+la sesión 2.0.0). De ellos, **5 están corregidos**: `EXP-001`, `EXP-002`, `EXP-007` y
+`EXP-014` —verificados en vivo en la sesión 2.0.0— y `EXP-027` —cerrado en
+esta versión 2.1.0 sin exploración nueva, a partir de la corrección y
+verificación que ya documenta `DOC-23` 2.2.0; ver «Procedencia»—.
+Quedan **23 hallazgos abiertos**: 16 `defecto`, 7 `mejora`, 0 `duda`. Por
+severidad, de los abiertos: **0 `critical`**, **2 `high`**, **17 `medium`**
+y **4 `low`**.
 
 **La frase que resume el estado: las tres cosas concretas que impedían
 entregar según `DOC-14` 1.0.0 están resueltas en dos de tres, y la tercera
@@ -182,14 +212,18 @@ entera**: la presentación de la fecha del albarán ya es `DD/MM/AAAA` en
 listado y ficha, verificado en vivo, pero el defecto de fondo —guardar el
 albarán reescribe la fecha a medianoche UTC y pierde la hora, aunque solo
 se toquen las notas— **sigue reproduciéndose exactamente igual**, porque
-SPEC 05 lo declaró fuera de su alcance explícitamente. Segundo, la propia
-corrección de SPEC 05 deja un efecto colateral no buscado: los ficheros
-`.feature` de `automation/ui/` que validan literales de importe con punto
-decimal (`98.40 €`, `1299.50 €`) ya no coinciden con lo que la pantalla
-muestra hoy (`98,40 €`, `1.299,50 €`). Esto ya estaba anotado como coste
-aceptado en el propio `SPEC 05`, pero **no consta en ningún documento de
-estado del proyecto** —`CLAUDE.md` sigue diciendo «1 caso rojo, TC-048»— y
-afecta a más de un caso: ver `EXP-027`.
+SPEC 05 lo declaró fuera de su alcance explícitamente. Segundo, un efecto
+colateral que sí dejó SPEC 05 y que en esta versión queda cerrado: los
+ficheros `.feature` de `automation/ui/` que validaban literales de importe
+con punto decimal (`98.40 €`, `1299.50 €`) dejaron de coincidir con lo que
+la pantalla muestra (`98,40 €`, `1.299,50 €`) — ver `EXP-027`. Esto ya
+estaba anotado como coste aceptado en el propio `SPEC 05`, y esta
+resincronización confirma, sin exploración nueva, que `A-03`/`S-10` ya lo
+corrigieron y lo verificaron: `DOC-23` 2.2.0 documenta los 17 `.feature`
+actualizados a coma decimal y 18 de 18 casos en verde. Queda un desfase
+documental menor y ajeno a este informe: `CLAUDE.md` sigue describiendo el
+estado intermedio («1 caso rojo, TC-048») en vez del estado ya cerrado; no
+es competencia de A-10 corregirlo.
 
 El resto de la aplicación —lo que no tocan SPEC 04 ni SPEC 05— se comporta
 exactamente como lo dejó `DOC-14` 1.0.0. No se ha encontrado ninguna
@@ -635,9 +669,30 @@ cuatro casos. `SPEC 04` no toca `ConfirmDialog.tsx`. Ver `DOC-14` 1.0.0,
 
 ---
 
-### EXP-027 · `high` · `defecto` · Nuevo — Los `.feature` de facturas y nóminas validan literales de importe con punto decimal que ya no coinciden con lo que la pantalla muestra
+### EXP-027 · `high` · `defecto` · **CORREGIDO en v2.1.0** — Los `.feature` de facturas y nóminas validaban literales de importe con punto decimal que ya no coincidían con lo que la pantalla mostraba
 
-**Qué pasa.** `SPEC 05` cambió el separador decimal de toda la aplicación
+> **Verificación de cierre — 2026-08-24 (resincronización, sin exploración
+> en vivo).** `DOC-23-INFORME.md` versión `2.2.0` (S-10, generado
+> 2026-08-23T23:30) documenta en su §4.2 la corrección de 17 `.feature` de
+> esta misma familia —incluye `factures.feature` y `nomines.feature`, los
+> dos verificados a mano abajo, más `pieces.feature` y `albarans.feature`,
+> que esta ficha no había llegado a revisar— pasando sus literales a coma
+> decimal y añadiendo el espacio no separable antes de `€` que la pantalla
+> usa. Su §4.3 confirma además que el caso aislado de infraestructura que
+> la versión 2.1.0 de `DOC-23` había atribuido por error a `TC-029` era en
+> realidad `TC-103`, y que era transitorio. Los 18 casos que estaban en
+> rojo se han vuelto a ejecutar y están **18 de 18 en verde**, verificado
+> por S-10 contra `testng-results.xml`. No se ha vuelto a abrir el
+> navegador ni a comparar la pantalla a mano en esta verificación: la
+> corrección de `automation/ui/` y su prueba son trabajo de `A-03`/`S-10`,
+> zona que este informe no toca, y `DOC-23` 2.2.0 ya aporta la evidencia de
+> ejecución que sustituye a la comparación manual que motivó esta ficha.
+> Es el único hallazgo de este informe cuyo cierre depende de una cifra de
+> ejecución de la suite — ver «Procedencia» de esta versión.
+
+**Qué pasaba (histórico, ya corregido).**
+
+`SPEC 05` cambió el separador decimal de toda la aplicación
 de punto a coma (`EXP-014`, cerrado arriba). Los ficheros `.feature` de
 `automation/ui/` que verifican esos mismos importes por su texto literal
 en pantalla **no se han actualizado** y siguen escritos con punto. El
@@ -702,13 +757,17 @@ Pantalla observada en vivo tras reproducir `TC-060` a mano: `TOTAL 121,00
 **Hipótesis de causa.** Ninguna: no hace falta. La causa es el cambio de
 formato de `SPEC 05`, ya documentado, no un error de código.
 
-**Sugerencia para Doctor QA.** Ninguna — **esto no es trabajo de Doctor
-QA**. Es trabajo de `A-03`/`s10-auto-tcs`, tal como los propios `SPEC 04`
-y `SPEC 05` ya señalaron en su nota final. Se incluye en este informe
-porque se ha confirmado en vivo y porque `CLAUDE.md` necesita saberlo para
-dejar de anunciar un estado que ya no es cierto.
+**Sugerencia para Doctor QA.** Ninguna — **nunca fue trabajo de Doctor
+QA**. Era trabajo de `A-03`/`s10-auto-tcs`, tal como los propios `SPEC 04`
+y `SPEC 05` ya señalaron en su nota final, y ya está hecho: `DOC-23` 2.2.0
+confirma los 17 `.feature` corregidos y 18/18 casos en verde. Queda un
+desfase documental menor y ajeno a este informe — `CLAUDE.md` todavía
+describe el estado intermedio («1 caso rojo, TC-048», o el más reciente
+«18 rojos nuevos») en vez del estado ya cerrado — pero no es competencia
+de A-10 corregirlo.
 
-**deriva_a: A-03**.
+**deriva_a: null** (ya no pendiente — `A-03`/`S-10` corrigieron y
+verificaron los `.feature` afectados; ver `DOC-23` 2.2.0).
 
 ---
 
@@ -1266,18 +1325,20 @@ hallazgos:
     sugerencia: 'ConfirmDialog.tsx es único; pasarle el nombre cubre todos los borrados'
     deriva_a: A-12
   - id: EXP-027
-    titulo: Los .feature de facturas y nóminas validan literales de importe con punto decimal que ya no coinciden con la pantalla
+    titulo: Los .feature de facturas y nóminas validaban literales de importe con punto decimal que ya no coincidían con la pantalla
     tipo: defecto
     severidad: high
     pantalla: Suite automatizada (meta)
     ruta: automation/ui/src/test/resources/features/factures.feature, nomines.feature
     reproducible: si
     cubierto_por_tc: TC-060, TC-061, TC-069, TC-070, TC-071, TC-072, TC-073, TC-075, TC-098, TC-099, TC-100
-    estado: abierto
-    evidencia: 'factures.feature:44 fija totalEsperado 121.00 en TC-060; reproducido a mano el mismo flujo, la pantalla muestra TOTAL 121,00 €. nomines.feature:178 fija netoEsperado 1299.50 en TC-100. No se ha ejecutado la suite'
-    hipotesis_causa: 'Cambio de separador decimal de SPEC 05 (P-03: coma), ya anticipado por escrito en el propio spec como coste aceptado; los .feature no se han actualizado'
-    sugerencia: 'Actualizar los literales de los .feature afectados a coma decimal; trabajo de A-03/s10-auto-tcs, no de Doctor QA. Actualizar también CLAUDE.md, que sigue anunciando "1 caso rojo"'
-    deriva_a: A-03
+    estado: corregido
+    corregido_en: 2026-08-24
+    corregido_en_version: 2.1.0
+    evidencia: 'Cierre confirmado por DOC-23-INFORME.md 2.2.0 (S-10), no por exploracion en vivo: parrafo 4.2 documenta los 17 .feature corregidos a coma decimal (incluye factures.feature y nomines.feature, verificados a mano en la sesion original) y parrafo 4.3 confirma TC-103 transitorio; 18 de 18 casos rojos re-ejecutados en verde, contrastado contra testng-results.xml. Evidencia original de la sesion 2.0.0: factures.feature:44 fijaba totalEsperado 121.00 en TC-060, la pantalla mostraba TOTAL 121,00 €; nomines.feature:178 fijaba netoEsperado 1299.50 en TC-100'
+    hipotesis_causa: null
+    sugerencia: null
+    deriva_a: null
   - id: EXP-028
     titulo: La fecha de alta de personal se sigue mostrando en formato ISO crudo, distinto del resto de fechas destacadas
     tipo: mejora
@@ -1368,6 +1429,9 @@ una orden. `SPEC 04` y `SPEC 05` cierran, verificado en vivo, cuatro de los
 cinco hallazgos de los que nacieron; el quinto (`EXP-009`) lo cierran solo
 a medias, y así queda dicho tanto aquí como en el propio spec. `EXP-004`,
 `EXP-005` y `EXP-015` **siguen sin tocarse** a la espera de `P-01`/`P-02`.
-`EXP-027` no es un defecto de la aplicación: es una factura pendiente con
-`A-03` que conviene no dejar pasar, porque mientras no se salde,
-`CLAUDE.md` sigue anunciando un estado de la suite que ya no es cierto.
+`EXP-027` nunca fue un defecto de la aplicación —era una factura pendiente
+con `A-03`— y en esta versión 2.1.0 queda saldada: `DOC-23` 2.2.0 confirma
+que `A-03`/`S-10` corrigieron los `.feature` afectados y que la suite pasa
+18 de 18 en los casos que estaban en rojo. Sigue pendiente, y ajeno a este
+informe, que `CLAUDE.md` refleje ese cierre en vez del estado intermedio
+que todavía describe.
