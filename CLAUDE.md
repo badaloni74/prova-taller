@@ -70,6 +70,7 @@ assignat.
 | DOC-23 | Informe d'execució de la suite (UI) | S-10 |
 | DOC-24 | Defectes confirmats `BUG-nnn` | A-14 |
 | DOC-26 | Col·lecció Postman de capa de servei (`automation/api/`) | S-17 |
+| DOC-27 | Informe d'execució de la suite (servei), resultat per `TCS-nnn` | S-17 |
 | DOC-25 | Propostes funcionals `FUN-nnn` | A-15 |
 
 `registro-ids.json` governa els identificadors (`REQ`, `TC`, `UC`, `BR`) i el
@@ -114,12 +115,17 @@ créixer indefinidament — tanca'l abans d'acabar un spec o una entrega.
 servei: regles de negoci que la interfície no permet ni intentar (línies amb
 un tipus que el desplegable no ofereix, facturar un albarà ja facturat,
 barrejar clients en una factura). Cobreix 4 dels 110 casos de DOC-05
-(`verification_path: service`). S'executa amb `newman`, no duplica cap cas
-de `automation/ui/`.
+(`verification_path: service`). Cada petició que verifica alguna cosa hi porta
+el seu `TCS-nnn`; els `_setup`/`_teardown`, no. No duplica cap cas de
+`automation/ui/`.
 
 ```bash
-cd automation/api && newman run tallerMecaniccollection.json -e environments/tallerMecanicEnvironmentLocal.json
+cd automation/api && newman run tallerMecaniccollection.json -e environments/tallerMecanicEnvironmentLocal.json --reporters cli,json --reporter-json-export newman/run.json
 ```
+
+Del `newman/run.json` que en surt, S-17 deriva `DOC-27` — el resultat de cada
+`TCS-nnn`. La col·lecció no deixa residu: la base queda igual abans i després,
+així que es pot repetir sense resembrar.
 
 ```bash
 export JAVA_HOME="C:\Program Files\Java\jdk-21.0.9.10-hotspot"
