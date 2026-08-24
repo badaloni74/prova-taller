@@ -1,34 +1,37 @@
 ---
 doc_id: DOC-09
 doc_name: DOC-09-IMPACTO-albara-canvi-client
-version: 2.0.3
+version: 2.0.4
 status: draft
 generator: A-07 análisis de impacto
-generated_at: 2026-08-24T09:30:00+02:00
+generated_at: 2026-08-24T11:15:00+02:00
 resync_note: >-
-  Segundo resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por
-  DOC-07 1.8.0->1.9.0 y DOC-23 2.0.0->2.2.0, ambos MINOR). Leído DOC-07 1.9.0 y su HIST: el
-  salto entero lo dispara DOC-23-INFORME.md, que subió dos MINOR el mismo día (2.0.0->2.1.0
-  ->2.2.0) por una re-ejecución de la suite, no por ningún cambio en DOC-04 o DOC-05. El
-  propio HIST de DOC-07 1.9.0 lo confirma con evidencia byte a byte: el bloque `yaml
-  requirements` de DOC-04 y los nueve `yaml testcases` de DOC-05 son idénticos a los que
-  produjeron el CSV de la versión anterior, y DOC-07-MATRIZ.csv sale con el mismo md5
-  (séptima vez consecutiva). Y DOC-23 2.1.0/2.2.0, leído directamente, documenta que los 18
-  escenarios que estaban en rojo (17 de EXP-027, separador decimal, más TC-103 aislado de
-  infraestructura) quedaron corregidos y verificados en verde — cero menciones a REQ-040,
-  REQ-046, TC-055 o TC-064, que son los únicos elementos de DOC-07/DOC-23 que este documento
-  cita (§§3, 6, bloque estructurado). Conclusión: sin cambio de contenido para el área
-  "cambiar vehículo de un albarán a otro cliente". Se resincronizan solo las entradas
-  DOC-07-TRAZABILIDAD.md y DOC-23-INFORME.md (version y hash) de este bloque; el cuerpo
-  (secciones 1-7) no se toca. Sube de PATCH (2.0.2->2.0.3), mismo criterio que el resello
-  anterior. Sigue sin existir DOC-09-IMPACTO-albara-canvi-client-HIST.md y este resync
-  tampoco lo crea: no hay un patrón de fichero de historia independiente para este
-  documento, la procedencia de sus resyncs vive en este mismo campo.
+  Tercer resello de procedencia tras S-16 · Cascada de obsolescencia (marcaba caducado por
+  DOC-14 2.0.0->2.1.0, MINOR). Comprobado con criterio propio, no dando por sentado el
+  trabajo de A-10 ni de A-05: leído DOC-14-EXPLORATORIO.md 2.1.0 y su HIST directamente.
+  El único cambio de contenido de esa versión es que `EXP-027` pasa de `abierto` a
+  `corregido` (cita DOC-23 2.2.0 §4.2/§4.3, 18 de 18 casos re-ejecutados en verde); ningún
+  otro `EXP-nnn` se toca, y el resumen ejecutivo solo ajusta los contadores (de 4 a 5
+  corregidos, de 24 a 23 abiertos). Rastreado con grep todo el cuerpo de este documento en
+  busca de citas a `DOC-14` o a cualquier `EXP-nnn`: la única aparición es dentro de este
+  mismo campo `resync_note`, en la entrada anterior, y no es una cita al contenido de
+  DOC-14 sino a DOC-23 (menciona "17 de EXP-027" al describir qué escenarios corrigió la
+  suite, no el estado del hallazgo de A-10). El cuerpo (secciones 1-7 y bloque estructurado)
+  nunca ha citado ningún `EXP-nnn` como evidencia: DOC-14 figura en `inputs` por ser una
+  entrada declarada del análisis de impacto (fuente potencial de hallazgos de exploración
+  sobre esta área), pero ninguno de sus 26 hallazgos se usa como sustento de ningún hallazgo
+  de este documento. Conclusión: sin cambio de contenido para el área "cambiar vehículo de
+  un albarán a otro cliente". Se resincroniza solo la entrada DOC-14-EXPLORATORIO.md
+  (version y hash) de este bloque; el cuerpo no se toca. Sube de PATCH (2.0.3->2.0.4), mismo
+  criterio que los dos resellos anteriores. Sigue sin existir
+  DOC-09-IMPACTO-albara-canvi-client-HIST.md y este resync tampoco lo crea: no hay un patrón
+  de fichero de historia independiente para este documento, la procedencia de sus resyncs
+  vive en este mismo campo.
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 7f2000feb41ca90e13794e3ad81b80c86fd7e2d2
+  commit_sha: c0591533415958800b0748dc042ae566ebb6fc43
   working_tree_clean: true   # sin cambios sobre ficheros versionados; sin versionar (ajeno a este documento): ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
@@ -63,8 +66,8 @@ inputs:
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
-    version: 2.0.0
-    hash: sha256:4aad4cc90f497f97122a67d75fdabdda6d43e118e6ea139cbc9616c2bfafeb36
+    version: 2.1.0
+    hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
     present: true
   - id: DOC-23-INFORME.md
     from: S-10
