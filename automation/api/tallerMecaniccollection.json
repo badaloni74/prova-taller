@@ -521,78 +521,47 @@
           ]
         },
         {
-          "name": "_setup · Crear un albarán del cliente A y facturarlo, para TC-063",
+          "name": "_setup · Localizar un albarán ya facturado de la base sembrada",
           "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "{{baseUrl}}/albarans",
+              "raw": "{{baseUrl}}/albarans?estat=facturat",
               "host": [
-                "{{baseUrl}}/albarans"
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ],
+              "query": [
+                {
+                  "key": "estat",
+                  "value": "facturat"
+                }
               ]
             },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-063 (se factura)\"\n}"
-            }
+            "description": "TC-063 necesita un albarán ya facturado. Se reutiliza uno de la base sembrada en vez de crearlo: facturar uno nuevo dejaría una factura que ninguna ruta del servidor puede borrar."
           },
-          "response": [],
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.environment.set(\"albaranFacturadoId\", pm.response.json().id);"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "_setup · Emitir la factura del albarán anterior",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/factures",
-              "host": [
-                "{{baseUrl}}/factures"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"albara_ids\": [\n    \"{{albaranFacturadoId}}\"\n  ]\n}"
-            }
-          },
-          "response": [],
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"_setup · la factura se emite correctamente\", () => {",
-                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "pm.test(\"_setup · la base sembrada ofrece al menos un albarán facturado\", () => {",
+                  "  pm.expect(pm.response.json().length).to.be.above(0);",
                   "});",
-                  "pm.environment.set(\"facturaSetupId\", pm.response.json().id);"
+                  "const a = pm.response.json()[0];",
+                  "pm.environment.set(\"albaranFacturadoId\", a.id);",
+                  "pm.environment.set(\"albaranFacturadoVehicleId\", a.vehicle_id);",
+                  "pm.environment.set(\"facturaDelFacturadoId\", a.factura_id);"
                 ]
               }
             }
           ]
         },
         {
-          "name": "_setup · Crear un segundo albarán pendiente del mismo cliente A, para TC-063",
+          "name": "_setup · Crear un albarán pendiente sobre el mismo vehículo, para TC-063",
           "request": {
             "method": "POST",
             "header": [
@@ -609,7 +578,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-063 (pendent)\"\n}"
+              "raw": "{\n  \"vehicle_id\": \"{{albaranFacturadoVehicleId}}\",\n  \"notes\": \"Fixture S-17 · TC-063 (pendent)\"\n}"
             }
           },
           "response": [],
@@ -688,8 +657,8 @@
                 "exec": [
                   "pm.test(\"TC-063 · efecto lateral: el albarán sigue facturado con la misma factura\", () => {",
                   "  const body = pm.response.json();",
-                  "  pm.expect(body.estat).to.eql('facturat');",
-                  "  pm.expect(String(body.factura_id)).to.eql(String(pm.environment.get(\"facturaSetupId\")));",
+                  "  pm.expect(body.estat).to.eql(\"facturat\");",
+                  "  pm.expect(String(body.factura_id)).to.eql(String(pm.environment.get(\"facturaDelFacturadoId\")));",
                   "});"
                 ]
               }
@@ -715,8 +684,8 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"TC-063 · efecto lateral: el número de facturas es el inicial + 1 (solo la del _setup)\", () => {",
-                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\")) + 1;",
+                  "pm.test(\"TC-063 · efecto lateral: el número de facturas es exactamente el inicial\", () => {",
+                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\"));",
                   "  pm.expect(pm.response.json().length).to.eql(esperado);",
                   "});"
                 ]
@@ -725,7 +694,7 @@
           ]
         },
         {
-          "name": "_teardown · Borrar el segundo albarán del cliente A (sigue pendiente)",
+          "name": "_teardown · Borrar el albarán pendiente de TC-063",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -904,8 +873,8 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"TC-064 · efecto lateral: el número de facturas sigue siendo el inicial + 1 (solo la del _setup de TC-063)\", () => {",
-                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\")) + 1;",
+                  "pm.test(\"TC-064 · efecto lateral: el número de facturas es exactamente el inicial\", () => {",
+                  "  const esperado = Number(pm.environment.get(\"facturaCountInicial\"));",
                   "  pm.expect(pm.response.json().length).to.eql(esperado);",
                   "});"
                 ]

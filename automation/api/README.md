@@ -21,8 +21,9 @@ permite ni intentar, no lo que se ve.
   `server/db/seed.js`** — la base sembrada usa otros nombres y referencias.
   Esta colección resuelve las entidades **dinámicamente** contra la base
   real (primer par de vehículos de clientes distintos, primera pieza con
-  stock) en vez de asumir esos nombres literales. Cuando exista DOC-13, sus
-  `DS-nnn` deberían sustituir esta resolución dinámica por fixtures fijas.
+  stock, primer albarán ya facturado) en vez de asumir esos nombres
+  literales. Cuando exista DOC-13, sus `DS-nnn` deberían sustituir esta
+  resolución dinámica por fixtures fijas.
 
 ## Cómo ejecutar
 
@@ -34,10 +35,11 @@ cd automation/api
 newman run tallerMecaniccollection.json -e environments/tallerMecanicEnvironmentLocal.json
 ```
 
-Verificado en este entorno: **3 ejecuciones consecutivas, 29 peticiones, 31
-assertions, 0 fallos** cada vez — incluida la comprobación de que el stock de
-la pieza usada (`FO-100`) vuelve exactamente a su valor de partida después de
-cada ejecución (ver «Aislamiento» más abajo).
+Verificado en este entorno: **28 peticiones, 31 assertions, 0 fallos**, y —lo
+que más importa— con la base **exactamente igual antes y después**: 12 facturas
+y 37 albaranes en las dos medidas, y el stock de la pieza usada (`FO-100`) de
+vuelta en 37. Dos ejecuciones seguidas dan el mismo recuento, así que la
+colección se puede repetir indefinidamente sobre la misma base sin resembrarla.
 
 ## Estructura y orden de ejecución
 
@@ -64,13 +66,12 @@ Taller API · Casos de servicio (DOC-26)
 │  └─ _teardown · Borrar el albarán de TC-045
 └─ Factures
    ├─ _setup · Obtener el número de facturas existentes
-   ├─ _setup · Crear un albarán del cliente A y facturarlo, para TC-063
-   ├─ _setup · Emitir la factura del albarán anterior
-   ├─ _setup · Crear un segundo albarán pendiente del mismo cliente A, para TC-063
+   ├─ _setup · Localizar un albarán ya facturado de la base sembrada
+   ├─ _setup · Crear un albarán pendiente sobre el mismo vehículo, para TC-063
    ├─ TC-063 · Rechazar la emisión con un albarán ya facturado
    ├─ TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura
    ├─ TC-063 · Verificar que no se ha creado ninguna factura nueva
-   ├─ _teardown · Borrar el segundo albarán del cliente A (sigue pendiente)
+   ├─ _teardown · Borrar el albarán pendiente de TC-063
    ├─ _setup · Crear un albarán pendiente del cliente A, para TC-064
    ├─ _setup · Crear un albarán pendiente del cliente B, para TC-064
    ├─ TC-064 · Rechazar la emisión con albaranes de dos clientes distintos
@@ -95,33 +96,46 @@ mismo número de facturas, mismo estado del albarán).
 
 ## Aislamiento
 
-- **`restores_state: true`** está declarado en los 4 casos de `DOC-05`, y se
-  cumple para `TC-041`, `TC-045` y `TC-064`: cada `_teardown` borra
-  exactamente lo que su `_setup` creó.
-- **Hallazgo durante la generación — `DELETE /api/albarans/:id` no restaura
-  el stock de sus líneas de pieza** (a diferencia de
-  `DELETE /api/albarans/:id/linies/:lineaId`, que sí lo hace). Borrar un
-  albarán con líneas de pieza directamente dejaría el estoc decrementado de
-  forma permanente. Por eso el `_teardown` de `TC-041` borra primero cada
-  línea individualmente (lo que restaura el estoc) y solo entonces borra el
-  albarán ya vacío — nunca `DELETE /albarans/:id` sobre un albarán con
-  líneas de pieza todavía dentro. **Esto es un hallazgo para `A-12 ·
-  Roadmap`, no una corrección de esta pieza**: `DELETE /api/albarans/:id`
-  debería restaurar el stock de sus líneas de pieza igual que ya hace el
-  borrado de una línea individual.
-- **`TC-063` no se puede limpiar del todo.** Su `_setup` factura
-  deliberadamente un albarán para poder probar el rechazo. Una vez
-  facturado: `DELETE /api/albarans/:id` lo rechaza (`409`, «ja està
-  facturat»), y **no existe ningún `DELETE /api/factures/:id`** en el
-  servidor. El albarán facturado y su factura quedan en la base
-  permanentemente — uno de cada por ejecución de la colección. Las
-  aserciones de «no se ha creado ninguna factura nueva» son relativas al
-  recuento capturado al principio de cada ejecución (`facturaCountInicial`),
-  así que la colección sigue siendo correcta y repetible a pesar de este
-  residuo — pero quien la ejecute muchas veces en un entorno que no se
-  resiembre acumulará una factura y un albarán facturado por cada corrida.
+`restores_state: true` está declarado en los 4 casos de `DOC-05`, y se cumple
+en los 4: cada `_teardown` borra exactamente lo que su `_setup` creó, y el
+recuento de facturas y albaranes es idéntico antes y después de ejecutar.
+
+Dos cosas hubo que resolver para llegar ahí, y las dos son hallazgos sobre el
+servidor, no detalles de implementación de esta colección:
+
+- **`DELETE /api/albarans/:id` no restaura el stock de sus líneas de pieza**,
+  a diferencia de `DELETE /api/albarans/:id/linies/:lineaId`, que sí lo hace.
+  Borrar un albarán con líneas de pieza directamente dejaría el estoc
+  decrementado de forma permanente. Por eso el `_teardown` de `TC-041` borra
+  primero cada línea individualmente (lo que restaura el estoc) y solo
+  entonces borra el albarán ya vacío. **Esto es un hallazgo para `A-12 ·
+  Roadmap`, no una corrección de esta pieza**: el borrado de un albarán
+  debería restaurar el stock igual que ya hace el de una línea suelta.
+
+- **Una factura no se puede borrar por ninguna vía.** No existe
+  `DELETE /api/factures/:id` —las únicas rutas son `GET /`, `GET /:id`,
+  `POST /` y un `PATCH /:id` que solo commuta `estat_pagament`— y
+  `DELETE /api/albarans/:id` responde `409` sobre un albarán ya facturado.
+  Emitir una factura es, hoy, irreversible.
+
+  `TC-063` necesita un albarán ya facturado para probar el rechazo. La
+  versión inicial de esta colección lo **creaba y lo facturaba**, y por eso
+  dejaba una factura y un albarán imborrables por cada ejecución. Ahora
+  **reutiliza uno de los que ya trae la base sembrada** (`GET
+  /albarans?estat=facturat`) y crea sobre **el mismo vehículo** el albarán
+  pendiente que le hace falta —mismo vehículo garantiza mismo cliente, así
+  que el rechazo que salta es el de «todos pendientes» y no el de «mismo
+  cliente»—, que sí es borrable. Residuo: ninguno.
+
+  El hallazgo sigue en pie de todas formas: que un caso de prueba tuviera que
+  esquivarlo no lo arregla, y una aplicación real necesita poder anular una
+  factura emitida por error. **Candidato para `A-12 · Roadmap`, o para
+  `A-15 · Funcionalidad` si se decide que anular es una operación de negocio
+  y no solo un borrado.**
 
 ## Peticiones reutilizadas vs. creadas
 
-Primera ejecución de S-17 en este proyecto: **0 reutilizadas, 29 creadas**
-(todas nuevas — no había colección previa).
+- **Primera generación** (2026-08-24): 0 reutilizadas, 29 creadas — no había
+  colección previa.
+- **Retirada del residuo de `TC-063`** (2026-08-24): 27 reutilizadas (4 de
+  ellas con el script de test ajustado), 1 creada, 2 retiradas. Total: 28.
