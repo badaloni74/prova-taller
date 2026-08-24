@@ -49,34 +49,34 @@ escondidos en scripts de carpeta. Ejecutar de arriba a abajo:
 ```
 Taller API · Casos de servicio (DOC-26)
 ├─ _setup (fixtures compartidas)
-│  ├─ Obtener dos vehículos de clientes distintos
-│  └─ Obtener una pieza con stock (Filtre d'oli)
+│  ├─ _setup · Obtener dos vehículos de clientes distintos
+│  └─ _setup · Obtener una pieza con stock (Filtre d'oli)
 ├─ Albarans
 │  ├─ _setup · Crear albarán pendiente para TC-041
 │  ├─ _setup · Añadir línea de pieza al albarán de TC-041
 │  ├─ _setup · Añadir línea de mano de obra al albarán de TC-041
-│  ├─ TC-041 · Rechazar anotación de tipo inválido enviada directamente al servicio
-│  ├─ TC-041 · Verificar que el albarán conserva sus líneas y su base tras el rechazo
-│  ├─ _teardown · Borrar las líneas y el albarán de TC-041 (restaura el stock)
+│  ├─ TCS001 · TC-041 · Rechazar anotación de tipo inválido enviada directamente al servicio
+│  ├─ TCS002 · TC-041 · Verificar que el albarán conserva sus líneas y su base tras el rechazo
+│  ├─ _teardown · Borrar las líneas y el albarán de TC-041 (restaura el stock de la pieza)
 │  ├─ _teardown · Borrar la línea de mano de obra y el albarán vacío de TC-041
 │  ├─ _teardown · Borrar el albarán vacío de TC-041
 │  ├─ _setup · Crear albarán pendiente vacío para TC-045
-│  ├─ TC-045 · Rechazar línea de pieza que no existe en el catálogo
-│  ├─ TC-045 · Verificar que el albarán no registra ninguna línea
+│  ├─ TCS003 · TC-045 · Rechazar línea de pieza que no existe en el catálogo
+│  ├─ TCS004 · TC-045 · Verificar que el albarán no registra ninguna línea
 │  └─ _teardown · Borrar el albarán de TC-045
 └─ Factures
    ├─ _setup · Obtener el número de facturas existentes
    ├─ _setup · Localizar un albarán ya facturado de la base sembrada
    ├─ _setup · Crear un albarán pendiente sobre el mismo vehículo, para TC-063
-   ├─ TC-063 · Rechazar la emisión con un albarán ya facturado
-   ├─ TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura
-   ├─ TC-063 · Verificar que no se ha creado ninguna factura nueva
+   ├─ TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado
+   ├─ TCS006 · TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura
+   ├─ TCS007 · TC-063 · Verificar que no se ha creado ninguna factura nueva
    ├─ _teardown · Borrar el albarán pendiente de TC-063
    ├─ _setup · Crear un albarán pendiente del cliente A, para TC-064
    ├─ _setup · Crear un albarán pendiente del cliente B, para TC-064
-   ├─ TC-064 · Rechazar la emisión con albaranes de dos clientes distintos
-   ├─ TC-064 · Verificar que los dos albaranes siguen pendientes
-   ├─ TC-064 · Verificar que no se ha creado ninguna factura nueva
+   ├─ TCS008 · TC-064 · Rechazar la emisión con albaranes de dos clientes distintos
+   ├─ TCS009 · TC-064 · Verificar que los dos albaranes siguen pendientes
+   ├─ TCS010 · TC-064 · Verificar que no se ha creado ninguna factura nueva
    ├─ _teardown · Borrar el albarán pendiente del cliente A de TC-064
    └─ _teardown · Borrar el albarán pendiente del cliente B de TC-064
 ```
@@ -86,6 +86,37 @@ y `TC-064` en `DOC-05` (los cuatro llevan `touches: []`), así que en teoría
 son paralelizables — pero esta colección los encadena **secuencialmente**
 porque comparten las fixtures de `_setup` (mismo `vehicleAId`/`vehicleBId`) y
 Postman/newman no paraleliza carpetas de una misma colección por defecto.
+
+## Nomenclatura: `TCS-nnn`
+
+Cada petición que **es** un caso de prueba lleva un identificador propio
+`TCSnnn` al principio del nombre, delante del `TC-nnn` de `DOC-05` que
+cubre:
+
+```
+TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado
+```
+
+Los dos identificadores dicen cosas distintas y por eso van los dos. El
+`TC-nnn` es el caso de negocio tal como lo diseñó `A-03`; el `TCS-nnn` es
+**una comprobación concreta contra el servicio**, y un mismo `TC-nnn` suele
+necesitar varias: una para el rechazo y otra para el efecto lateral que
+confirma que el sistema no se movió. Sin el `TCS`, un resultado en rojo
+diría «falla TC-063» sin decir si lo que falló fue el rechazo o la limpieza.
+
+**Los `_setup` y `_teardown` no llevan `TCS`.** Preparan y limpian estado;
+no verifican nada del sistema bajo prueba. Sus assertions son guardas —
+comprueban que la fixture se construyó— y si una falla, lo que hay es un
+problema de entorno, no un caso en rojo.
+
+**Los `TCS-nnn` solo se añaden.** Si una comprobación desaparece, su número
+se retira pero no se reutiliza ni se renumera el resto: los informes viejos
+seguirían apuntando a él. Misma regla que `registro-ids.json` aplica a
+`REQ`, `TC`, `UC` y `BR`, aunque la familia `TCS` todavía no esté dada
+de alta ahí.
+
+Los resultados de cada ejecución, TCS a TCS, van a
+[`docs/DOC-27-INFORME-API.md`](../../docs/DOC-27-INFORME-API.md).
 
 ## Los tres niveles de validación
 

@@ -205,7 +205,7 @@
           ]
         },
         {
-          "name": "TC-041 · Rechazar anotación de tipo inválido enviada directamente al servicio",
+          "name": "TCS001 · TC-041 · Rechazar anotación de tipo inválido enviada directamente al servicio",
           "request": {
             "method": "POST",
             "header": [
@@ -244,7 +244,7 @@
           ]
         },
         {
-          "name": "TC-041 · Verificar que el albarán conserva sus líneas y su base tras el rechazo",
+          "name": "TCS002 · TC-041 · Verificar que el albarán conserva sus líneas y su base tras el rechazo",
           "request": {
             "method": "GET",
             "header": [],
@@ -398,7 +398,7 @@
           ]
         },
         {
-          "name": "TC-045 · Rechazar línea de pieza que no existe en el catálogo",
+          "name": "TCS003 · TC-045 · Rechazar línea de pieza que no existe en el catálogo",
           "request": {
             "method": "POST",
             "header": [
@@ -437,7 +437,7 @@
           ]
         },
         {
-          "name": "TC-045 · Verificar que el albarán no registra ninguna línea",
+          "name": "TCS004 · TC-045 · Verificar que el albarán no registra ninguna línea",
           "request": {
             "method": "GET",
             "header": [],
@@ -598,7 +598,7 @@
           ]
         },
         {
-          "name": "TC-063 · Rechazar la emisión con un albarán ya facturado",
+          "name": "TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado",
           "request": {
             "method": "POST",
             "header": [
@@ -637,7 +637,7 @@
           ]
         },
         {
-          "name": "TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura",
+          "name": "TCS006 · TC-063 · Verificar que el albarán ya facturado sigue enlazado solo a su factura",
           "request": {
             "method": "GET",
             "header": [],
@@ -666,7 +666,7 @@
           ]
         },
         {
-          "name": "TC-063 · Verificar que no se ha creado ninguna factura nueva",
+          "name": "TCS007 · TC-063 · Verificar que no se ha creado ninguna factura nueva",
           "request": {
             "method": "GET",
             "header": [],
@@ -789,7 +789,7 @@
           ]
         },
         {
-          "name": "TC-064 · Rechazar la emisión con albaranes de dos clientes distintos",
+          "name": "TCS008 · TC-064 · Rechazar la emisión con albaranes de dos clientes distintos",
           "request": {
             "method": "POST",
             "header": [
@@ -828,7 +828,7 @@
           ]
         },
         {
-          "name": "TC-064 · Verificar que los dos albaranes siguen pendientes",
+          "name": "TCS009 · TC-064 · Verificar que los dos albaranes siguen pendientes",
           "request": {
             "method": "GET",
             "header": [],
@@ -855,7 +855,7 @@
           ]
         },
         {
-          "name": "TC-064 · Verificar que no se ha creado ninguna factura nueva",
+          "name": "TCS010 · TC-064 · Verificar que no se ha creado ninguna factura nueva",
           "request": {
             "method": "GET",
             "header": [],
