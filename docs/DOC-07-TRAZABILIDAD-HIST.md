@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.9.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.10.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-24T11:00:00+02:00
+generated_at: 2026-08-24T12:40:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,138 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.10.0 — 2026-08-24 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** Ha nacido `docs/DOC-27-INFORME-API.md` **1.0.0**, de `S-17 · api-qa`:
+el informe de ejecución de la suite de servicio, contraparte de `DOC-23` para la colección
+Postman de `automation/api/`. Registra 10 comprobaciones `TCS-nnn`, todas en verde, que
+cubren los **4 casos de DOC-05 marcados `verification_path: service`** — `TC-041`, `TC-045`,
+`TC-063` y `TC-064`.
+
+**Quién disparó la regeneración, y por qué no fue S-16.** Las cinco anteriores las disparó
+`S-16 · Cascada de obsolescencia`. Esta no podía dispararla: **la cascada compara lo que
+está declarado en algún bloque `inputs`, y `DOC-27` no estaba declarado en ninguno porque
+hasta hoy no existía.** Un documento que nace es invisible al control de obsolescencia
+hasta que alguien lo declara la primera vez. El disparo fue humano. Declararlo ahora en
+`inputs` es lo que hace que, a partir de la próxima ejecución de la suite de servicio, sí lo
+vea S-16.
+
+### Por qué MINOR y no PATCH
+
+Era la decisión que había que tomar con cuidado, porque el resultado más probable a priori
+era un PATCH: `DOC-27` **no es una entrada del JOIN**, la cobertura sigue en 100,00 % y el
+CSV vuelve a salir byte a byte idéntico —md5 `087a03779bd36a00d09f9e87943588c0`, **octava
+vez consecutiva**—. Si lo único que hubiera cambiado fuese la procedencia, PATCH habría sido
+lo correcto.
+
+No es lo único. Hay **contenido nuevo verificable** que 1.9.1 no podía contener:
+
+1. **Cuatro casos dejan de ser un punto ciego de la evidencia.** Hasta 1.9.1 este documento
+   solo cruzaba ejecución contra `DOC-23`, que informa exclusivamente de la suite de
+   navegador. Los 4 casos `service` estaban correctamente fuera de ella y **ninguna fuente
+   decía si se habían ejecutado alguna vez**. §5.5 los daba por «correcto: los ejecutará
+   S-17», en futuro, desde 1.7.0. La cifra de evidencia de ejecución publicada pasa de
+   **102 de 110 a 106 de 110**, con las dos fuentes declaradas por separado.
+2. **`A-05-11a` pasa de cerrado por inferencia a cerrado por comprobación.** El cierre se
+   sostenía en que A-05 leyó `FacturaForm.tsx` y `AlbaraLiniesSection.tsx` y concluyó que el
+   vector existía por servicio. `DOC-27` compuso los tres intentos —`TCS008`, `TCS005`,
+   `TCS003`— y los tres fueron rechazados con `400` y el mensaje esperado. Es la primera vez
+   en la vida de este documento que una reclasificación de `verification_path` se contrasta
+   con un hecho.
+3. **El límite declarado en §5.6 gana una excepción de tamaño conocido.** «`verification_path`
+   es un campo declarativo, no verificado» sigue siendo cierto para 106 casos y ha dejado de
+   serlo para 4.
+4. **Nacen tres avisos**, los tres verificados por A-05 en el código o en los ficheros de las
+   suites, no aceptados de la prosa de `DOC-27`:
+   - **`A-05-14`** — `TC-041` se ejecuta entero por servicio, y su paso 2 —«El selector
+     ofrece exactamente dos tipos […] y ninguna otra opción»— **no lo ejerce ninguna de las
+     dos suites**: S-10 no tiene escenario para el caso y `TCS001` comprueba la API, que es
+     otra afirmación. Corrección de A-03.
+   - **`A-05-15`** — borrar un albarán **no devuelve al catálogo el stock** de sus líneas de
+     pieza (verificado en `server/routes/albarans.js:116-132`, frente a las líneas 197-224
+     que sí lo devuelven al retirar una línea suelta). Ningún requisito decide si eso está
+     bien —REQ-039 habla de la línea, REQ-041 del albarán—, `TC-056` está en verde sin mirar
+     el stock, su escenario ni siquiera crea una línea de pieza pese a la precondición
+     `DS-005`, y su `touches` no declara `peces.estoc`. Tres destinatarios: producto/A-02,
+     A-03 y `s10-auto-tcs`.
+   - **`A-05-16`** — la familia `TCS-nnn` nace **fuera de `registro-ids.json`** (0
+     ocurrencias en las 317 anclas). No es bloqueante —un `TCS` no viaja a Rally— y la
+     decisión de registrarla es de S-12 y del canon, no de A-05.
+
+El censo de avisos pasa de **29 (17 + 12) a 32 (17 + 15)**. Las filas con reserva del §4
+pasan de 25 a **26**: entra REQ-041.
+
+**Por qué no MAJOR.** No cambia el contrato del CSV —mismas 10 columnas, mismas 79 filas,
+mismos diagnósticos—, no cambia el porcentaje de cobertura y no cambia la pasada: sigue
+siendo `pre`. No se ha tocado ni una celda del fichero que consume S-07.
+
+### La decisión que se tomó, y la que no
+
+**Se decidió que `DOC-27` entra como evidencia citada en la prosa y no como columna del
+CSV**, exactamente por la misma puerta por la que entra `DOC-23`. `DOC-27` lo preguntaba en
+su §6.2 («¿Entra esta suite en el Go/No-Go? […] eso lo decide A-05»). Las tres columnas
+`exists_in_rally`, `executed` y `result` nombran **una sola** fuente, `DOC-19` y `DOC-20`;
+rellenarlas con una suite local —de navegador o de servicio— dejaría a cualquier consumidor
+que hiciera `join` con `DOC-20` con contradicciones sin procedencia. Que ahora haya dos
+fuentes de ejecución en vez de una no ablanda el argumento: lo endurece.
+
+**No se decidió, porque no es de A-05**, si el Go/No-Go debe **exigir** esa evidencia. Eso
+es criterio de A-11. Ni si la familia `TCS-nnn` se registra (S-12 y canon `DOC-nn`), ni si
+borrar un albarán debe devolver el stock (producto). Las tres quedan como preguntas 16, 17 y
+18 del §7.3.
+
+### Correcciones de procedencia que van en esta versión
+
+- **`DOC-05`**: 1.9.1 declaraba `sha256:d338297a…`, el hash del resello contra `DOC-23`
+  2.1.0, cuando en el árbol ya estaba el resello contra la 2.2.0 (`7f2000f`,
+  `sha256:43051f32…`). Se corrige. **Es el hash lo que S-16 compara**, así que un hash
+  desfasado en `inputs` es el mismo fallo silencioso que este documento persigue en otros.
+  De paso queda sin objeto el matiz que 1.9.1 anotaba sobre que DOC-05 «sigue citando la
+  2.1.0»: A-03 ya lo había resincronizado.
+- **`DOC-09`**: hash actualizado a `sha256:b745b092…` y **versión corregida de 2.0.2 a
+  2.0.4**. El borrador de esta misma versión declaraba `version: 2.0.2` con el hash de la
+  2.0.4: el hash ya era el bueno —es el del fichero real— pero el número se había heredado
+  de 1.9.1 sin tocar, así que los dos campos de la entrada describían estados distintos del
+  mismo fichero. Detectado en revisión antes de subir la 1.10.0 y corregido dentro de ella,
+  sin abrir versión nueva. **No era bloqueante para `cascada.js`** —2.0.2 → 2.0.4 es PATCH,
+  «no invalida»— pero era una declaración de procedencia falsa, que es la deriva que este
+  documento persigue en §3.12 cuando la comete otro. Son **dos** resellos, no uno:
+  `3606266` (2.0.2 → 2.0.3, contra `DOC-07` 1.9.0 y `DOC-23` 2.2.0) y `2bbd4fe`
+  (2.0.3 → 2.0.4, tras el cierre de `EXP-027`). **Comprobado, no supuesto**, que ninguno de
+  los dos toca lo que este documento cita: extraído el cuerpo de las tres versiones —desde
+  el segundo `---`— y comparados los bytes, las tres dan `sha256:a3d63770…` sobre 917
+  líneas. Las tres aristas ausentes de `DOC-09` §2.3 que cita §7.2 y el enunciado de REQ-040
+  de su §3.1 que cita la fila de §4 siguen siendo palabra por palabra los mismos.
+- **`DOC-27`**: entrada nueva, `version: 1.0.0` y hash. Se ha leído también su `-HIST.md`.
+
+### Limpieza
+
+- **`A-05-11a` y `A-05-13` salen del censo de avisos.** Los dos estaban cerrados y se
+  mostraban «por última vez» en 1.9.x. La ficha de `A-05-11a` (§3.11) se conserva una vez
+  más, y solo una, porque hay evidencia nueva sobre ella; a partir de 1.11.0 vivirá solo
+  aquí. La de `A-05-13` (§3.13) se reduce a los hechos verificados en los que se apoyan §3.4
+  y §5.5; el relato completo estaba ya en las entradas 1.8.0 y 1.9.0 de este fichero y no se
+  duplica.
+- El párrafo de «Procedencia» sobre `DOC-14` 2.1.0 se condensa a tres líneas por el mismo
+  motivo: su análisis completo es la entrada 1.9.1 de este fichero.
+
+### Verificaciones hechas antes de entregar
+
+- El JOIN se **volvió a ejecutar** (`matriz.js` de S-14 sobre DOC-04 1.2.0, DOC-05 1.6.0 y
+  `registro-ids.json`), no se copió el CSV anterior: **código de salida 0, 0 bloqueantes**,
+  79 filas, 110 casos, suma de `test_case_count` = 110, tres columnas de Rally en `n/d` en
+  las 79, **0 ocurrencias de `GAP EXPORT`**, 0 `GAP PLAN`.
+- Salida byte a byte idéntica a la del fichero versionado (md5 y sha256 comprobados).
+- Las afirmaciones de `DOC-27` que este documento usa para sostener un hallazgo se han
+  verificado en la fuente: `server/routes/albarans.js` y `server/routes/factures.js` para
+  `A-05-15` y para la corroboración de `A-05-04`, `tallerMecaniccollection.json` para las
+  aserciones de `A-05-14` y §3.11, `albarans.feature` para el escenario de TC-056 y
+  `registro-ids.json` para `A-05-16`.
 
 ---
 

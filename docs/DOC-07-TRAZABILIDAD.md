@@ -1,15 +1,15 @@
 ---
 doc_id: DOC-07
 doc_name: DOC-07-TRAZABILIDAD
-version: 1.9.1
+version: 1.10.0
 status: draft
 generator: A-05 coherencia y trazabilidad
-generated_at: 2026-08-24T11:00:00+02:00
+generated_at: 2026-08-24T12:40:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: be656fd4bb9be1534b4a47b43a345317d37d4574
+  commit_sha: 8774cec50622faa01c546425ec7efe134a5ab8d9
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-04-FUNCIONAL.md
@@ -19,7 +19,7 @@ inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
     version: 1.6.0
-    hash: sha256:d338297ae78c318c49887925df52a2399eb725edda29e24ac5d1dffa14d650ba
+    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
   - id: registro-ids.json
     from: S-12
     version: 1.6.0
@@ -30,8 +30,8 @@ inputs:
     hash: sha256:c081aea157c978d8ffcfffaed9fa9b33fc10106fa47498277f07c9720ef26067
   - id: DOC-09-IMPACTO-albara-canvi-client.md
     from: A-07
-    version: 2.0.2
-    hash: sha256:c9921bfab17bde391290a3f58f8b3037ec3e78fcfc4bed0608c0b29ee937e1f9
+    version: 2.0.4
+    hash: sha256:b745b0925a4082f114efa26dbd4ad052ee2bfcecad6167e7bb7ccfea671f2bef
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
     version: 2.1.0
@@ -44,6 +44,10 @@ inputs:
     from: A-14
     version: 1.0.0
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
+  - id: DOC-27-INFORME-API.md
+    from: S-17
+    version: 1.0.0
+    hash: sha256:178d4b14e0202ec9f8846b661f1dda465e552cb6d3aa5f563e19d9b9c5b82573
   - id: DOC-19-RALLY-TESTCASES.csv
     from: S-07
     version: n/d
@@ -68,18 +72,39 @@ caso, 23 tienen dos y 4 tienen tres. No hay ningún requisito sin prueba, ningú
 huérfano, ninguna referencia rota y **ninguna anomalía bloqueante**: nada de lo
 comprobado aquí impide avanzar a la Fase 3.
 
-**La cobertura no se ha movido, y otra vez el motivo no es de DOC-04 o DOC-05.** Esta
-regeneración la dispara `DOC-23-INFORME.md`, que ha subido **dos** versiones MINOR en el
-mismo día —2.0.0 → 2.1.0 → 2.2.0— desde la última vez que A-05 lo leyó (§2), y `DOC-23` no
-es una entrada del JOIN. A-05 lo ha comprobado sobre los bytes, no sobre el número de
-versión: el bloque `yaml requirements` de DOC-04 y los nueve `yaml testcases` de DOC-05
-son **idénticos, carácter a carácter**, a los que produjeron el CSV de 1.8.0. El CSV sale
-igual: md5 `087a03779bd36a00d09f9e87943588c0`, **séptima vez consecutiva** — la quinta,
-1.6.0, fue la última vez que DOC-05 sí cambió algo con efecto en el JOIN; van ya dos
-regeneraciones seguidas (1.8.0 por `DOC-14`, esta por `DOC-23`) disparadas por una entrada
-que nunca ha alimentado el `yaml requirements`/`yaml testcases`.
+**La cobertura no se ha movido, y el motivo vuelve a no ser de DOC-04 ni de DOC-05.** Esta
+regeneración la dispara un documento que **antes no existía**: `DOC-27-INFORME-API.md`
+1.0.0, de `S-17`, el informe de ejecución de la suite de servicio. No es una entrada del
+JOIN, así que A-05 lo ha comprobado sobre los bytes y no sobre el número de versión: el
+bloque `yaml requirements` de DOC-04 y los nueve `yaml testcases` de DOC-05 son
+**idénticos, carácter a carácter**, a los que produjeron el CSV de 1.8.0. El CSV sale
+igual: md5 `087a03779bd36a00d09f9e87943588c0`, **octava vez consecutiva** — la quinta,
+1.6.0, fue la última vez que DOC-05 sí cambió algo con efecto en el JOIN.
 
-| Magnitud | Valor | vs 1.8.0 |
+**Y sin embargo esta versión no es un resello, y conviene decir por qué desde la primera
+página.** Hasta hoy este documento solo tenía una fuente de evidencia de ejecución,
+`DOC-23`, que informa exclusivamente de la suite de navegador. Los **cuatro casos
+`verification_path: service`** del plan —`TC-041`, `TC-045`, `TC-063` y `TC-064`— estaban
+correctamente fuera de ella y **no tenían ninguna fuente que dijera si alguna vez se habían
+ejecutado**. §5.5 de 1.9.1 los daba por «correcto: los ejecutará **S-17**», en futuro.
+`DOC-27` 1.0.0 convierte ese futuro en un hecho datado: 10 comprobaciones `TCS-nnn`, 10 en
+verde, sobre esos 4 casos. Tres consecuencias, ninguna sobre el porcentaje:
+
+1. **La cobertura de ejecución publicada pasa de 102 a 106 de los 110 casos**, sumando dos
+   informes de dos suites distintas y declarando cuál dice qué (§5.5). No es una cifra
+   nueva de cobertura de requisitos: es que ya no hay cuatro casos sobre los que nadie
+   informaba.
+2. **`verification_path` deja de ser, para esos cuatro casos, un campo puramente
+   declarativo.** §5.6 venía diciendo —y lo sigue diciendo para los otros 106— que el campo
+   dice por qué vía **se declara** que se ejerce un caso y no si el vector existe en ella.
+   Para los cuatro `service` ya existe la comprobación empírica: los cuatro intentos se
+   compusieron contra el servicio y los cuatro fueron rechazados con el mensaje esperado
+   (§3.11).
+3. **Nacen tres avisos nuevos** —`A-05-14`, `A-05-15` y `A-05-16`, §3.14 a §3.16—, los tres
+   destapados por leer `DOC-27` y los tres verificados por A-05 en el código o en los
+   ficheros de las suites, no dados por buenos de su prosa.
+
+| Magnitud | Valor | vs 1.9.1 |
 |---|---:|---|
 | Requisitos en DOC-04 | 79 | = |
 | Requisitos con al menos un caso (`Correcto`) | 79 | = |
@@ -90,14 +115,17 @@ que nunca ha alimentado el `yaml requirements`/`yaml testcases`.
 | Casos mapeados a un requisito existente | 110 | = |
 | Casos huérfanos o con referencia rota | 0 | = |
 | **Anomalías bloqueantes** | **0** | **=** |
-| Avisos | 29 | **−1**: se cierra A-05-13 |
+| Avisos | 32 | **+3**: nacen A-05-14, A-05-15 y A-05-16 |
 | Casos `verification_path: ui` | **106** | = |
 | Casos `verification_path: service` | **4** | = |
 | Requisitos con toda su cobertura por interfaz | **75** (94,9 %) | = |
 | Requisitos `critical` con toda su cobertura por interfaz | **32 de 35** | = |
 | **Requisitos cuyo vector no es alcanzable por la vía declarada** | **5** | = |
-| Casos automatizados y ejecutados (DOC-23 2.2.0) | **102 de 110** | = |
-| Escenarios en verde (DOC-23 2.2.0) | **107 de 107** | **+18** (TC-048 y los 17 de EXP-027, corregidos) |
+| Casos automatizados y ejecutados por interfaz (DOC-23 2.2.0) | **102 de 110** | = |
+| Escenarios en verde (DOC-23 2.2.0) | **107 de 107** | = |
+| **Casos ejecutados por servicio (DOC-27 1.0.0)** | **4 de 4** | **+4** — antes: sin fuente |
+| **Comprobaciones `TCS-nnn` en verde (DOC-27 1.0.0)** | **10 de 10** | **nueva** |
+| **Casos del plan con evidencia de ejecución publicada** | **106 de 110** | **+4** |
 | Censo de `Q-nnn` con ancla | 29 | = |
 | `Q-nnn` reclamados sin ancla | 1 (`Q-30`) | = |
 | ① Requisitos que esperan respuesta de negocio | 16 (20,3 %) | = |
@@ -114,7 +142,9 @@ vigentes y no se repiten enteras: no mide **ejecución en Rally ni resultado** (
 `post`), no mide que el requisito describa un **sistema sano** (A-05-03), no mide **en qué
 orden puede producirse la evidencia** (A-05-08), no mide **si se sabe qué verá el usuario**
 (A-05-10) y no mide **si el caso puede ejercer su vector por la vía que declara**
-(A-05-11).
+(A-05-11). De esas cinco, la última acaba de dejar de ser una incógnita para **4 de los
+110 casos**: `DOC-27` lo ha comprobado ejecutándolos. Sigue siéndolo para los otros 106,
+y para cinco requisitos es un hueco abierto y nombrado (§3.11).
 
 Desde 1.7.0 hay una sexta, y sigue vigente sin cambios en esta versión:
 
@@ -141,8 +171,21 @@ no es cierto es el caso concreto que la ilustraba. Queda un residuo, más peque�
 suite completa (§5.5), así que el 107 de 107 en verde **tampoco es, todavía, el resultado
 de una sola ejecución**.
 
+**Y `DOC-27` estrena su propia trampa, que hay que declarar el mismo día en que se
+estrena el documento.** Su ejecución es **una sola**, de 1,75 s, sobre una base que
+—deliberadamente— **no se resembró**: el propio informe lo dice y explica por qué (§5 de
+`DOC-27`: «comprobar que la colección es repetible sobre una base ya usada es parte de lo
+que se quería verificar. Un informe de entrega sí debería partir de `npm run seed`»). Es
+una decisión defendible y bien argumentada, y aun así deja el mismo residuo que este
+documento le anotó a `DOC-23` 2.2.0 por otro motivo: **el verde de los cuatro casos de
+servicio todavía no procede de una ejecución hecha en condiciones de entrega.** No es
+motivo para desconfiar de la cifra —el informe mide el estado de la base antes y después y
+sale idéntico, 12 facturas, 37 albaranes y stock 37—, es la clase de matiz que aquí no se
+calla.
+
 Ninguno de los cuatro requisitos con defecto confirmado baja la cobertura ni un punto, y
-tampoco lo hace el cierre de A-05-13: cambian lo que el 100 % significa, no cuánto vale.
+tampoco lo hacen los tres avisos nuevos: cambian lo que el 100 % significa, no cuánto
+vale.
 
 ## 2. Qué pasada se ha ejecutado y por qué
 
@@ -151,13 +194,14 @@ tampoco lo hace el cierre de A-05-13: cambian lo que el 100 % significa, no cuá
 | Entrada | Estado | Consecuencia |
 |---|---|---|
 | `docs/DOC-04-FUNCIONAL.md` | presente, **v1.2.0** (mismo número, mismo hash que 1.8.0) | JOIN posible; sin cambio de contenido versionado |
-| `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.6.0** (mismo número; **hash resincronizado** contra `DOC-23` 2.1.0, ver abajo) | JOIN posible; sin cambio de contenido versionado |
+| `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.6.0** (mismo número; **hash corregido**: 1.9.1 declaraba el del resello contra `DOC-23` 2.1.0 y el vigente ya era el del resello contra 2.2.0, ver «Procedencia») | JOIN posible; sin cambio de contenido versionado |
 | `registro-ids.json` | presente, 317 anclas — 79 REQ, 110 TC, 29 Q, 12 FUN, 8 MEJ, 1 EVO, todas sin cambios desde 1.8.0; hash resincronizado por el renombrado `SPE-` de los specs | verificación de anclas y del censo de `Q-nnn` |
 | `docs/DOC-23-INFORME.md` | presente, **v2.2.0** (era 2.0.0; pasó por 2.1.0 el mismo día) | **no toca la matriz**; motivo de esta regeneración; cierra TC-048 y los 17 de `EXP-027`, corrige una atribución de la propia 2.1.0 |
 | `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (era 2.0.1; resincronización dirigida contra `DOC-23` 2.2.0, sin exploración nueva; cierra `EXP-027`) | **no toca la matriz** — ver nota de 1.9.1 en `DOC-07-TRAZABILIDAD-HIST.md` |
-| `docs/DOC-09-IMPACTO-…md` | presente, v2.0.2 (era 2.0.0; **resello de patch**) | **no toca la matriz**; A-05-11a sigue cerrado |
+| `docs/DOC-09-IMPACTO-…md` | presente, **v2.0.4** (1.9.1 declaraba 2.0.2; **dos resellos de PATCH desde entonces**, `3606266` y `2bbd4fe`) | **no toca la matriz**; cuerpo byte a byte idéntico al de 2.0.2; A-05-11a sigue cerrado |
 | `docs/DOC-06-MANUAL-USUARIO.md` | presente, v1.3.0 (mismo número; **hash resincronizado**, renombrado `SPE-` de los specs que cita) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10 |
 | `docs/DOC-24-BUGS.json` | presente, v1.0.0 (mismo hash) | **no toca la matriz**; alimenta A-05-03 |
+| **`docs/DOC-27-INFORME-API.md`** | **presente, v1.0.0 — entrada nueva, antes no existía** | **no toca la matriz**; motivo de esta regeneración; primera y única fuente de evidencia de ejecución de los 4 casos `service`; origen de A-05-14, A-05-15 y A-05-16 |
 | `docs/DOC-19-RALLY-TESTCASES.csv` | **ausente** | no hay exportación a Rally que comprobar |
 | `docs/DOC-20-RALLY-STATE.json` | **ausente** | no hay estado de ejecución que leer |
 
@@ -168,12 +212,27 @@ misma razón, los únicos diagnósticos emitidos son `Correcto` y `GAP PLAN`; **
 contiene ni un solo `GAP EXPORT`**, que en esta pasada sería un dato inventado
 (verificado: 0 ocurrencias de la cadena en el fichero).
 
-**DOC-23 es la entrada que más cerca está de tentar a escribir la pasada `post`, y esta
-vez la tentación es mayor todavía: ya no hay ni un caso en rojo.** `DOC-23` 2.2.0 declara
-102 casos automatizados y ejecutados y **107 de 107 escenarios en verde** (§5.5). Es
-ejecución real de casos reales del plan —no como DOC-24, que ejercía la aplicación—,
-así que la tentación es legítima y hay que contestarla con precisión: **la pasada `post`
-no es «¿se ha ejecutado algo?», es «¿qué dice Rally?»**. Las tres columnas del CSV son
+**`DOC-27` pregunta directamente a A-05 si su suite entra en el Go/No-Go, y la respuesta
+va aquí porque es una pregunta de contrato, no de criterio.** La pregunta 2 de su §6 dice:
+«`DOC-07` cruza cobertura contra `DOC-23`; con este documento ya se puede citar también
+para los 4 casos de servicio, pero eso lo decide `A-05`». **Sí, y por la misma puerta por
+la que entra `DOC-23`: como evidencia citada en la prosa, con su procedencia al lado —y no
+como columna del CSV.** Las tres columnas `exists_in_rally`, `executed` y `result` tienen
+un contrato que nombra **una sola** fuente, `DOC-19` y `DOC-20`; meter en `result` lo que
+dice una suite local —de navegador o de servicio, da igual— mezclaría dos fuentes en una
+columna que nombra una, y el primer consumidor que hiciera `join` con `DOC-20` encontraría
+contradicciones sin saber de dónde vienen. Lo que sí cambia, y no es poco, es que a partir
+de esta versión **hay evidencia de ejecución citable para 106 de los 110 casos en vez de
+para 102**, y para los 4 que faltaban no había ninguna. Si el Go/No-Go debe **exigir** esa
+evidencia antes de aprobar, eso ya no es de A-05: es criterio de **A-11**.
+
+**DOC-23 y DOC-27 son las dos entradas que más cerca están de tentar a escribir la pasada
+`post`, y juntas la tentación es mayor todavía: ya no hay ni un caso en rojo en ninguna de
+las dos suites.** `DOC-23` 2.2.0 declara 102 casos automatizados y ejecutados y **107 de
+107 escenarios en verde**; `DOC-27` 1.0.0 declara **10 de 10 comprobaciones en verde** sobre
+los 4 casos restantes (§5.5). Es ejecución real de casos reales del plan —no como DOC-24,
+que ejercía la aplicación—, así que la tentación es legítima y hay que contestarla con
+precisión: **la pasada `post` no es «¿se ha ejecutado algo?», es «¿qué dice Rally?»**. Las tres columnas del CSV son
 `exists_in_rally`, `executed` y `result`, y las tres se llenan desde `DOC-19` y `DOC-20`.
 Ninguno de los 110 casos está en Rally, así que la respuesta a la primera columna sigue
 siendo que nadie la ha mirado. Rellenar `result` con lo que dice DOC-23 mezclaría dos
@@ -182,12 +241,20 @@ fuentes en una columna cuyo contrato nombra una sola, y el primer consumidor que
 este documento **como evidencia en la prosa**, que es donde puede ir acompañada de su
 procedencia, y no en el CSV.
 
-**Quién ha disparado esta regeneración.** `S-16 · Cascada de obsolescencia`, por quinta vez
-consecutiva y ya sin ninguna intervención humana en el disparo:
+**Quién ha disparado esta regeneración, y por qué esta vez no ha sido S-16.** Las cinco
+anteriores las disparó `S-16 · Cascada de obsolescencia` comparando la versión declarada en
+el bloque `inputs` con la vigente en el repositorio. **Esta no ha podido dispararla S-16, y
+es estructural, no un descuido**: `DOC-27` es un documento **nuevo**, ningún `inputs` de
+ningún documento lo declaraba —no podía declararlo, no existía— y la cascada solo compara
+lo declarado. Un documento que nace es invisible para el control de obsolescencia hasta que
+alguien lo declara por primera vez. El disparo, por tanto, ha sido humano.
 
-```
-DOC-07 1.8.0 — por DOC-23: declara 2.0.0, actual 2.2.0  [MINOR]
-```
+**Esa es la segunda razón por la que `DOC-27` se declara en `inputs` y no solo se cita en
+la prosa.** La primera es la de siempre —declarar de dónde viene lo que se afirma—; la
+segunda es que a partir de ahora **S-16 sí vigilará** que este documento no se quede atrás
+cuando `S-17` vuelva a ejecutar la suite. La foto de una ejecución caduca, y este documento
+lleva dos versiones diciéndolo de `DOC-23`; sería incoherente no ponerle el mismo control a
+`DOC-27` el día que nace.
 
 `DOC-23` subió dos veces el mismo día —2.0.0 → 2.1.0 (TC-048 corregido, 17 rojos nuevos
 diagnosticados con causa única `EXP-027`, un rojo aislado de infraestructura) y 2.1.0 →
@@ -199,28 +266,37 @@ vigente, no la descripción con la que empieza la tarea.** Es el uso exacto para
 existe el bloque `inputs` con versión y hash, y la razón por la que la procedencia se
 queda en este documento y **no** se va al fichero de historial.
 
-**Qué cambió DOC-05 desde 1.8.0, y por qué no mueve la matriz.** Nada en el contenido: el
-único movimiento es un resello de procedencia —«Resync DOC-05 procedencia against DOC-23
-2.1.0, no version bump»— que actualiza la entrada `DOC-23` de su propio bloque `inputs`
-(versión, hash y el resumen de qué aporta) y su `commit_sha`, sin tocar ningún `id`,
-`external_id`, `requirement`, `priority` ni `steps` de los 110 casos. A-05 no se lo cree
-por deferencia —lo comprueba volviendo a ejecutar el JOIN— y el CSV sale **byte a byte
-idéntico por séptima vez consecutiva**. Un matiz que sí hay que anotar: **ese resello de
-DOC-05 es del 23-08 a las 23:41, y `DOC-23` volvió a subir a 2.2.0 después, a las 23:30 del
-mismo día según su propio `generated_at`** — los relojes de sesión no son estrictamente
-monótonos entre documentos generados por agentes distintos en la misma tanda, así que DOC-05
-**sigue citando la 2.1.0** y `S-16` lo marca obsoleto por ello (orden de regeneración:
-DOC-05 → DOC-07 → …). No es tarea de A-05 corregirlo —DOC-05 es de A-03—, y no bloquea esta
-regeneración: A-05 ha verificado que ninguno de los dos saltos de DOC-23 (2.1.0 y 2.2.0)
-toca un `REQ-nnn` o `TC-nnn`, así que el JOIN es válido con independencia de cuál de las
-dos cite el front-matter de DOC-05.
+**Qué cambió DOC-05, por qué no mueve la matriz, y un error de 1.9.1 que se corrige aquí.**
+Nada en el contenido: los dos únicos movimientos son resellos de procedencia —«Resync DOC-05
+procedencia against DOC-23 2.1.0» (`e23348b`) y **«Resincronizar DOC-05 contra DOC-23 2.2.0»
+(`7f2000f`)**—, que actualizan la entrada `DOC-23` de su propio bloque `inputs` y su
+`commit_sha`, sin tocar ningún `id`, `external_id`, `requirement`, `priority` ni `steps` de
+los 110 casos. A-05 no se lo cree por deferencia —lo comprueba volviendo a ejecutar el
+JOIN— y el CSV sale **byte a byte idéntico por octava vez consecutiva**.
 
-**Qué cambió DOC-14 y DOC-09 desde 1.8.0, y por qué el disparo de S-16 no obliga a
-recalcular la matriz.** Los dos son resellos de PATCH sin exploración ni análisis nuevos
-—`DOC-14` 2.0.1 solo referencia la subida de `DOC-16` a 3.0.0; `DOC-09` 2.0.2 es un
-resello equivalente—, y ninguno de los dos toca `REQ-nnn` ni `TC-nnn`. `S-16` ya avisa de
-que un PATCH «no invalida» (§ salida de la herramienta), y A-05 lo confirma sobre los
-bytes: mismo `test_case_count` por requisito, mismo CSV.
+**El error que se corrige: 1.9.1 declaró de DOC-05 el hash `sha256:d338297a…`, que es el
+del primer resello, cuando en el árbol ya estaba el segundo, `sha256:43051f32…`.** Es el
+hash lo que S-16 compara, así que un hash desfasado en `inputs` es exactamente el fallo
+silencioso que este documento persigue en otros: mientras estuvo así, S-16 habría avisado
+por una diferencia que ya se había resuelto. Se corrige en el bloque `inputs` de esta
+versión, y la comprobación que lo destapó es la de siempre —recalcular el hash de cada
+entrada en vez de arrastrarlo—. Con esto, además, **queda sin objeto el matiz que 1.9.1
+anotaba**: A-05 escribió entonces que DOC-05 «sigue citando la 2.1.0» de DOC-23; A-03 ya lo
+resincronizó contra la 2.2.0, y lo hizo antes de que 1.9.1 se publicara. La cita era
+correcta en el momento de escribirse y dejó de serlo antes de imprimirse; se retira.
+
+**Qué cambió DOC-14 y DOC-09, y por qué no obliga a recalcular la matriz.** Los dos son
+resellos de PATCH sin exploración ni análisis nuevos, y ninguno toca `REQ-nnn` ni `TC-nnn`.
+**`DOC-09` ha recibido dos resellos desde que 1.9.1 lo leyó**, no uno: `3606266`
+(2.0.2 → 2.0.3, resincronización contra `DOC-07` 1.9.0 y `DOC-23` 2.2.0) y `2bbd4fe`
+(2.0.3 → 2.0.4, tras el cierre de `EXP-027` en `DOC-14` 2.1.0). **A-05 no se ha fiado de que
+los dos sean «solo front-matter»: ha extraído el cuerpo de las tres versiones —todo lo que
+va después del segundo `---`— y ha comparado los bytes.** Las tres dan el mismo
+`sha256:a3d63770…` sobre 917 líneas: **el cuerpo de 2.0.4 es idéntico al de 2.0.2**, así que
+los dos pasajes que este documento cita de `DOC-09` —las tres aristas ausentes de §2.3 (§7.2)
+y el enunciado de REQ-040 de §3.1 (fila de REQ-040 en §4)— siguen diciendo exactamente lo
+mismo. `S-16` ya avisa de que un PATCH «no invalida» (§ salida de la herramienta), y aquí
+está comprobado en vez de supuesto: mismo `test_case_count` por requisito, mismo CSV.
 
 **Por qué el hash de DOC-05, `registro-ids.json` y DOC-06 ha cambiado sin que su `version`
 se mueva, y por qué no es una anomalía.** Además del resello de DOC-05 ya descrito, un
@@ -257,24 +333,46 @@ matriz (§5.6), el censo de `Q-nnn` de los tres documentos, los cinco alcances d
 apartado 7 y el cruce entre la matriz y el plan de ejecución del §5.4. La verificación de
 identificadores se hace con **S-12 en modo lectura**.
 
-**Las dos verificaciones que A-05 ha hecho fuera de todo YAML, y por qué.** Este documento
-se permite afirmar que casos concretos no pueden ejecutarse por la vía que declaran, y una
-afirmación de ese peso no se sostiene en la lectura de otro agente. Así que las veces que
-la hace, la comprueba en el código él mismo: `DataTable.tsx` y `AlbaraLiniesSection.tsx`
-para A-05-11c (§3.11), y en su día `FacturaForm.tsx` para A-05-11a. Lo que se cita en
-§3.11 es lo que esos ficheros hacen, no una interpretación de lo que hacen.
+**Las verificaciones que A-05 ha hecho fuera de todo YAML, y por qué.** Este documento se
+permite afirmar que casos concretos no pueden ejecutarse por la vía que declaran, o que un
+comportamiento del sistema no está enunciado en ningún requisito, y una afirmación de ese
+peso no se sostiene en la lectura de otro agente. Así que las veces que la hace, la
+comprueba él mismo: `DataTable.tsx` y `AlbaraLiniesSection.tsx` para A-05-11c (§3.11),
+`FacturaForm.tsx` para A-05-11a, `FacturaDetail.tsx` y los `.feature` para A-05-03b y
+A-05-13. **En esta versión se añaden tres, todas nacidas de leer `DOC-27`**:
+`server/routes/albarans.js` para A-05-15 (§3.15), el fichero de la colección Postman para
+las aserciones que A-05-14 discute (§3.14) y `automation/ui/…/albarans.feature` para el
+escenario de TC-056. Lo que se cita es lo que esos ficheros hacen, no una interpretación de
+lo que hacen.
 
-**Ni DOC-23, ni DOC-14, ni DOC-09, ni DOC-24, ni DOC-06 convierten esto en una pasada
-`post`.** S-10 ha ejecutado una **suite de automatización** contra un entorno local, A-10
-ha explorado *la aplicación* a mano, A-07 ha analizado un *impacto* leyendo código, A-14
-ha ejercido *la aplicación* por servicio y A-04 ha escrito *un manual*. Ninguno de los 110
-casos está en Rally y ninguno tiene resultado **en Rally**, que es lo que las tres columnas
-`n/d` preguntan.
+**Ni DOC-23, ni DOC-27, ni DOC-14, ni DOC-09, ni DOC-24, ni DOC-06 convierten esto en una
+pasada `post`.** S-10 ha ejecutado una **suite de navegador** contra un entorno local, S-17
+ha ejecutado una **colección de servicio** contra ese mismo entorno local, A-10 ha explorado
+*la aplicación* a mano, A-07 ha analizado un *impacto* leyendo código, A-14 ha ejercido *la
+aplicación* por servicio y A-04 ha escrito *un manual*. Ninguno de los 110 casos está en
+Rally y ninguno tiene resultado **en Rally**, que es lo que las tres columnas `n/d`
+preguntan.
 
 ### Procedencia
 
 El bloque `inputs` declara el dato; aquí van los matices, que es donde se pueden leer como
 prosa y no inflan lo que todos los parsers leen primero.
+
+**`DOC-27-INFORME-API.md` 1.0.0 es la entrada nueva de esta versión y la que la dispara.**
+Se declara con `version: 1.0.0` y su hash porque es un documento versionado con historial
+propio (`DOC-27-INFORME-API-HIST.md`, leído también: registra su 1.0.0 como MAJOR por ser
+la primera y fija el esquema para las siguientes). Qué aporta que no aportara nadie: **la
+única fuente de evidencia de ejecución de los 4 casos `verification_path: service`**. Cómo
+se ha usado: como se usa `DOC-23` —evidencia citada en la prosa de §3 y §5, nunca dato de
+una columna del CSV—. Qué **no** se ha hecho con él: no se ha usado para derivar ninguna
+fila, ningún `test_case_count` ni ningún diagnóstico, porque no es una entrada del JOIN.
+
+**Y una nota de procedencia sobre el propio DOC-27 que conviene dejar escrita.** Su bloque
+`inputs` declara `DOC-05-PLAN-PRUEBAS.md` 1.6.0 con hash `sha256:43051f32…` — **el mismo
+que A-05 verifica hoy en el árbol**, y el que este documento corrige respecto de 1.9.1.
+Dicho de otro modo: `DOC-27` y `DOC-07` 1.10.0 leen exactamente los mismos bytes del plan
+de pruebas, y por eso sus recuentos de casos `service` coinciden sin necesidad de
+conciliarlos (§3.12).
 
 **DOC-05 1.6.0 y DOC-14 2.0.0 fueron las entradas que dispararon 1.7.0 y 1.8.0
 respectivamente.** Sus saltos están descritos en esas versiones y en el `-HIST.md`. Sigue
@@ -301,24 +399,24 @@ espacio no separable (`U+00A0`) que produce `Intl.NumberFormat('es-ES', …)` �
 que ya usó para A-05-11c y A-05-13: no se afirma nada de este peso sobre la lectura de otro
 agente sin comprobarlo en el código.
 
-**`DOC-09` 2.0.2 y `DOC-14` 2.0.1 son resellos de PATCH sin contenido nuevo relevante para
-A-05**: se han vuelto a leer para comprobarlo, no se han dado por buenos por inercia.
+**`DOC-09` 2.0.4 y `DOC-14` 2.1.0 son resellos de PATCH sin contenido nuevo relevante para
+A-05**: se han vuelto a leer para comprobarlo, no se han dado por buenos por inercia. En el
+caso de `DOC-09` hay además un error propio que se corrige aquí y conviene nombrar sin
+adornos: **el borrador de esta versión actualizó el hash de esa entrada y heredó el número
+de versión de 1.9.1**, de modo que `version: 2.0.2` y el hash describían dos estados
+distintos del mismo fichero — la declaración decía haber leído la 2.0.2 y el hash probaba
+que se había leído la 2.0.4. Para `cascada.js` no era bloqueante, porque el salto es PATCH;
+como declaración de procedencia era falsa, que es peor. **Es exactamente la deriva que §3.12
+persigue en el front-matter de otro documento**: un dato derivado que deja de derivarse. Se
+declara 2.0.4, que es lo que corresponde al hash.
 `DOC-06` 1.3.0 y `DOC-24` 1.0.0 cambian de hash o se mantienen por motivos ya descritos en
 §2 (renombrado de rutas `SPE-` el primero; sin cambios el segundo).
 
-**1.9.1 — `DOC-14` sube de 2.0.1 a 2.1.0 (MINOR en su propio ciclo) y A-05 confirma que,
-para este documento, es de nuevo un resello de procedencia.** El único cambio de contenido
-de `DOC-14` 2.1.0 es que `EXP-027` pasa de `abierto` a `estado: corregido`, citando como
-prueba de cierre `DOC-23-INFORME` 2.2.0 (`testng-results.xml`, 18 de 18 en verde) — la
-misma evidencia que este documento ya conocía y había verificado por su cuenta, código en
-mano, al cerrar **A-05-13** en 1.9.0 (§3.13) y al reverificar **A-05-03b** (§3.4). DOC-07 no
-cita en ningún punto el campo `estado` de `EXP-027` en `DOC-14` como prueba de nada —cita a
-`DOC-14` 2.0.0 solo como **origen** del hallazgo (§3.13, «Origen: `EXP-027` de
-`DOC-14-EXPLORATORIO` 2.0.0»)—, así que no hay ninguna afirmación en este documento que
-`DOC-14` 2.1.0 sostenga y que antes no sostuviera ya `DOC-23` verificado en código. El JOIN
-no se ha vuelto a ejecutar porque ninguna de sus dos entradas (DOC-04, DOC-05) se ha movido,
-y el CSV sigue siendo el mismo byte a byte. Detalle en `DOC-07-TRAZABILIDAD-HIST.md`,
-entrada 1.9.1.
+**`DOC-14` 2.1.0 es la versión vigente y este documento no apoya en ella ninguna
+afirmación.** Su único cambio de contenido —`EXP-027` pasa a `estado: corregido`— es la
+misma evidencia que A-05 ya había verificado por su cuenta, código en mano, al cerrar
+`A-05-13` (§3.13). Se declara en `inputs` porque es una entrada real; el análisis de por qué
+no movió nada está en `DOC-07-TRAZABILIDAD-HIST.md`, entrada 1.9.1, y no se repite aquí.
 
 **`registro-ids.json`** no lleva versión propia como fichero de datos que es; se declara
 con la del ciclo (1.6.0) y con su hash, que es lo que S-16 compara. Su hash cambia desde
@@ -344,11 +442,12 @@ ningún dato: se ha movido cada uno a donde se lee.**
 
 ### 3.0 El censo de avisos, enumerado
 
-Este documento declara **29 avisos**: los 17 de una sola regla de S-14 (§3.2) y **12
-hallazgos propios de A-05 abiertos**, más dos ya cerrados que se muestran aquí por última
-vez (así se hizo con A-05-11a en 1.7.0 y 1.8.0):
+Este documento declara **32 avisos**: los 17 de una sola regla de S-14 (§3.2) y **15
+hallazgos propios de A-05 abiertos**. `A-05-11a` y `A-05-13`, cerrados y mostrados por
+última vez en 1.9.x, **salen ya del censo**; su historia vive en
+`DOC-07-TRAZABILIDAD-HIST.md`:
 
-| Hallazgo | Qué dice | Estado en 1.9.0 | Corrección de |
+| Hallazgo | Qué dice | Estado en 1.10.0 | Corrección de |
 |---|---|---|---|
 | **A-05-01b** | REQ-055 y REQ-073 no tienen consecuencia observable que verificar | abierto, sin cambios | A-06 → A-03 |
 | **A-05-03** | Cuatro requisitos con cobertura verde y defecto confirmado | abierto, decidido y vigilado | decidido (Q-19) |
@@ -359,22 +458,24 @@ vez (así se hizo con A-05-11a en 1.7.0 y 1.8.0):
 | **A-05-08b** | Tres `critical` de caso único dentro del carril serial de 17 | abierto: el riesgo estructural sigue sin corregirse aunque su único caso materializado (TC-040/TC-048) ya esté parcheado | S-06 / DOC-13 |
 | **A-05-09** | `Q-30` vive en DOC-06 y no tiene ancla | abierto, sin cambios | quien tenga shell → A-04 |
 | **A-05-10** | Una superficie de interfaz no documentada, medida por tres agentes | abierto, sin cambios | A-02 + mantenedor |
-| **A-05-11a** | `TC-064` no puede componer su intento por la vía que declara | CERRADO en DOC-05 1.6.0; se muestra por última vez | — |
 | **A-05-11b** | Tres casos ejercen solo una mitad de un vector de dos | abierto, sin cambios | A-03 |
 | **A-05-11c** | TC-032, TC-033 y TC-047 declaran `ui` y no tienen vector en la interfaz | abierto, sin cambios desde 1.7.0 | **A-03** (vía) + producto (funcionalidad) |
 | **A-05-12** | El resumen `verification_path` del front-matter de DOC-05 no coincide con su propio YAML | abierto, sin cambios desde 1.7.0 | **A-03** |
-| **A-05-13** | 17 casos citaban literales de importe con punto decimal que la aplicación ya no produce; `DOC-23` 2.0.0 los daba por verdes desde antes de ese cambio | **CERRADO**: `DOC-23` 2.1.0 confirmó los 17 exactos contra ejecución real, 2.2.0 documenta su corrección y A-05 la ha verificado en el código (§3.13); se muestra por última vez | — |
+| **A-05-14** | `TC-041` ya se ejecuta, pero 3 de sus 4 pasos describen la pantalla y se han ejecutado por servicio; el paso 2 no lo ejerce nadie | **nuevo**, origen `DOC-27` §2 | **A-03** (el paso), S-10 si se separa |
+| **A-05-15** | Borrar un albarán no devuelve al stock las piezas de sus líneas; ningún requisito dice si debe hacerlo y ningún caso lo comprueba | **nuevo**, origen `DOC-27` §4.1, verificado en el servidor | **producto / A-02** (enunciado) + **A-03** (`touches` y precondición) |
+| **A-05-16** | La familia `TCS-nnn` nace fuera de `registro-ids.json` | **nuevo**, origen `DOC-27` §6.1 | **S-12** + decisión de proyecto |
 
-1.6.0 declaró **27** (17 + 10); 1.7.0 declaró **29** (17 + 12), con la salida de A-05-11a y
-la entrada de A-05-03b, A-05-11c y A-05-12; 1.8.0 declaró **30** (17 + 13), con la entrada
-de A-05-13. **1.9.0 vuelve a 29** (17 + 12): se cierra A-05-13 y ningún hallazgo nuevo nace.
-Es la primera versión en la que la línea de avisos propios baja desde que existe el
-censo.
+1.6.0 declaró **27** (17 + 10); 1.7.0 declaró **29** (17 + 12); 1.8.0 declaró **30**
+(17 + 13); 1.9.0 y 1.9.1 declararon **29** (17 + 12). **1.10.0 declara 32** (17 + 15): no
+se cierra ninguno y nacen tres.
 
-**A-05-13 se cierra por el mismo motivo que A-05-11a: su destinatario lo corrigió y A-05 lo
-verificó sobre el código, no sobre la declaración de otro documento.** Los hallazgos
-cerrados no vuelven a este censo pasada la versión en la que se anuncia su cierre; su
-historia vive en `DOC-07-TRAZABILIDAD-HIST.md`.
+**Los tres nacen del mismo sitio, y eso es lo que más dice de ellos.** No los ha encontrado
+un barrido del YAML ni una relectura de DOC-04: los ha encontrado **leer el informe de una
+suite que se ejecutó**. Es la tercera vez que ocurre lo mismo —`DOC-23` 2.0.0 destapó
+A-05-11c, `DOC-23` 2.1.0 convirtió A-05-08b en un hecho, y ahora `DOC-27` 1.0.0 destapa
+tres—, y refuerza sin proponérselo la respuesta a la pregunta 4 de §7.3: **ejecutar es hoy
+el único método que ha demostrado encontrar estas cosas.** Un plan de pruebas se puede leer
+mil veces sin que aparezca ninguno de los tres.
 
 ### 3.1 Bloqueantes — **ninguna**
 
@@ -420,13 +521,24 @@ Comprobaciones adicionales de A-05, fuera del alcance de la skill:
 1.5.0 a 1.6.0 no ha introducido ninguna bloqueante, y era previsible: cambiar el valor de
 `verification_path` en tres casos no puede romper un JOIN que no mira ese campo.
 
+**Y `DOC-27` tampoco introduce ninguna, incluida la que más se le parece.** La regla
+`fuera_de_registro` es bloqueante y `DOC-27` estrena una familia de identificadores,
+`TCS-nnn`, que **no está en `registro-ids.json`** (verificado: 0 ocurrencias de la cadena
+`TCS` en el fichero). No es una bloqueante y conviene decir exactamente por qué, para que
+nadie lo lea como una excepción de conveniencia: la regla se aplica a los `REQ-nnn` y
+`TC-nnn` **que viajan a Rally**, un `TCS-nnn` no genera fila, no aparece en ninguna columna
+del CSV y no puede romper una exportación. Es el mismo criterio con el que `Q-30` es aviso
+y no bloqueante desde 1.4.0. Que no sea bloqueante no significa que dé igual: es
+**A-05-16**, §3.16.
+
 **Que no haya bloqueantes no significa que no haya nada que decidir antes de exportar.**
-Lo que en 1.6.0 era **A-05-11a** ya está resuelto —A-03 reclasificó TC-064 a `service`—,
-pero quedan dos cosas en §3.11 y una en §3.4, ninguna bloqueante y las tres recomendadas
-antes de que los casos lleguen a Rally: **A-05-11b** (tres `critical` de caso único que
-ejercen media mitad de su vector), **A-05-11c** (tres casos que declaran `ui` sobre una
-interfaz que no ofrece su vector) y **A-05-03b** (dos casos verdes que no comprueban lo
-que su nombre anuncia).
+Lo que en 1.6.0 era **A-05-11a** ya está resuelto —A-03 reclasificó TC-064 a `service`— y
+`DOC-27` acaba de demostrarlo ejecutándolo (§3.11), pero quedan dos cosas en §3.11, una en
+§3.4 y una nueva en §3.14, ninguna bloqueante y las cuatro recomendadas antes de que los
+casos lleguen a Rally: **A-05-11b** (tres `critical` de caso único que ejercen media mitad
+de su vector), **A-05-11c** (tres casos que declaran `ui` sobre una interfaz que no ofrece
+su vector), **A-05-03b** (dos casos verdes que no comprueban lo que su nombre anuncia) y
+**A-05-14** (un caso verde cuyo paso 2 no lo ejecuta ninguna de las dos suites).
 
 **Y una comprobación de coherencia que esta vez no pasa.** La penúltima fila de la tabla
 —el reparto de `verification_path` que DOC-05 declara frente al que A-05 cuenta— **discrepa
@@ -437,7 +549,7 @@ derivarse y hay que corregirlo. Es **A-05-12**, §3.12, corrección de A-03.
 
 La fila que más pesa en el Go/No-Go sigue valiendo cero: **ninguna de las seis respuestas
 de negocio ha validado un comportamiento como intencionado.** Las seis son
-`gap_confirmed`, en siete versiones consecutivas.
+`gap_confirmed`, en ocho versiones consecutivas.
 
 
 ### 3.2 Avisos de la skill — 17, todos de la misma regla
@@ -467,14 +579,20 @@ Los 17 requisitos, sin cambios en número ni en composición:
 cuatro de los diecisiete tenían un caso único que además no ejercía entero su vector. Hoy
 son tres, y los tres que salen lo hacen porque DOC-05 1.6.0 los reclasificó:
 
-| Requisito | Caso único | En 1.6.0 | En 1.7.0 |
+| Requisito | Caso único | En 1.6.0 | En 1.10.0 |
 |---|---|---|---|
-| **REQ-046** | TC-064 | no podía componer su intento por `ui` (A-05-11a) | **resuelto**: el caso es `service` |
-| **REQ-045** | TC-063 | `ui`, no señalado entonces | **resuelto de antemano**: el caso es `service` |
-| **REQ-033** | TC-045 | `ui`, no señalado entonces | **resuelto de antemano**: el caso es `service` |
+| **REQ-046** | TC-064 | no podía componer su intento por `ui` (A-05-11a) | **resuelto y ejecutado**: `service`, verde en `DOC-27` (`TCS008`–`TCS010`) |
+| **REQ-045** | TC-063 | `ui`, no señalado entonces | **resuelto y ejecutado**: `service`, verde en `DOC-27` (`TCS005`–`TCS007`) |
+| **REQ-033** | TC-045 | `ui`, no señalado entonces | **resuelto y ejecutado**: `service`, verde en `DOC-27` (`TCS003`–`TCS004`) |
 | **REQ-011** | TC-015 | ejerce la mitad *vacía*; la *inexistente* no la cubre nadie | igual (A-05-11b) |
 | **REQ-027** | TC-036 | ídem, con el vehículo | igual (A-05-11b) |
 | **REQ-065** | TC-090 | ídem, con el empleado | igual (A-05-11b) |
+
+**La columna de la derecha ha ganado dos palabras y las dos importan.** Hasta 1.9.1 decía
+«resuelto», y «resuelto» quería decir *A-03 cambió el campo y A-05 verificó en el código que
+la vía nueva existe*. Ahora dice «resuelto **y ejecutado**», y eso ya no lo sostiene ninguna
+lectura: los tres intentos se compusieron de verdad contra el servicio y los tres fueron
+rechazados. Es la diferencia entre creer que una puerta se abre y haberla abierto.
 
 REQ-045 y REQ-033 merecen una nota, porque el mérito no es de este documento: **A-05 no los
 había señalado.** §3.11 de 1.6.0 nombró a TC-064 y dejó escrito que el barrido de A-03
@@ -508,6 +626,15 @@ como ejemplo aislado de la política de A-03 aplicada a tiempo. Hoy son cuatro (
 TC-045, TC-063, TC-064) y la política ha dejado de tener una sola excepción para tener una
 familia. Es la señal de salud que faltaba: **un criterio que se aplica una sola vez es
 indistinguible de una excepción; uno que se aplica cuatro veces es una regla.**
+
+**Y desde hoy hay una segunda señal, que es la que faltaba de verdad: la regla tiene
+ejecutor y tiene informe.** Una familia de cuatro casos asignada a un automatizador que
+nunca publicaba resultados era, en la práctica, una familia de cuatro casos sobre los que
+nadie podía decir nada. `DOC-27` 1.0.0 cierra ese hueco con 10 comprobaciones sobre los
+cuatro, todas en verde. El dato relevante para la cobertura no es el verde —este documento
+no puntúa verdes—, es que **los cuatro casos han dejado de ser un punto ciego de la
+evidencia**: hasta ayer, la única respuesta honesta a «¿se ha ejecutado TC-063 alguna vez?»
+era «no consta».
 
 ### 3.4 A-05-03 · cobertura verde sobre defecto confirmado — 4 requisitos, sin cambios
 
@@ -641,12 +768,23 @@ pregunta 2 de §7.3— y es de **A-03** en solitario.
 diagnóstico: las cuatro filas de A-05-03 y las dos de A-05-03b siguen diciendo `Correcto` y
 S-07 consume exactamente el mismo formato.
 
-### 3.5 A-05-04 · regla afirmada fuera del censo de requisitos — sin cambios
+### 3.5 A-05-04 · regla afirmada fuera del censo de requisitos — sin cambios de estado, con una corroboración nueva
 
 La imposibilidad de modificar o anular una factura **no está enunciada en ninguno de los
 79 requisitos**; A-05 ha vuelto a revisar los trece de `factures` (REQ-043 a REQ-055) y
 ninguno la menciona. La mitad de DOC-05 se cerró en 1.4.0. La mitad de **DOC-04
 (DISC-001) sigue abierta y es corrección de A-02.**
+
+**Lo que aporta `DOC-27`: una segunda fuente, medida desde la capa de servicio, de que la
+regla existe de verdad.** Hasta ahora este hallazgo se apoyaba en `DOC-01`/`DOC-02` y en la
+interfaz. `DOC-27` §4.2 lo dice desde el otro lado —«No existe `DELETE /api/factures/:id`, y
+`PATCH /:id` solo commuta `estat_pagament`. Emitir es, hoy, irreversible»— y **A-05 lo ha
+verificado él mismo en `server/routes/factures.js`**, que expone exactamente cuatro rutas
+—`GET /`, `GET /:id`, `POST /` y `PATCH /:id`— y cuyo `PATCH` rechaza con `400` cualquier
+cuerpo que no sea `estat_pagament` en `{pendent, pagada}`. La regla más severa del ciclo del
+dinero —lo que se emite no se deshace— **sigue sin ser un requisito**, ahora con evidencia
+por dos vías independientes. No cambia la severidad ni el destinatario: **aviso, A-02**. Sí
+cambia lo que se le puede responder a quien pregunte si es una interpretación: no lo es.
 
 Las dos consecuencias siguen vivas: **no es un GAP PLAN y la matriz no puede verlo** —una
 regla que nunca llegó a ser requisito no entra en el censo, no genera fila y no puede
@@ -764,6 +902,26 @@ y con eso ha cerrado A-05-11a; **su grado de automatización sigue degradado por
 documental**, que no depende de la vía. Eran dos hallazgos distintos sobre el mismo caso,
 uno está corregido y el otro no.
 
+**Y `DOC-27` enseña exactamente qué pasa cuando nadie ha documentado el literal: el oráculo
+se lo pide al código.** Las cuatro comprobaciones de rechazo de la colección no se
+conforman con el código de estado —eso es una virtud, y `DOC-27` la reivindica con razón—:
+fijan el mensaje exacto. Pero el mensaje exacto que fijan es el que devuelve hoy el
+servidor, en catalán, y ningún requisito lo enuncia. Así, literalmente:
+
+```js
+pm.expect(pm.response.json().error).to.eql('El camp tipus ha de ser "peca" o "ma_obra"');
+```
+
+Frente al `expected` que DOC-05 escribe para ese mismo paso de TC-041 —«El sistema rechaza
+la anotación avisando de que el tipo debe ser pieza o mano de obra»—, la aserción es más
+precisa y a la vez **circular**: comprueba que el sistema sigue diciendo lo que dice, no que
+diga lo que debía decir. Si el literal estuviera mal redactado, o no estuviera traducido, la
+comprobación seguiría en verde. **No es un defecto de la colección** —quien la escribe no
+tiene otro sitio de donde sacar el oráculo— y por eso este párrafo va aquí, en A-05-10, y no
+en un hallazgo contra S-17: es la misma carencia documental de siempre, ahora visible
+también en la suite de servicio. **Corrección: A-02**, la mitad «literales» de este
+hallazgo, que sigue entera.
+
 ### 3.10 Procedencia del registro
 
 El registro ha crecido a **317 anclas** (eran 311 en 1.7.0): `ACT=1 UC=40 BR=37 REQ=79
@@ -806,14 +964,18 @@ El enunciado del hallazgo no cambia:
 > entero o a medias. La matriz lo cuenta como cobertura correcta porque hay caso, y lo
 > hay; lo que no hay es forma de ejercerlo por donde el caso dice que se ejerce.
 
-El reparto que cambió en 1.7.0 —**11a se cierra, 11b sigue igual y nace 11c**— no vuelve a
-moverse en 1.8.0:
+El reparto que cambió en 1.7.0 —**11a se cierra, 11b sigue igual y nace 11c**— tampoco se
+mueve aquí; lo que cambia es la calidad de la prueba del cierre:
 
-| Sub-hallazgo | Casos | Estado en 1.8.0 |
+| Sub-hallazgo | Casos | Estado en 1.10.0 |
 |---|---|---|
-| **A-05-11a** | TC-064 | **CERRADO** — DOC-05 1.6.0 lo reclasificó a `service`; sin cambios |
+| **A-05-11a** | TC-064 | **CERRADO y ahora confirmado por ejecución** — `DOC-27` 1.0.0 |
 | **A-05-11b** | TC-015, TC-036, TC-090 | **abierto, sin cambios** |
 | **A-05-11c** | TC-032, TC-033, TC-047 | **abierto, sin cambios desde 1.7.0** |
+
+`A-05-11a` ya salió del censo de avisos (§3.0) y su ficha se conserva **solo esta vez** por
+una razón concreta: hay evidencia nueva sobre él y este documento no da por sabido lo que
+no ha dicho. A partir de 1.11.0 vivirá únicamente en el `-HIST.md`.
 
 #### A-05-11a · `TC-064` no puede componer su intento — **CERRADO**
 
@@ -853,6 +1015,33 @@ automatismo es lo que obliga a comprobar que el vector existe.
 REQ-033. Era lo previsto y es la comprobación que sostiene todo lo demás: **la vía por la
 que se verifica un caso no es una propiedad de la cobertura.** Lo que cambia es quién
 ejecuta esos tres casos —pasan de `S-10` a `S-17`— y eso vive en §5.5, no en la matriz.
+
+**Y lo que `DOC-27` añade hoy: el cierre deja de ser una predicción bien fundada y pasa a
+ser un hecho.** Esta es la parte que merece decirse despacio, porque toca el límite que este
+documento lleva versiones declarando (§5.6): `verification_path` es **un campo declarativo,
+no verificado**, y reclasificar un caso a `service` es afirmar que el vector existe por esa
+vía —una afirmación que hasta hoy solo estaba respaldada por leer `FacturaForm.tsx` y
+`AlbaraLiniesSection.tsx`—. `DOC-27` la ha puesto a prueba componiendo los tres intentos
+contra el servicio:
+
+| Caso | Comprobación que ejerce el vector | Qué hizo el sistema |
+|---|---|---|
+| **TC-064** (REQ-046) | `TCS008` · `POST /api/factures` con albaranes de dos clientes | `400` · `Tots els albarans han de ser del mateix client` |
+| **TC-063** (REQ-045) | `TCS005` · `POST /api/factures` con un albarán ya facturado | `400` · `Tots els albarans han d'estar pendents de facturar` |
+| **TC-045** (REQ-033) | `TCS003` · `POST /api/albarans/:id/linies` con una pieza inexistente | `400` |
+
+Los tres intentos **se pudieron formular**, que era exactamente lo que la vía `ui` no
+permitía. Y los tres llevan además la comprobación del efecto lateral en una petición
+aparte —`TCS009`/`TCS010`, `TCS006`/`TCS007`, `TCS004`—, que es la mitad del caso que el
+plan escribe como «Revisar el listado de albaranes» y que sin ella dejaría el rechazo sin
+demostrar que el sistema no se movió. **A-05 respalda esa forma de escribirlo sin
+reservas**: es el segundo paso de los `expected` de DOC-05, no un extra.
+
+**El precedente que esto fija, y que vale más que el cierre.** La recomendación de §5.6
+—«el único método que ha demostrado encontrar estas cosas es intentar automatizarlas»— se
+completa por el otro extremo: **automatizar también es el único método que ha demostrado
+confirmar que una reclasificación era correcta.** A-03 reclasificó tres casos leyendo
+código; alguien podría haber leído mal. Ya no hay que fiarse: se intentó y funcionó.
 
 #### A-05-11b · media mitad de un vector de dos — **REQ-011, REQ-027, REQ-065** — abierto
 
@@ -999,8 +1188,19 @@ nombre: **un dato derivado que deja de derivarse.** La diferencia con la deriva 
 significado de las anclas es que aquí no hay ningún control automático que lo cace —S-12
 vigila anclas, S-14 vigila el JOIN, y el front-matter de DOC-05 no lo vigila nadie—, y por
 eso la comprobación manual del §3.1 es la única red que hay. 1.7.0 fue la primera versión
-en que esa comprobación falló, y **sigue fallando en 1.8.0**: DOC-05 no ha cambiado y nadie
-ha corregido el resumen todavía.
+en que esa comprobación falló, y **sigue fallando en 1.10.0**: DOC-05 no ha cambiado y
+nadie ha corregido el resumen todavía.
+
+**Y ya no es la única red: `DOC-27` acaba de contradecir ese resumen con una ejecución.**
+Su §5 declara que cubre «**4 de los 110 casos** de `DOC-05`, los marcados
+`verification_path: service`», y su tabla de resultados nombra los cuatro: `TC-041`,
+`TC-045`, `TC-063` y `TC-064`. Es exactamente el recuento que A-05 hace sobre el YAML y
+exactamente lo contrario de lo que dice el resumen del front-matter de DOC-05 (`service: 1
+# TC-041`). Dos agentes independientes, leyendo los datos y no el resumen, llegan al mismo
+4; el resumen sigue diciendo 1. **El hallazgo no cambia de severidad, pero pierde su última
+excusa**: ya no hay que imaginar al consumidor apresurado que mandaría tres casos
+`Critical` a la cola equivocada, porque ya existe el documento que demuestra que la cola
+correcta tenía cuatro.
 
 **Severidad: aviso.** No rompe el JOIN, no rompe la exportación y no altera ninguna fila
 del CSV. **Corrección: A-03**, de tres líneas —`ui: 106`, `service: 4` y retirar o ampliar
@@ -1014,47 +1214,203 @@ invalidarlo. Si el bloque no se puede generar automáticamente, la alternativa h
 **no tenerlo**, y remitir al recuento. Este documento acaba de mover 129 líneas de su
 propio front-matter al cuerpo por una razón muy parecida.
 
-### 3.13 A-05-13 · el plan citaba literales de importe que la aplicación ya no producía — **CERRADO en 1.9.0**
+### 3.13 A-05-13 · el plan citaba literales de importe que la aplicación ya no producía — **CERRADO en 1.9.0, fuera del censo desde 1.10.0**
 
-**Origen: `EXP-027` de `DOC-14-EXPLORATORIO` 2.0.0, nacido como hallazgo en 1.8.0.**
-`SPEC 05` cambió el separador decimal de toda la aplicación de punto a coma (`EXP-014`,
-cerrado); los `.feature` de `automation/ui/` que comprobaban esos importes por su texto
-literal en pantalla —`factures.feature`, `nomines.feature` y, se supo después, también
-`peces.feature` y `albarans.feature`— **seguían escritos con punto**. 1.8.0 lo verificó
-sobre el código (`client/src/utils/format.ts`, `Intl.NumberFormat('es-ES', …)`) y sobre dos
-casos citados por A-05-03b (TC-073, TC-075), y dejó constancia de que `DOC-14` citaba «al
-menos nueve» sin cerrar la cuenta completa.
+**Cerrado y retirado del censo de avisos** (§3.0). Su historia completa —origen en `EXP-027`
+de `DOC-14` 2.0.0, la lista exacta de los 17 casos que `DOC-23` 2.1.0 confirmó en rojo con
+una ejecución real, y su corrección— vive en `DOC-07-TRAZABILIDAD-HIST.md`, entradas 1.8.0 y
+1.9.0. No se reproduce aquí.
 
-**`DOC-23` 2.1.0 cerró esa cuenta con una ejecución real, no con más lectura de código.**
-De 107 escenarios, **17 fallaron exactamente por este patrón**: `TC-046`, `TC-060`,
-`TC-069` a `TC-075`, `TC-088`, `TC-089`, `TC-097` a `TC-101` y `TC-103` — el conjunto que
-citaba `DOC-14`, más algunos que no había llegado a nombrar (entre ellos `TC-046`, de
-`albarans.feature`, y `TC-101`), más un caso aislado de infraestructura sin relación con
-`EXP-027`. Confirma, con la lista exacta en la mano, lo que 1.8.0 solo podía acotar por
-abajo con «al menos nueve».
+**Se conserva solo el hecho verificado, porque §3.4 y §5.5 se apoyan en él.** El commit
+`5366e18` sustituyó en `factures.feature`, `nomines.feature`, `peces.feature` y
+`albarans.feature` los literales de importe con punto decimal por su equivalente con coma, y
+**A-05 lo comprobó sobre los ficheros, no sobre la declaración de `DOC-23`**: `TC-073` fija
+hoy `baseEsperada: 33,33` y `totalEsperado: 40,33`, `TC-075` fija `base: 98,40` y
+`total: 119,06` (`factures.feature`, líneas 385 y 415), y el literal lleva el espacio no
+separable (`U+00A0`) que produce `Intl.NumberFormat('es-ES', …)`, confirmado con `cat -A`.
+El único residuo abierto no es de este hallazgo sino de método: los 18 casos se
+reverificaron con una reejecución dirigida, no con la suite completa (§5.5).
 
-**`DOC-23` 2.2.0 documenta la corrección, y A-05 la ha verificado él mismo, no solo
-leído.** El commit `5366e18` («factures/nomines/peces/albarans.feature: EXP-027, coma
-decimal + NBSP») sustituye los literales con punto por su equivalente con coma en los
-cuatro `.feature` afectados. A-05 ha comprobado directamente sobre el fichero actual —no
-sobre la declaración de DOC-23— que **TC-073** ahora fija `baseEsperada: 33,33` y
-`totalEsperado: 40,33`, y **TC-075** fija `base: 98,40` y `total: 119,06`
-(`factures.feature`, líneas 385 y 415), y que el propio literal `Literal: <…> €` lleva el
-espacio no separable (`U+00A0`, no un espacio normal) que produce
-`Intl.NumberFormat('es-ES', …)` — un detalle que el commit señala haber verificado contra
-el DOM real antes de escribir ningún literal, y que A-05 ha confirmado con `cat -A` sobre
-el fichero. `DOC-23` 2.2.0 reporta los 18 casos afectados en verde tras una reejecución
-dirigida a esos 18 (no la suite completa, matiz que se traslada a §5.5).
+### 3.14 A-05-14 · `TC-041` ya tiene evidencia de ejecución, y su paso 2 no lo ejerce nadie — **REQ-031** — nuevo
 
-**Qué NO cambia por esto: nada en el CSV ni en el diagnóstico de A-05-03b.** TC-073 y
-TC-075 seguían —y siguen— sin comprobar el IVA, con independencia de este hallazgo (§3.4):
-arreglar el literal del importe no añadió el paso que falta, y añadirlo no habría arreglado
-el literal. Son y eran dos problemas independientes sobre los mismos dos casos.
+**Origen: `DOC-27` §2, leído contra el propio `TC-041` de DOC-05.** Es un hallazgo que solo
+podía aparecer hoy: hasta que alguien no publicó **cómo** se había ejecutado el caso, no
+había con qué comparar lo que el caso dice que hay que hacer.
 
-**Severidad: cerrado.** No era bloqueante, no tocaba la matriz y no era responsabilidad de
-la aplicación. **Corregido por `s10-auto-tcs`**, verificado por A-05 en el código. El único
-residuo es metodológico, no de este hallazgo: la confirmación de los 18 casos fue una
-reejecución dirigida, no una pasada completa de los 107 (§5.5).
+`TC-041` es el más antiguo de los cuatro `service` y el único que declara, en un campo
+propio, que su clasificación no es homogénea. Su `verification_path_note`, citado con las
+dos mitades porque las dos importan:
+
+> «clasifica el vector, no cada paso: **los pasos 1, 2 y 4 se ejecutan por la pantalla** y
+> solo el 3 -el intento- va por servicio. […] aqui pesa mas quien tiene que automatizarlo:
+> **el intento y la comprobacion del efecto los ejecuta S-17 de punta a punta**.»
+
+Las dos frases no dicen lo mismo, y hasta hoy daba igual cuál se cumpliera porque el caso no
+se ejecutaba. Ya se ejecuta, y se ha cumplido la segunda: `DOC-27` lo cubre con **`TCS001`**
+(el intento, `POST /api/albarans/:id/linies`) y **`TCS002`** (el efecto, `GET`). Dos
+peticiones, ninguna pantalla.
+
+**Para tres de los cuatro pasos eso no tiene consecuencias, y para uno sí.** Los pasos 1 y 4
+piden observar las líneas y la base del albarán antes y después; `TCS002` lo comprueba por
+`GET` sobre el mismo dato, y es una sustitución legítima —lo que el paso quiere saber es el
+estado, no el píxel—. El paso 2 es de otra naturaleza:
+
+> **input:** «Desplegar el selector de tipo del formulario de añadir línea»
+>
+> **expected:** «El selector ofrece exactamente dos tipos, pieza y mano de obra, y ninguna
+> otra opción»
+
+**Eso no lo comprueba `TCS001` ni puede comprobarlo.** Que la API rechace un tercer tipo y
+que el desplegable no lo ofrezca son dos afirmaciones independientes: un desplegable puede
+ofrecer una opción que el servidor rechace, y es precisamente el modo de fallo que un paso
+así existe para cazar. Y **no lo comprueba tampoco S-10**: `TC-041` no tiene escenario en
+`automation/ui/` —A-05 lo ha verificado, no aparece en ningún `.feature`— porque `DOC-23` lo
+excluye, con razón, por ser `service`.
+
+**Resultado: el paso 2 de TC-041 no lo ejecuta ninguna de las dos suites.** El caso figura
+hoy como ejecutado y en verde, y lo está; lo que no está es ese paso.
+
+**Dos matices que bajan la gravedad, y que hay que dar porque son ciertos.** El primero: el
+paso 2 **no lo pide el requisito**. `REQ-031` dice que «una anotación que no sea de ninguno
+de esos dos tipos **no llega a registrarse**, de modo que el albarán mantiene las líneas y
+los importes que ya tenía» — habla del rechazo y del efecto, no del contenido del
+desplegable. Lo que se pierde es una comprobación **de más** que el caso se autoimpuso, no
+una parte del enunciado. El segundo: es un solo paso de un solo caso, y `REQ-031` tiene su
+vector cubierto y ejercido.
+
+**Por qué se reporta igualmente.** Porque es la primera vez que este documento puede medir
+la distancia entre *lo que un caso dice que hay que hacer* y *lo que la suite hace*, y la
+respuesta ha sido «no coinciden» en la primera comparación posible. Es la misma familia que
+`A-05-03b` —un verde que no comprueba todo lo que su ficha anuncia— con la diferencia de que
+aquí la ficha lo dice explícitamente y en un campo propio.
+
+**Severidad: aviso.** No toca la matriz, no cambia ningún diagnóstico y no rompe la
+exportación. **Corrección: de A-03**, por dos caminos legítimos entre los que A-05 no elige
+porque no le toca: (a) aceptar que `TC-041` es `service` de punta a punta y reescribir los
+pasos 1, 2 y 4 para que ninguno prometa una observación de pantalla que nadie hará; o (b)
+conservar el paso 2 sacándolo a un caso hermano `ui` que ejecute S-10, como ya se hizo con
+la familia inversa en 1.6.0. La (a) es más barata y la (b) cubre más. **Qué se quiere probar
+es de A-03**; si hace falta cubrirlo, criterio de A-11.
+
+### 3.15 A-05-15 · borrar un albarán no devuelve el stock: ningún requisito dice si debe, ningún caso lo comprueba — **REQ-041, REQ-039** — nuevo
+
+**Origen: `DOC-27` §4.1**, que lo reporta como hallazgo abierto sobre el servidor y lo
+propone como candidato para `A-12 · Roadmap`. A-05 no lo recoge para repetirlo —eso sería
+duplicar el trabajo de otro documento— sino porque **al cruzarlo con la matriz aparece algo
+que `DOC-27` no podía ver desde donde está**: que no hay ningún requisito que decida si eso
+es un defecto, y que el único caso que pasa por ahí está en verde sin haberlo mirado.
+
+**Primero el hecho, verificado por A-05 en el servidor y no citado de `DOC-27`.** Las dos
+rutas hacen cosas distintas con el stock. Al retirar **una línea**
+(`server/routes/albarans.js:197-224`):
+
+```js
+db.prepare('DELETE FROM albara_linies WHERE id = ?').run(linia.id);
+if (linia.tipus === 'peca') {
+  db.prepare('UPDATE peces SET estoc = estoc + ? WHERE id = ?').run(linia.quantitat, linia.peca_id);
+}
+```
+
+Al borrar **el albarán entero** (`server/routes/albarans.js:116-132`):
+
+```js
+db.prepare('DELETE FROM albara_linies WHERE albara_id = ?').run(req.params.id);
+db.prepare('DELETE FROM albarans WHERE id = ?').run(req.params.id);
+```
+
+**No hay ningún `UPDATE peces`.** Las líneas de pieza desaparecen y el stock que
+descontaron no vuelve.
+
+**Ahora el cruce con DOC-04, que es lo que aporta este documento.** Los dos requisitos que
+tocan el asunto dicen esto:
+
+> **REQ-039** (`critical`): «**Al retirar una línea de pieza**, el sistema devuelve al stock
+> de esa pieza la cantidad que se había consumido, en la misma operación que elimina la
+> línea.»
+>
+> **REQ-041** (`medium`): «El sistema permite borrar un albarán no facturado **junto con
+> todas sus líneas**, previa confirmación del usuario.»
+
+Borrar el albarán retira todas sus líneas. ¿Cae eso bajo REQ-039, y entonces la aplicación
+lo incumple? ¿O REQ-039 habla solo del caso de uso de retirar una línea suelta —`UC-ALB-05`,
+su ancla— y lo que falta es un requisito que diga qué pasa con el stock por la otra vía?
+**DOC-04 no lo decide, y A-05 no puede decidirlo por él**: es la forma exacta de `A-05-04`
+—una consecuencia real del sistema que ningún enunciado gobierna—, con la diferencia de que
+aquí hay dos requisitos que casi se tocan y ninguno se pronuncia.
+
+**Y el caso que pasa por ahí no lo comprueba.** `REQ-041` tiene un solo caso, `TC-056`, que
+no menciona el stock en ningún paso; su diagnóstico en la matriz es `Correcto` y su
+resultado en `DOC-23` 2.2.0 es **VERDE**. Hay además una segunda cosa, y es de aislamiento:
+
+| | `TC-056` en DOC-05 | El escenario que ejecuta S-10 |
+|---|---|---|
+| Precondición | «un albarán pendiente de facturar con **dos líneas: una de pieza** y una de mano de obra» (`DS-005`) | crea un albarán nuevo y le añade **solo una línea de mano de obra** |
+| `touches` | `[albarans, albara_linies]` | — |
+| `restores_state` | `false` | — |
+
+Verificado por A-05 en `automation/ui/…/features/albarans.feature:509-531`: el escenario
+rellena «Lista: Tipo» con «Mano de obra», añade la línea, borra el albarán y valida el
+literal de confirmación. **Nunca crea una línea de pieza.** Dos consecuencias, y conviene no
+confundirlas:
+
+1. **El verde de `TC-056` no atraviesa el camino donde vive la diferencia.** Es un verde
+   legítimo de lo que ejecuta, y no dice nada sobre el stock — ni podría, porque no hay
+   pieza. Aunque mañana el escenario se alineara con su precondición, seguiría en verde: el
+   caso tampoco tiene un paso que mire el stock.
+2. **`touches` no declara `peces.estoc`, y con la precondición escrita debería.** Ocho casos
+   del plan sí lo declaran (`TC-029`, `TC-040`, `TC-044`, `TC-046`, `TC-047`, `TC-048`,
+   `TC-053`, `TC-054`). `S-14` deriva los carriles de ese campo, y hoy coloca a `TC-056` en
+   el carril serial de 17 de todos modos —por `albarans`, no por el stock—, así que **no hay
+   colisión real hoy**. Lo que hay es una declaración incompleta que protege por accidente:
+   justo el terreno de `A-05-08b`, donde el par `TC-040`/`TC-048` ya demostró qué ocurre
+   cuando el orden real y el declarado no coinciden.
+
+**Severidad: aviso**, y **tres destinatarios que no hay que mezclar**:
+
+| Quién | Qué le toca |
+|---|---|
+| **Producto / A-02** | Decidir si borrar un albarán debe devolver el stock. Si sí, hay un defecto de aplicación y le corresponde entrada en `DOC-24` o evolutivo; si no, falta un requisito que lo diga, y es de **A-02** |
+| **A-03** | Después de esa decisión: añadir `peces.estoc` a `touches` de `TC-056` —eso ya, es independiente— y, si procede, el paso que mire el stock |
+| **`s10-auto-tcs`** | Alinear el escenario con la precondición `DS-005` del caso, o pedir a A-03 que la precondición cambie. Hoy no coinciden |
+
+**A-05 no arregla ninguna de las tres**, y en particular no toca `automation/ui/`: la regla
+de este proyecto es que quien mantiene las pruebas y quien las analiza no son el mismo, y esa
+regla es lo que hace que este apartado valga algo.
+
+### 3.16 A-05-16 · la familia `TCS-nnn` nace fuera de `registro-ids.json` — nuevo
+
+**Origen: la pregunta 1 de `DOC-27` §6**, que la plantea sin resolverla: «¿Debe la familia
+`TCS-nnn` darse de alta en `registro-ids.json`? Hoy los identificadores se asignan en la
+colección y se respeta la regla de no reutilizarlos, pero **no hay nada que lo impida
+mecánicamente**, a diferencia de `REQ`, `TC`, `UC` y `BR`.»
+
+**El hecho, verificado:** `registro-ids.json` tiene 317 anclas y **ninguna** contiene la
+cadena `TCS`. Los diez identificadores viven en el `name` de cada petición de
+`automation/api/tallerMecaniccollection.json`, con el formato
+`TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado`.
+
+**Por qué esto es de A-05 y no de nadie más.** Este documento existe para vigilar que la
+cadena `REQ-nnn → TC-nnn` no derive, y una de sus seis reglas bloqueantes es precisamente
+`fuera_de_registro`. `DOC-27` acaba de añadir un eslabón nuevo por debajo —`TC-nnn →
+TCS-nnn`— y ese eslabón **no lo vigila nadie**: ni S-12, que no conoce la familia; ni este
+documento, cuyo JOIN no baja de `TC-nnn`; ni S-14. Hoy lo único que impide que `TCS005`
+signifique mañana otra comprobación es el cuidado de quien edite el fichero de la colección,
+que es exactamente la situación en la que estaban los `TC-nnn` antes de que existiera el
+registro.
+
+**Qué se arriesga, en concreto.** La correspondencia `TCS-nnn → TC-nnn` solo está escrita en
+dos sitios: el `name` de la petición y la tabla de `DOC-27` §2. Si una petición se renombra o
+se retira, su número queda libre en silencio y el `DOC-27` de la ejecución siguiente puede
+reutilizarlo para otra cosa sin que ningún control se entere. El daño no llega a la matriz
+—un `TCS` no viaja a Rally, §3.1— pero sí a la posibilidad de comparar dos informes de
+ejecución entre sí, que es para lo que sirve numerar las comprobaciones.
+
+**Severidad: aviso.** **La decisión no es de A-05**: dar de alta una familia nueva cambia el
+contrato de `registro-ids.json`, y eso es de **S-12** y de quien gobierne el canon `DOC-nn`.
+Lo que A-05 sí puede decir, porque es su terreno, es que **el argumento que hizo que valiera
+la pena registrar los `TC-nnn` se aplica sin cambios a los `TCS-nnn`**, y que si la respuesta
+es que no se registran, conviene que quede escrita como decisión y no como omisión — que es
+la diferencia entre un riesgo aceptado y un descuido.
 
 ## 4. La matriz
 
@@ -1067,11 +1423,11 @@ requirement_id,requirement_statement,module,priority,test_case_ids,test_case_cou
 
 **No hay ninguna fila con diagnóstico distinto de `Correcto`**, así que la tabla de
 excepciones que normalmente ocuparía esta sección está vacía. Se remite al CSV para el
-detalle requisito a requisito. Las filas con reserva en este documento son **veinticinco**,
-cinco más que en 1.6.0: entran REQ-025 y REQ-034 por A-05-11c, entra REQ-053 y REQ-051
-gana una reserva nueva por A-05-03b, y entran REQ-033 y REQ-045 para dejar constancia de
-que su vía ya está corregida. REQ-046 conserva la suya por otro motivo tras cerrarse
-A-05-11a.
+detalle requisito a requisito. Las filas con reserva en este documento son **veintiséis**,
+una más que en 1.9.1: entra **REQ-041** por `A-05-15`. Otras cuatro cambian de texto sin
+entrar ni salir: **REQ-031** gana `A-05-14`, y **REQ-033**, **REQ-045** y **REQ-046** pasan
+de «su vía ya está corregida» a «su vía está corregida **y ejercida**», que es lo que
+`DOC-27` añade.
 
 | requirement_id | module | priority | test_case_ids | count | diagnosis | Reserva |
 |---|---|---|---:|---|---|---|
@@ -1083,16 +1439,17 @@ A-05-11a.
 | REQ-028 | albarans | critical | TC-037 | 1 | Correcto | A-05-08b (caso único en el carril de 17) · ① |
 | REQ-029 | albarans | high | TC-038;TC-039 | 2 | Correcto | ③ Q-16 |
 | REQ-030 | albarans | critical | TC-040 | 1 | Correcto | A-05-08b · TC-040 causó el rojo de TC-048 en `DOC-23` 2.1.0; **aislado y corregido en 2.2.0** — el riesgo estructural del carril sigue abierto |
-| REQ-031 | albarans | high | TC-041 | 1 | Correcto | A-05-01a **cerrado**; queda ⑤ Q-30. `service` |
+| **REQ-031** | albarans | high | TC-041 | 1 | Correcto | A-05-01a **cerrado**; queda ⑤ Q-30. `service`, **ejecutado y verde** (`DOC-27`) · **A-05-14**: su paso 2 no lo ejerce ninguna suite |
 | REQ-032 | albarans | critical | TC-042;TC-043;TC-044 | 3 | Correcto | ⑤ |
-| REQ-033 | albarans | critical | TC-045 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto**: el caso es `service` |
+| REQ-033 | albarans | critical | TC-045 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto y confirmado**: `service`, ejercido en `DOC-27` (`TCS003`–`TCS004`) |
 | **REQ-034** | albarans | high | TC-046;TC-047 | 2 | Correcto | **A-05-11c** (TC-047 inejecutable; TC-046 sí) |
 | REQ-035 | albarans | critical | TC-048;TC-049 | 2 | Correcto | A-05-03 · BUG-001 · ② · TC-048 fue el rojo por aislamiento de `DOC-23` 2.1.0, **corregido y verde en 2.2.0** |
 | REQ-036 | albarans | critical | TC-050 | 1 | Correcto | A-05-08b (caso único en el carril de 17) · ② |
 | REQ-040 | albarans | medium | TC-055 | 1 | Correcto | A-05-03 · BUG-002 · ② · DOC-09 §3.1 |
+| **REQ-041** | albarans | medium | TC-056 | 1 | Correcto | **A-05-15** — borrar el albarán no devuelve el stock; ni DOC-04 lo decide ni TC-056 lo mira |
 | REQ-043 | factures | critical | TC-060;TC-061 | 2 | Correcto | A-05-03 · BUG-004 · ② · ⑤ Q-24, Q-27 |
-| REQ-045 | factures | critical | TC-063 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto**: el caso es `service` |
-| REQ-046 | factures | critical | TC-064 | 1 | Correcto | **A-05-11a CERRADO** (el caso es `service`); quedan ② y `critico_caso_unico` |
+| REQ-045 | factures | critical | TC-063 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto y confirmado**: `service`, ejercido en `DOC-27` (`TCS005`–`TCS007`) |
+| REQ-046 | factures | critical | TC-064 | 1 | Correcto | **A-05-11a CERRADO y confirmado por ejecución** (`DOC-27`, `TCS008`–`TCS010`); quedan ② y `critico_caso_unico` |
 | REQ-048 | factures | high | TC-067;TC-068 | 2 | Correcto | ③ Q-16 |
 | **REQ-051** | factures | high | TC-073 | 1 | Correcto | **A-05-03b** (defecto corregido; el caso sigue sin comprobar el IVA) · ③ Q-17 |
 | **REQ-053** | factures | high | TC-075 | 1 | Correcto | **A-05-03b** (defecto corregido; el caso sigue sin comprobar el IVA) |
@@ -1101,7 +1458,7 @@ A-05-11a.
 | **REQ-065** | nomines | critical | TC-090 | 1 | Correcto | **A-05-11b** (mitad del vector) · `critico_caso_unico` |
 | REQ-073 | nomines | high | TC-103 | 1 | Correcto | A-05-01b · ① · ② |
 
-Las veinticinco filas de arriba dicen `Correcto` y las veinticinco tienen reserva. **No es
+Las veintiséis filas de arriba dicen `Correcto` y las veintiséis tienen reserva. **No es
 una contradicción, es el alcance del fichero**: la columna `diagnosis` responde a «¿hay
 caso?», no a «¿sirve el caso?», ni a «¿está sano el requisito?», ni a «¿se ha decidido ya
 qué probar?», ni a «¿puede ejecutarse ese caso por sí solo?», ni a «¿puede ese caso
@@ -1109,18 +1466,22 @@ componer su vector por la vía que declara?», ni —desde hoy— a «**¿compru
 su nombre anuncia?**». La columna «Reserva» es de esta tabla y **no existe en el CSV**:
 añadirla rompería el contrato que consume S-07.
 
-**Qué NO cambia en el CSV respecto de 1.8.0: nada.** Es **byte a byte idéntico** (md5
-`087a03779bd36a00d09f9e87943588c0`, sha256 `1676546a…`), por **séptima vez consecutiva**, y
-esta vez, igual que en 1.8.0, ni siquiera había un cambio de versión que comprobar en DOC-04
-o DOC-05: el disparo fue `DOC-23`, que no es una entrada del JOIN (§2).
+**Qué NO cambia en el CSV respecto de 1.9.1: nada.** Es **byte a byte idéntico** (md5
+`087a03779bd36a00d09f9e87943588c0`, sha256 `1676546a…`), por **octava vez consecutiva**, y
+otra vez sin que hubiera un cambio de versión que comprobar en DOC-04 o DOC-05: el disparo
+fue `DOC-27`, que no es una entrada del JOIN (§2). El JOIN se ha vuelto a ejecutar de todos
+modos —no se ha copiado el fichero de la versión anterior— porque la única manera de
+afirmar que un fichero no ha cambiado es regenerarlo y comparar.
 
-**Y la advertencia de 1.7.0 se mantiene, con el mismo matiz a favor que en 1.8.0, ahora
-completo.** Siete versiones de CSV idéntico, y en esta: dos hallazgos que estaban abiertos
-—el aislamiento TC-040/TC-048 (A-05-08b) y el literal de decimales (A-05-13)— se corrigen y
-verifican, y su reflejo en este documento cambia de naturaleza sin que el CSV lo note.
-**La estabilidad del fichero sigue sin ser evidencia de que nada relevante haya cambiado**:
-es evidencia de que este fichero mide una sola cosa —¿hay caso?— y la mide bien. Todo lo
-demás vive en la prosa de este documento, y por eso este documento existe.
+**Y la advertencia de 1.7.0 se mantiene, con el mejor ejemplo que ha tenido hasta hoy.**
+Ocho versiones de CSV idéntico, y en esta ha pasado lo siguiente sin que el fichero se
+inmute: cuatro casos han dejado de no tener ninguna fuente de evidencia de ejecución y ahora
+la tienen; un cierre que se sostenía en leer código ha quedado confirmado ejecutándolo; y
+han nacido tres avisos, uno de los cuales señala que la aplicación pierde stock por un
+camino que ningún requisito gobierna. **La estabilidad del fichero sigue sin ser evidencia
+de que nada relevante haya cambiado**: es evidencia de que este fichero mide una sola cosa
+—¿hay caso?— y la mide bien. Todo lo demás vive en la prosa de este documento, y por eso
+este documento existe.
 
 **Verificaciones hechas sobre el CSV antes de entregarlo.** Las 79 filas parsean con 10
 columnas cada una según RFC 4180; los enunciados que contienen coma van entrecomillados y
@@ -1251,7 +1612,7 @@ parche de esa sesión no cubre a los otros dos.
 
 **Corrección:** de **S-06 / DOC-13**, no de A-03. Coste: tres datos de prueba.
 
-### 5.5 Grados de automatización y ejecución real — contexto, no cobertura
+### 5.5 Grados de automatización y ejecución real — contexto, no cobertura, y por primera vez con dos fuentes
 
 | Grado | Casos | Qué significa |
 |---|---:|---|
@@ -1273,7 +1634,14 @@ que corregir A-05-11 entero llevaría el reparto a 105/5; el reparto real es 106
 diferencia se explica sola: se corrigieron tres casos en vez de uno, y los tres hermanos
 de A-05-11b siguen sin escribirse.
 
-**Lo que DOC-23 añade encima, y cómo ha cambiado entre 2.0.0 y 2.2.0:**
+**Lo que cambia en 1.10.0 no es el reparto: es que los dos lados del reparto ya informan.**
+Hasta ayer, la cola de `S-10` tenía informe versionado —`DOC-23`, desde el principio— y la
+de `S-17` no tenía ninguno. Cuatro casos asignados a un automatizador que no publicaba
+resultados equivalían, para este documento, a cuatro casos sin evidencia. `DOC-27` 1.0.0
+—que su propio historial describe como el fin de una asimetría «sin justificación»— cierra
+ese hueco.
+
+**Lo que DOC-23 añade encima, sin cambios desde 1.9.1:**
 
 | Magnitud | 2.0.0 (1.8.0) | 2.2.0 (esta versión) |
 |---|---:|---:|
@@ -1304,19 +1672,43 @@ que había fallado, con la causa raíz identificada y corregida en la fuente, no
 adivinada—, pero es la clase de matiz que este documento no calla cuando lo encuentra.
 
 Los 8 excluidos merecen desglose porque **no son todos la misma cosa**, y confundirlos
-sería perder el hallazgo de §3.11:
+sería perder el hallazgo de §3.11. Esta es la tabla que más cambia en 1.10.0:
 
-| Excluidos | Casos | Qué son |
-|---|---|---|
-| Ya reclasificados a `service` | TC-041, TC-045, TC-063, TC-064 | **correcto**: los ejecutará S-17, no S-10 |
-| Marcados `not-recommended` por el propio plan | TC-109 | **correcto**: se ejecuta a mano |
-| **Declaran `ui` y no tienen vector en la interfaz** | **TC-032, TC-033, TC-047** | **A-05-11c**, §3.11 |
+| Excluidos de la suite de navegador | Casos | Qué son | vs 1.9.1 |
+|---|---|---|---|
+| Ejecutados por la suite de servicio | TC-041, TC-045, TC-063, TC-064 | **correcto, y ya no es una promesa**: `DOC-27` 1.0.0 los ejecuta, 10 `TCS-nnn` en verde | **eran «los ejecutará S-17»** |
+| Marcados `not-recommended` por el propio plan | TC-109 | **correcto**: se ejecuta a mano; **sigue sin constar ejecutado por nadie** | = |
+| **Declaran `ui` y no tienen vector en la interfaz** | **TC-032, TC-033, TC-047** | **A-05-11c**, §3.11 | = |
 
-**Nada de esto entra en el CSV ni cambia un diagnóstico.** 102 de 110 automatizados es una
-cifra de madurez de la suite, no de cobertura de requisitos: la cobertura sigue siendo
-100 % porque los 110 casos existen y los 79 requisitos tienen el suyo. Un caso sin
-escenario automatizado sigue cubriendo su requisito; lo que no hace es producir evidencia
-sin que alguien se siente a ejecutarlo.
+**La primera fila decía «los ejecutará S-17, no S-10», en futuro, y llevaba así desde
+1.7.0.** Era una atribución de responsabilidad, no un dato de ejecución, y este documento
+la daba por buena porque no tenía nada mejor. La distinción importa: durante tres versiones,
+`DOC-07` presentó como «correcto» el hecho de que cuatro casos —tres de ellos `Critical`,
+`Negative` y caso único de un requisito `critical`— **no constaran ejecutados por nadie**.
+Correcto lo era, en el sentido de que estaban en la cola adecuada; lo que no había era
+ninguna forma de saber si esa cola se vaciaba alguna vez. Ahora la hay.
+
+**Cómo queda la evidencia de ejecución del plan, sumando las dos fuentes:**
+
+| | Casos | Fuente | Estado |
+|---|---:|---|---|
+| Ejecutados por interfaz | **102** | `DOC-23` 2.2.0 (S-10, Selenium + Cucumber) | 107 de 107 escenarios en verde |
+| Ejecutados por servicio | **4** | `DOC-27` 1.0.0 (S-17, colección Postman) | 10 de 10 `TCS-nnn` en verde |
+| **Con evidencia publicada** | **106 de 110** | — | — |
+| Sin evidencia de ejecución | **4** | — | TC-032, TC-033, TC-047 (`A-05-11c`) y TC-109 (`not-recommended`) |
+
+**Y hay que leer ese 106 con el mismo cuidado con el que se lee el 100 % de cobertura.** No
+son 106 casos «que pasan»: son 106 casos **de los que alguien ha publicado un resultado**.
+Los cuatro que faltan no son un descuido de nadie —tres esperan una decisión de producto y
+el cuarto se ejecuta a mano por decisión del plan—, pero siguen siendo cuatro casos de los
+que, si mañana se pregunta en el Go/No-Go «¿esto se ha probado?», la respuesta honesta es
+que no consta.
+
+**Nada de esto entra en el CSV ni cambia un diagnóstico.** 106 de 110 con evidencia de
+ejecución es una cifra de madurez de las suites, no de cobertura de requisitos: la cobertura
+sigue siendo 100 % porque los 110 casos existen y los 79 requisitos tienen el suyo. Un caso
+sin escenario automatizado sigue cubriendo su requisito; lo que no hace es producir
+evidencia sin que alguien se siente a ejecutarlo.
 
 ### 5.6 Por vía de verificación
 
@@ -1330,10 +1722,10 @@ lee el YAML» cambia el resultado en vez de solo garantizarlo.
 
 Llevado a la matriz, requisito a requisito:
 
-| | Requisitos | % | vs 1.8.0 |
+| | Requisitos | % | vs 1.9.1 |
 |---|---:|---:|---|
 | Cobertura enteramente por interfaz (`ui`) | **75** | 94,9 % | = |
-| Cobertura enteramente por servicio | **4** (REQ-031, REQ-033, REQ-045, REQ-046) | 5,1 % | = |
+| Cobertura enteramente por servicio | **4** (REQ-031, REQ-033, REQ-045, REQ-046) | 5,1 % | = · **los cuatro, con evidencia de ejecución desde `DOC-27` 1.0.0** |
 | Cobertura mixta (casos por las dos vías) | 0 | 0 % | = |
 | **`critical` con cobertura enteramente por interfaz** | **32 de 35** | 91,4 % | = |
 
@@ -1351,17 +1743,26 @@ por `ui`»**. Esa intersección tenía cuatro requisitos en 1.6.0; hoy tiene **c
 porque el problema haya crecido sino porque se ha mirado mejor: salen los tres que A-03
 reclasificó y entran los dos que la automatización destapó.
 
-| | 1.6.0 | 1.7.0 |
+| | 1.6.0 | 1.10.0 |
 |---|---|---|
-| REQ-046 (TC-064) | en la intersección | **fuera**: el caso es `service` |
+| REQ-046 (TC-064) | en la intersección | **fuera**: el caso es `service`, y `DOC-27` lo ha ejercido por esa vía |
 | REQ-011, REQ-027, REQ-065 | dentro, a medias | dentro, a medias, sin cambios |
 | REQ-025 (TC-032, TC-033) | no detectado | **dentro, entero** |
 | REQ-034 (TC-047) | no detectado | **dentro, a medias** |
 
-**Y aquí sigue el límite honesto de esta medición, corregido en un punto.**
-`verification_path` dice **por qué vía se declara** que se ejerce un caso; **no dice si el
-vector existe en esa vía**. Es un campo declarativo, no verificado, y nada en el contrato,
-ni en S-14, ni en este documento puede comprobarlo automáticamente. Lo que 1.6.0 añadía a
+**Y aquí sigue el límite honesto de esta medición, ahora con una excepción de tamaño
+conocido.** `verification_path` dice **por qué vía se declara** que se ejerce un caso; **no
+dice si el vector existe en esa vía**. Es un campo declarativo, no verificado, y nada en el
+contrato, ni en S-14, ni en este documento puede comprobarlo automáticamente.
+
+**La excepción: para los 4 casos `service`, desde hoy sí está verificado, y no por este
+documento.** `DOC-27` compuso los cuatro intentos contra el servicio y los cuatro fueron
+rechazados con el mensaje esperado (§3.11). Es exactamente lo que el campo declaraba, y es
+la primera vez que la declaración se contrasta con un hecho en vez de con una lectura de
+código. Conviene medir bien el alcance de esa buena noticia: **4 de 110**. Para los otros
+106 el campo sigue siendo una promesa, y de esos, cinco requisitos tienen una promesa que
+ya sabemos que no se cumple (`A-05-11b` y `A-05-11c`). La forma de reducir esa cifra es la
+de siempre y no ha cambiado: intentar ejecutarlos. Lo que 1.6.0 añadía a
 continuación —que el espacio donde esconderse eran los 40 `Negative` y `Boundary`, porque
 los `Functional` fallarían ruidosamente el primer día— **era falso, y esta versión lo
 sabe**. TC-032, TC-033 y TC-047 son `Functional`. No fallaron ruidosamente: **nunca
@@ -1389,12 +1790,15 @@ no puede escribirse ahora: no existen `DOC-19-RALLY-TESTCASES.csv` ni
 ejecutados en Rally y no tienen resultado registrado allí. Cualquier afirmación sobre qué
 diría esa ejecución sería especulación, no trazabilidad.
 
-**Y desde 1.7.0 hay una tentación todavía mayor en esta versión, y sigue mereciendo
-nombrarse.** `DOC-23` 2.2.0 trae 102 casos del plan ejecutados y **107 de 107 escenarios en
-verde**: ya no queda ni un rojo que discutir. Es lo más cerca que este proyecto ha estado
-nunca de tener resultados, y aun así no llena este hueco: **una suite local no es Rally**,
-`exists_in_rally` sigue sin haber sido mirado por nadie, y las tres columnas del CSV
-preguntan por Rally. Escribir aquí la narrativa de riesgos con los datos de DOC-23 sería
+**Y la tentación crece otra vez, ahora por partida doble.** `DOC-23` 2.2.0 trae 102 casos
+del plan ejecutados y **107 de 107 escenarios en verde**; `DOC-27` 1.0.0 trae los **4 que
+faltaban, con 10 comprobaciones en verde**. Entre las dos, 106 de los 110 casos del plan
+tienen hoy un resultado publicado y **ninguno de los dos informes tiene un solo rojo**. Es
+lo más cerca que este proyecto ha estado nunca de tener resultados, y aun así no llena este
+hueco: **una suite local no es Rally**, `exists_in_rally` sigue sin haber sido mirado por
+nadie, y las tres columnas del CSV preguntan por Rally. Que ahora haya dos fuentes en vez de
+una hace la tentación mayor y el error idéntico: **dos fuentes distintas en una columna que
+nombra una tercera es peor, no mejor, que una sola fuente equivocada.** Escribir aquí la narrativa de riesgos con los datos de DOC-23 sería
 exactamente el mismo error que escribir «No» donde toca `n/d`: dar por medido lo que se ha
 medido en otro sitio y con otro alcance. Lo que sí se puede hacer —y se ha hecho a lo largo
 de §3 y §5— es usar DOC-23 **como evidencia citada, con su procedencia al lado**, para
@@ -1404,8 +1808,23 @@ Lo que sí puede afirmarse hoy, y sólo esto:
 
 - el plan no deja ningún requisito sin caso definido, ni ningún requisito crítico sin un
   caso crítico;
-- **el hallazgo más grave de 1.6.0 sigue corregido**: TC-064 —y con él TC-063 y TC-045— ya
-  no declara una vía por la que su vector no se puede componer;
+- **el hallazgo más grave de 1.6.0 no solo sigue corregido: se ha comprobado ejecutándolo.**
+  TC-064 —y con él TC-063 y TC-045— ya no declara una vía por la que su vector no se puede
+  componer, y esta vez no es una inferencia sobre el código: los tres intentos se
+  formularon contra el servicio y los tres fueron rechazados (§3.11);
+- **cuatro casos del plan han dejado de ser un punto ciego de la evidencia.** Hasta ayer,
+  `TC-041`, `TC-045`, `TC-063` y `TC-064` estaban correctamente asignados a S-17 y **no
+  constaban ejecutados por nadie**; hoy constan, en un informe versionado y con historial
+  (§5.5). Quedan cuatro casos sin evidencia —TC-032, TC-033, TC-047 y TC-109—, y de esos,
+  tres esperan una decisión de producto;
+- **hay un camino por el que la aplicación pierde stock y ningún requisito dice si eso está
+  bien**: borrar un albarán no devuelve al catálogo las piezas de sus líneas (verificado en
+  el servidor, `A-05-15`, §3.15). El único caso de REQ-041 está en verde y no mira el stock,
+  y el escenario que lo ejecuta ni siquiera crea una línea de pieza. No es un GAP PLAN
+  —REQ-041 tiene caso— y la matriz no puede verlo, igual que no puede ver `A-05-04`;
+- **un paso de `TC-041` no lo ejecuta ninguna de las dos suites** (`A-05-14`, §3.14): el que
+  comprueba que el desplegable de tipo ofrece exactamente dos opciones. El caso figura como
+  ejecutado y en verde, y lo está; ese paso, no;
 - **quedan cinco requisitos cuyo vector no es alcanzable por la vía declarada**: tres a
   medias por un desplegable (A-05-11b) y dos —REQ-025 entero y REQ-034 a medias— porque la
   funcionalidad que el requisito enuncia no está en la pantalla (A-05-11c);
@@ -1488,12 +1907,13 @@ recuento se ha vuelto a derivar de los bloques YAML de los tres documentos, no s
 copiado de 1.6.0.
 
 **Que las cifras no se muevan no significa que la versión no haya avanzado**, y este
-apartado es el sitio donde la distinción se ve mejor. Lo que ha avanzado a lo largo de
-1.7.0 y 1.8.0 —A-05-11a cerrado, A-05-11c y A-05-03b abiertos, A-05-03b cambiando de
-naturaleza y A-05-13 naciendo— **no vive en ninguno de los cinco alcances**, porque los
-cinco miden preguntas sin responder y esto son hechos verificados. Un
-requisito puede estar fuera de los cinco alcances y aun así no ser verificable: REQ-025 lo
-demuestra.
+apartado es el sitio donde la distinción se ve mejor. Nada de lo que ha avanzado desde
+1.7.0 —A-05-11a cerrado y ahora confirmado por ejecución, A-05-11c y A-05-03b abiertos,
+A-05-13 cerrado, y los tres avisos que nacen en 1.10.0— **vive en ninguno de los cinco
+alcances**, porque los cinco miden preguntas sin responder y esto son hechos verificados.
+Un requisito puede estar fuera de los cinco alcances y aun así no ser verificable: REQ-025
+lo demuestra. Y puede estar fuera de los cinco y aun así esconder una consecuencia que
+nadie ha decidido: REQ-041 lo demuestra desde hoy (§3.15).
 
 **Cómo se ha cerrado Q-18 merece una nota, porque es el mejor cierre de pregunta de este
 proyecto hasta hoy.** Se ha respondido en dos mitades con dueños distintos y declarados:
@@ -1512,7 +1932,7 @@ disfrace de hecho o al revés. A-05 lo recoge como precedente, no como observaci
 - **③** es la única que se puede reducir sin esperar a un tercero, y **se ha vuelto a
   reducir**: de tres preguntas a dos, y a la mitad de requisitos — sin cambios desde 1.7.0.
 - **④ sigue valiendo cero**, y es la única que mediría una reducción real del riesgo. Ni
-  un solo requisito ha quedado validado como intencionado en seis versiones consecutivas.
+  un solo requisito ha quedado validado como intencionado en siete versiones consecutivas.
 - **⑤** es la más grande y su corrección **no es de A-04**: es de A-02, porque el hueco
   está en DOC-04 (§3.9).
 
@@ -1569,11 +1989,16 @@ tres. **Corrección de S-01**, independiente de `EVO-001`.
 
 ### 7.3 Preguntas propiamente abiertas
 
-**La pregunta 1 de 1.6.0 —«¿se corrige TC-064 antes de exportar?»— está contestada, y la
-respuesta fue sí.** Se retiró en 1.7.0. **La pregunta 16 de 1.8.0 —«¿se actualizan los
-literales de importe al separador decimal vigente?»— también está contestada, y también
-sí**: commit `5366e18`, verificado por A-05 en el código (A-05-13, §3.13). Se retira de
-esta lista sin dejar hueco: no hay pregunta nueva que ocupe su número.
+**Los números de esta lista son posicionales dentro de cada versión, no identificadores
+permanentes**; los identificadores estables son los `A-05-nn` de §3. La pregunta 1 de 1.6.0
+—«¿se corrige TC-064 antes de exportar?»— está contestada, y la respuesta fue sí; `DOC-27`
+añade ahora la comprobación de que la corrección funciona (§3.11). La pregunta 16 de 1.8.0
+—«¿se actualizan los literales de importe al separador decimal vigente?»— también está
+contestada, y también sí: commit `5366e18`, verificado por A-05 en el código.
+
+**1.10.0 añade tres preguntas nuevas —16, 17 y 18—, las tres nacidas de leer `DOC-27`.** Las
+tres son baratas de contestar y ninguna es de A-05: una es de S-12, otra de producto y la
+tercera de A-03. La lista pasa de 15 a **18**.
 
 1. **¿Describen REQ-025 y REQ-034 lo que se quiere que haga la aplicación?** Nacida en
    1.7.0, sigue sin respuesta y **no es de QA**. REQ-025 promete un listado de
@@ -1598,12 +2023,14 @@ esta lista sin dejar hueco: no hay pregunta nueva que ocupe su número.
    TC-045 a la vista. Corrección de **A-03**. No depende de ningún evolutivo ni de ninguna
    respuesta de negocio: es de lo poco de este documento que se puede arreglar hoy.
 4. **¿Se automatizan los casos antes de exportarlos, como método y no como excepción?** Es
-   la pregunta de método que dejó 1.7.0 y sigue abierta. El barrido documental de §4.12 encontró
-   cuatro dudosos; la generación de escenarios de S-10 encontró cinco casos sin vector
-   —tres que A-03 ya reclasificó y los tres de A-05-11c— y además destapó el problema de
-   aislamiento TC-040/TC-048 que este documento venía anunciando en abstracto desde 1.4.0.
-   **Escribir el automatismo es hoy el único método que ha demostrado encontrar estas
-   cosas** (§5.6). Decisión de **A-01 / A-11** sobre el orden de las fases.
+   la pregunta de método que dejó 1.7.0 y sigue abierta, con un argumento más a favor cada
+   vez que alguien ejecuta algo. El barrido documental de §4.12 encontró cuatro dudosos; la
+   generación de escenarios de S-10 encontró cinco casos sin vector —tres que A-03 ya
+   reclasificó y los tres de A-05-11c— y destapó el aislamiento TC-040/TC-048 que este
+   documento venía anunciando en abstracto desde 1.4.0; **y la ejecución de la colección de
+   servicio ha destapado en una sola sesión los tres hallazgos nuevos de esta versión**
+   (§3.0). **Escribir y ejecutar el automatismo es hoy el único método que ha demostrado
+   encontrar estas cosas** (§5.6). Decisión de **A-01 / A-11** sobre el orden de las fases.
 5. **¿Se corrige, a nivel de S-06 / DOC-13, el mecanismo que permitió el aislamiento entre
    TC-040 y TC-048?** Ya no es un riesgo teórico —fue el único rojo de 107 escenarios en
    `DOC-23` 2.1.0, con causa diagnosticada (§3.7)— y el propio escenario ya está parcheado
@@ -1652,13 +2079,34 @@ esta lista sin dejar hueco: no hay pregunta nueva que ocupe su número.
 15. **¿Se mantendrá este documento cuando exista `DOC-21-GRAPH.json`?** Si el proyecto
     llega a tener el grafo de S-08, DOC-07 deja de ser un artefacto que mantener y pasa a
     ser una **vista del grafo**: un artefacto menos. Hoy no existe, así que se mantiene, y
-    esta versión vuelve a reforzar el argumento en contra, con la misma vía que 1.8.0 y un
-    disparador distinto: el de 1.9.0 no vino de DOC-04 ni de DOC-05 —las dos entradas del
-    JOIN, las únicas que un grafo modelaría— sino de `DOC-23`, un informe de ejecución que
-    ningún grafo de dependencias técnicas va a contener nunca. Lo único que ha cambiado en
-    esta versión —que se cierre A-05-13, que TC-048 quede corregido y verificado, que
-    A-05-08b pase de hipótesis a caso concreto parcheado— es una lectura de un documento de
-    ejecución y de cuatro `.feature`, no una arista. **Lo que queda como artefacto propio de
-    A-05 es cada vez más sólo la interpretación**, y séptima versión consecutiva con el CSV
-    byte a byte idéntico —la segunda sin que ni DOC-04 ni DOC-05 cambiaran de versión— lo
-    enseña sin necesidad de argumentarlo.
+    esta versión vuelve a reforzar el argumento en contra con un disparador todavía más
+    ajeno al grafo que el de 1.9.0: aquel vino de `DOC-23` y este viene de **`DOC-27`, un
+    documento que no existía**. Ni las entradas del JOIN se han movido —DOC-04 y DOC-05
+    son las únicas que un grafo modelaría— ni ha cambiado una sola arista: lo que ha
+    cambiado es que cuatro casos han pasado de no tener evidencia a tenerla, que un cierre
+    ha pasado de inferido a comprobado y que han aparecido tres avisos. **Nada de eso es
+    una relación entre nodos**, y octava versión consecutiva con el CSV byte a byte idéntico
+    —la tercera sin que ni DOC-04 ni DOC-05 cambiaran de versión— lo enseña sin necesidad
+    de argumentarlo. **Lo que queda como artefacto propio de A-05 es cada vez más sólo la
+    interpretación**, y esta versión es el mejor ejemplo: su valor entero está en prosa.
+16. **¿Se da de alta la familia `TCS-nnn` en `registro-ids.json`?** Nace en 1.10.0 con
+    `A-05-16` (§3.16) y la plantea el propio `DOC-27` en su §6.1. Hoy los diez `TCS-nnn`
+    viven solo en el `name` de las peticiones de la colección y en la tabla de `DOC-27`;
+    nada impide mecánicamente que un número se reutilice. **No es de A-05**: cambia el
+    contrato de `registro-ids.json`, así que es de **S-12** y de quien gobierne el canon
+    `DOC-nn`. Si la respuesta es que no se registran, que quede escrita como decisión.
+17. **¿Debe borrar un albarán devolver al catálogo el stock de sus líneas de pieza?** Nace
+    en 1.10.0 con `A-05-15` (§3.15). El hecho está verificado en el servidor: retirar una
+    línea lo devuelve, borrar el albarán entero no. Lo que no existe es un requisito que
+    diga cuál de las dos cosas es la correcta —REQ-039 habla de la línea, REQ-041 del
+    albarán y ninguno del stock por esa vía—. **Decisión de producto**; si la respuesta es
+    que sí, hay un defecto de aplicación y le toca entrada en `DOC-24` o evolutivo; si es
+    que no, falta un requisito y es de **A-02**. Por debajo cuelgan dos correcciones
+    baratas e independientes de la decisión: `peces.estoc` en el `touches` de TC-056
+    (**A-03**) y el escenario que no cumple su propia precondición (**`s10-auto-tcs`**).
+18. **¿Qué se hace con el paso 2 de `TC-041`?** Nace en 1.10.0 con `A-05-14` (§3.14).
+    Ninguna de las dos suites comprueba que el desplegable de tipo ofrezca exactamente dos
+    opciones, y el propio caso dice que ese paso «se ejecuta por la pantalla». O se
+    reescribe el caso para que no prometa lo que nadie hará, o el paso sale a un caso
+    hermano `ui`. **Es de A-03**, y cuesta menos que cualquiera de las otras diecisiete
+    preguntas de esta lista.
