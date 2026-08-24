@@ -79,6 +79,32 @@ renumeren ni es reutilitzen.**
 Quan un canvi a l'app toca comportament documentat, hi ha documents que queden
 desfasats. La skill `s16-cascada-obsolescencia` calcula quins.
 
+### Saber si cal revisar res, sense analitzar-ho tot
+
+A l'arrel hi ha —o no hi ha— `PENDIENTE-RESINCRONIZAR.md`:
+
+- **No hi és** → tota la documentació estava al dia a l'últim tancament. No cal
+  executar res ni carregar cap skill.
+- **Hi és** → llegeix-lo: diu quins commits han tocat quina zona des d'aleshores.
+  Quins `DOC-nn` queden obsolets ho segueix calculant `cascada.js`; el fitxer
+  registra **fets**, no conseqüències, per no tenir la mateixa dada en dos llocs.
+
+L'escriu sol el hook `.githooks/post-commit`. **En un clon nou cal activar-lo un
+cop**, perquè `core.hooksPath` és configuració local i no es versiona:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+L'esborra `s16-cascada-obsolescencia` en tancar una onada amb 0 obsolets,
+actualitzant alhora `.resync-watermark` — la marca versionada de l'últim
+tancament, i l'única veritat persistent del mecanisme. Si el fitxer senyal es
+perd, `.githooks/registrar-pendiente.sh --rebuild` el reconstrueix idèntic.
+
+Serveix per **acumular**: cinc canvis petits es resincronitzen en una sola
+passada en comptes de cinc. El preu és deriva acumulada, així que no el deixis
+créixer indefinidament — tanca'l abans d'acabar un spec o una entrega.
+
 ## Proves automatitzades
 
 `automation/ui/` — Selenium + Cucumber + TestNG, patró BasePO / StepDef genèric
