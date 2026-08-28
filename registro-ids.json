@@ -2989,6 +2989,14 @@
       "external_id": "TALLER-FAC-TC-119",
       "created": "2026-08-28",
       "status": "active"
+    },
+    "BR-ALB-10": {
+      "text": "Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera, y el selector del formulario solo ofrece los vehículos del cliente actual",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:95",
+      "created": "2026-08-28",
+      "status": "active"
     }
   }
 }

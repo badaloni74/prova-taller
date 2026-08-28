@@ -1,22 +1,22 @@
 ---
 doc_id: DOC-01
 doc_name: DOC-01-BASE-ASIS
-version: 1.1.0
+version: 1.2.0
 status: draft
 history: DOC-01-BASE-ASIS-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-23T00:38:21+02:00
+generated_at: 2026-08-28T13:55:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: 90b24b861bd4d0a366e1dab28308868e7190ae9d
-  working_tree_clean: false   # specs/, docs/, TRIATGE-DOC-14.md y ficheros de sesion sin versionar en el ambito de este ciclo
+  branch: spec-SPE-06-albara-canvi-client
+  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
+  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el arbol versionado esta limpio
 inputs:
   - id: registro-ids.json
     present: true
-    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    hash: sha256:4b25a1a4bc636ef781f149e4a2bddc601a23460ed7f401c3dbd8783a6c0ab5a7
 ---
 
 # DOC-01 · Base AS-IS — app-taller
@@ -112,7 +112,7 @@ usará para crear los `REQ-nnn`: no cambian entre ejecuciones.
 | UC-ALB-03 | Añadir una línea de pieza | El usuario elige una pieza y una cantidad | La línea se añade y el stock de la pieza baja |
 | UC-ALB-04 | Añadir una línea de mano de obra | El usuario describe el trabajo y las horas | La línea se añade con su precio por hora |
 | UC-ALB-05 | Retirar una línea | El usuario elimina una línea | La línea desaparece y, si era de pieza, el stock se devuelve |
-| UC-ALB-06 | Modificar la cabecera de un albarán | El usuario edita vehículo, fecha o notas | Los datos quedan actualizados, salvo que ya esté facturado |
+| UC-ALB-06 | Modificar la cabecera de un albarán | El usuario edita vehículo, fecha o notas | Los datos quedan actualizados, salvo que ya esté facturado; el vehículo solo puede sustituirse por otro **del mismo cliente** |
 | UC-ALB-07 | Borrar un albarán | El usuario confirma el borrado | El albarán y sus líneas desaparecen, salvo que ya esté facturado |
 
 **Flujo detallado — UC-ALB-03 · Añadir una línea de pieza**
@@ -130,6 +130,18 @@ usará para crear los `REQ-nnn`: no cambian entre ejecuciones.
 2. Elimina una línea concreta.
 3. Si la línea era de pieza, la cantidad **vuelve al stock** en la misma
    operación. Si era de mano de obra, no hay efecto sobre el stock.
+
+**Flujo detallado — UC-ALB-06 · Modificar la cabecera de un albarán**
+
+1. El usuario abre un albarán que **no** esté facturado.
+2. En el formulario, el selector de vehículo ofrece **solo los vehículos del
+   cliente actual del albarán** — ningún vehículo de otro cliente.
+3. Puede cambiar el vehículo por otro del mismo cliente, la fecha o las notas.
+4. Al guardar, si el vehículo indicado pertenece a un cliente distinto del
+   actual, la operación se **rechaza entera**: no se guarda ni el vehículo, ni la
+   fecha, ni las notas (ver `BR-ALB-10`).
+5. Sobre un albarán ya facturado, cualquier cambio se rechaza por estar
+   facturado (`BR-ALB-03`), con independencia del vehículo elegido.
 
 ### 3.5 Facturas
 
@@ -215,26 +227,20 @@ la base de datos. Ninguna es una suposición.
 | BR-VEH-03 | La matrícula es única en todo el sistema | `server/routes/vehicles.js:42` + `002_*.sql:19` |
 | BR-VEH-04 | No se puede borrar un vehículo que tenga albaranes asociados | `server/routes/vehicles.js:124` |
 
-### Piezas
-
-| Ancla | Regla | Fuente |
-|---|---|---|
-| BR-PEC-01 | El nombre de la pieza es obligatorio | `server/routes/peces.js:22`, `:52` |
-| BR-PEC-02 | No se puede borrar una pieza usada en algún albarán | `server/routes/peces.js:85` |
-
 ### Albaranes
 
 | Ancla | Regla | Fuente |
 |---|---|---|
-| BR-ALB-01 | Un albarán pertenece siempre a un vehículo existente | `server/routes/albarans.js:55`, `:60` |
+| BR-ALB-01 | Un albarán pertenece siempre a un vehículo existente | `server/routes/albarans.js:55`, `:60`, `:91` |
 | BR-ALB-02 | Un albarán nace en estado *pendiente* | `server/routes/albarans.js:68` |
-| BR-ALB-03 | Un albarán facturado no se puede modificar ni borrar, ni tocar sus líneas | `server/routes/albarans.js:81`, `:110`, `:128`, `:186` |
-| BR-ALB-04 | Una línea es de *pieza* o de *mano de obra*, sin más opciones | `002_*.sql:53` + `server/routes/albarans.js:134` |
-| BR-ALB-05 | La cantidad de una línea debe ser mayor que cero | `server/routes/albarans.js:137` |
-| BR-ALB-06 | Una línea de pieza exige una pieza existente; si no se informa precio, se toma el de catálogo | `server/routes/albarans.js:146`, `:150`, `:152` |
-| BR-ALB-07 | Una línea de mano de obra exige descripción | `server/routes/albarans.js:155` |
-| BR-ALB-08 | Añadir una línea de pieza descuenta el stock; retirarla lo devuelve | `server/routes/albarans.js:168`, `:200` |
+| BR-ALB-03 | Un albarán facturado no se puede modificar ni borrar, ni tocar sus líneas | `server/routes/albarans.js:81`, `:121`, `:139`, `:202` |
+| BR-ALB-04 | Una línea es de *pieza* o de *mano de obra*, sin más opciones | `002_*.sql:53` + `server/routes/albarans.js:145` |
+| BR-ALB-05 | La cantidad de una línea debe ser mayor que cero | `server/routes/albarans.js:148` |
+| BR-ALB-06 | Una línea de pieza exige una pieza existente; si no se informa precio, se toma el de catálogo | `server/routes/albarans.js:156`, `:159`, `:168` |
+| BR-ALB-07 | Una línea de mano de obra exige descripción | `server/routes/albarans.js:171` |
+| BR-ALB-08 | Añadir una línea de pieza descuenta el stock; retirarla lo devuelve | `server/routes/albarans.js:184`, `:216` |
 | BR-ALB-09 | El número de albarán se genera solo, con formato `año/A-nnnn` | `server/db/numbering.js:16` |
+| BR-ALB-10 | Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera. El selector del formulario, además, solo ofrece los vehículos del cliente actual | `server/routes/albarans.js:95-104` (rechazo) + `client/src/pages/albarans/AlbaraForm.tsx:40-60` (filtro del selector) |
 
 ### Facturas
 
@@ -322,7 +328,7 @@ appdani/
 │     ├─ numbering.js      # La numeración anual de albaranes y facturas
 │     └─ seed.js           # Datos de ejemplo para probar la aplicación
 ├─ data/                   # El fichero con todos los datos reales del taller
-└─ specs/                  # Las cinco especificaciones con las que se construyó y se ha ido corrigiendo la aplicación
+└─ specs/                  # Las seis especificaciones con las que se construyó y se ha ido corrigiendo la aplicación, repartidas en implemented/, pending/ y rejected/
 ```
 
 ## 7. Cobertura y exclusiones
@@ -343,6 +349,7 @@ pantallas y tiene casos de uso y reglas propias, así que se cuenta como módulo
 | `data/` | Datos reales del taller. Ignorada en `.gitignore` |
 | `.git/` | Metadatos de control de versiones |
 | `package-lock.json` | Bloqueo de versiones. Su contenido relevante está en DOC-02 |
+| `automation/`, `docs/`, `dashboard/` | Automatización de pruebas, documentación del ciclo QA y herramienta de seguimiento. No son la aplicación; `automation/` la describe DOC-02 §9 |
 
 ## 8. Suposiciones y preguntas abiertas
 
@@ -354,8 +361,11 @@ pantallas y tiene casos de uso y reglas propias, así que se cuenta como módulo
 | Q-05 | El empleado guarda `data_alta` y `salari_base`, pero la nómina no los usa: el bruto se teclea a mano cada mes. ¿Se espera que el salario base proponga el bruto? | UC-NOM-02, BR-NOM-05 | Negocio |
 | Q-06 | Una factura no se puede modificar ni anular, y sus albaranes quedan bloqueados para siempre. ¿Cómo se corrige en el taller una factura emitida por error? | UC-FAC-01, BR-ALB-03 | Negocio |
 | Q-07 | Los albaranes no tienen ningún estado intermedio entre *pendiente* y *facturado* (por ejemplo, «en curso» o «cerrado»). ¿El taller trabaja así, o falta reflejar un paso real? | UC-ALB-02, BR-ALB-02 | Negocio |
+| Q-08 | `BR-ALB-10` cierra el cambio de cliente por la puerta del albarán, pero cambiar el propietario de un vehículo (`UC-VEH-04`) sigue arrastrando sus albaranes pendientes al cliente nuevo. ¿Debe impedirse, avisarse, o permitirse dejar el trabajo con el dueño anterior? | UC-VEH-04, BR-ALB-10 | Negocio (recogida como PD-002 en `specs/implemented/SPE-06-albara-canvi-client.md`) |
 
 **La antigua Q-02** («¿stock negativo es decisión consciente o falta una regla?») **ya no es una pregunta abierta**: negocio la resolvió el 2026-08-16 (recogida como `Q-12` en `DOC-04`, alcance «precio, coste y stock de pieza, precio de línea de albarán y precio por hora de mano de obra deben ser siempre positivos»). La decisión existe; su implementación todavía no —está censada como `BUG-003`, abierto, en `docs/DOC-24-BUGS.json`—. No se repite aquí porque repetir una pregunta ya contestada es el error que esta regeneración existe para evitar.
+
+**La antigua Q-10 de `DOC-04`** («¿se puede cambiar el vehículo de un albarán a otro cliente?») **está contestada**: negocio decidió el 2026-08-16 que debe impedirse. La decisión está implementada y recogida como `BR-ALB-10` (SPEC 06, `status: Implemented`). Lo que queda abierto de ese mismo asunto es solo la puerta del vehículo, ahora `Q-08`.
 
 ## 9. Bloque estructurado
 
@@ -678,27 +688,32 @@ business_rules:
   - anchor: BR-ALB-05
     statement: La cantidad de una línea debe ser mayor que cero
     module: albarans
-    source: server/routes/albarans.js:137
+    source: server/routes/albarans.js:148
     confidence: high
   - anchor: BR-ALB-06
     statement: Una línea de pieza exige una pieza existente; si no se informa precio, se toma el de catálogo
     module: albarans
-    source: server/routes/albarans.js:152
+    source: server/routes/albarans.js:168
     confidence: high
   - anchor: BR-ALB-07
     statement: Una línea de mano de obra exige descripción
     module: albarans
-    source: server/routes/albarans.js:155
+    source: server/routes/albarans.js:171
     confidence: high
   - anchor: BR-ALB-08
     statement: Añadir una línea de pieza descuenta el stock; retirarla lo devuelve
     module: albarans
-    source: server/routes/albarans.js:168
+    source: server/routes/albarans.js:184
     confidence: high
   - anchor: BR-ALB-09
     statement: El número de albarán se genera solo, con formato año/A-nnnn
     module: albarans
     source: server/db/numbering.js:16
+    confidence: high
+  - anchor: BR-ALB-10
+    statement: Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera, y el selector del formulario solo ofrece los vehículos del cliente actual
+    module: albarans
+    source: server/routes/albarans.js:95
     confidence: high
   - anchor: BR-FAC-01
     statement: Una factura agrupa al menos un albarán
@@ -854,6 +869,12 @@ excluded_paths:
     reason: Metadatos de control de versiones
   - path: package-lock.json
     reason: Bloqueo de versiones; el contenido relevante está en DOC-02
+  - path: dashboard/
+    reason: Herramienta auxiliar de seguimiento, no forma parte de la aplicación
+  - path: automation/
+    reason: Automatización de pruebas (UI y servicio); descrita en DOC-02 §9, no es la aplicación
+  - path: docs/
+    reason: Documentación generada del ciclo QA, no es la aplicación
 
 coverage:
   modules_in_repo: 9
@@ -878,4 +899,7 @@ open_questions:
   - id: Q-07
     question: Los albaranes no tienen estado intermedio entre pendiente y facturado. ¿El taller trabaja así o falta reflejar un paso real?
     blocks: UC-ALB-02
+  - id: Q-08
+    question: BR-ALB-10 impide el cambio de cliente por la puerta del albarán, pero cambiar el propietario de un vehículo (UC-VEH-04) sigue arrastrando sus albaranes pendientes al cliente nuevo. ¿Debe impedirse, avisarse o permitirse?
+    blocks: UC-VEH-04
 ```

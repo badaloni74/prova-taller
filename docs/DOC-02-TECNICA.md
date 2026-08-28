@@ -1,22 +1,22 @@
 ---
 doc_id: DOC-02
 doc_name: DOC-02-TECNICA
-version: 1.1.0
+version: 1.2.0
 status: draft
 history: DOC-02-TECNICA-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-23T00:38:21+02:00
+generated_at: 2026-08-28T13:55:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: 90b24b861bd4d0a366e1dab28308868e7190ae9d
-  working_tree_clean: false   # specs/, docs/, TRIATGE-DOC-14.md y ficheros de sesion sin versionar en el ambito de este ciclo
+  branch: spec-SPE-06-albara-canvi-client
+  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
+  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el arbol versionado esta limpio
 inputs:
   - id: registro-ids.json
     present: true
-    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    hash: sha256:4b25a1a4bc636ef781f149e4a2bddc601a23460ed7f401c3dbd8783a6c0ab5a7
 ---
 
 # DOC-02 · Documentación técnica — app-taller
@@ -85,6 +85,15 @@ Petición HTTP
               └─ data/taller.db  (SQLite, WAL)
 ```
 
+El handler `PUT /api/albarans/:id` es un ejemplo de esa concentración: en el
+mismo bloque comprueba existencia del albarán, que no esté facturado, que llegue
+`vehicle_id`, que el vehículo exista, y —solo si el `vehicle_id` cambia respecto
+al actual— que el vehículo nuevo sea del mismo `client_id` que el vehículo actual,
+devolviendo `409` en caso contrario (`server/routes/albarans.js:95-104`). El
+`UPDATE` es una sola sentencia sin transacción explícita: la atomicidad de
+«no guardar nada si el cliente no coincide» se sostiene porque la comprobación
+precede al único `UPDATE`.
+
 **Cliente.** SPA de React con enrutado en cliente. Estructura por módulo
 funcional, con el mismo patrón repetido siete veces:
 
@@ -99,6 +108,14 @@ services/api.ts                     → fetch, conversión de claves, ApiError
         ↓  HTTP /api/*
 server/routes/<modulo>.js
 ```
+
+Algunos formularios y fichas cruzan a más de un servicio cuando necesitan datos
+de otra entidad. `AlbaraForm.tsx` es uno de esos casos: al **editar** una
+cabecera resuelve el cliente del albarán (`albaransService.get` →
+`vehiclesService.get` → `vehiclesService.listByClient`) y con ello limita el
+desplegable de vehículo a los del cliente actual; al **crear**, sigue pidiendo la
+lista completa con `vehiclesService.list()`. Es la mitad de cliente de la regla
+que el servidor también aplica por su cuenta (ver DOC-01 `BR-ALB-10`).
 
 **Frontera de nomenclatura.** El servidor trabaja en `snake_case` (columnas
 SQLite) y el cliente en `camelCase`. `services/api.ts` convierte en ambas
@@ -120,16 +137,16 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 |---|---|---|---|---|
 | `server-app` | api | shell | `server/index.js` | Bootstrap, montaje de routers, estáticos y fallback SPA |
 | `clients-router` | api | clients | `server/routes/clients.js` | CRUD de clientes y bloqueos de borrado |
-| `vehicles-router` | api | vehicles | `server/routes/vehicles.js` | CRUD de vehículos, unicidad de matrícula |
+| `vehicles-router` | api | vehicles | `server/routes/vehicles.js` | CRUD de vehículos, unicidad de matrícula, filtro `?client_id=` |
 | `peces-router` | api | peces | `server/routes/peces.js` | CRUD del catálogo de piezas |
-| `albarans-router` | api | albarans | `server/routes/albarans.js` | CRUD de albaranes, gestión de líneas y movimiento de stock |
+| `albarans-router` | api | albarans | `server/routes/albarans.js` | CRUD de albaranes, gestión de líneas y movimiento de stock, rechazo del cambio de vehículo a otro cliente |
 | `factures-router` | api | factures | `server/routes/factures.js` | Emisión de facturas, cálculo de base/IVA/total, estado de pago |
 | `personal-router` | api | personal | `server/routes/personal.js` | CRUD de empleados |
 | `nomines-router` | api | nomines | `server/routes/nomines.js` | CRUD de nóminas, unicidad empleado+mes+año, salario neto |
 | `db-connection` | data | shell | `server/db/index.js` | Singleton de better-sqlite3, WAL y claves foráneas activas |
 | `db-migrate` | data | shell | `server/db/migrate.js` | Migraciones idempotentes controladas por `_migrations` |
 | `db-numbering` | data | shell | `server/db/numbering.js` | Numeración anual `año/PREFIJO-nnnn` |
-| `db-seed` | data | shell | `server/db/seed.js` | Carga de datos de ejemplo (`npm run seed`) |
+| `db-seed` | data | shell | `server/db/seed.js` | Carga de datos de ejemplo (`npm run seed`). Incluye un cliente con dos vehículos para poder ejercer `BR-ALB-10` |
 | `client-main` | ui | shell | `client/src/main.tsx` | Punto de entrada de React |
 | `client-app` | ui | shell | `client/src/App.tsx` | Tabla de rutas de la SPA |
 | `layout` | ui | shell | `client/src/components/Layout.tsx` | Barra lateral, cabecera y área de contenido |
@@ -140,7 +157,7 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 | `format-utils` | ui | shell | `client/src/utils/format.ts` | `formatMoney`/`formatDate`: único punto de formato de importes y fechas del cliente |
 | `api-client` | infra | shell | `client/src/services/api.ts` | `fetch` envuelto, conversión snake↔camel, `ApiError` |
 | `clients-service` | infra | clients | `client/src/services/clients.ts` | Llamadas tipadas a `/api/clients` |
-| `vehicles-service` | infra | vehicles | `client/src/services/vehicles.ts` | Llamadas tipadas a `/api/vehicles` |
+| `vehicles-service` | infra | vehicles | `client/src/services/vehicles.ts` | Llamadas tipadas a `/api/vehicles`, incluida `listByClient` (`?client_id=`) |
 | `peces-service` | infra | peces | `client/src/services/peces.ts` | Llamadas tipadas a `/api/peces` |
 | `albarans-service` | infra | albarans | `client/src/services/albarans.ts` | Llamadas tipadas a `/api/albarans` y sus líneas |
 | `factures-service` | infra | factures | `client/src/services/factures.ts` | Llamadas tipadas a `/api/factures` |
@@ -149,7 +166,7 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 | `clients-pages` | ui | clients | `client/src/pages/clients/` | Listado, ficha y formulario de clientes |
 | `vehicles-pages` | ui | vehicles | `client/src/pages/vehicles/` | Listado, ficha y formulario de vehículos |
 | `peces-pages` | ui | peces | `client/src/pages/peces/` | Listado, ficha y formulario de piezas |
-| `albarans-pages` | ui | albarans | `client/src/pages/albarans/` | Listado, ficha, formulario y sección de líneas |
+| `albarans-pages` | ui | albarans | `client/src/pages/albarans/` | Listado, ficha, formulario y sección de líneas. El formulario de edición filtra el selector de vehículo por el cliente del albarán |
 | `factures-pages` | ui | factures | `client/src/pages/factures/` | Listado, ficha y formulario de emisión |
 | `personal-pages` | ui | personal | `client/src/pages/personal/` | Listado, ficha y formulario de empleados |
 | `nomines-pages` | ui | nomines | `client/src/pages/nomines/` | Listado, ficha y formulario de nóminas |
@@ -197,6 +214,7 @@ aristas que S-08 usa sin inferencia.
 | `vehicles-pages` | `vehicles-service` | calls | `client/src/pages/vehicles/` |
 | `peces-pages` | `peces-service` | calls | `client/src/pages/peces/` |
 | `albarans-pages` | `albarans-service` | calls | `client/src/pages/albarans/` |
+| `albarans-pages` | `vehicles-service` | calls | `client/src/pages/albarans/AlbaraForm.tsx:9,37,53,55`, `AlbaraDetail.tsx:5` |
 | `factures-pages` | `factures-service` | calls | `client/src/pages/factures/` |
 | `personal-pages` | `personal-service` | calls | `client/src/pages/personal/` |
 | `nomines-pages` | `nomines-service` | calls | `client/src/pages/nomines/` |
@@ -222,6 +240,15 @@ aristas que S-08 usa sin inferencia.
 | `peces-pages` | `format-utils` | calls | `client/src/pages/peces/PecaDetail.tsx`, `PecesList.tsx` |
 | `personal-pages` | `format-utils` | calls | `client/src/pages/personal/PersonalDetail.tsx` |
 
+**Sobre las páginas y los servicios de otros módulos.** La tabla recoge la
+relación `<módulo>-pages → <módulo>-service` de cada módulo y, explícitamente, la
+de `albarans-pages → vehicles-service`, que `AlbaraForm.tsx` ejerce con fuerza
+desde SPEC 06. Hay más llamadas de una página al servicio de otro módulo
+(fichas que muestran entidades relacionadas: `AlbaraDetail` también usa
+`clients-service`, `FacturaForm` usa `clients-service` y `albarans-service`,
+`NominaForm` usa `personal-service`, etc.). No están todas enumeradas todavía
+— ver Q-07.
+
 **`vehicles-pages` es el único módulo de páginas que no llama a `format-utils`**:
 no presenta ningún importe, así que no había ningún `toFixed` que sustituir.
 Sí usa `use-submit-guard`, como los otros seis.
@@ -234,7 +261,7 @@ propio módulo para aplicar reglas de integridad:
 | `clients-router` | tabla `vehicles`, `factures` | Bloqueo de borrado | `clients.js:75,82` |
 | `vehicles-router` | tabla `clients`, `albarans` | Validación de existencia y bloqueo de borrado | `vehicles.js:37,121` |
 | `peces-router` | tabla `albara_linies` | Bloqueo de borrado | `peces.js:82` |
-| `albarans-router` | tabla `vehicles`, `peces` | Validación y movimiento de stock | `albarans.js:58,148,168,200` |
+| `albarans-router` | tabla `vehicles`, `peces` | Validación del vehículo, impedir que la cabecera cambie a un vehículo de otro cliente, y movimiento de stock | `albarans.js:58,90,96,159,184,216` |
 | `factures-router` | tabla `albarans`, `vehicles`, `albara_linies` | Agrupación, resolución del cliente y cálculo de totales | `factures.js:18,22,62,73` |
 | `personal-router` | tabla `nomines` | Bloqueo de borrado | `personal.js:82` |
 | `nomines-router` | tabla `personal` | Validación de existencia | `nomines.js:42` |
@@ -268,6 +295,9 @@ Todas las tablas de negocio usan `id INTEGER PRIMARY KEY AUTOINCREMENT` y, salvo
 | `002_vehicles_peces_albarans_factures.sql` | `peces`, `vehicles`, `factures`, `albarans`, `albara_linies` |
 | `003_personal_i_nomines.sql` | `personal`, `nomines` |
 
+SPEC 06 no añade ninguna migración: la relación albarán→vehículo→cliente que
+sostiene `BR-ALB-10` ya existía en el esquema `002`.
+
 **Campos calculados, no almacenados:**
 
 | Campo | Dónde se calcula | Fórmula |
@@ -278,12 +308,14 @@ Todas las tablas de negocio usan `id INTEGER PRIMARY KEY AUTOINCREMENT` y, salvo
 **Sin índices adicionales** más allá de las claves primarias y las restricciones
 `UNIQUE` declaradas. No hay `ON DELETE CASCADE`: el borrado en cascada de las
 líneas de un albarán se hace en código, dentro de una transacción
-(`albarans.js:114-118`).
+(`albarans.js:125-129`).
 
-**Transacciones.** Se usan en cuatro puntos, todos con `db.transaction(...)` de
+**Transacciones.** Se usan en cinco puntos, todos con `db.transaction(...)` de
 better-sqlite3: aplicación de una migración, borrado de albarán con sus líneas,
 alta de línea con descuento de stock, baja de línea con devolución de stock, y
-emisión de factura con el marcado de sus albaranes.
+emisión de factura con el marcado de sus albaranes. El rechazo de cambio de
+cliente en `PUT /api/albarans/:id` **no** usa transacción: es una comprobación
+previa a un `UPDATE` de una sola sentencia.
 
 ## 6. Superficie de API
 
@@ -298,13 +330,18 @@ piezas 5, personal 5, vehículos 5, facturas 4, más `GET /api/health` en
 `server/index.js:20`. La ruta `GET ^(?!\/api).*` es el fallback de SPA y no
 cuenta como endpoint de API.
 
+SPEC 06 no cambia el recuento: el filtro `GET /api/vehicles?client_id=` ya
+existía (`vehicles.js:6-13`) y `PUT /api/albarans/:id` solo gana una rama de
+validación dentro del mismo handler.
+
 **Nota para S-03:** al no haber springdoc ni ningún generador de OpenAPI, DOC-03
 no se puede obtener con un `curl` a `/v3/api-docs`. Habrá que derivarlo del
 código o introducir un generador. Ver Q-05.
 
 **Convenciones observadas:** los errores viajan como `{ "error": "<mensaje>" }`
 en catalán; `400` para validación, `404` para no encontrado, `409` para conflicto
-de estado o integridad, `201` en creación y `204` sin cuerpo en borrado.
+de estado o integridad (incluido el cambio de vehículo a otro cliente), `201` en
+creación y `204` sin cuerpo en borrado.
 
 ## 7. Integraciones externas
 
@@ -345,28 +382,31 @@ variable de entorno y a valores en código.
 
 ## 9. Testing existente
 
-**No hay ninguna prueba automatizada.** No existen ficheros de test en el código
-del proyecto, ni framework de test declarado en ningún `package.json`, ni
-configuración de CI.
+**Dentro del código de la aplicación (`client/`, `server/`) no hay ninguna prueba
+automatizada.** No existen ficheros de test en esas carpetas, ni framework de
+test declarado en sus `package.json`, ni configuración de CI.
 
 | Framework | Tipo | Ubicación | Qué cubre |
 |---|---|---|---|
-| — | — | — | Nada |
+| — | — | — | Nada dentro de `client/` ni `server/` |
 
-Lo único que existe en materia de calidad automática es **oxlint** en el cliente
-(`npm run lint -w client`, configurado en `client/.oxlintrc.json`). No hay
-linter en el servidor.
+Lo único que existe en materia de calidad automática **en el código** es
+**oxlint** en el cliente (`npm run lint -w client`, configurado en
+`client/.oxlintrc.json`). No hay linter en el servidor.
 
-**Cobertura observada: 0%.** Es medible sin ejecutar nada: no hay ficheros de
-test que ejecutar.
+**Cobertura de código observada: 0%.** Es medible sin ejecutar nada: no hay
+ficheros de test que ejecutar en `client/` ni `server/`.
 
 Es una omisión **deliberada y documentada**, no un descuido: SPEC 01 declara
 «No: tests automatitzats en aquest spec. Muntar Vitest i Playwright mereix un
 spec propi que ho faci una sola vegada per a tota l'app»
 (`specs/implemented/SPE-01-esquelet-app-taller.md:203`).
 
-La verificación hasta ahora ha sido manual, mediante las listas de comprobación
-que cada spec incluye (por ejemplo `specs/implemented/SPE-01-esquelet-app-taller.md:167-171`).
+Aparte del código de la aplicación, el repositorio contiene en `automation/` dos
+suites E2E que ejercen la aplicación **desplegada** (Selenium+Cucumber+TestNG en
+`automation/ui/`, colección Postman en `automation/api/`). No son parte de
+`client/`/`server/`, las mantiene otro actor (CLAUDE.md) y su alcance y resultado
+los llevan DOC-05, DOC-07, DOC-23 y DOC-27 — no este documento.
 
 ## 10. Suposiciones y preguntas abiertas
 
@@ -375,9 +415,10 @@ que cada spec incluye (por ejemplo `specs/implemented/SPE-01-esquelet-app-taller
 | Q-01 | No hay versión de Node fijada: ni `engines` en los `package.json` ni `.nvmrc`. ¿Cuál es la versión de referencia? Afecta a la reproducibilidad de `better-sqlite3`, que compila binarios nativos | Stack, despliegue | Técnico |
 | Q-02 | La ruta de la base de datos está codificada en `server/db/index.js`. ¿Se quiere hacer configurable por entorno, o el uso monopuesto lo hace innecesario? | Configuración | Técnico |
 | Q-03 | `generateNumero` ordena por `numero` como texto y consulta el último número fuera de la transacción que hace el `INSERT`. ¿Existe algún requisito de concurrencia, o el uso de un solo puesto lo hace irrelevante? | `db-numbering` | Técnico |
-| Q-04 | No hay ninguna suite de pruebas ni CI, por decisión explícita de SPEC 01. ¿Está previsto el spec que las monte, y con qué alcance? | Testing | Técnico |
+| Q-04 | No hay ninguna suite de pruebas dentro de `client/`/`server/` ni CI, por decisión explícita de SPEC 01. ¿Está previsto el spec que las monte, y con qué alcance? Las suites de `automation/` son E2E externas, no de código | Testing | Técnico |
 | Q-05 | Al no exponerse OpenAPI, DOC-03 no se puede generar con un `curl`. ¿Se prefiere introducir un generador en el servidor, o derivar DOC-03 del código? | DOC-03 (S-03) | Técnico / Arquitectura |
 | Q-06 | Los routers concentran validación, negocio y SQL sin capa intermedia. ¿Es una decisión asumida para el tamaño actual del proyecto? Condiciona el alcance de DOC-11 y DOC-17 | Arquitectura | Arquitectura |
+| Q-07 | El bloque `graph` recoge la arista `<módulo>-pages → <módulo>-service` de cada módulo y la de `albarans-pages → vehicles-service`, pero no todas las llamadas de una página al servicio de otro módulo (fichas de entidades relacionadas, formularios que resuelven el cliente, etc.). Un escaneo dirigido las completaría; quedó fuera de esta regeneración, centrada en SPEC 06 | grafo S-08 | Técnico |
 
 ## 11. Bloque estructurado
 
@@ -636,6 +677,9 @@ edges:
   - from: albarans-pages
     to: albarans-service
     type: calls
+  - from: albarans-pages
+    to: vehicles-service
+    type: calls
   - from: factures-pages
     to: factures-service
     type: calls
@@ -800,7 +844,7 @@ open_questions:
     question: generateNumero ordena por numero como texto y consulta fuera de la transacción del INSERT. ¿Hay requisito de concurrencia?
     blocks: db-numbering
   - id: Q-04
-    question: No hay suite de pruebas ni CI, por decisión explícita de SPEC 01. ¿Está previsto el spec que las monte?
+    question: No hay suite de pruebas dentro de client/server ni CI, por decisión explícita de SPEC 01. Las suites de automation/ son E2E externas. ¿Está previsto el spec que monte pruebas de código?
     blocks: testing
   - id: Q-05
     question: Al no exponerse OpenAPI, DOC-03 no se puede generar con un curl. ¿Introducir un generador o derivar DOC-03 del código?
@@ -808,4 +852,7 @@ open_questions:
   - id: Q-06
     question: Los routers concentran validación, negocio y SQL sin capa intermedia. ¿Es una decisión asumida para el tamaño actual?
     blocks: architecture
+  - id: Q-07
+    question: El grafo enumera la arista pages→service de cada módulo y albarans-pages→vehicles-service, pero no todas las llamadas de una página al servicio de otro módulo. ¿Se completa con un escaneo dirigido?
+    blocks: graph
 ```
