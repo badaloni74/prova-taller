@@ -33,22 +33,30 @@ function AlbaraForm() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (isEdit) return;
     vehiclesService.list().then(setVehicles);
-  }, []);
+  }, [isEdit]);
 
   useEffect(() => {
     if (!isEdit || !id) {
       setLoading(false);
       return;
     }
-    albaransService.get(Number(id)).then((albara) => {
-      setValues({
-        vehicleId: String(albara.vehicleId),
-        data: albara.data ? albara.data.slice(0, 10) : '',
-        notes: albara.notes ?? '',
+    albaransService
+      .get(Number(id))
+      .then((albara) => {
+        setValues({
+          vehicleId: String(albara.vehicleId),
+          data: albara.data ? albara.data.slice(0, 10) : '',
+          notes: albara.notes ?? '',
+        });
+        return vehiclesService.get(albara.vehicleId);
+      })
+      .then((vehicle) => vehiclesService.listByClient(vehicle.clientId))
+      .then((clientVehicles) => {
+        setVehicles(clientVehicles);
+        setLoading(false);
       });
-      setLoading(false);
-    });
   }, [id, isEdit]);
 
   const fields: FormField[] = [
