@@ -1,37 +1,37 @@
 ---
 doc_id: DOC-16
 doc_name: DOC-16-ROADMAP
-version: 3.0.1
+version: 3.1.0
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-24T11:30:00+02:00
+generated_at: 2026-08-24T17:15:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 4384a96d110216fd0907f8a1d36cf42f7a3b0e39
-  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta resincronización
+  commit_sha: 40bbd43a7cf722dbd5a12259c994f1a415317479
+  working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 2.1.0
-    hash: sha256:467fe9dfceb63ecec0f8af13626519d5ff5ba2647e24ab3f93b6e4e5e71a1169
+    version: 3.0.1
+    hash: sha256:545330c910c20fb070ad01cbbb8be1e00ce8fac1c8008c93a98d98d5751bee10
     present: true
   - id: DOC-02-TECNICA.md
     from: S-01
     version: 1.1.0
-    hash: sha256:32639b3f515f4780fdaf962513f02abf6f01fa2854b2418c2ef1f2ef864a44ca
+    hash: sha256:5a4fce68251cc84977b15f363c63e850f85caa737b89fea8cf2e4f3ef83b8304
     present: true
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
     version: 1.6.0
-    hash: sha256:a88ca2aac68a4b976650ce10fa70832a800568cf4b8efd1e390785a63282674c
+    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.9.0
-    hash: sha256:7094bd372aa179e964c56049abfeaacb1609cb4eb6f5bf2ede16639cae987cf8
+    version: 1.10.0
+    hash: sha256:f3eb60be92de53c46245bb92637446551d102333761576119d85f9a84f9c5a86
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
@@ -43,6 +43,11 @@ inputs:
     version: 2.2.0
     hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
     present: true
+  - id: DOC-27-INFORME-API.md
+    from: S-17
+    version: 1.0.0
+    hash: sha256:178d4b14e0202ec9f8846b661f1dda465e552cb6d3aa5f563e19d9b9c5b82573
+    present: true
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
@@ -50,13 +55,13 @@ inputs:
     present: true
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.2.0
-    hash: sha256:b4f26c8f2ae7d8f944917bd6770ac52680c3690ee66fbd85b77f8304aef86349
+    version: 1.2.1
+    hash: sha256:256d1507f2bb5aa5fdf3193622ff688de3f069182413a3ef29c98d9e9e4f5c02
     present: true
   - id: registro-ids.json
     from: S-12
     version: "1"
-    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
+    hash: sha256:bc54df9a531287e953975a311cea55a25297ecba3ce50d403f91dc6106528b97
     present: true
   - id: DOC-17-DEUDA-TECNICA.md
     from: S-05
@@ -79,205 +84,303 @@ inputs:
 > **Este documento no lleva historial de cambios.** Refleja solo el estado actual, con su
 > `version` en el front-matter. El historial está en **`docs/DOC-16-ROADMAP-HIST.md`**.
 >
-> `status: draft`. **Dos mejoras se han implementado y verificado en vivo desde la ronda
-> anterior** (`MEJ-007`, `MEJ-008`). Tres siguen `accepted` sin haber entrado en `A-07`.
-> Cuatro esperan decisión, una de ellas nueva. **Las decide una persona, no A-12.**
+> `status: draft`. Nueve mejoras: dos `implemented`, tres `accepted` que siguen sin entrar
+> en `A-07` y cuatro esperando decisión. **Esta ronda no nace ninguna mejora nueva y ninguna
+> cambia de estado**; lo que cambia es la evidencia de cuatro de ellas (`MEJ-002`, `MEJ-003`,
+> `MEJ-004`, `MEJ-006`) y la corrección del cuerpo que la 3.0.1 dejó desfasado. **Las decide
+> una persona, no A-12.**
 
 ## Procedencia
 
 Cómo se han usado las entradas, por qué la versión es la que es y qué se ha decidido en
 esta ronda sobre la forma del propio documento.
 
-**El worktree de esta ronda estaba desactualizado respecto a `master` y se ha adelantado
-en avance rápido antes de leer nada.** Al empezar, `HEAD` era `90b24b8` (el commit
-inmediatamente posterior a la fusión de `SPEC 05`) mientras `master` tenía doce commits
-más: la regeneración de `DOC-01`/`DOC-02` por `S-01`, la de `DOC-04`, `DOC-05`, `DOC-06`,
-`DOC-07`, `DOC-08` por sus respectivos dueños, y la verificación en vivo de `DOC-14` por
-`A-10`. El worktree no tenía ningún commit propio (`git merge-base master
-worktree-agent-ab87d461132e63a07` = `90b24b8` = la propia `HEAD`), así que avanzar con
-`git merge --ff-only master` no descarta nada: es estrictamente ponerse al día. Sin ese
-paso, este documento habría regenerado sobre `DOC-02` 1.0.0 y `DOC-14` 1.0.0, que ya no
-son las verdades vigentes.
+### Ronda 3.1.0 (2026-08-24) — lo que se ha leído y lo que se ha corregido del bloque `inputs`
 
-**Qué se ha leído de cada entrada.**
+**Se ha verificado entrada por entrada la versión declarada contra la real y el hash
+declarado contra el calculado**, y no era un trámite: **cuatro entradas llevaban un hash
+que ya no correspondía a su fichero**, el fallo que `cascada.js` no puede ver porque solo
+compara números de versión.
 
-- **`DOC-02` 1.1.0** (era 1.0.0, **MINOR**) — bloque `graph`: **51 componentes y 71
-  aristas** (eran 33 y 58). Los dos componentes nuevos son exactamente la infraestructura
-  que `MEJ-007` y `MEJ-008` pedían: `use-submit-guard`
-  (`client/src/hooks/useSubmitGuard.ts`) y `format-utils`
-  (`client/src/utils/format.ts`), con 7 y 6 aristas entrantes respectivamente (13 de las
-  14 aristas nuevas; la 14ª no existe — se ha recontado a mano, ver más abajo). **Las tres
-  aristas que `DOC-07/7.2` señaló como ausentes siguen ausentes**: `albarans-pages →
-  vehicles-service`, `albarans-pages → shared-components` y `factures-pages →
-  albarans-service` no están en 1.1.0 tampoco. `S-01` regeneró el documento por otro
-  motivo (los dos componentes de SPEC 04/05) y no tocó esa carencia; consta en el
-  apartado 6.
-- **`DOC-05` 1.6.0** — mismo hash que la ronda anterior. Sin cambios que citar.
-- **`DOC-07` 1.7.0** — **mismo número de versión, hash distinto.** El commit
-  `8c4086c` («Resincronizar DOC-07 con DOC-06 1.3.0 sin cambio de contenido») explica por
-  qué: el front-matter actualizó la referencia a `DOC-06`, el archivo cambió de bytes, el
-  contenido sustantivo no. Se ha comprobado leyendo `§3.4`, `§5` y `§7.2`: son el mismo
-  texto que citó la versión 2.1.0 de este documento. **Y por el mismo motivo `DOC-07`
-  1.7.0 ya está obsoleto según `S16`**: declara `DOC-14` 1.0.0 y la actual es 2.0.0. No es
-  un problema de este documento — es de `A-05` — pero significa que la cobertura que cita
-  este roadmap no ha incorporado todavía lo que `DOC-14` 2.0.0 cerró. Se anota en el
-  apartado 6.
-- **`DOC-14` 2.0.0** (era 1.0.0, **MAJOR**) — sesión de verificación de cierre, no
-  exploración nueva. Cuatro hallazgos se cierran verificados con red y base de datos
-  (`EXP-001`, `EXP-002`, `EXP-007`, `EXP-014`), uno se cierra a medias (`EXP-009`) y nacen
-  dos (`EXP-027`, `EXP-028`). Es la entrada que más mueve esta ronda; ver apartado 1.
-- **`DOC-24` 1.0.0** — mismo hash. Sigue con los cuatro defectos «abiertos» en su propio
-  texto mientras `DOC-14` verificó dos como corregidos. Consta otra vez en el apartado 6:
-  es la tercera ronda que lo señala.
-- **`DOC-25` 1.1.1** — mismo hash. Comprobado de nuevo que ninguno de los hallazgos que
-  este documento manda a `A-15` está ya cubierto: `FUN-001` a `FUN-008` no cambian.
-- **`registro-ids.json`** — 8 anclas `MEJ` antes de esta ronda. Pedido a `S-12`
-  (`registry.js next registro-ids.json --prefix MEJ --count 2` → «8 existentes, máximo 8;
-  siguientes libres: **MEJ-009**, MEJ-010»). Se usa el primero. **A-12 no ha tocado el
-  registro.**
-- **Código fuente** — releído en el commit `4526cf0`, `HEAD` de este ciclo.
-  `git diff --stat b2a8d77 HEAD -- server/routes/` **no devuelve nada**: `server/routes/`
-  no se ha tocado desde la verificación de la ronda anterior. Por eso las tres cifras que
-  2.1.0 citó —893 líneas, 86 `res.status`, 71 literales de error— **no se recorrigen: ya
-  son correctas**, y así se anota en vez de fingir un recuento que no aportaría nada
-  nuevo. Donde sí ha cambiado el código es en `client/src`: `grep -rl useSubmitGuard
-  client/src` devuelve **9 ficheros** (los 7 formularios más el propio hook y su
-  consumidor indirecto en `AlbaraLiniesSection.tsx`), y `grep -rl toFixed client/src`
-  **no devuelve ninguno** (eran 15 llamadas en 8 ficheros). Ambas cifras se citan en las
-  fichas de `MEJ-007` y `MEJ-008`.
-- **`specs/implemented/SPE-04-proteccio-enviaments-duplicats.md` y `specs/implemented/SPE-05-presentacio-imports-i-dates.md`**
-  — los dos con `Estado: Implemented`, y los dos citan a este documento por su nombre:
-  «`docs/DOC-16-ROADMAP.md` ja ho havia censat com **MEJ-007**» y «com **MEJ-008**». Es la
-  primera vez que una mejora de este roadmap se ve citada de vuelta desde la
-  implementación que la ejecuta, y se usa como evidencia de cierre en el apartado 3.1.
-- **`DOC-17` (S-05) sigue sin existir.** Cuarta versión consecutiva de este roadmap
-  escrita sin que nadie haya analizado la deuda técnica del proyecto como tal.
+| Entrada | Estaba declarado | Es | Por qué |
+|---|---|---|---|
+| `DOC-07-TRAZABILIDAD.md` | 1.9.0 · `7094bd37…` | **1.10.0** · `f3eb60be…` | El motivo de esta ronda. `A-05` la regeneró al nacer `DOC-27` |
+| `DOC-02-TECNICA.md` | 1.1.0 · `32639b3f…` | 1.1.0 · **`5a4fce68…`** | Misma versión, bytes distintos. Commit `c71c580` reescribió dos rutas de spec (`specs/01-…` → `specs/implemented/SPE-01-…`). **Verificado el diff: son las dos únicas líneas tocadas**, ningún cambio en el bloque `graph` |
+| `DOC-05-PLAN-PRUEBAS.md` | 1.6.0 · `a88ca2aa…` | 1.6.0 · **`43051f32…`** | Misma versión, bytes distintos. Commit `7f2000f`, resello de procedencia de `A-03` contra `DOC-23` 2.2.0. **Verificado el diff: solo front-matter** |
+| `DOC-25-PROPUESTAS-FUNCIONALES.md` | 1.2.0 · `b4f26c8f…` | **1.2.1** · `256d1507…` | `A-15` la reselló contra `DOC-14` 2.1.0 (commit `320246d`) |
+| `registro-ids.json` | `9f5b3679…` | **`bc54df9a…`** | Tocado en `20496d3` y `c71c580`. Recontado: **sigue con 8 anclas `MEJ`** |
+| `DOC-27-INFORME-API.md` | — | **1.0.0** · `178d4b14…` | **Entrada nueva.** No estaba declarada en ningún `inputs` de este documento porque hasta hoy no existía |
+
+Las cuatro correcciones de hash **no han cambiado ninguna conclusión** —se ha comprobado el
+diff de cada una, no se ha asumido—, pero dejarlas mal declaradas habría significado que
+`S-16` no volvería a marcar este documento por esas entradas aunque cambiaran de verdad.
+
+**Qué se ha leído de las entradas que sí traen contenido nuevo.**
+
+- **`DOC-07` 1.10.0** — §3.14 a §3.16 (los tres avisos nuevos), la tabla de magnitudes de
+  §1, §5 (cobertura por módulo) y la ficha de `A-05-15` entera, incluidos los dos fragmentos
+  de `server/routes/albarans.js` que cita. **Releído el código en `HEAD` (`40bbd43`) para no
+  citar de segunda mano**: las líneas 197-224 hacen `UPDATE peces SET estoc = estoc + ?` al
+  retirar una línea y las 116-132 no lo hacen al borrar el albarán. Confirmado.
+- **`DOC-27` 1.0.0** — §1 (resultado global), §3 (residuo), §4 (hallazgos abiertos sobre el
+  servidor) y §5 (límites). Y **la propia colección**, que es donde está el dato que más
+  mueve esta ronda: `automation/api/tallerMecaniccollection.json`.
+- **Código, recontado en `HEAD` (`40bbd43`)** — `server/routes/`: **893 líneas, 86
+  `res.status`, 71 literales de error**. Las tres cifras coinciden con las de 3.0.0; no se
+  han recorregido porque no ha cambiado nada. Y se ha comprobado que **no hay ni un fichero
+  de prueba dentro de `server/`, ni script `test`, ni dependencia de test, ni CI**
+  (`find server -name '*.test.*'` vacío, `.github/` inexistente) — el dato que sostiene la
+  respuesta sobre `MEJ-003` en 1.1.
+
+**Lo que esta ronda NO ha mirado, a propósito.** `DOC-09` acaba de pasar a 2.1.0 y está en
+revisión dentro de una onada mayor. No es entrada de este documento, no se declara y no se
+cita, aunque `A-05-15` conste allí como riesgo `RS-07`. Se dice para que quien lea sepa que
+la ausencia es deliberada y no un olvido.
+
+### Rondas anteriores
+
+El detalle de cómo se leyó cada entrada en 3.0.0, 2.1.0, 2.0.0 y 1.0.0 está en
+**`docs/DOC-16-ROADMAP-HIST.md`** y no se reproduce aquí. Se conservan solo los cuatro
+datos de rondas anteriores que **siguen sosteniendo una afirmación de este documento** y
+que ninguna entrada nueva ha desmentido:
+
+- **`DOC-02` 1.1.0, bloque `graph`: 51 componentes y 71 aristas.** De ahí sale el impacto
+  de cada mejora. Los dos componentes que nacieron en esa versión —`use-submit-guard` y
+  `format-utils`, con 7 y 6 aristas entrantes— son la infraestructura que `MEJ-007` y
+  `MEJ-008` pedían. **Las tres aristas que `DOC-07` §7.2 señaló como ausentes siguen
+  ausentes** en 1.1.0; consta en 6.8.
+- **`DOC-14` 2.1.0.** Cuatro hallazgos cerrados y verificados (`EXP-001`, `EXP-002`,
+  `EXP-007`, `EXP-014`), uno a medias (`EXP-009`), y `EXP-027` **ya cerrado** en esta
+  versión. Sostiene las fichas de cierre de 3.1 y la de `MEJ-009`.
+- **`specs/implemented/SPE-04-…` y `SPE-05-…`**, los dos `Implemented`, citan a este
+  documento por nombre («ja ho havia censat com **MEJ-007**», «com **MEJ-008**»). Es la
+  evidencia de cierre de 3.1.
+- **`DOC-17` (S-05) sigue sin existir.** Quinta versión consecutiva de este roadmap escrita
+  sin que nadie haya analizado la deuda técnica del proyecto como tal.
 
 ## 1. Qué ha cambiado desde el roadmap anterior
 
+**No es la primera ejecución.** La última con análisis fue la **3.0.0** (2026-08-23), que
+llevó `MEJ-007` y `MEJ-008` a `implemented` — ese cierre está documentado en el apartado 3.1
+y no se repite aquí. La **3.0.1** fue un resello de procedencia que, por decisión escrita en
+el `-HIST.md`, dejó el cuerpo sin tocar con citas ya desfasadas. Esta ronda las corrige —
+ver 1.6.
+
 | Entrada | Qué cambió | Qué aporta a este documento |
 |---|---|---|
-| **`DOC-02` 1.1.0** | +18 componentes, +13 aristas | El impacto de `MEJ-007`/`MEJ-008` deja de ser una estimación: es lo que el grafo ya declara construido |
-| **`DOC-14` 2.0.0** | 4 hallazgos cerrados, 1 a medias, 2 nuevos | Verificación en vivo de si los problemas que `MEJ-007` y `MEJ-008` atacaban han desaparecido de verdad |
+| **`DOC-07` 1.10.0** (era 1.9.0) | Nacen `A-05-14`, `A-05-15` y `A-05-16`. La evidencia de ejecución publicada pasa de 102 a 106 de 110 casos | Una mejora gana evidencia (`MEJ-004`), otra queda parcialmente satisfecha (`MEJ-003`) y aparece un hallazgo que **no** se convierte en mejora, con el motivo escrito |
+| **`DOC-27` 1.0.0** (entrada nueva) | Existe y se ha ejecutado una suite de servicio: 10 `TCS-nnn`, 28 peticiones, 31 aserciones, 0 rojos, sin residuo en la base | Es la primera verificación automática del servidor que existe en este proyecto. Obliga a repreguntar si `MEJ-003` sigue haciendo falta, y destapa evidencia nueva para `MEJ-002` |
 
-### 1.1 MEJ-007 y MEJ-008 pasan a `implemented`, y es la primera vez que ocurre en este documento
+**La cobertura no se mueve, y conviene decirlo antes que nada.** `DOC-07` 1.10.0 mantiene
+**100,00 % (79/79)**, **0 `GAP PLAN`**, **0 anomalías bloqueantes**, y su
+`DOC-07-MATRIZ.csv` vuelve a salir con el mismo md5, octava vez consecutiva. Además,
+**ningún `MEJ-nnn` de este documento citaba `DOC-07` en su `evidence_refs`** hasta esta
+ronda — comprobado una a una sobre las nueve fichas del bloque estructurado antes de tocar
+nada; las únicas menciones eran narrativas (`A-05-06` en 5.4, `A-05-11c` en 6.3, las tres
+aristas de §7.2 en 6.8). **El salto de versión de `DOC-07`, por sí solo, no invalida
+ninguna prioridad de este roadmap.** Lo que lo mueve son los tres avisos nuevos y el
+documento que los destapó, `DOC-27`.
 
-**Las dos nacieron en la ronda 2.1.0 y las dos se han construido a través de `SPEC 04` y
-`SPEC 05`, que citan sus identificadores por nombre.** No es una coincidencia de
-calendario: los dos specs enumeran explícitamente los hallazgos de `DOC-14` de los que
-parten y dicen, en su cabecera, que este roadmap ya los había censado. Verificar si el
-problema desapareció, y no solo si el código cambió, es la comprobación que corresponde
-antes de marcarlas `implemented`.
+**Ninguna mejora cambia de estado esta ronda y no nace ninguna nueva.** Se dice al principio
+para que quien solo lea esto no busque movimiento que no hay. Lo que sí cambia es la
+evidencia de tres mejoras, y en una de ellas cambia **en contra** de lo que cabría esperar.
 
-**MEJ-007 — la guarda de reenvío.**
+### 1.1 `DOC-27` y `MEJ-003`: ya existe una suite de servidor, y `MEJ-003` sigue haciendo falta
 
-| Lo que pedía la ficha de 2.1.0 | Verificado ahora |
+Es la pregunta obligada de esta ronda, y la respuesta corta es **no, `MEJ-003` no queda
+satisfecha**, pero tampoco sigue igual: **queda parcialmente satisfecha, y por primera vez
+su forma no es una hipótesis**.
+
+**Lo que sí ha llegado.** `automation/api/` es una colección Postman ejecutable con
+`newman`, y `DOC-27` 1.0.0 publica su resultado: **10 `TCS-nnn` en verde, 28 peticiones, 31
+aserciones, 0 fallidas, 1,75 s**. Verifica reglas que la interfaz no permite ni intentar
+—un tipo de línea que el desplegable no ofrece, facturar un albarán ya facturado, mezclar
+clientes en una factura— y **no deja residuo**: facturas 12→12, albaranes 37→37, stock de
+`FO-100` 37→37, medido antes y después. Es exactamente la clase de comprobación que
+`MEJ-003` compraba, y es real.
+
+**Lo que no ha llegado, recontado en `HEAD` (`40bbd43`) y no deducido de la prosa de nadie.**
+
+| Lo que `MEJ-003` pedía | Estado hoy |
 |---|---|
-| Un solo sitio, no tres implementaciones distintas | `client/src/hooks/useSubmitGuard.ts`, un hook de 27 líneas. **9 ficheros lo importan**: los 7 formularios (`ClientForm`, `VehicleForm`, `PecaForm`, `PersonalForm`, `NominaForm`, `AlbaraForm`, `FacturaForm`) más `AlbaraLiniesSection.tsx` |
-| Cerrar `EXP-002` (`critical`) | **Cierra.** `DOC-14/EXP-002`, verificación 2026-08-23: doble clic en «Añadir línea» sobre el albarán `2026/A-0003` produce **un solo** `POST /api/albarans/3/linies → 201`, una sola línea (id 14), stock de 37 a 35 (dos unidades, no cuatro) |
-| Cerrar `EXP-001` (`high`) | **Cierra.** `DOC-14/EXP-001`: doble clic en «Guardar» en alta de cliente produce **un solo** `POST → 201`, cliente id 19 único; **extendido y confirmado también en el alta de vehículo**, que la ficha original de `DOC-14` 1.0.0 dejaba como generalización «no verificada» |
-| El tercer punto de envío, `FacturaForm.tsx:142`, no reproducido — inferencia de código, no evidencia | **Ya no es inferencia.** `FacturaForm.tsx` importa `useSubmitGuard` igual que los otros seis; el mecanismo cubre los tres puntos que la ficha identificó, con o sin reproducción específica de cada uno |
+| Pruebas automáticas del servidor | **Parcial.** `find server -name '*.test.*' -o -name '*.spec.*'` sigue devolviendo **0 ficheros**. La suite existe, pero vive fuera de `server/`, se dispara a mano y **necesita el servidor levantado** para ejecutarse |
+| Cobertura de los routers | **2 de 7.** Las peticiones de la colección tocan `albarans-router` y `factures-router`; `clients`, `vehicles` y `peces` solo como lectura de fixture, y `personal` y `nomines` **no aparecen** |
+| Densidad | **10 comprobaciones frente a 86 `res.status`** en `server/routes/`. No es una red: es un cable tenso sobre tres reglas concretas |
+| CI mínima | **Nada.** No hay `.github/`, ni `.gitlab-ci.yml`, ni script `test` en la raíz ni en `server/package.json`, ni una sola dependencia de test declarada |
 
-**MEJ-008 — el formato único de importe y fecha.**
+**La consecuencia para `MEJ-004`, que es lo que de verdad importa.** `MEJ-004` (mover las
+reglas de escritura de los siete routers a un módulo por dominio) `depends_on: [MEJ-003]`
+por un motivo concreto: sin red, mover reglas es apostar. Diez comprobaciones sobre dos
+routers **no son esa red**. En particular, `nomines-router` y `vehicles-router` —donde viven
+`EXP-004`, `EXP-005` y `EXP-015`— no tienen hoy ni una sola comprobación automática de
+servicio. **La dependencia se mantiene entera.**
 
-| Lo que pedía la ficha de 2.1.0 | Verificado ahora |
+**Lo que sí ha cambiado, y no es poco: la pregunta de forma está respondida.** Hasta hoy
+`MEJ-003` llevaba `confidence: medium` en parte porque nadie sabía qué forma tendría la
+suite (¿Vitest + supertest dentro de `server/`? ¿algo externo?). Ahora hay **un ejemplo que
+funciona, en el repositorio, con informe publicado y con un patrón de fixture que devuelve
+la base a su estado**. Quien haga `A-07` sobre `MEJ-003` ya no diseña desde cero: extiende
+o decide no extender. **Eso es una decisión de una persona, no de A-12**, y por eso no se
+tocan aquí ni el tamaño ni la dificultad de una mejora ya `accepted`: cambiarle los números
+sin pasar por `A-07` sería volver a decidir lo ya decidido.
+
+**`MEJ-003` sigue `accepted`, sin implementar, y A-12 no la repropone.**
+
+### 1.2 `A-05-15` no se convierte en un `MEJ-nnn` propio, y el motivo es la parte importante
+
+`DOC-27` §4.1 lo levanta y lo propone literalmente como «candidato para `A-12 · Roadmap`».
+`DOC-07` §3.15 lo recoge, lo verifica en el servidor y lo cruza con la matriz. El hecho,
+**releído por A-12 en `HEAD` para no citarlo de segunda mano**, es este: al retirar una
+línea, `server/routes/albarans.js:197-224` hace `UPDATE peces SET estoc = estoc + ?`; al
+borrar el albarán entero, las líneas 116-132 borran `albara_linies` y `albarans` y **no
+tocan `peces`**. El stock que las líneas descontaron no vuelve.
+
+**Y aun así no nace un `MEJ-010`.** Tres razones, en orden de peso:
+
+1. **Si debe o no devolver el stock es una pregunta de producto, y A-05 lo dice
+   explícitamente.** `REQ-039` habla de retirar *una línea*; `REQ-041`, de borrar *el
+   albarán*. Ninguno se pronuncia sobre el otro. Una mejora titulada «hacer que el borrado
+   devuelva el stock» **resolvería esa ambigüedad por la puerta de atrás**, decidiendo en un
+   roadmap técnico algo que nadie ha decidido en el funcional.
+2. **La reformulación aparentemente neutra tampoco lo es.** «Que el borrado del albarán
+   reutilice el camino de retirada de línea» suena a refactorización pura y no lo es:
+   reutilizar ese camino *devuelve el stock*. Decide lo mismo con otras palabras.
+3. **La parte que sí es mía ya tiene sitio, y es `MEJ-004`.** Ver 1.3.
+
+**Lo que A-12 hace con él**: lo incorpora como evidencia de `MEJ-004` (3.4), lo añade al
+patrón de 3.0 marcado como **candidato a noveno defecto, no como noveno defecto**, y manda
+la pregunta de producto al apartado 6 sin responderla. **Si producto decide que sí debe
+devolver el stock, esto es un `BUG-nnn` para `A-14`, no un `MEJ-nnn` para mí.**
+
+### 1.3 `MEJ-004` gana evidencia por primera vez en tres rondas, y de un tipo nuevo
+
+Las ocho piezas del patrón de 3.0 eran todas **la misma forma**: una comprobación que falta
+en el punto donde el dato se escribe. `A-05-15` es la misma familia con **una forma que no
+estaba representada**: la regla **sí existe**, escrita, funcionando —en una de las dos rutas
+del mismo fichero— y **no está en la otra**. No es una comprobación olvidada: es una regla
+que vive duplicada-por-omisión porque no tiene un sitio propio.
+
+Eso es, palabra por palabra, lo que `MEJ-004` propone arreglar, y sin necesidad de decidir
+la pregunta de producto: **si la regla de «devolver stock al retirar líneas de pieza»
+viviera en un módulo de dominio en vez de incrustada en un `router.delete`, las dos rutas
+compartirían el mismo comportamiento por construcción, fuera cual fuera**. La mejora sigue
+sin añadir ni cambiar ninguna regla; lo que cambia es que ahora hay un caso donde el coste
+de no tenerla ya se ha materializado en una divergencia real y verificada, no en un defecto
+hipotético.
+
+Su `risk_if_not_done` decía «el noveno defecto de la misma familia». **Ha aparecido un
+candidato exacto a noveno, por la vía que la ficha predecía**, y ha hecho falta que se
+cruzaran tres documentos (`DOC-27`, `DOC-07` y el código) para verlo. La evidencia de
+`MEJ-004` **crece**; su dificultad, su impacto y su dependencia de `MEJ-003`, no cambian.
+
+### 1.4 `MEJ-002` gana un segundo consumidor de los literales, y es más estricto que el primero
+
+Es el hallazgo con más consecuencia práctica de la ronda, y no lo señalaba ningún documento:
+sale de leer la colección directamente. **`automation/api/tallerMecaniccollection.json`
+afirma cuatro de los 71 literales de error del servidor con igualdad exacta**, no con
+`include`:
+
+| Aserción en la colección | Literal en el servidor |
 |---|---|
-| Un módulo único, no 15 llamadas repartidas | `client/src/utils/format.ts`: `formatMoney` (`Intl.NumberFormat`, `es-ES`, `EUR`) y `formatDate` (`Intl.DateTimeFormat`, `es-ES`). `grep -rl toFixed client/src` **devuelve 0 ficheros** (eran 15 llamadas en 8) |
-| Cerrar `EXP-014` (precio en tres formatos distintos) | **Cierra.** `DOC-14/EXP-014`, verificación 2026-08-23: catálogo, ficha de pieza, línea de albarán, factura y nómina muestran las cinco coma decimal, separador de miles y `€` |
-| Cerrar la parte de presentación de `EXP-009` (fecha en crudo) | **Cierra.** `/albarans` y la ficha de cada albarán muestran `21/08/2026` donde antes había `2026-08-21T15:16:55.032Z` |
-| Responder `P-03` (coma o punto decimal) | **Respondida** por la propia decisión de `SPEC 05`: coma decimal. Se retira de las preguntas abiertas de `DOC-14` |
+| `to.eql('Tots els albarans han d\'estar pendents de facturar')` | `server/routes/factures.js:69` |
+| `to.eql('Tots els albarans han de ser del mateix client')` | `server/routes/factures.js:76` |
+| `to.eql('El camp tipus ha de ser "peca" o "ma_obra"')` | `server/routes/albarans.js:146` |
+| `to.eql('La peça indicada no existeix')` | `server/routes/albarans.js:161` |
 
-**Lo que queda fuera, y por qué no invalida `implemented`.**
+**Los cuatro verificados verbatim contra el código en `HEAD`.** Y los cuatro están en
+catalán, que es exactamente el objeto de `DOC-14/EXP-006` (`deriva_a: A-14`: la interfaz en
+castellano devuelve avisos en catalán).
 
-1. **El defecto de fondo de `EXP-009` no cierra, y no es de esta mejora.** Editar el
-   albarán reescribe su fecha a medianoche UTC y pierde la hora original —reproducido de
-   nuevo, idéntico a 1.0.0—. `SPEC 05` lo declaró fuera de su alcance explícitamente
-   porque es una decisión de modelo de datos (¿el albarán guarda fecha o fecha y hora?),
-   no de presentación: **exactamente la frontera que la ficha 2.1.0 de MEJ-008 ya
-   marcaba** («la corrección de EXP-009 y EXP-014 como defectos sigue siendo de A-14»).
-   Sigue abierto, sigue siendo de `A-14`.
-2. **La propia cautela que la ficha 2.1.0 escribió se ha cumplido, y tiene nombre:
-   `EXP-027`.** «Los `.feature` de `automation/ui/` validan literales como `119.06 €`»
-   dejó de ser un riesgo y pasó a ser un hecho confirmado: `factures.feature` y
-   `nomines.feature` siguen escritos con punto decimal —`TC-060` espera `121.00 €`, la
-   pantalla real muestra `121,00 €`— y afecta al menos a nueve casos contados a mano
-   (`TC-060`, `TC-061`, `TC-069` a `TC-073`, `TC-075`, `TC-098` a `TC-100`). **`deriva_a:
-   A-03`, no `A-12`**: es trabajo sobre el plan de pruebas, no sobre la aplicación. Va al
-   apartado 6.
-3. **Un hueco que la ficha 2.1.0 no pudo prever, porque no estaba en su alcance:
-   `EXP-028`.** `Personal.dataAlta` se sigue mostrando como `2020-01-15` en
-   `/personal/1`, sin pasar por `formatDate`, mientras el «Salario base» de la misma
-   ficha ya usa `formatMoney`. Verificado en código: `PersonalDetail.tsx:68` imprime
-   `persona.dataAlta` en crudo; la línea 71, dos más abajo, sí envuelve `salariBase` en
-   `formatMoney`. El propio `SPEC 05` lo declaró fuera de su alcance por escrito («Cap
-   hallazgo de DOC-14 els reprodueix; formatDate no s'hi aplica en aquest spec»). Es
-   `deriva_a: A-12`, `low`, y dispara **MEJ-009** — ver 3.2.
+**Por qué esto sube la evidencia y no es una curiosidad.** Hasta ahora `MEJ-002` se sostenía
+en un acoplamiento: 25 casos de la familia «Literal del aviso» de `DOC-05` §4.11 anclados a
+los 71 literales. Ahora son **dos suites, de dos tecnologías distintas, con dos dueños
+distintos** (`s10-auto-tcs` y `S-17`) ancladas al mismo texto, y la segunda con igualdad
+exacta. El día que `A-14` corrija el idioma de `EXP-006`, rompe las dos a la vez.
 
-**Una observación de proceso, sin juicio.** Las dos mejoras se han implementado
-directamente vía `/spec` → `/spec-impl`, sin pasar formalmente por `A-07 · Impacto` como
-prescribe el ciclo nominal para las `accepted`. El resultado técnico es correcto y
-verificado; se deja constancia porque es un dato para quien revise el propio ciclo, no
-porque afecte a la calidad de lo construido.
+**Y el ensayo general ya ocurrió.** `EXP-027` fue precisamente esto: `SPEC 05` cambió un
+formato de presentación y **17 escenarios se pusieron en rojo** porque validaban el literal
+antiguo (`DOC-23` 2.1.0, corregidos y reverificados en 2.2.0). No es una hipótesis sobre lo
+que podría pasar: es lo que pasó hace un día, contado, con su informe. La diferencia es que
+`EXP-027` afectaba a literales de la pantalla, sobre los que `MEJ-002` no puede nada, y los
+71 de error sí son su objeto.
 
-### 1.2 Las tres aceptadas el 2026-08-17 siguen sin pasar por A-07
+### 1.5 `MEJ-006`: la evidencia se matiza, y no en la dirección que cabría esperar
 
-**Seis días después, MEJ-001, MEJ-003 y MEJ-005 siguen `accepted` y ninguna ha entrado en
-`A-07`.** No hay evidencia nueva sobre ellas esta ronda —nada en `DOC-14` 2.0.0 toca sus
-áreas— así que se mantienen tal como las dejó 2.1.0, con la nota de que el reloj sigue
-corriendo: la suite de interfaz sigue creciendo (ahora con dos hallazgos más pendientes de
-que `A-03` la actualice, `EXP-027`), y cuanto más tarde `MEJ-001` más Page Objects habrá
-escritos contra rótulos.
+Sería fácil escribir aquí que `MEJ-006` gana urgencia porque ahora hay una suite más que
+necesita entorno reproducible. **Sería falso, y el dato apunta al revés.**
 
-### 1.3 Los defectos de `DOC-24`: sin novedad documental, y ya van tres rondas señalándolo
+`DOC-27` §5 dice que la base **no se resembró** antes de ejecutar, y que fue deliberado:
+«comprobar que la colección es repetible sobre una base ya usada es parte de lo que se
+quería verificar». Salió bien: 10/10 en verde y la base idéntica antes y después. Es decir,
+**la suite de servicio demostró que se puede ejecutar de forma repetible sin nada de lo que
+`MEJ-006` propone**. El argumento de «bloquea a dos aceptadas» se ablanda, no se refuerza.
 
-`DOC-24` sigue en 1.0.0 con los cuatro defectos «abiertos» en su propio texto. `DOC-14`
-1.0.0 ya había verificado en vivo que `BUG-001` y `BUG-002` funcionan, y esta ronda no
-tenía motivo para repetir esa verificación (ni `SPEC 04` ni `SPEC 05` tocan
-`albarans-router` ni `peces-router`). `BUG-003` y `BUG-004` siguen abiertos, sin cambios,
-tal como los deja `DOC-14` 2.0.0 explícitamente («siguen abiertos y no se vuelven a
-levantar»).
+Lo que sí queda, y es citable por primera vez, es la otra mitad: el mismo `DOC-27` §5 añade
+que «un informe de entrega sí debería partir de `npm run seed`», y `npm run seed` **rehace
+`data/taller.db` en el sitio**, destruyendo la base de trabajo. Esa es exactamente la
+incomodidad que resuelve hacer configurable la ruta. Sigue sin haber **ni un solo dato** que
+mida un incidente causado por la mitad de `engines`/`.nvmrc`.
 
-### 1.4 La cobertura: mismo contenido, pero la fuente ya está desactualizada
+**Conclusión: `MEJ-006` no sube de urgencia, sigue en `medium` y sigue marcada `opinion`.**
+Se documenta el matiz porque `MEJ-006` viene recomendada en el podio desde hace tres rondas
+por lo que desbloquea, y esa justificación es hoy más débil que ayer. **Baja al tercer
+puesto — ver apartado 2.**
 
-`DOC-07` 1.7.0 no cambia de contenido, así que las cifras que cita este roadmap —100,00 %,
-0 GAP PLAN, `A-05-03` con 6 requisitos, `A-05-03b` con `TC-073`/`TC-075`— son las mismas
-de la ronda anterior. Lo que sí cambia es que **esa fuente ya no refleja `DOC-14` 2.0.0**:
-`A-05-03` sigue contando los cuatro defectos de `DOC-24` como no detectados por ningún
-caso, sin saber que dos de las cinco brechas que motivaron `SPEC 04`/`SPEC 05` ya se han
-cerrado por otra vía. No es una discrepancia que corresponda corregir aquí; consta en el
-apartado 6 para `A-05`.
+**Un apunte lateral que sí es útil para `MEJ-005`** (aceptada, sin empezar): el patrón
+`_setup`/`_teardown` de la colección —18 peticiones de fixture que devuelven la base a su
+estado, medido— es una demostración funcionando, dentro del repositorio, de la técnica que
+`MEJ-005` quiere para la suite de navegador. No cambia su estado ni su prioridad; es
+material para quien la ejecute.
 
-### 1.5 Lo nuevo de esta ronda
+### 1.6 Lo que esta ronda corrige del cuerpo heredado
 
-**Dos mejoras cambian a `implemented`** (`MEJ-007`, `MEJ-008`, ver 1.1 y 3.1) **y nace
-una**, pequeña y de coste trivial: `MEJ-009`, de `DOC-14/EXP-028`. Es el único hallazgo
-que `DOC-14` dirigió explícitamente a `A-12` en esta ronda; los otros dos con `deriva_a`
-histórico hacia `A-12` (`EXP-017`, `EXP-019`) no se han vuelto a revisar esta sesión y
-siguen tal como los dejó 2.1.0 en el apartado 6.
+La 3.0.1 documentó por escrito, en su `-HIST.md`, que dejaba el cuerpo con citas
+desfasadas hasta la próxima ronda con análisis. **Esta es esa ronda**, y quedan corregidas
+las menciones a «`DOC-14` 2.0.0» (por **2.1.0**: `EXP-027` cierra), «`DOC-23` sigue en
+2.0.0» (por **2.2.0**: `TC-048` y los 17 de `EXP-027` corregidos y reverificados; 89
+escenarios no re-ejecutados en esta versión, pendientes de una pasada completa), «`DOC-07`
+1.7.0» (por **1.10.0**), `EXP-027` citado como hallazgo abierto para `A-03` (ya **cerrado**
+en `DOC-14` 2.1.0 y `DOC-23` 2.2.0), «`DOC-25` 1.1.1» (por **1.2.1**) y «cuarta versión sin
+`DOC-17`» (por **quinta**). El detalle punto por punto de qué decía cada sitio y qué dice
+ahora está en el apartado correspondiente (3.0, 3.3, 5.1, 5.5, 5.6, 6.5, 6.7) y no se
+repite aquí.
+
+**Los defectos de `DOC-24`, sin novedad, cuarta ronda que se señala.** `DOC-24` sigue en
+1.0.0 con sus cuatro defectos «abiertos» en su propio texto, mientras `DOC-14` verificó en
+vivo que `BUG-001` y `BUG-002` funcionan. `BUG-003` (con decisión de negocio desde el
+2026-08-16, pendiente de implantar) y `BUG-004` siguen abiertos.
+
+**Las tres aceptadas el 2026-08-17 siguen sin pasar por `A-07`, siete días después.**
+`MEJ-001`, `MEJ-003` y `MEJ-005`. Ninguna ha entrado en el ciclo. Para `MEJ-003` esta ronda
+sí trae información nueva (1.1); para `MEJ-001` y `MEJ-005`, no.
 
 ## 2. Recomendación
 
 Las tres primeras por relación valor/dificultad **entre las cuatro que esperan decisión**.
 Las tres aceptadas y las dos implementadas quedan fuera: recomendar lo ya decidido o lo ya
-hecho no ayuda a nadie.
+hecho no ayuda a nadie. **El orden cambia respecto a la ronda anterior** — ver el motivo en
+1.5: no porque `MEJ-006` haya empeorado, sino porque el argumento que la sostenía en el
+podio (bloquear a dos aceptadas) se ha visto contradicho por un hecho nuevo.
 
 | # | Mejora | Por qué ésta |
 |---|---|---|
 | 1 | **MEJ-009 · Aplicar `formatDate` a `Personal.dataAlta`** | Coste casi nulo: el módulo de formato ya existe, probado y usado en seis páginas; falta una línea en `PersonalDetail.tsx`. Cierra la única inconsistencia de presentación que queda documentada tras `MEJ-008` |
-| 2 | **MEJ-006 · Fijar la versión de Node y hacer configurable la ruta de la base** | Sigue siendo la más barata de las de mayor alcance y **sigue bloqueando parcialmente a dos aceptadas**, ahora seis días paradas. Sigue siendo `opinion` y sigue sin un incidente medido que la respalde: se recomienda por lo que desbloquea |
-| 3 | **MEJ-002 · Catálogo único de los literales de error del servidor** | Evidencia reproducida en vivo (`DOC-14/EXP-006`, sin cambios esta ronda pero tampoco desmentida), 102 casos automatizados anclados a los mismos 71 literales, coste bajo, contrato de API aditivo que ya está acotado en su propia ficha |
+| 2 | **MEJ-002 · Catálogo único de los literales de error del servidor** | Sube por evidencia nueva, no por antigüedad: además de `DOC-14/EXP-006` y los 102 casos de interfaz, **la colección de servicio afirma cuatro de los 71 literales con igualdad exacta** (1.4). Dos suites de dos dueños distintos dependen ya del mismo texto, y `EXP-027` ya demostró qué pasa cuando un formato cambia sin avisar a quien lo valida |
+| 3 | **MEJ-006 · Fijar la versión de Node y hacer configurable la ruta de la base** | Baja del primer puesto: `DOC-27` demostró que la suite de servicio se ejecuta de forma repetible sin nada de lo que `MEJ-006` propone (1.5), así que el argumento de «bloquea a dos aceptadas» pesa menos que antes. Sigue siendo `opinion`, sigue sin incidente medido, y sigue siendo la más barata de las de mayor alcance |
 
 **MEJ-004 sigue siendo la de más valor absoluto del documento y no está en el podio**, por
 el mismo motivo que en la ronda anterior: dificultad `high`, toca los ocho componentes por
 los que pasa toda escritura, y depende de `MEJ-003`, que sigue aceptada sin haber entrado
-en `A-07`. Nada ha cambiado en su evidencia esta ronda porque nada de lo tocado por `SPEC
-04`/`SPEC 05` afecta a los routers del servidor.
+en `A-07`. **Esta ronda sí le crece evidencia** (1.3, `A-05-15`), pero no le cambia ni la
+dificultad ni la dependencia, así que no cambia su posición fuera del podio.
 
 ## 3. Mejoras
 
-Nueve en total: seis heredadas, dos que pasan a `implemented` esta ronda y una nueva.
-Ocho de nueve salen de evidencia con fuente citable; una (`MEJ-006`) es de criterio,
-marcada como `opinion` para poder filtrarse de un vistazo. Ninguna añade funcionalidad.
+Nueve en total: seis heredadas, dos `implemented` desde la 3.0.0 y una `proposed` nacida
+entonces. **Ninguna nace ni cambia de estado esta ronda**; tres ganan o matizan evidencia
+(`MEJ-002`, `MEJ-003`, `MEJ-004`, `MEJ-006` — ver apartado 1). Ocho de nueve salen de
+evidencia con fuente citable; una (`MEJ-006`) es de criterio, marcada como `opinion` para
+poder filtrarse de un vistazo. Ninguna añade funcionalidad.
 
 ### 3.0 El patrón, recontado: la mitad del cliente se cierra, la del servidor sigue igual
 
@@ -295,12 +398,14 @@ encontrado ocho casos de esa clase, todos en el servidor:
 | `DOC-14/EXP-005` | mes con decimales y año sin límite | `nomines-router` | `medium` · abierto, bloqueado por P-02 |
 | `DOC-14/EXP-015` | año de matriculación 2099 y kilometraje negativo | `vehicles-router` | `medium` · abierto, bloqueado por P-02 |
 | `DOC-14/EXP-016` | validación de navegador desactivada: correo sin arroba, nombre de 281 caracteres | `clients-router` + `shared-components` | `medium` · abierto |
+| `DOC-07/A-05-15` | borrar el albarán entero no devuelve el stock de sus líneas de pieza, a diferencia de retirar una línea suelta | `albarans-router` | aviso · **candidato**, no defecto — pendiente de que producto diga si `REQ-039` alcanza a este camino (1.2) |
 
-**Sin cambios esta ronda: seis abiertos, dos corregidos, los ocho del servidor.** Ninguno
-de los dos specs implementados toca `server/routes/`, así que el patrón que sostiene
-`MEJ-004` no se mueve. `albarans` (18 requisitos, 28 casos) y `factures` (13 requisitos,
-19 casos) siguen siendo, según `DOC-07` §5, el 39 % de los requisitos y el 43 % de los
-casos, y ahí caen tres de los cuatro defectos de `DOC-24`.
+**Los ocho de siempre no se mueven: seis abiertos, dos corregidos.** `albarans` (18
+requisitos, 28 casos) y `factures` (13 requisitos, 19 casos) siguen siendo, según `DOC-07`
+§5, el 39 % de los requisitos y el 43 % de los casos, y ahí caen tres de los cuatro
+defectos de `DOC-24`. **Lo que sí se añade esta ronda es un noveno candidato**, distinto de
+forma a los ocho anteriores: no es una comprobación ausente, es una regla que existe en un
+sitio y no en el otro — ver 1.2 y 1.3.
 
 **La segunda mitad, la del cliente, sí se ha movido, y es la novedad de esta ronda.** Los
 dos defectos de doble envío que `DOC-14` había encontrado fuera de los routers —`EXP-002`
@@ -439,33 +544,31 @@ cualquier otro cambio menor que toque `personal-pages`.
 ### 3.3 Decididas · `accepted` el 2026-08-17, sin ejecutar
 
 **No son propuestas. A-12 no las repropone, ni con este número ni reformuladas.** Su
-siguiente paso es `A-07`, y seis días después no ha ocurrido con ninguna de las tres. Sin
-evidencia nueva esta ronda porque nada de lo implementado por `SPEC 04`/`SPEC 05` toca sus
-áreas.
+siguiente paso es `A-07`, y siete días después no ha ocurrido con ninguna de las tres.
 
 | Mejora | Estado | Nota de esta ronda |
 |---|---|---|
-| **MEJ-001 · Identificadores estables de prueba en la interfaz** | `accepted`, sin ejecutar | Sin cambios en su evidencia (26 POs, 20 `By.xpath` frente a 1 `By.id`). El reloj sigue corriendo: la suite ahora tiene además `EXP-027` pendiente de que `A-03` la actualice, otro motivo para que cada ronda sin ejecutar cueste más |
-| **MEJ-003 · Suite de pruebas del servidor y CI mínima** | `accepted`, sin ejecutar | Sin cambios: 0 ficheros de prueba en `server/`, 0 CI, 0 script `test`. `SPEC 04`/`SPEC 05` no tocan esto |
-| **MEJ-005 · Estado de base reproducible entre escenarios** | `accepted`, sin ejecutar | Sin cambios. `DOC-23` sigue en 2.0.0: el único rojo de la suite (`TC-048`) sigue siendo el mismo caso de contaminación de `TC-040` |
+| **MEJ-001 · Identificadores estables de prueba en la interfaz** | `accepted`, sin ejecutar | Sin cambios en su evidencia (26 POs, 20 `By.xpath` frente a 1 `By.id`). El reloj sigue corriendo: la suite de interfaz ya pasó por un susto real con `EXP-027` (17 escenarios en rojo por un cambio de formato, ya corregidos), y cuanto más tarde `MEJ-001` más Page Objects habrá escritos contra rótulos |
+| **MEJ-003 · Suite de pruebas del servidor y CI mínima** | `accepted`, sin ejecutar | **Evidencia nueva, sin cambio de estado — ver 1.1.** Nace `automation/api/` con informe publicado (`DOC-27` 1.0.0): 10 comprobaciones en verde sobre 2 de los 7 routers, repetible sin residuo. Queda parcialmente satisfecha, no sustituida: 0 ficheros de prueba dentro de `server/`, 0 CI, `nomines`/`personal` sin ninguna comprobación de servicio |
+| **MEJ-005 · Estado de base reproducible entre escenarios** | `accepted`, sin ejecutar | Sin cambios en su propia evidencia. `DOC-23` 2.2.0 confirma `TC-048` y los 17 de `EXP-027` corregidos y reverificados (89 escenarios no re-ejecutados en esta versión). El patrón `_setup`/`_teardown` de `automation/api/` es una demostración funcionando de la técnica que pide, sin que eso cambie su prioridad (1.5) |
 
 **Las dependencias siguen sin resolverse.** `MEJ-003` y `MEJ-005` dependen de `MEJ-006`,
-que sigue sin decidir seis días después.
+que sigue sin decidir siete días después.
 
 ---
 
-### 3.4 Esperando decisión · sin evidencia nueva esta ronda
+### 3.4 Esperando decisión
 
-**Ninguna de estas tres está descartada: están sin decidir.** No hay evidencia nueva que
-citar en ninguna de ellas —nada de lo que ha cambiado esta ronda (`DOC-02`, `DOC-14`) toca
-las áreas que sostienen su ficha—, así que se mantienen tal como las dejó 2.1.0 y se dice
-con esas palabras en vez de fabricar movimiento donde no lo hay.
+**Ninguna de estas tres está descartada: están sin decidir.** Tres ganan o matizan
+evidencia esta ronda (`MEJ-002`, `MEJ-004`, `MEJ-006`); ninguna cambia de tamaño,
+dificultad ni dependencia — eso es análisis de impacto y le corresponde a `A-07` cuando
+entren en ciclo.
 
 #### MEJ-002 · Catálogo único de los literales de error del servidor
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, sin evidencia nueva |
+| **Estado** | `proposed` — sin decidir, **evidencia crecida esta ronda** |
 | **Origen** | `evidence` |
 | **Tamaño** | `medium` · confianza `medium` |
 | **Impacto / dificultad / urgencia** | `medium` / `low` / `medium` |
@@ -473,19 +576,27 @@ con esas palabras en vez de fabricar movimiento donde no lo hay.
 **En qué consiste.** Extraer los 71 mensajes de error hoy incrustados en las rutas a un
 módulo único, con un código estable por mensaje. No traduce ni reescribe ningún literal.
 
-**Evidencia, sin cambios desde 2.1.0.** `DOC-14/EXP-006` (reproducido en los siete
-módulos con la interfaz en castellano, recuento por fichero: albarans 20, nomines 13,
-vehicles 12, clients 7, factures 7, peces 6, personal 6 = 71); `DOC-05/4.11` («Literal del
-aviso», 25 casos); `client/src/services/api.ts` propaga `body.error` tal cual;
-`specs/01:102` fija la convención de claves de traducción que las 71 incumplen.
-**Recontado en `HEAD` (`4526cf0`): `server/routes/` no ha cambiado desde `b2a8d77`, así
-que los 71 siguen siendo 71.**
+**Evidencia.** `DOC-14/EXP-006` (reproducido en los siete módulos con la interfaz en
+castellano, recuento por fichero: albarans 20, nomines 13, vehicles 12, clients 7, factures
+7, peces 6, personal 6 = 71); `DOC-05/4.11` («Literal del aviso», 25 casos);
+`client/src/services/api.ts` propaga `body.error` tal cual; `specs/implemented/SPE-01-…:102`
+fija la convención de claves de traducción que las 71 incumplen. **Recontado en `HEAD`
+(`40bbd43`): `server/routes/` no ha cambiado, los 71 siguen siendo 71.**
+
+**Nuevo esta ronda — un segundo consumidor, con igualdad exacta (1.4).**
+`automation/api/tallerMecaniccollection.json` afirma cuatro literales con `to.eql(...)`,
+no con `include`: `'Tots els albarans han d\'estar pendents de facturar'`
+(`factures.js:69`), `'Tots els albarans han de ser del mateix client'` (`factures.js:76`),
+`'El camp tipus ha de ser "peca" o "ma_obra"'` (`albarans.js:146`) y `'La peça indicada no
+existeix'` (`albarans.js:161`). Los cuatro verificados contra el código en `HEAD`. Dos
+suites, dos dueños (`s10-auto-tcs` y `S-17`), el mismo texto sin catálogo.
 
 **Componentes afectados:** los siete routers y, si se decide devolver un código,
 `api-client`.
 
 **Riesgo de no hacerla.** La corrección del idioma (`EXP-006`, `deriva_a: A-14`) se
-escribirá router a router si llega antes que el catálogo.
+escribirá router a router si llega antes que el catálogo, y ahora rompe dos suites en vez
+de una — `EXP-027` ya mostró lo que cuesta ese escenario cuando ocurre sin catálogo.
 
 **Entra por** `A-07`.
 
@@ -495,7 +606,7 @@ escribirá router a router si llega antes que el catálogo.
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, sin evidencia nueva |
+| **Estado** | `proposed` — sin decidir, **evidencia crecida esta ronda** |
 | **Origen** | `evidence` |
 | **Tamaño** | `large` · confianza `medium` |
 | **Impacto / dificultad / urgencia** | `high` / `high` / `high` |
@@ -503,18 +614,29 @@ escribirá router a router si llega antes que el catálogo.
 **En qué consiste.** Extraer de los routers la validación y las reglas de negocio a un
 módulo por dominio. No añade ni cambia ninguna regla: mueve las que ya existen.
 
-**Evidencia, sin cambios desde 2.1.0.** Los ocho defectos de escritura del apartado 3.0
-(`DOC-24/BUG-001` a `BUG-004`, `DOC-14/EXP-004`, `EXP-005`, `EXP-015`, `EXP-016`);
-`DOC-02/Q-06`; 893 líneas y 86 `res.status` en `server/routes/`, recontados en `HEAD` y
-sin cambios desde la ronda anterior porque `server/routes/` no se ha tocado.
+**Evidencia.** Los ocho defectos de escritura del apartado 3.0 (`DOC-24/BUG-001` a
+`BUG-004`, `DOC-14/EXP-004`, `EXP-005`, `EXP-015`, `EXP-016`); `DOC-02/Q-06`; 893 líneas y
+86 `res.status` en `server/routes/`, recontados en `HEAD` y sin cambios porque
+`server/routes/` no se ha tocado.
+
+**Nuevo esta ronda — un noveno candidato, de una forma distinta a los ocho anteriores
+(1.2, 1.3).** `DOC-07/A-05-15`: `server/routes/albarans.js:197-224` devuelve el stock al
+retirar una línea de pieza; `:116-132` no lo hace al borrar el albarán entero, aunque
+retire las mismas líneas. No es una comprobación ausente, sino la misma regla escrita en
+un sitio y ausente en el otro — exactamente el síntoma que un módulo de dominio compartido
+elimina por construcción. **No se resuelve aquí si el comportamiento actual es un defecto**
+—eso es de producto, ver 1.2 y apartado 6—; lo que aporta a esta ficha es evidencia de que
+el patrón de duplicación que `MEJ-004` ataca ya se ha materializado una vez más.
 
 **Componentes afectados:** los siete routers más `db-connection`.
 
-**Riesgo de no hacerla.** El noveno defecto de la misma familia.
+**Riesgo de no hacerla.** El noveno defecto de la misma familia — ya no es una proyección
+abstracta, tiene candidato y cita.
 
 **Sigue recomendándose la tercera vía**, no antes: hacerla con el primer evolutivo,
 acotada al dominio que ese evolutivo toque, porque `MEJ-003` —de la que depende para tener
-red— sigue aceptada y parada.
+red— sigue aceptada y parada, y la suite de servicio que ha nacido no cubre `nomines` ni
+`personal` (1.1).
 
 **Entra por** `A-07`.
 
@@ -524,7 +646,7 @@ red— sigue aceptada y parada.
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, y bloquea parcialmente a dos aceptadas desde hace seis días |
+| **Estado** | `proposed` — sin decidir, **evidencia matizada esta ronda (1.5)** |
 | **Origen** | **`opinion`** |
 | **Tamaño** | `small` · confianza `high` |
 | **Impacto / dificultad / urgencia** | `low` / `low` / `medium` |
@@ -536,6 +658,14 @@ variable de entorno con el valor actual como valor por defecto.
 `package.json` declara `engines`, no hay `.nvmrc`, `Q-01` y `Q-02` siguen abiertas. Sigue
 sin haber un solo dato que mida que esto haya causado un incidente.
 
+**Matiz de esta ronda, en contra del argumento de urgencia.** `DOC-27` §5 demuestra que
+`automation/api/` se ejecuta de forma repetible **sin** nada de lo que esta mejora
+propone —la base no se resembró y quedó idéntica antes y después—, lo que ablanda, no
+refuerza, el argumento de «bloquea a dos aceptadas». Sigue siendo la parte de
+`data/taller.db` configurable la que queda pendiente: el mismo `DOC-27` §5 anota que «un
+informe de entrega sí debería partir de `npm run seed`», que hoy reescribe la base en el
+sitio.
+
 **Componentes afectados:** `db-connection` y `server-app`.
 
 **Riesgo de no hacerla.** `MEJ-003` (CI reproducible) y la mitad de `MEJ-005` que apunta a
@@ -545,14 +675,14 @@ otra base no se pueden hacer sin esto, y las dos siguen aceptadas.
 
 ## 4. Vivas de rondas anteriores
 
-Las cuatro `proposed` —tres heredadas, sin evidencia nueva, y una nacida esta ronda—.
+Las cuatro `proposed` —tres con evidencia que se mueve esta ronda, una sin evidencia nueva—.
 
 | Mejora | Evidencia | Qué ha pasado |
 |---|---|---|
-| **MEJ-002** | Sin cambios | `server/routes/` no se ha tocado; los 71 literales se recontaron y coinciden |
-| **MEJ-004** | Sin cambios | Los ocho defectos de escritura siguen igual; sigue dependiendo de `MEJ-003` |
-| **MEJ-006** | Sin cambios en datos | Sigue `opinion`, sigue sin incidente medido; sigue bloqueando parcialmente a dos aceptadas, ahora seis días |
-| **MEJ-009** | Nueva | Nace de `DOC-14/EXP-028`, coste trivial |
+| **MEJ-002** | **Crece** | Segundo consumidor de los 71 literales: `automation/api/` los afirma con igualdad exacta en 4 casos (1.4) |
+| **MEJ-004** | **Crece** | Noveno candidato de la misma familia, de forma nueva: `DOC-07/A-05-15` (1.2, 1.3). Sigue dependiendo de `MEJ-003` |
+| **MEJ-006** | **Se matiza** | Sigue `opinion`, sigue sin incidente medido; el argumento de «bloquea a dos aceptadas» se ablanda, no se refuerza (1.5) |
+| **MEJ-009** | Sin cambios | Nació en la 3.0.0 de `DOC-14/EXP-028`, coste trivial. Sigue `proposed` |
 
 **MEJ-007 y MEJ-008 salen de esta lista porque están `implemented`**, no porque se hayan
 descartado. Su verificación de cierre está en el apartado 3.1.
@@ -561,118 +691,156 @@ descartado. Su verificación de cierre está en el apartado 3.1.
 
 **Ninguna, y sigue siendo importante decirlo con todas las letras.** El propietario del
 proyecto no ha rechazado ninguna mejora desde el 2026-08-17. `MEJ-002`, `MEJ-004` y
-`MEJ-006` **no están descartadas: están esperando decisión desde hace seis días.**
+`MEJ-006` **no están descartadas: están esperando decisión desde hace siete días.**
 
-Lo que se conserva, sin cambios esta ronda porque nada de lo que trajo `DOC-14` 2.0.0
-toca estos temas:
+Lo que se conserva, actualizado donde `DOC-07` 1.10.0 o `DOC-27` lo tocan:
 
 ### 5.1 El control de concurrencia (`DOC-14/EXP-003`) · sin cambios
 
-`DOC-14` 2.0.0 lo confirma explícitamente: «no revisado de nuevo en esta sesión […] se da
-por vigente». Sigue sin proponerse: la decisión —bloqueo optimista o fusión por campos— es
-de producto, no técnica (`specs/01:50` excluye el acceso multiusuario simultáneo; `EXP-003`
+`DOC-14` 2.1.0 no lo revisa de nuevo: sigue vigente lo dicho en 2.0.0. Sigue sin
+proponerse: la decisión —bloqueo optimista o fusión por campos— es de producto, no técnica
+(`specs/implemented/SPE-01-…:50` excluye el acceso multiusuario simultáneo; `EXP-003`
 ocurre con un solo usuario y dos pestañas, que el spec no excluye). Va al apartado 6.
 
 ### 5.2 La numeración de albaranes y facturas (`generateNumero`) · sin cambios
 
-Sigue sin proponerse. `better-sqlite3` es síncrono; `DOC-24` y `DOC-14` (ambas versiones)
-verificaron la numeración como correcta.
+Sigue sin proponerse. `better-sqlite3` es síncrono; `DOC-24` y `DOC-14` verificaron la
+numeración como correcta.
 
-### 5.3 Las correcciones de los defectos, los ocho · sin cambios
+### 5.3 Las correcciones de los defectos, los ocho (y el candidato a noveno) · matizado
 
 No son mías: `BUG-003`/`BUG-004` son evolutivos decididos por negocio; los defectos de
 `DOC-14` van a `A-14`. Lo que hago con ellos es leerlos como patrón (3.0) y proponer dónde
-aterrizan: `MEJ-004` en el servidor.
+aterrizan: `MEJ-004` en el servidor. **`A-05-15` se suma al mismo tratamiento**: no se
+propone su corrección —depende de una decisión de producto que no me corresponde tomar
+(1.2)— y se incorpora como evidencia de `MEJ-004`.
 
 ### 5.4 La fragilidad del extractor de S-12 (`DOC-07/A-05-06`) · sin cambios
 
 No existe en el grafo de `DOC-02` y no es código de `app-taller`. Va al apartado 6.
 
-### 5.5 Los huecos de cobertura · sin cambios
+### 5.5 Los huecos de cobertura · sin cambios en la cifra, con una entrada nueva
 
-`DOC-07` 1.7.0, mismo contenido que 2.1.0 citó: 100,00 %, 0 GAP PLAN, 0 anomalías
-bloqueantes. Los avisos vivos siguen siendo correcciones de otros agentes o
-funcionalidad para `A-15`.
+`DOC-07` 1.10.0: **100,00 % (79/79)**, 0 `GAP PLAN`, 0 anomalías bloqueantes — igual que
+en toda la historia de este documento. Lo que cambia es que la evidencia de ejecución
+publicada sube de 102 a 106 de 110 casos, al incorporarse `DOC-27` para los 4 casos
+`verification_path: service`. Los avisos vivos siguen siendo correcciones de otros agentes
+o funcionalidad para `A-15`; ver 6.5 y 6.9 para lo que nace en esta versión.
 
-### 5.6 EXP-017 y EXP-019 (`deriva_a: A-12`, no revisados esta sesión) · sin cambios
+### 5.6 EXP-017, EXP-019 y EXP-026 (`deriva_a: A-12`, no revisados esta sesión) · sin cambios
 
-`DOC-14` 2.0.0 los marca «sin cambios, no revisado de nuevo» para los dos. Siguen sin
-proponerse por el mismo motivo que en 2.1.0: cambian lo que el usuario ve y decide —un
-aviso de cambios sin guardar, una salida en la pantalla de error—, y eso es funcionalidad,
-no deuda técnica. Van al apartado 6. **`EXP-026` (diálogo de borrado) tampoco se ha vuelto
-a revisar esta sesión** y sigue por el mismo motivo en el apartado 6.
+`DOC-14` 2.1.0 los marca «sin cambios, no revisado de nuevo» para los tres. Siguen sin
+proponerse por el mismo motivo de siempre: cambian lo que el usuario ve y decide —un aviso
+de cambios sin guardar, una salida en la pantalla de error, qué registro se va a borrar—, y
+eso es funcionalidad, no deuda técnica. Van al apartado 6.
 
 ## 6. Hallazgos para otras piezas
 
 Ninguno se desarrolla aquí y ninguno se registra editando el documento de su dueño.
 
-### 6.1 → `A-15` · Tres hallazgos que son funcionalidad, no deuda
+### 6.1 → `A-15` · Tres hallazgos que eran funcionalidad, no deuda — ya recogidos
 
-Sin cambios respecto a 2.1.0: `EXP-017` (aviso al abandonar un formulario con cambios sin
-guardar), `EXP-026` (el diálogo de borrado no dice qué registro se borra) y `EXP-019` (las
-pantallas de error no ofrecen salida). Ninguno se ha vuelto a revisar esta sesión; ninguno
-está en `DOC-25` 1.1.1 (comprobado contra `FUN-001` a `FUN-008`, mismo hash que la ronda
-anterior).
+Los tres que este roadmap venía reenviando sin cambios desde la 2.1.0 —`EXP-017` (aviso al
+abandonar un formulario con cambios sin guardar), `EXP-026` (el diálogo de borrado no dice
+qué registro se borra) y `EXP-019` (las pantallas de error no ofrecen salida)— **ya están
+en `DOC-25` 1.2.0/1.2.1** como `FUN-009`, `FUN-010` y `FUN-011`, citando a este documento
+como origen. **No hace falta seguir reenviándolos**: la puerta ya está cruzada y lo que
+sigue con ellos es decisión de negocio sobre las tres `FUN-nnn`, no trabajo pendiente de
+`A-15`.
 
-### 6.2 → `A-15` (y a través suyo, a negocio) · Si la concurrencia está o no en el alcance
+### 6.2 → ya recogido en `DOC-25` como `FUN-012` · Si la concurrencia está o no en el alcance
 
-Sin cambios: `DOC-14/EXP-003` sigue sin destinatario, sigue demostrando que dos ventanas
-del mismo usuario pierden trabajo en silencio, y `A-12` no lo propondrá mientras no haya
-respuesta sobre si el sistema debe defenderse de ello.
+`DOC-14/EXP-003` (dos pestañas del mismo usuario pierden trabajo en silencio) dio lugar a
+**`FUN-012`** en `DOC-25` 1.2.0, citando a este documento como origen. La pregunta de fondo
+—si el sistema debe defenderse de ello— sigue siendo de negocio, y ahora tiene ficha propia
+donde decidirla; A-12 no necesita seguir reenviándola.
 
-### 6.3 → `A-15` · Funcionalidad ausente que la automatización topó
+### 6.3 → ya recogido en `DOC-25`, con un matiz que sí es nuevo · Funcionalidad ausente que la automatización topó
 
-Sin cambios: `DOC-07/A-05-11c` (`TC-032`, `TC-033`, `TC-047` sin vector porque no existe
-filtro por vehículo/cliente en albaranes ni campo de precio manual en la línea de pieza).
+`DOC-07/A-05-11c` (`TC-032`, `TC-033`, `TC-047` sin vector porque no existe filtro por
+vehículo/cliente en albaranes ni campo de precio manual en la línea de pieza) fue evaluado
+por `A-15` en `DOC-25` 1.2.0, que **decidió no convertirlo en `FUN-nnn`**: razona que
+`REQ-025` y `REQ-034`/`BR-ALB-06` ya dan por hecho, en presente, que esas capacidades
+existen, así que el hueco no es una funcionalidad que falte proponer sino una discrepancia
+entre lo que `DOC-04` declara y lo que la interfaz ofrece. **Eso es un hallazgo de
+`DOC-04`/`DOC-07`, no de este roadmap ni de `A-15`**; se deja constancia aquí solo para que
+quede claro que ya se evaluó y no quedó huérfano.
 
-### 6.4 → `A-14` · El censo de defectos sigue sin reflejar lo verificado, tercera ronda que lo señala
+### 6.4 → `A-14` · El censo de defectos sigue sin reflejar lo verificado, cuarta ronda que lo señala
 
 `DOC-24` sigue en 1.0.0 con los cuatro defectos «abiertos», mientras `DOC-14` verificó en
-vivo —ya en su versión 1.0.0, y sin necesidad de repetirlo en la 2.0.0 porque nada tocó
-esa zona— que `BUG-001` y `BUG-002` funcionan. Es la tercera versión de este roadmap que
-tiene que cruzar dos documentos para saberlo.
+vivo —ya en su versión 1.0.0— que `BUG-001` y `BUG-002` funcionan. `BUG-003` tiene decisión
+de negocio desde el 2026-08-16 (Q-12), pendiente de implantar; `BUG-004` sigue abierto sin
+decisión. Es la cuarta versión de este roadmap que tiene que cruzar dos documentos para
+saber el estado real de los cuatro.
 
-### 6.5 → `A-03` y `S-10` · Cuatro cosas, dos de ellas nuevas y con severidad `high`
+### 6.5 → `A-03` · El paso 2 de `TC-041` no lo ejerce ninguna suite
 
-1. **Nuevo — `DOC-14/EXP-027`, `high`.** Los `.feature` de `factures` y `nomines` validan
-   literales de importe con punto decimal (`121.00 €`, `1299.50 €`) que ya no coinciden
-   con lo que la pantalla muestra tras `SPEC 05` (`121,00 €`, `1.299,50 €`). Confirmado en
-   vivo sobre `TC-060`; contados a mano otros ocho casos con el mismo patrón
-   (`TC-061`, `TC-069` a `TC-073`, `TC-075`, `TC-098` a `TC-100`). No es un defecto de la
-   aplicación: es la consecuencia, ya anticipada por escrito en el propio `SPEC 05`, de
-   que los `.feature` no se actualizaron con el cambio de formato.
-2. **Nuevo — el estado documentado del proyecto ya no es exacto.** `CLAUDE.md` sigue
-   anunciando «1 caso vermell: TC-048» y ya no lo es si se ejecutara la suite hoy —aunque
-   no se ha vuelto a lanzar `mvn test` para confirmar el número exacto—. No es un DOC-nn y
-   `A-12` no lo edita; se deja constancia para que quien mantenga `CLAUDE.md` lo sepa.
-3. **`A-05-12` sigue sin corregir** (sin cambios desde 2.1.0): el resumen del front-matter
-   de `DOC-05` dice `ui:109/service:1`, su YAML dice `106/4`.
-4. **`TC-073` y `TC-075` siguen sin comprobar el IVA** (`A-05-03b`, sin cambios): están en
-   verde y no validan `Literal: <ivaEsperado> €` en ningún paso, sobre un requisito que la
-   aplicación ya cumple mejor que ellos lo comprueban.
+**Nuevo — `DOC-07/A-05-15`, ver `DOC-07` §3.14.** `TC-041` ya tiene evidencia de ejecución
+por servicio (`TCS001`), pero su paso 2 —«el selector ofrece exactamente dos tipos […] y
+ninguna otra opción»— es una afirmación sobre la pantalla, y **ni la suite de navegador ni
+la de servicio lo ejercen**: `S-10` no tiene escenario para el caso y `TCS001` comprueba la
+API, que es otra cosa. Corrección de guion de prueba, no de la aplicación.
 
-### 6.6 → `S-12` · Cuatro cosas del registro, una nueva
+**Cerrado desde la ronda anterior, se retira de este apartado: `EXP-027`.** `DOC-14` 2.1.0
+y `DOC-23` 2.2.0 confirman los 17 `.feature` corregidos y reverificados en verde. Seguía
+citado como abierto en la 3.0.1 por la razón explicada en 1.6.
 
-1. **`MEJ-009` necesita censo.** El número lo ha dado `registry.js next`; **A-12 no ha
-   escrito en el registro**, que sigue con 8 anclas `MEJ` antes de esta ronda.
-2. **La divergencia de estado sigue**: `MEJ-001`, `MEJ-003` y `MEJ-005` deberían figurar
+**Sin cambios:**
+
+1. **El estado documentado del proyecto ya no es exacto.** `CLAUDE.md` sigue anunciando «1
+   caso vermell: TC-048», que ya no lo es tras `DOC-23` 2.2.0. No es un `DOC-nn` y `A-12` no
+   lo edita; se deja constancia para quien mantenga `CLAUDE.md`.
+2. **`A-05-12` sigue sin corregir**: el resumen del front-matter de `DOC-05` dice
+   `ui:109/service:1`, su YAML dice `106/4`.
+3. **`TC-073` y `TC-075` siguen sin comprobar el IVA** (`A-05-03b`): están en verde y no
+   validan `Literal: <ivaEsperado> €` en ningún paso.
+
+### 6.6 → `S-12` · Cinco cosas del registro, una nueva
+
+1. **La familia `TCS-nnn` nace fuera de `registro-ids.json`.** Nuevo — `DOC-07/A-05-16`,
+   origen `DOC-27` §6.1: los diez identificadores de la colección de servicio se asignan
+   dentro del propio JSON de Postman, sin pasar por `S-12`, a diferencia de `REQ`, `TC`,
+   `UC` y `BR`. Si la familia debe registrarse es decisión de `S-12` y del canon `DOC-nn`,
+   no de `A-12`.
+2. **`MEJ-009` sigue sin censo.** Nació en la 3.0.0 con número dado por `registry.js`; **A-12
+   no ha escrito en el registro** en ninguna ronda desde entonces, que sigue con 8 anclas
+   `MEJ`.
+3. **La divergencia de estado sigue**: `MEJ-001`, `MEJ-003` y `MEJ-005` deberían figurar
    `accepted` y `MEJ-007`/`MEJ-008` `implemented`; si el registro no lo refleja, sigue
    siendo `proposed` allí. La fuente de verdad del estado es `DOC-16`.
-3. **`A-05-06` sigue abierta**, sin cambios.
+4. **`A-05-06` sigue abierta**, sin cambios.
 
-### 6.7 → `S-05` · Cuarta versión consecutiva sin `DOC-17`
+### 6.7 → `S-05` · Quinta versión consecutiva sin `DOC-17`
 
 Este roadmap sigue supliendo la ausencia con evidencia de defectos, exploración,
 cobertura y lectura de código, y no puede ver la deuda que todavía no ha producido ningún
 defecto.
 
-### 6.8 → `S-01` · El grafo sigue sin las tres aristas que `DOC-07/7.2` documentó, pese a la regeneración
+### 6.8 → `S-01` · El grafo sigue sin las tres aristas que `DOC-07/7.2` documentó, pese a dos regeneraciones
 
-`DOC-02` subió a 1.1.0 para añadir `use-submit-guard` y `format-utils`, motivo ajeno a
-esta carencia, y las tres aristas que `DOC-07/7.2` señaló como faltantes en 2.1.0
-—`albarans-pages → vehicles-service`, `albarans-pages → shared-components`,
-`factures-pages → albarans-service`— **siguen sin estar en el grafo**. Verificado a mano
-sobre el bloque `edges` de `DOC-02` 1.1.0. Segunda ronda que lo señala.
+Las tres aristas que `DOC-07` §7.2 señaló como faltantes —`albarans-pages →
+vehicles-service`, `albarans-pages → shared-components`, `factures-pages →
+albarans-service`— **siguen sin estar en el grafo**. `DOC-02` ha subido de versión dos
+veces desde que se señaló (1.1.0 por `use-submit-guard`/`format-utils`; el salto de hash
+sin versión de esta ronda, por dos rutas de spec reescritas) y ninguna de las dos tocó
+esta carencia. Verificado a mano sobre el bloque `edges` de `DOC-02` en `HEAD`. Tercera
+ronda que lo señala.
+
+### 6.9 → `A-02` (producto) · Si borrar un albarán debe devolver el stock de sus líneas de pieza
+
+**Nuevo — `DOC-07/A-05-15`, origen `DOC-27` §4.1.** El hecho, verificado en el servidor:
+retirar una línea de pieza devuelve la cantidad al stock (`server/routes/albarans.js:197-224`);
+borrar el albarán entero, que retira las mismas líneas, no lo hace (`:116-132`). `A-05` ya
+señala que ningún requisito de `DOC-04` decide si el segundo camino debe comportarse como
+el primero: `REQ-039` habla de retirar una línea; `REQ-041`, de borrar el albarán. **A-12
+no responde esta pregunta** —es la misma clase de decisión que `EXP-003` en 6.2: técnica no
+es, de producto sí— y la incorpora solo como evidencia de `MEJ-004` (1.2, 1.3, 3.4). Si la
+respuesta es que sí debe devolverlo, hay un defecto de aplicación para `DOC-24`/`A-14`; si
+no, falta el requisito que lo diga, y es trabajo de `A-02`. `A-05` añade además que `TC-056`
+—el único caso de `REQ-041`— está en verde sin mirar el stock y que su escenario no coincide
+con la precondición del caso (`s10-auto-tcs`); A-12 no repite ese detalle, ya está en
+`DOC-07` §3.15.
 
 ## 7. Bloque estructurado
 
@@ -680,21 +848,33 @@ sobre el bloque `edges` de `DOC-02` 1.1.0. Segunda ronda que lo señala.
 version: 1
 project: app-taller
 run:
-  date: 2026-08-23
-  kind: analysis_round
+  date: 2026-08-24
+  kind: resync_with_evidence
   first_run: false
-  previous_doc_version: 2.1.0
-  commit_sha: 4526cf0589ba5666e9c897510e4c41dea987d442
-  new_inputs_this_run: []
-  inputs_changed_this_run: [DOC-02-TECNICA.md, DOC-14-EXPLORATORIO.md]
+  previous_doc_version: 3.0.1
+  last_analysis_round: 3.0.0
+  commit_sha: 40bbd43a7cf722dbd5a12259c994f1a415317479
+  new_inputs_this_run: [DOC-27-INFORME-API.md]
+  inputs_changed_this_run: [DOC-07-TRAZABILIDAD.md]
+  inputs_hash_corrected_this_run: [DOC-02-TECNICA.md, DOC-05-PLAN-PRUEBAS.md, DOC-25-PROPUESTAS-FUNCIONALES.md, registro-ids.json]
   inputs_absent: [DOC-17-DEUDA-TECNICA.md, DOC-20-RALLY-STATE.json, DOC-19-RALLY-TESTCASES.csv]
+  frozen_this_run: [DOC-09-ARQUITECTURA.md]
+  frozen_reason: >-
+    DOC-09 pasó a 2.1.0 y está en revisión dentro de una onada mayor con seis documentos
+    obsoletos; se despacha a A-12 solo porque es el único invalidado exclusivamente por
+    DOC-07 y sin depender de una decisión de negocio pendiente. No se declara como entrada
+    ni se cita en esta ronda; se hará cuando la onada se cierre.
   ids_granted_by: S-12
-  ids_requested_this_run: 1
-  ids_granted: [MEJ-009]
-  worktree_note: >-
-    El worktree estaba 12 commits detrás de master al empezar (mismo merge-base que HEAD,
-    cero commits propios); se avanzó en fast-forward antes de leer nada. Sin ese paso este
-    documento habria regenerado sobre DOC-02 1.0.0 y DOC-14 1.0.0, ya superadas.
+  ids_requested_this_run: 0
+  ids_granted: []
+  no_new_mej_this_round: true
+  no_status_change_this_round: true
+  provenance_note: >-
+    Se ha verificado version declarada vs real y hash declarado vs calculado en las 10
+    entradas (salvo DOC-09, congelado). Cuatro llevaban hash desactualizado sin cambio de
+    version (DOC-02, DOC-05, registro-ids.json en su propia version "1", y DOC-25 con
+    version tambien desactualizada 1.2.0 -> 1.2.1). Corregidas las cuatro; ninguna cambio
+    de contenido sustantivo verificado por diff.
 decision_of_record:
   date: 2026-08-17
   by: propietario del proyecto
@@ -713,7 +893,7 @@ improvements:
     decided_by: propietario del proyecto
     next_step: A-07
     next_step_done: false
-    evidence_change_since_2_1_0: sin cambios
+    evidence_change_since_3_0_0: sin cambios
     components: [albarans-pages, clients-pages, vehicles-pages, factures-pages, personal-pages, shared-components]
     impact: low
     difficulty: low
@@ -736,9 +916,13 @@ improvements:
     evidence_refs:
       - DOC-14/EXP-006
       - DOC-05/4.11/familia-literal-del-aviso-25-casos
-      - codigo/71-literales-en-server-routes-recontados-en-4526cf0-sin-cambios
+      - codigo/71-literales-en-server-routes-recontados-en-40bbd43-sin-cambios
       - specs/implemented/SPE-01-esquelet-app-taller.md:102
-    evidence_change_since_2_1_0: sin cambios
+      - automation/api/tallerMecaniccollection.json/4-literales-en-igualdad-exacta-to.eql
+    evidence_change_since_3_0_0: >-
+      Crece. Segundo consumidor de los mismos literales: la coleccion de servicio afirma
+      4 de los 71 con igualdad exacta (to.eql), verificados contra factures.js:69,76 y
+      albarans.js:146,161. Dos suites, dos dueños (s10-auto-tcs, S-17), mismo texto.
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, api-client]
     impact: medium
     difficulty: low
@@ -757,7 +941,16 @@ improvements:
     next_step: A-07
     next_step_done: false
     implemented: false
-    evidence_change_since_2_1_0: sin cambios
+    evidence_change_since_3_0_0: >-
+      Parcialmente satisfecha, sin cambio de estado. Nace automation/api/ con informe
+      publicado (DOC-27 1.0.0): 10 TCS-nnn en verde sobre 2 de los 7 routers (albarans,
+      factures), 0 residuo en base medido. Sigue faltando: 0 ficheros de prueba dentro de
+      server/, 0 CI, nomines y personal sin ninguna comprobacion de servicio. La decision
+      de si esto sustituye o solo complementa a MEJ-003 es de quien la lleve a A-07.
+    evidence_refs:
+      - DOC-27-INFORME-API.md/1.0.0
+      - codigo/0-ficheros-test-en-server-en-40bbd43
+      - codigo/sin-CI-sin-script-test-en-40bbd43
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, db-connection, db-migrate, db-numbering]
     impact: low
     difficulty: medium
@@ -788,7 +981,12 @@ improvements:
       - DOC-14/EXP-016
       - DOC-02/Q-06
       - codigo/893-lineas-y-86-res.status-en-server-routes-sin-cambios-desde-b2a8d77
-    evidence_change_since_2_1_0: sin cambios
+      - DOC-07/A-05-15
+    evidence_change_since_3_0_0: >-
+      Crece. Noveno candidato de la misma familia, de forma nueva: la regla de devolver
+      stock existe en albarans.js:197-224 (retirar linea) y no en :116-132 (borrar
+      albaran), verificado en HEAD. No se decide si es defecto -- pregunta de producto,
+      ver DOC-16 apartado 6.9 -- se incorpora solo como evidencia de duplicacion-por-omision.
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, db-connection]
     impact: high
     difficulty: high
@@ -808,7 +1006,7 @@ improvements:
     decided_by: propietario del proyecto
     next_step: A-07
     next_step_done: false
-    evidence_change_since_2_1_0: sin cambios
+    evidence_change_since_3_0_0: sin cambios
     components: [db-seed, db-migrate, db-connection]
     impact: low
     difficulty: low
@@ -824,13 +1022,19 @@ improvements:
     what: >-
       Declarar `engines` y `.nvmrc`, y leer la ruta de la base de una variable de entorno
       con el valor actual como valor por defecto.
-    value: Habilitador de MEJ-003 y MEJ-005, las dos aceptadas y las dos paradas.
+    value: Habilitador parcial de MEJ-003 y MEJ-005, las dos aceptadas y las dos paradas.
     source: opinion
     evidence_refs:
       - DOC-02/Q-01
       - DOC-02/Q-02
       - codigo/ningun-package.json-declara-engines-y-no-hay-.nvmrc
-    evidence_change_since_2_1_0: sin cambios en datos; seis días bloqueando en vez de cinco
+      - DOC-27-INFORME-API.md/§5
+    evidence_change_since_3_0_0: >-
+      Se matiza, en contra de la urgencia. DOC-27 §5 demuestra que automation/api/ se
+      ejecuta de forma repetible SIN nada de lo que esta mejora propone (base no
+      resembrada, idéntica antes y después); el argumento "bloquea a dos aceptadas" pesa
+      menos. Queda en pie la mitad de ruta de base configurable: DOC-27 §5 anota que un
+      informe de entrega sí debería partir de npm run seed, que hoy reescribe en el sitio.
     components: [db-connection, server-app]
     impact: low
     difficulty: low
@@ -922,55 +1126,87 @@ improvements:
 considered_not_proposed:
   - what: Control de concurrencia / bloqueo optimista (DOC-14/EXP-003)
     why: >-
-      Decisión de producto, no técnica; sin cambios esta ronda (DOC-14 2.0.0: "no revisado
-      de nuevo, se da por vigente"). Va a findings_for_others.
+      Decisión de producto, no técnica; sin cambios esta ronda (DOC-14 2.1.0: no revisado de
+      nuevo, se da por vigente). Ya recogido por A-15 como FUN-012 en DOC-25 1.2.0.
   - what: Condición de carrera y orden textual en generateNumero (DOC-02/Q-03)
-    why: better-sqlite3 es síncrono; verificado correcto por DOC-24 y ambas versiones de DOC-14.
-  - what: Las correcciones de los ocho defectos de escritura
-    why: Son de A-14 (BUG-nnn, EXP-nnn); A-12 los lee como patrón y propone dónde aterrizan.
+    why: better-sqlite3 es síncrono; verificado correcto por DOC-24 y DOC-14.
+  - what: Las correcciones de los ocho defectos de escritura, y el candidato a noveno
+    why: >-
+      Son de A-14 (BUG-nnn, EXP-nnn) o de una decisión de producto pendiente (DOC-07/A-05-15,
+      ver findings_for_others target A-02). A-12 los lee como patrón y propone dónde
+      aterrizan: MEJ-004.
+  - what: Si borrar un albarán debe devolver el stock de sus líneas de pieza (DOC-07/A-05-15)
+    why: >-
+      Pregunta de producto, no técnica; el propio DOC-07 lo dice explícitamente. Incorporado
+      solo como evidence_ref de MEJ-004; no nace MEJ-010. Va a findings_for_others, target A-02.
   - what: Fragilidad del extractor de S-12 (DOC-07/A-05-06)
     why: No es código de app-taller, no existe en el grafo de DOC-02.
   - what: Huecos de cobertura
-    why: "DOC-07 1.7.0, sin cambios: 100%, 0 GAP PLAN, 0 bloqueantes."
-  - what: EXP-017, EXP-019 y EXP-026 (deriva_a A-12, no revisados esta sesión)
+    why: "DOC-07 1.10.0, sin cambios: 100%, 0 GAP PLAN, 0 bloqueantes."
+  - what: EXP-017, EXP-019 y EXP-026 (deriva_a A-12, no revisados en DOC-14 2.1.0)
     why: >-
-      Cambian lo que el usuario ve o puede hacer; es funcionalidad y la decide negocio. Van
-      a findings_for_others.
+      Cambian lo que el usuario ve o puede hacer; es funcionalidad y la decide negocio. Ya
+      recogidos por A-15 como FUN-009, FUN-010 y FUN-011 en DOC-25 1.2.0.
+  - what: TC-032/TC-033/TC-047 sin vector por REQ-025/REQ-034 (DOC-07/A-05-11c)
+    why: >-
+      Evaluado por A-15 en DOC-25 1.2.0, que no lo convierte en FUN-nnn: los requisitos ya
+      dan por hecho que la capacidad existe, así que es discrepancia DOC-04/DOC-07, no
+      funcionalidad ausente que A-12 deba reenviar de nuevo.
 corrections_to_previous_version:
-  - what: ninguna cifra de código requirió corrección esta ronda
+  - what: cuatro entradas de `inputs` llevaban hash desactualizado sin cambio de versión declarada
     detail: >-
-      git diff --stat b2a8d77 HEAD -- server/routes/ no devuelve nada: 893 líneas, 86
-      res.status y 71 literales de 2.1.0 siguen siendo correctos.
+      DOC-02-TECNICA.md (1.1.0, hash 32639b3f -> 5a4fce68, diff verificado: solo dos rutas
+      de spec reescritas, graph sin cambios), DOC-05-PLAN-PRUEBAS.md (1.6.0, hash a88ca2aa
+      -> 43051f32, diff verificado: solo front-matter), registro-ids.json (hash 9f5b3679 ->
+      bc54df9a, recontado: sigue con 8 anclas MEJ) y DOC-25-PROPUESTAS-FUNCIONALES.md, que
+      además llevaba la versión mal (1.2.0 declarada, 1.2.1 real). Ninguna cambió conclusión
+      alguna de este documento.
+  - what: ninguna cifra de server/routes/ requirió corrección de contenido
+    detail: >-
+      893 líneas, 86 res.status y 71 literales de error, recontados en HEAD (40bbd43),
+      siguen siendo correctos.
 findings_for_others:
   - target: A-15
-    status: sin cambios
+    status: cerrado por el destinatario
     note: >-
-      EXP-017 (aviso al abandonar formulario), EXP-026 (diálogo de borrado sin nombre del
-      registro) y EXP-019 (pantallas de error sin salida). Ninguno revisado de nuevo esta
-      sesión; ninguno en DOC-25 1.1.1.
+      EXP-017, EXP-026 y EXP-019 ya son FUN-009, FUN-010 y FUN-011 en DOC-25 1.2.0/1.2.1,
+      citando este documento como origen. No se repropone.
   - target: A-15
-    status: sin cambios
-    note: Si la concurrencia (EXP-003) está en el alcance del producto.
+    status: cerrado por el destinatario
+    note: >-
+      Si la concurrencia (EXP-003) está en el alcance del producto: ya es FUN-012 en DOC-25
+      1.2.0. No se repropone.
   - target: A-15
-    status: sin cambios
-    note: "Funcionalidad ausente topada por automatización: DOC-07/A-05-11c."
+    status: evaluado por el destinatario, sin FUN-nnn
+    note: >-
+      DOC-07/A-05-11c (TC-032/TC-033/TC-047 sin vector) evaluado por A-15 en DOC-25 1.2.0:
+      no da lugar a propuesta, es discrepancia DOC-04/DOC-07. Se deja constancia, no se
+      repropone.
+  - target: A-02
+    status: nuevo
+    note: >-
+      DOC-07/A-05-15 — si borrar un albarán debe devolver el stock de sus líneas de pieza.
+      REQ-039 habla de retirar una línea, REQ-041 de borrar el albarán; ninguno decide sobre
+      el otro. A-12 no lo resuelve ni lo propone como MEJ; lo usa solo como evidence_ref de
+      MEJ-004. Si la respuesta es sí, es BUG-nnn para A-14; si no, falta requisito en DOC-04.
   - target: A-14
     status: sin cambios
     note: >-
       DOC-24 sigue en 1.0.0 con BUG-001/BUG-002 "abiertos" pese a que DOC-14 verificó en
-      vivo que funcionan. Tercera ronda que lo señala.
+      vivo que funcionan. Cuarta ronda que lo señala.
   - target: A-03
     status: nuevo
     note: >-
-      DOC-14/EXP-027 (high): los .feature de factures y nomines validan literales con punto
-      decimal que ya no coinciden con la pantalla tras SPEC 05. Confirmado sobre TC-060;
-      contados a mano 8 casos más. No es defecto de la app.
+      DOC-07/A-05-14: TC-041 ya se ejecuta por servicio, pero su paso 2 (el selector ofrece
+      exactamente dos tipos) no lo ejerce ninguna de las dos suites. Corrección de guion,
+      no de la aplicación.
   - target: A-03
-    status: nuevo
+    status: cerrado
     note: >-
-      El estado documentado del proyecto ("1 caso vermell: TC-048" en CLAUDE.md) ya no es
-      exacto si EXP-027 se materializa al ejecutar la suite. No es un DOC-nn; se deja
-      constancia para quien mantenga CLAUDE.md.
+      DOC-14/EXP-027 y el estado de CLAUDE.md ligado a él: EXP-027 cierra en DOC-14 2.1.0 y
+      DOC-23 2.2.0 (17 escenarios corregidos y reverificados en verde). Se retira de esta
+      lista; queda solo la nota de que CLAUDE.md sigue sin reflejar la ejecución completa
+      más reciente (89 escenarios no re-ejecutados en 2.2.0), que no es un DOC-nn.
   - target: A-03
     status: sin cambios
     note: "A-05-12 (resumen de front-matter de DOC-05 no coincide con su YAML) sigue sin corregir."
@@ -979,7 +1215,12 @@ findings_for_others:
     note: "TC-073 y TC-075 (A-05-03b) siguen sin comprobar el IVA en su literal."
   - target: S-12
     status: nuevo
-    note: "MEJ-009 necesita censo. A-12 no ha escrito en el registro."
+    note: >-
+      DOC-07/A-05-16 — la familia TCS-nnn (colección de servicio) nace fuera de
+      registro-ids.json. Decisión de S-12 y del canon, no de A-12.
+  - target: S-12
+    status: sin cambios
+    note: "MEJ-009 sigue sin censo. A-12 no ha escrito en el registro en ninguna ronda."
   - target: S-12
     status: sin cambios
     note: >-
@@ -987,31 +1228,49 @@ findings_for_others:
       implemented en el registro. A-05-06 sigue abierta.
   - target: S-05
     status: sin cambios
-    note: Cuarta versión consecutiva sin DOC-17.
+    note: Quinta versión consecutiva sin DOC-17.
   - target: S-01
     status: sin cambios
     note: >-
-      Las tres aristas que DOC-07/7.2 señaló como ausentes siguen ausentes en DOC-02 1.1.0
-      pese a la regeneración por otro motivo. Segunda ronda que lo señala.
+      Las tres aristas que DOC-07/7.2 señaló como ausentes siguen ausentes en el grafo de
+      DOC-02 tras dos regeneraciones por otros motivos. Tercera ronda que lo señala.
 registry_check:
-  command: registry.js next registro-ids.json --prefix MEJ --count 2
-  result: "8 existentes, máximo 8; siguientes libres: MEJ-009, MEJ-010"
-  used: [MEJ-009]
+  command_previous_round: registry.js next registro-ids.json --prefix MEJ --count 2
+  result_previous_round: "8 existentes, máximo 8; siguientes libres: MEJ-009, MEJ-010"
+  requested_this_round: 0
+  used_this_round: []
   written_by_a12: false
+  note: >-
+    No se pide número esta ronda: no nace ningún MEJ-nnn. MEJ-009 sigue sin censar en
+    registro-ids.json (findings_for_others, target S-12).
 summary:
   total: 9
-  new: 1
-  implemented_this_round: 2
-  still_open: 4
-  accepted_not_started: 3
+  new_this_round: 0
+  status_changed_this_round: 0
   implemented: 2
+  accepted_not_started: 3
+  proposed_undecided: 3
+  proposed_new_pending: 1
   rejected_respected: 0
   rejected_total: 0
-  evidence_grown: []
+  evidence_grown_this_round: [MEJ-002, MEJ-004]
+  evidence_matured_this_round: [MEJ-003, MEJ-006]
   evidence_shrunk: []
   by_source: { evidence: 8, opinion: 1 }
-  considered_not_proposed: 6
-  findings_for_others: 12
-  recommended_top3_among_undecided: [MEJ-009, MEJ-006, MEJ-002]
+  considered_not_proposed: 8
+  findings_for_others: 14
+  findings_closed_by_recipient_this_round: 3
+  recommended_top3_among_undecided: [MEJ-009, MEJ-002, MEJ-006]
+  recommended_order_changed_since_3_0_0: true
+  recommended_order_change_reason: >-
+    MEJ-006 baja del primer al tercer puesto: DOC-27 demostró que la suite de servicio se
+    ejecuta de forma repetible sin lo que MEJ-006 propone, lo que ablanda su argumento
+    principal (bloquea a dos aceptadas). MEJ-002 sube al segundo puesto por evidencia nueva
+    (segundo consumidor de los 71 literales, con igualdad exacta).
   never_propose_again: [MEJ-001, MEJ-003, MEJ-005, MEJ-007, MEJ-008]
+  a05_15_decision: >-
+    No nace MEJ-010. A-05-15 (borrar albarán no devuelve stock) se incorpora como
+    evidence_ref de MEJ-004 y como candidato a noveno defecto en el apartado 3.0; la
+    pregunta de si el comportamiento actual es correcto queda sin responder, dirigida a
+    A-02 en findings_for_others, respetando que es decisión de producto, no técnica.
 ```

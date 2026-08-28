@@ -2,11 +2,11 @@
 doc_id: DOC-16-HIST
 doc_name: DOC-16-ROADMAP-HIST
 of_document: DOC-16-ROADMAP.md
-version: 3.0.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 3.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-24T11:30:00+02:00
+generated_at: 2026-08-24T17:15:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -38,6 +38,108 @@ señalan como reconstruidas para que nadie las tome por notas escritas en su mom
 histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
 añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
 `DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## 3.1.0 — 2026-08-24 — MINOR
+
+**Ronda de análisis con evidencia nueva, no solo resello de procedencia.** `S-16` volvió a
+marcar `DOC-16` como obsoleto por una única entrada:
+
+```
+DOC-07: declara 1.9.0, actual 1.10.0  [MINOR]
+```
+
+**Alcance deliberadamente estrecho.** Hay una onada mayor en curso con seis documentos
+obsoletos; `DOC-16` fue el único despachado en esta pasada por ser el único invalidado
+**solo** por `DOC-07` y sin depender de una decisión de negocio pendiente. `DOC-09`, que
+acaba de pasar a 2.1.0 y está en revisión dentro de esa misma onada, **queda
+deliberadamente congelado**: no se declara como entrada ni se cita, aunque
+`DOC-07/A-05-15` conste allí como riesgo `RS-07`.
+
+**Qué trajo `DOC-07` 1.10.0, verificado documento a documento, no asumido.** Nace
+`docs/DOC-27-INFORME-API.md` 1.0.0 (`S-17`): informe de ejecución de la suite de servicio
+sobre `automation/api/` — 10 `TCS-nnn` en verde, 28 peticiones, 31 aserciones, 0 residuo en
+la base. `DOC-07` la incorpora sin mover la cobertura (100,00 %, 0 `GAP PLAN`, CSV
+idéntico byte a byte, octava vez consecutiva) y nacen tres avisos: `A-05-14` (paso 2 de
+`TC-041` sin ejercer por ninguna suite), `A-05-15` (borrar un albarán no devuelve el stock
+de sus líneas de pieza, a diferencia de retirar una línea suelta) y `A-05-16` (la familia
+`TCS-nnn` nace fuera de `registro-ids.json`).
+
+**Antes de tocar nada se comprobó que ningún `MEJ-nnn` citaba `DOC-07`** en su
+`evidence_refs` — cierto: las únicas menciones eran narrativas. El salto de versión, por sí
+solo, no invalidaba ninguna prioridad. Lo que sí la movió fue leer `DOC-27` y su colección
+directamente.
+
+**Ninguna mejora nace ni cambia de estado.** Se decidió expresamente no crear un `MEJ-010`
+a partir de `A-05-15`, con tres motivos: (1) si el sistema debe devolver el stock al borrar
+el albarán es una pregunta de producto que `DOC-07` deja explícitamente sin responder —
+`REQ-039` habla de retirar una línea, `REQ-041` de borrar el albarán, ninguno del otro —;
+(2) cualquier reformulación aparentemente neutra («reutilizar el camino de retirada de
+línea») decide lo mismo por la puerta de atrás; (3) la parte que sí es técnica ya tenía
+sitio en `MEJ-004`. El hallazgo se incorpora como `evidence_ref` de `MEJ-004` (noveno
+candidato de la misma familia, con una forma nueva: la regla existe en una ruta del
+fichero y no en la otra) y la pregunta de producto va a `findings_for_others`, target
+`A-02`, sin resolverla.
+
+**Cuatro mejoras ganan o matizan evidencia, ninguna cambia de tamaño, dificultad ni
+dependencia:**
+
+- **`MEJ-002`** crece: la colección de servicio afirma cuatro de los 71 literales de error
+  con igualdad exacta (`to.eql`), verificados contra el código. Segundo consumidor, segundo
+  dueño (`S-17`), mismo texto sin catálogo.
+- **`MEJ-003`** (aceptada) queda **parcialmente satisfecha, sin cambio de estado**: existe
+  ya una suite de servidor real y con informe, pero cubre 2 de 7 routers, vive fuera de
+  `server/`, no tiene CI y `nomines`/`personal` no tienen ni una comprobación. La pregunta
+  de si esto sustituye o solo complementa a `MEJ-003` queda para quien la lleve a `A-07`.
+- **`MEJ-004`** crece por `A-05-15`, como se ha explicado arriba.
+- **`MEJ-006`** se matiza **en contra** de su propio argumento de urgencia: `DOC-27` §5
+  demuestra que la suite de servicio se ejecuta de forma repetible sin nada de lo que
+  `MEJ-006` propone (base no resembrada, idéntica antes y después). Baja del primer al
+  tercer puesto en la recomendación.
+
+**La recomendación cambia de orden**, no de contenido: `MEJ-009` (sin cambios, primer
+puesto), `MEJ-002` (sube al segundo por evidencia nueva), `MEJ-006` (baja al tercero por el
+motivo de arriba).
+
+**Se corrige el cuerpo heredado que la 3.0.1 dejó desfasado a propósito**, tal como
+anunciaba su propia entrada de este fichero: las citas a «`DOC-14` 2.0.0», «`DOC-23` sigue
+en 2.0.0», «`DOC-07` 1.7.0», `EXP-027` como abierto y «`DOC-25` 1.1.1» pasan a reflejar
+`DOC-14` 2.1.0, `DOC-23` 2.2.0, `DOC-07` 1.10.0, `EXP-027` cerrado y `DOC-25` 1.2.1.
+
+**Tres hallazgos que este documento venía reenviando ronda tras ronda ya fueron recogidos
+por su destinatario**: `EXP-017`, `EXP-026` y `EXP-019` son `FUN-009` a `FUN-011` en
+`DOC-25` 1.2.0; `EXP-003` es `FUN-012`; `DOC-07/A-05-11c` fue evaluado por `A-15` y no dio
+lugar a propuesta. Se documenta el cierre y se deja de repetirlos como pendientes.
+
+**Corrección del bloque `inputs`, verificación hash a hash.** Se comprobó versión
+declarada contra real y hash declarado contra calculado en las diez entradas presentes
+(`DOC-09` excluido por estar congelado). Cuatro llevaban un hash que ya no correspondía a
+su fichero, sin que hubiera cambiado el número de versión: `DOC-02-TECNICA.md` (commit
+`c71c580`, dos rutas de spec reescritas, `graph` sin cambios — verificado el diff),
+`DOC-05-PLAN-PRUEBAS.md` (commit `7f2000f`, resello de procedencia de `A-03`, solo
+front-matter — verificado el diff), `registro-ids.json` (tocado en `20496d3` y `c71c580`,
+recontado: sigue con 8 anclas `MEJ`) y `DOC-25-PROPUESTAS-FUNCIONALES.md`, que además
+llevaba la propia versión mal declarada (1.2.0 en vez de 1.2.1 real). Las cuatro se
+corrigen; ninguna cambió una conclusión de este documento — se verificó el diff de cada
+una, no se asumió.
+
+**Por qué MINOR y no PATCH.** Era la decisión que había que tomar con cuidado, porque el
+resultado más probable a priori era PATCH: la cobertura no se mueve y ningún `MEJ-nnn`
+cambia de estado. No es lo único que ha pasado. Hay contenido nuevo verificable que la
+3.0.1 no podía contener: cuatro fichas de mejora ganan o pierden peso en su argumento
+(`MEJ-002`, `MEJ-003`, `MEJ-004`, `MEJ-006`), el orden de la recomendación cambia, nace un
+apartado de análisis nuevo (`A-05-15` y por qué no se convierte en `MEJ-010`) y tres
+hallazgos históricos se cierran por su destinatario. Es el mismo criterio que sostuvo la
+2.1.0: evidencia que crece o se matiza en varias fichas es `MINOR`, aunque ningún `MEJ-nnn`
+cambie de estado.
+
+**Efecto secundario, anotado sin ser responsabilidad de esta ronda.** Este salto a 3.1.0
+deja a `DOC-14` (que cita `DOC-16` 3.0.0 en su propio `inputs`) y a `DOC-25` (que cita
+`DOC-16` 3.0.0) como obsoletos según `S-16`. No corresponde a `A-12` corregirlo: lo
+disparará el propio dueño de cada documento en su momento.
+
+**`registro-ids.json` no se toca.** Ningún `MEJ-nnn` nuevo, retirado ni reformulado.
 
 ---
 
