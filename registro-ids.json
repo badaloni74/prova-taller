@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-28T10:16:40.941Z",
+  "updated_at": "2026-08-28T16:20:00.000Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -1414,6 +1414,28 @@
         "UC-SHL-03"
       ],
       "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-080": {
+      "text": "El sistema impide que, al modificar la cabecera de un albarán no facturado, su vehículo se sustituya por uno perteneciente a un cliente distinto del actual; el intento se rechaza por completo y ni el vehículo, ni la fecha, ni las notas quedan modificados.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-10",
+        "UC-ALB-06"
+      ],
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "REQ-081": {
+      "text": "Al modificar la cabecera de un albarán no facturado, el selector de vehículo solo ofrece los vehículos del cliente actual del albarán.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-10",
+        "UC-ALB-06"
+      ],
+      "created": "2026-08-28",
       "status": "active"
     },
     "TC-001": {

@@ -2,11 +2,11 @@
 doc_id: DOC-04-HIST
 doc_name: DOC-04-FUNCIONAL-HIST
 of_document: DOC-04-FUNCIONAL.md
-version: 1.2.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-23T00:38:21+02:00
+generated_at: 2026-08-28T16:20:00+02:00
 ---
 
 # DOC-04-FUNCIONAL · Historial de versiones
