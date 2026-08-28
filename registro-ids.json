@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-28T16:20:00.000Z",
+  "updated_at": "2026-08-28T18:30:00.000Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -2935,7 +2935,9 @@
       "text": "Rechazar por servicio el cambio de vehículo a otro cliente, con el selector ya filtrado",
       "type": "test_case",
       "module": "albarans",
-      "requirement": "REQ-040",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
       "external_id": "TALLER-ALB-TC-111",
       "created": "2026-08-28",
       "status": "active"
@@ -2953,7 +2955,9 @@
       "text": "Un cambio simultáneo de vehículo a otro cliente, fecha y notas no guarda nada de los tres",
       "type": "test_case",
       "module": "albarans",
-      "requirement": "REQ-040",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
       "external_id": "TALLER-ALB-TC-113",
       "created": "2026-08-28",
       "status": "active"
@@ -2989,7 +2993,9 @@
       "text": "El selector de vehículo al editar muestra solo los del cliente actual",
       "type": "test_case",
       "module": "albarans",
-      "requirement": "REQ-040",
+      "requirement": "REQ-081",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
       "external_id": "TALLER-ALB-TC-117",
       "created": "2026-08-28",
       "status": "active"
@@ -2998,7 +3004,9 @@
       "text": "Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona",
       "type": "test_case",
       "module": "albarans",
-      "requirement": "REQ-040",
+      "requirement": "REQ-081",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
       "external_id": "TALLER-ALB-TC-118",
       "created": "2026-08-28",
       "status": "active"
@@ -3007,7 +3015,9 @@
       "text": "Tras un intento rechazado de cambio de cliente, la factura sale al cliente original",
       "type": "test_case",
       "module": "factures",
-      "requirement": "REQ-040",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
       "external_id": "TALLER-FAC-TC-119",
       "created": "2026-08-28",
       "status": "active"
