@@ -48,7 +48,15 @@ van construir l'app sencera així.
 3. `/spec-impl NN-slug` — branca pròpia, implantació pas a pas amb pausa per
    revisar cada diff
 
-Format de la capçalera d'un spec: veure `specs/implemented/SPE-03-personal-i-nomines.md`. Els
+En tancar l'spec, `/spec-impl` el mou a **la seva pròpia carpeta**
+`specs/implemented/<slug>/<slug>.md` i hi deixa, al costat, dos fitxers que
+escriu A-03: `<slug>-QA.md` (canvis a fer a les proves, per a `s10-auto-tcs`,
+pendent de confirmació) i `<slug>-TS.md` (manifest d'acceptació i regressió a
+executar). L'app va a l'spec; les proves, als dos `-QA`/`-TS` — separats.
+Els specs `SPE-01`…`SPE-05` són anteriors a aquesta estructura i segueixen com
+a fitxers solts dins `specs/implemented/`.
+
+Format de la capçalera d'un spec: veure `specs/implemented/SPE-06-albara-canvi-client/SPE-06-albara-canvi-client.md`. Els
 estats es fan servir **en anglès** (`Draft`, `Approved`, `Implemented`), tot i
 que el cos del document està en català.
 

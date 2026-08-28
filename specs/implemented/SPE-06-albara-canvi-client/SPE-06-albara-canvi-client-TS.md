@@ -1,12 +1,12 @@
 ---
 spec: SPE-06-albara-canvi-client.md
 spec_status: Implemented
-generator: A-09
+generator: A-09 (formato TS- original, 2026-08-28); dividido en -TS.md + -QA.md al migrar a carpeta por spec
 generated_at: 2026-08-28T12:30:00+02:00
 commit_range: 65b23a2..dc53dbf
 inputs:
   - id: SPE-06-albara-canvi-client
-    path: specs/implemented/SPE-06-albara-canvi-client.md
+    path: specs/implemented/SPE-06-albara-canvi-client/SPE-06-albara-canvi-client.md
     spec_status: Implemented
     present: true
   - id: DOC-05-PLAN-PRUEBAS
@@ -35,7 +35,13 @@ inputs:
     present: false
 ---
 
-# TS-SPE-06-albara-canvi-client
+# SPE-06-albara-canvi-client — Manifiesto de ejecución (`-TS`)
+
+Qué se ejecuta para validar esta implantación: pruebas de aceptación (una por
+criterio del spec) y el recorte de regresión. **El plan de cambios que la
+automatización tiene pendiente** —los 9 `TC-nnn` nuevos que aún no están en
+ninguna suite— vive en el fichero hermano
+[`SPE-06-albara-canvi-client-QA.md`](SPE-06-albara-canvi-client-QA.md).
 
 ## 1. Qué se implantó
 
