@@ -1,11 +1,11 @@
 ---
 doc_id: DOC-25
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES
-version: 1.2.1
+version: 1.2.2
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-24T11:00:00+02:00
+generated_at: 2026-08-28T10:30:00+02:00
 language: es
 history_document: docs/DOC-25-PROPUESTAS-FUNCIONALES-HIST.md
 history_note: >-
@@ -15,13 +15,13 @@ source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 2bbd4fe689b5f9f637d0c822bf4f0b0c81d3b93b
-  working_tree_clean: false   # sin versionar en el ambito de este ciclo: docs/, automation/, registro-ids.json y ficheros de sesion
+  commit_sha: 511796975891e4ef74e644b0cc6e926d20ee4e8b
+  working_tree_clean: false   # sin versionar y ajenos a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.2.0
-    hash: sha256:b4f26c8f2ae7d8f944917bd6770ac52680c3690ee66fbd85b77f8304aef86349
+    version: 1.2.1
+    hash: sha256:256d1507f2bb5aa5fdf3193622ff688de3f069182413a3ef29c98d9e9e4f5c02
     present: true
     usage: >-
       documento anterior. Manda sobre esta ronda: las doce propuestas FUN-001 a FUN-012 se
@@ -29,15 +29,22 @@ inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
     version: 1.1.0
-    hash: sha256:0f074e686a5fb700286e8de28f0210a204380423a6a797e7a9e8f3a96384200a
+    hash: sha256:828f05beb589c0897c441e18ae5ec9ec543989f53dfda4cfdd847dbc05028764
     present: true
-    changed_since_previous_run: true
-    previous_version_declared: 1.0.0
+    changed_since_previous_run: false
+    hash_changed_note: >-
+      el hash cambia respecto al declarado en 1.2.1 (mismo commit c71c580 que tambien tocó
+      DOC-06 y registro-ids.json): dos rutas `specs/01-...md` pasan a `specs/implemented/SPE-01-...md`
+      en BR-SHL-01 y BR-SHL-02. Verificado el diff completo: son las dos únicas líneas tocadas,
+      ningún actor, caso de uso, regla de negocio ni entrada de glosario cambia. `version` se
+      mantiene en 1.1.0 porque S-01 no lo trata como cambio de contenido. Sin efecto sobre
+      ninguna FUN-nnn
     change_note: >-
-      MINOR sin cambio de contenido de negocio: mismos actores, casos de uso, reglas de negocio
-      y glosario (verificado contra `DOC-01-BASE-ASIS-HIST.md` 1.1.0). Cierra Q-02 (ya resuelta
-      el 2026-08-16, censada como Q-12 en DOC-04 y como BUG-003 candidato en DOC-24) y corrige
-      un comentario del arbol de carpetas. Sin efecto sobre ninguna FUN-nnn
+      MINOR (1.0.0 -> 1.1.0, ronda 1.1.0/1.1.1 de este documento) sin cambio de contenido de
+      negocio: mismos actores, casos de uso, reglas de negocio y glosario (verificado contra
+      `DOC-01-BASE-ASIS-HIST.md` 1.1.0). Cerró Q-02 (ya resuelta el 2026-08-16, censada como
+      Q-12 en DOC-04 y como BUG-003 candidato en DOC-24) y corrigió un comentario del árbol de
+      carpetas. Sin efecto sobre ninguna FUN-nnn
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     version: 1.2.0
@@ -53,17 +60,23 @@ inputs:
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
     version: 1.3.0
-    hash: sha256:90ea9dd6102fbb62aae8d3133b3377a7f85be32181ac0f2a6c9de6c12bd82d15
+    hash: sha256:c081aea157c978d8ffcfffaed9fa9b33fc10106fa47498277f07c9720ef26067
     present: true
-    changed_since_previous_run: true
-    previous_version_declared: 1.2.0
+    changed_since_previous_run: false
+    hash_changed_note: >-
+      el hash cambia respecto al declarado en 1.2.1 por el mismo commit c71c580 que tocó DOC-01 y
+      registro-ids.json: dos rutas de spec en el front-matter (`specs/04-...md` ->
+      `specs/implemented/SPE-04-...md`, `specs/05-...md` -> `specs/implemented/SPE-05-...md`).
+      Verificado el diff completo: solo esas dos líneas de referencia. §6 y §9, el único alcance
+      que A-15 lee de este documento por contrato, no cambian ni una palabra. Sin efecto sobre
+      ninguna FUN-nnn
     scope: solo §6 (que no puede hacer la aplicacion todavia) y §9 (preguntas abiertas), por contrato
     change_note: >-
-      1.3.0 añade dos avisos sobre comportamiento ya implementado (guarda de reenvio de SPEC 04,
-      formato de importes/fechas de SPEC 05): no son funcionalidad nueva, son defectos ya
-      corregidos. §6.1 sigue con las mismas catorce carencias, mismo texto. §9 gana una pregunta
-      nueva (Q-30, sobre que ve el usuario ante una anotacion invalida) que es hueco de
-      documentacion, no de producto. Ninguna carencia de §6.1 se ha movido de dueño
+      1.3.0 (ronda 1.2.0 de este documento) añadió dos avisos sobre comportamiento ya implementado
+      (guarda de reenvio de SPEC 04, formato de importes/fechas de SPEC 05): no son funcionalidad
+      nueva, son defectos ya corregidos. §6.1 sigue con las mismas catorce carencias, mismo texto.
+      §9 gana una pregunta nueva (Q-30, sobre que ve el usuario ante una anotacion invalida) que es
+      hueco de documentacion, no de producto. Ninguna carencia de §6.1 se ha movido de dueño
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
@@ -73,29 +86,35 @@ inputs:
     note: sigue con BUG-001 a BUG-004; el candidato BUG-005 todavia no esta censado
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 3.0.0
-    hash: sha256:e70c3786b5dfe8e4f60e5adc0e02ab302cfcc85e657281da2af4b689423604de
+    version: 3.1.0
+    hash: sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81
     present: true
     changed_since_previous_run: true
-    previous_version_declared: 2.0.0
+    previous_version_declared: 3.0.0
     scope: solo el apartado 6, que contiene los hallazgos dirigidos a A-15
     change_note: >-
-      motivo de esta ronda junto con DOC-01 y DOC-06. MEJ-007 y MEJ-008 pasan a implemented;
-      MEJ-001, MEJ-003 y MEJ-005 siguen accepted sin ejecutar; nace MEJ-009. Releido el apartado
-      6 entero: §6.1 reafirma sin cambios los tres hallazgos de UX (EXP-017, EXP-026, EXP-019)
-      que ya senalaba 2.0.0/2.1.0 y que esta ronda **si** se convierten en propuesta; §6.2
-      reafirma EXP-003 (concurrencia entre pestañas), no evaluado hasta ahora; §6.3 señala por
-      primera vez REQ-025 y REQ-034 sin cumplir en la interfaz
+      motivo de esta ronda (1.2.2). 3.1.0 nace de DOC-27 (primer informe de la suite de servicio,
+      S-17) y de la resincronización de DOC-07 a 1.10.0: A-12 revisa las nueve MEJ-nnn contra esa
+      evidencia, pero **ninguna cambia de estado y no nace ninguna nueva** — crece la evidencia de
+      MEJ-002, MEJ-003, MEJ-004 y se matiza la de MEJ-006, sin tocar tamaño, dificultad ni
+      dependencias. §6.1 y §6.2 ya no reenvían EXP-017/EXP-026/EXP-019/EXP-003: confirman
+      explícitamente que están "ya recogidos" como FUN-009 a FUN-012 en esta misma DOC-25 (citando
+      su versión 1.2.0/1.2.1) y que no hace falta seguir reenviándolos. §6.3 confirma del mismo
+      modo que A-15 ya evaluó REQ-025/REQ-034 y decidió no proponer FUN-nnn, redirigiendo a A-14 —
+      sin matiz nuevo para A-15. Nace §6.9, hallazgo sobre si borrar un albarán debe devolver el
+      stock de sus líneas de pieza: dirigido a **A-02**, no a A-15. **Ninguna FUN-nnn de este
+      documento depende de una MEJ-nnn que haya cambiado de estado ni de una cifra de DOC-16 que
+      este documento reproduzca**: resello de procedencia, ver apartado 1
     usage: >-
-      se lee unicamente por sus hallazgos §6.1, §6.2 y §6.3, y por el estado de las mejoras que
-      atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
+      se lee unicamente por sus hallazgos §6.1, §6.2, §6.3 y §6.9, y por el estado de las mejoras
+      que atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
     version: 2.1.0
     hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
     present: true
-    changed_since_previous_run: true
-    previous_version_declared: 2.0.0
+    changed_since_previous_run: false
+    previous_version_declared: 2.1.0
     first_read_in: 1.2.0
     scope: >-
       solo las fichas EXP-nnn que DOC-16/§6 cita como dirigidas a A-15 (EXP-003, EXP-017,
@@ -117,9 +136,14 @@ inputs:
   - id: registro-ids.json
     from: S-12
     present: true
-    hash: sha256:9f5b3679a537ad7e9399ba6ef61d99518a3308957cac29977fae5b3f12a1d1c5
-    read_at: 2026-08-23
-    scope: "FUN-001 a FUN-008 censados y en proposed, dueño A-15. next --prefix FUN devuelve FUN-009: reclamado esta ronda para FUN-009 a FUN-012"
+    hash: sha256:bc54df9a531287e953975a311cea55a25297ecba3ce50d403f91dc6106528b97
+    read_at: 2026-08-28
+    hash_changed_note: >-
+      el hash declarado en 1.2.1 (9f5b3679...) ya no correspondía al fichero: entre medias lo
+      tocaron el commit 3f10869 (censo real de FUN-009 a FUN-012, la ronda 1.2.0 de este mismo
+      documento) y el c71c580 (dos rutas de spec renombradas en dos anclas BR-SHL-01/02, ajenas a
+      A-15). Recontado: siguen siendo doce anclas FUN, FUN-001 a FUN-012, todas presentes
+    scope: "FUN-001 a FUN-012 censados, dueño A-15. Los doce están en proposed. Nada que reclamar esta ronda"
   - id: contexto-confluence
     from: I-02
     present: false
@@ -138,19 +162,39 @@ not_read_by_contract:
       completo ni se trata como fuente de carencias propia
 obsolescence_response:
   raised_by: S-16
-  round: 1.2.1
+  round: 1.2.2
   findings:
-    - finding: "DOC-25 1.2.0 declaraba DOC-14 en 2.0.0, y DOC-14 habia subido a 2.1.0 (via 2.0.1)"
+    - finding: "DOC-25 1.2.1 declaraba DOC-16 en 3.0.0, y DOC-16 habia subido a 3.1.0"
       resolved: true
       how: >-
-        releido DOC-14 2.1.0 y su -HIST.md: el unico cambio de fondo es que EXP-027 pasa de
-        abierto a corregido, porque S-10 ya corrigio los .feature de automation/ui que
-        DOC-23 2.2.0 confirma en verde. Verificado ancla a ancla que ninguna de las doce
-        FUN-nnn de este documento cita EXP-027 ni depende de su estado -la unica mencion era
-        de procedencia (scope/usage de la propia entrada), no evidencia de ninguna propuesta.
-        Resello puro: version y hash reales declarados, sin tocar ninguna FUN-nnn ni el cuerpo
-        del documento
+        releido DOC-16 3.1.0 (apartado 6 entero, motivo del salto: nace DOC-27 -primer informe
+        de la suite de servicio, S-17- y A-12 revisa las nueve MEJ-nnn contra esa evidencia).
+        Verificado explicitamente: ninguna MEJ-nnn cambia de estado ni nace ninguna nueva esta
+        ronda -crece la evidencia de MEJ-002, MEJ-003 y MEJ-004, se matiza la de MEJ-006, sin
+        tocar tamaño, dificultad ni dependencias-. §6.1 y §6.2 confirman que EXP-017/EXP-026/
+        EXP-019/EXP-003 "ya recogidos" como FUN-009 a FUN-012 en esta misma DOC-25; §6.3
+        confirma que la decision de A-15 de no proponer FUN-nnn para REQ-025/REQ-034 ya quedo
+        registrada; §6.9 (nuevo) va dirigido a A-02, no a A-15. Ninguna de las doce FUN-nnn de
+        este documento depende de una MEJ-nnn que haya cambiado de estado ni de una cifra de
+        DOC-16 que este documento reproduzca: resello puro. Aprovechada la ronda para verificar
+        version declarada vs real y hash declarado vs calculado en el resto de `inputs`:
+        DOC-01 y DOC-06 (mismo commit c71c580, dos rutas de spec renombradas, sin cambio de
+        version ni de contenido sustantivo) y registro-ids.json (commits 3f10869 y c71c580)
+        llevaban hash desactualizado sin cambio de version. Los tres corregidos; ninguno
+        cambia el fondo de ninguna FUN-nnn
   history:
+    - round: 1.2.1
+      findings:
+        - finding: "DOC-25 1.2.0 declaraba DOC-14 en 2.0.0, y DOC-14 habia subido a 2.1.0 (via 2.0.1)"
+          resolved: true
+          how: >-
+            releido DOC-14 2.1.0 y su -HIST.md: el unico cambio de fondo es que EXP-027 pasa de
+            abierto a corregido, porque S-10 ya corrigio los .feature de automation/ui que
+            DOC-23 2.2.0 confirma en verde. Verificado ancla a ancla que ninguna de las doce
+            FUN-nnn de este documento cita EXP-027 ni depende de su estado -la unica mencion era
+            de procedencia (scope/usage de la propia entrada), no evidencia de ninguna propuesta.
+            Resello puro: version y hash reales declarados, sin tocar ninguna FUN-nnn ni el cuerpo
+            del documento
     - round: 1.2.0
       findings:
         - finding: "DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y DOC-16 en 2.0.0, y los tres habian subido"
@@ -186,22 +230,50 @@ obsolescence_response:
 
 ## 1. Qué ha cambiado desde la ronda anterior
 
-**Nota de la versión 1.2.1 (resello de procedencia, sin cambio de fondo).**
+**Nota de la versión 1.2.2 (resello de procedencia, sin cambio de fondo).**
 `S-16 · Cascada de obsolescencia` marcó este documento como caducado porque
-declaraba `DOC-14-EXPLORATORIO.md` en `2.0.0` y el informe había subido a
-`2.1.0`: A-10 cerró formalmente `EXP-027` (de `abierto` a `corregido`), porque
-`DOC-23` 2.2.0 confirma que los `.feature` de `automation/ui` que citaban
-literales con punto decimal ya están corregidos. Se ha comprobado, propuesta
-por propuesta, que ninguna de las doce `FUN-nnn` cita `EXP-027` ni depende de
-su estado: la única mención que este documento le hacía era de procedencia,
-en el `scope`/`usage` de la propia entrada de `DOC-14` en el front-matter, para
-confirmar que ese hallazgo deriva a `A-03` y no a `A-15` — algo que ya era
-cierto con `EXP-027` abierto y sigue siéndolo corregido. **No cambia ninguna
-propuesta, ni la recomendación, ni ningún hallazgo del apartado 6.** Solo se
-actualizan versión y hash de la entrada de `DOC-14` en `inputs`. Detalle en
-`DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, entrada `1.2.1`.
+declaraba `DOC-16-ROADMAP.md` en `3.0.0` y el roadmap había subido a `3.1.0`.
+El motivo del salto es ajeno a `A-15`: nació `DOC-27` —primer informe de la
+suite de servicio, `S-17`— y `A-12` revisó las nueve `MEJ-nnn` contra esa
+evidencia nueva. **Ninguna `MEJ-nnn` cambió de estado y no nació ninguna**:
+crece la evidencia de `MEJ-002`, `MEJ-003` y `MEJ-004`, y se matiza la de
+`MEJ-006`, sin tocar tamaño, dificultad ni dependencias de ninguna. `DOC-16`
+§6.1 y §6.2 ya no reenvían `EXP-017`/`EXP-026`/`EXP-019`/`EXP-003`: confirman
+explícitamente que están «ya recogidos» como `FUN-009` a `FUN-012` en este
+mismo documento, citando su versión 1.2.0/1.2.1, y que no hace falta seguir
+reenviándolos. §6.3 confirma del mismo modo que A-15 ya evaluó `REQ-025` y
+`REQ-034` y decidió no proponer ninguna `FUN-nnn`, redirigiendo a `A-14` — sin
+matiz nuevo. Nace `§6.9`, un hallazgo sobre si borrar un albarán debe devolver
+el stock de sus líneas de pieza: va dirigido a **`A-02`**, no a `A-15`, y no se
+recoge aquí. **Se ha comprobado que ninguna de las doce `FUN-nnn` depende de
+una `MEJ-nnn` que haya cambiado de estado ni de una cifra de `DOC-16` que este
+documento reproduzca: no cambia ninguna propuesta, ni la recomendación, ni
+ningún hallazgo del apartado 6.**
 
-### Ronda anterior (1.2.0)
+Se ha aprovechado la ronda para verificar, en todo el bloque `inputs`, la
+versión declarada contra la real y el hash declarado contra el calculado —el
+fallo silencioso que `S-16` no puede detectar por sí solo, porque solo compara
+números de versión—. Resultado: **tres entradas llevaban un hash desactualizado
+sin cambio de versión.** `DOC-01` y `DOC-06` cambiaron de bytes por el mismo
+commit (`c71c580`), que renombra dos rutas de fichero de *spec* citadas en sus
+anclas y no toca ningún actor, requisito, carencia ni pregunta abierta —
+verificado leyendo el diff completo de cada uno, no asumido—. `registro-ids.json`
+cambió por el registro real de `FUN-009` a `FUN-012` (commit `3f10869`, la
+propia ronda 1.2.0 de este documento) y por el mismo `c71c580`; recontado,
+sigue con las doce anclas `FUN` que ya declaraba este documento, todas
+`proposed`. Las tres correcciones actualizan solo versión/hash en `inputs`, sin
+tocar ninguna `FUN-nnn` ni el cuerpo de este documento. Detalle en
+`DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, entrada `1.2.2`.
+
+### Ronda anterior (1.2.1)
+
+Resello de procedencia contra `DOC-14-EXPLORATORIO.md` 2.1.0: A-10 cerró
+formalmente `EXP-027` (de `abierto` a `corregido`), porque `DOC-23` 2.2.0
+confirma que los `.feature` de `automation/ui` que citaban literales con punto
+decimal ya están corregidos. Ninguna de las doce `FUN-nnn` citaba `EXP-027` ni
+dependía de su estado. Sin efecto en ninguna propuesta.
+
+### Dos rondas antes (1.2.0)
 
 **Nacen cuatro propuestas: `FUN-009` a `FUN-012`.** Las ocho anteriores no
 cambian de estado ni de señal. Es la primera ronda con novedad desde 1.0.0, y
@@ -1130,58 +1202,68 @@ reproche: es el dato que explica por qué `FUN-001` conserva confianza `medium`.
 version: 1
 project: app-taller
 run:
-  date: 2026-08-24
-  previous_doc_version: 1.2.0
+  date: 2026-08-28
+  previous_doc_version: 1.2.1
   version_bump: PATCH
   version_bump_reason: >-
-    Resello de procedencia: DOC-14 subió de 2.0.0 a 2.1.0 (cierre formal de EXP-027, de
-    abierto a corregido). Ninguna FUN-nnn citaba EXP-027 ni dependía de su estado -verificado
-    una a una-, así que no hay evidencia, alcance ni señal que cambie en ninguna propuesta.
-    Solo se actualiza versión y hash de la entrada DOC-14 en `inputs`. Ronda anterior
-    (1.1.1 -> 1.2.0, MINOR, 2026-08-23): nacen cuatro propuestas (FUN-009 a FUN-012).
+    Resello de procedencia: DOC-16 subió de 3.0.0 a 3.1.0 (nace DOC-27, primer informe de la
+    suite de servicio de S-17; A-12 revisa las nueve MEJ-nnn contra esa evidencia). Ninguna
+    MEJ-nnn cambió de estado ni nació ninguna: crece la evidencia de MEJ-002/MEJ-003/MEJ-004
+    y se matiza la de MEJ-006, sin tocar tamaño ni dificultad. DOC-16/§6.1-§6.3 confirman sin
+    matiz nuevo lo que este documento ya recogió como FUN-009 a FUN-012 y como redirección a
+    A-14; el §6.9 nuevo va a A-02, no a A-15. Ninguna FUN-nnn depende de una MEJ-nnn que
+    cambiara de estado ni de una cifra de DOC-16 que este documento reproduzca. Se aprovecha
+    para corregir tres hashes desactualizados sin cambio de versión en `inputs` (DOC-01,
+    DOC-06, registro-ids.json), detectados al verificar version declarada vs real y hash
+    declarado vs calculado en todo el bloque. Ronda anterior (1.2.0 -> 1.2.1, PATCH,
+    2026-08-24): resello contra DOC-14 2.1.0, cierre de EXP-027, sin efecto en ninguna FUN-nnn.
   trigger: >-
-    S-16 · cascada de obsolescencia: DOC-25 1.1.1 declaraba DOC-01 en 1.0.0, DOC-06 en 1.2.0 y
-    DOC-16 en 2.0.0, y los tres habían subido a 1.1.0, 1.3.0 y 3.0.0
-  new_proposals_this_round: 4
+    S-16 · cascada de obsolescencia: DOC-25 1.2.1 declaraba DOC-16 en 3.0.0, y DOC-16 había
+    subido a 3.1.0
+  new_proposals_this_round: 0
   new_proposals_note: >-
-    FUN-009, FUN-010, FUN-011 (de DOC-16/§6.1, hallazgos de UX que A-12 lleva reenviando desde
-    su ronda 2.0.0/2.1.0 sin que ninguna ronda de A-15 los hubiera evaluado, porque DOC-14 nació
-    después de la última ronda de este documento) y FUN-012 (de DOC-16/§6.2, EXP-003,
-    concurrencia entre pestañas, evaluado por primera vez). S-12 confirmó FUN-009 como siguiente
-    libre y se reclaman los cuatro consecutivos.
+    Ninguna esta ronda. Las doce propuestas (FUN-001 a FUN-012) conservan su número, su texto,
+    su estado y todas sus señales.
   upstream_changes:
-    - doc: DOC-01
-      from: 1.0.0
-      to: 1.1.0
-      level: MINOR
-      what: "cierre de una pregunta ya resuelta y corrección de un comentario del árbol de carpetas, sin cambio de contenido de negocio"
-      effect_on_this_doc: ninguno
-    - doc: DOC-06
-      from: 1.2.0
-      to: 1.3.0
-      level: MINOR
-      what: "dos avisos nuevos en §6.1 sobre comportamiento ya implementado (SPEC 04, SPEC 05); Q-30 nueva en §9, hueco de documentación"
-      effect_on_this_doc: "ninguno. Las catorce carencias que ya sostenían las ocho propuestas vivas siguen palabra por palabra iguales"
     - doc: DOC-16
-      from: 2.0.0
-      to: 3.0.0
-      level: MAJOR
-      what: "MEJ-007 y MEJ-008 pasan a implemented; nace MEJ-009; §6 reafirma EXP-017/EXP-019/EXP-026 (sin cambios) y EXP-003, y añade por primera vez REQ-025/REQ-034 (§6.3)"
-      effect_on_this_doc: "da lugar a FUN-009, FUN-010, FUN-011 y FUN-012. REQ-025/REQ-034 se evalúan y no producen FUN-nnn: van a A-14 (5.6)"
+      from: 3.0.0
+      to: 3.1.0
+      level: MINOR
+      what: >-
+        nace DOC-27 (primer informe de la suite de servicio, S-17); DOC-07 sube a 1.10.0. A-12
+        revisa las nueve MEJ-nnn contra esa evidencia: ninguna cambia de estado ni nace ninguna;
+        crece la evidencia de MEJ-002/MEJ-003/MEJ-004 y se matiza la de MEJ-006. §6.1 y §6.2
+        confirman "ya recogidos" (FUN-009 a FUN-012, citando esta misma DOC-25); §6.3 confirma
+        sin matiz nuevo la redirección a A-14 de REQ-025/REQ-034; nace §6.9, dirigido a A-02
+      effect_on_this_doc: >-
+        ninguno sobre ninguna FUN-nnn, su evidencia, su señal ni la recomendación. Resello puro
+        de la entrada DOC-16 en inputs
+  inputs_hash_corrected_this_round: [DOC-01-BASE-ASIS.md, DOC-06-MANUAL-USUARIO.md, registro-ids.json]
+  inputs_hash_correction_note: >-
+    Las tres llevaban hash desactualizado sin cambio de version, no detectado por S-16 porque
+    solo compara numeros de version. DOC-01 y DOC-06: mismo commit c71c580, dos rutas de spec
+    renombradas en sus anclas, sin tocar contenido sustantivo (verificado por diff completo).
+    registro-ids.json: registro real de FUN-009 a FUN-012 (commit 3f10869, ronda 1.2.0 de este
+    documento) mas el mismo c71c580; recontado, sigue con las doce anclas FUN ya declaradas.
 citations_verified_unchanged:
   - ref: DOC-16/§6.1
-    note: "en 3.0.0 pasa a contener los tres hallazgos de UX (EXP-017, EXP-026, EXP-019), reafirmados sin cambios desde 2.0.0/2.1.0. Ya no contiene el hallazgo de los avisos en catalán, que A-12 ha dejado de repetir por darlo por encaminado hacia A-14"
+    note: "en 3.1.0 confirma explícitamente que EXP-017/EXP-026/EXP-019 están ya recogidos como FUN-009 a FUN-011 en DOC-25 y deja de reenviarlos"
   - ref: DOC-16/§6.2
-    note: "en 3.0.0 pasa a contener EXP-003 (concurrencia), no evaluado hasta ahora por A-15"
+    note: "en 3.1.0 confirma que EXP-003 está ya recogido como FUN-012 en DOC-25 y deja de reenviarlo"
   - ref: DOC-16/§6.3
-    note: "en 3.0.0 pasa a contener REQ-025/REQ-034 (DOC-07/A-05-11c), nuevo para A-15. Ya no contiene el hallazgo del módulo de Configuración, que A-12 da por encaminado desde que existe FUN-003"
-  - ref: "DOC-06/§6.1 y §9"
-    note: "releídos enteros esta ronda, por contrato. Las catorce carencias de §6.1 que sostenían las ocho propuestas anteriores siguen enunciadas igual; §9 gana Q-30, que no es de A-15"
-provenance_fixes: []
+    note: "en 3.1.0 confirma sin matiz nuevo la redirección a A-14 de REQ-025/REQ-034 que A-15 ya decidió en la ronda 1.2.0"
+  - ref: DOC-16/§6.9
+    note: "nuevo en 3.1.0 (si borrar un albarán debe devolver el stock de sus líneas de pieza). Dirigido a A-02, no a A-15: no se recoge en este documento"
+provenance_fixes:
+  - entry: DOC-01-BASE-ASIS.md
+    fix: hash actualizado de 0f074e68... a 828f05be..., version sin cambio (1.1.0)
+  - entry: DOC-06-MANUAL-USUARIO.md
+    fix: hash actualizado de 90ea9dd6... a c081aea1..., version sin cambio (1.3.0)
+  - entry: registro-ids.json
+    fix: hash actualizado de 9f5b3679... a bc54df9a..., sin campo version
 proposals_note: >-
-  Las ocho anteriores conservan su número, su texto, su estado y todas sus señales; solo se
-  actualiza el orden de la recomendación del apartado 2 (FUN-010 entra al tercer lugar). Las
-  cuatro nuevas nacen en `proposed`, con `source: evidence` las cuatro.
+  Las doce conservan su número, su texto, su estado y todas sus señales. El orden de la
+  recomendación del apartado 2 no cambia respecto a 1.2.1.
 proposals:
   - id: FUN-001
     title: "Llevarse la factura en papel o en un archivo para dárselo al cliente"
@@ -1511,15 +1593,16 @@ findings_for_others:
       por encaminado hacia A-14 desde 2.0.0); este documento es hoy la única traza activa de que
       sigue pendiente.
   - target: A-14
-    status: nuevo
+    status: abierto
     priority: alta
     note: >-
       REQ-025 (filtro de albaranes por vehículo y por cliente) y REQ-034/BR-ALB-06 (precio
       informado a mano en una línea de pieza) son requisitos vigentes de prioridad high que la
       interfaz no cumple, verificado por A-05 leyendo AlbaransList.tsx y
-      AlbaraLiniesSection.tsx (DOC-07/A-05-11c, citado por DOC-16/§6.3). DOC-06/§3 describe la
-      misma capacidad como si existiera, sin matiz, lo que añade una discrepancia documental a
-      resolver. A-15 lo valora como candidato a defecto, no como funcionalidad ausente, por el
+      AlbaraLiniesSection.tsx (DOC-07/A-05-11c, citado por DOC-16/§6.3, confirmado sin matiz
+      nuevo en 3.1.0). DOC-06/§3 describe la misma capacidad como si existiera, sin matiz, lo
+      que añade una discrepancia documental a resolver. A-15 lo valora como candidato a
+      defecto, no como funcionalidad ausente, por el
       mismo criterio que el candidato a BUG-005 (detalle en 5.6). Afecta a TC-032, TC-033 y
       TC-047, que hoy no tienen vector en la interfaz por este motivo.
   - target: A-12
@@ -1554,18 +1637,18 @@ summary:
   rejected_respected: 0
   by_source: { evidence: 11, opinion: 1 }
   by_status: { proposed: 12, accepted: 0, rejected: 0, implemented: 0, superseded: 0 }
-  proposals_changed_this_round: 4          # FUN-009 a FUN-012, nuevas. Las ocho anteriores no cambian de señal
-  evidence_changed_this_round: 4
-  citations_verified: 4
+  proposals_changed_this_round: 0          # las doce mantienen texto, estado y señales
+  evidence_changed_this_round: 0
+  citations_verified: 4                    # DOC-16/§6.1, §6.2, §6.3, §6.9 (nuevo, dirigido a A-02)
   citations_fixed: 0
-  ids_requested_from_S12: 4                # FUN-009, FUN-010, FUN-011, FUN-012
+  ids_requested_from_S12: 0
   not_proposed_already_in_cycle: 6
   not_proposed_not_mine: 7                 # 6 anteriores + EXP-022/023/024 agrupadas como una entrada
-  not_proposed_by_judgement: 7             # incluye el nuevo redirect a A-14 de REQ-025/REQ-034
-  upstream_decisions_evaluated: 6          # MEJ-001, MEJ-003, MEJ-005, MEJ-007, MEJ-008, MEJ-009; ninguna cierra una FUN-nnn
-  provenance_fixes: 0
-  rounds_without_new_proposals: 0
-  recommendation_order_changed: true       # FUN-010 entra al tercer lugar, FUN-005 baja al cuarto
+  not_proposed_by_judgement: 7             # incluye el redirect a A-14 de REQ-025/REQ-034
+  upstream_decisions_evaluated: 9          # las nueve MEJ-nnn de DOC-16 3.1.0; ninguna cambia de estado ni cierra/abre una FUN-nnn
+  provenance_fixes: 3                      # hash desactualizado sin cambio de version: DOC-01, DOC-06, registro-ids.json
+  rounds_without_new_proposals: 1
+  recommendation_order_changed: false
 ```
 
 ---
@@ -1573,15 +1656,15 @@ summary:
 **Nota de vigencia.** Este documento se ha escrito sobre `DOC-01-BASE-ASIS`
 **1.1.0**, `DOC-04-FUNCIONAL` **1.2.0**, `DOC-06-MANUAL-USUARIO` **1.3.0** (solo
 §6 y §9, por contrato), `DOC-24-BUGS` **1.0.0**, el apartado 6 de
-`DOC-16-ROADMAP` **3.0.0** y las fichas que ese apartado cita de
-`DOC-14-EXPLORATORIO` **2.0.0**, en el commit `e451ad4`. **No se ha leído
-`DOC-02-TECNICA`**, y no por descuido: el contrato de A-15 lo prohíbe. Las
-versiones y los hashes están en el front-matter para que `S-16` pueda
-comprobarlos sin leer esta línea.
+`DOC-16-ROADMAP` **3.1.0** y las fichas que ese apartado cita de
+`DOC-14-EXPLORATORIO` **2.1.0**, en el commit `511796975891e4ef74e644b0cc6e926d20ee4e8b`.
+**No se ha leído `DOC-02-TECNICA`**, y no por descuido: el contrato de A-15 lo
+prohíbe. Las versiones y los hashes están en el front-matter para que `S-16`
+pueda comprobarlos sin leer esta línea.
 
 **Nada de esto está decidido.** `status: draft`. Las doce propuestas —ocho
-esperando desde hace tres rondas, cuatro nacidas hoy— siguen sin que ninguna
-decisión de negocio haya recaído sobre ellas. Prioriza negocio; A-15 solo
-propone y ordena, y cada propuesta entra en el ciclo por
+esperando desde hace cuatro rondas, cuatro desde hace dos— siguen sin que
+ninguna decisión de negocio haya recaído sobre ellas. Prioriza negocio; A-15
+solo propone y ordena, y cada propuesta entra en el ciclo por
 `A-06 · Refinamiento`, que es donde se resuelve hablando lo que aquí queda
 ambiguo.

@@ -3,11 +3,11 @@ doc_id: DOC-25-HIST
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES-HIST
 of_document: DOC-25-PROPUESTAS-FUNCIONALES.md
 main_document: docs/DOC-25-PROPUESTAS-FUNCIONALES.md
-version: 1.2.1        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
+version: 1.2.2        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-24T11:00:00+02:00
+generated_at: 2026-08-28T10:30:00+02:00
 language: es
 purpose: >-
   historial de versiones de DOC-25. El documento principal refleja solo el estado actual y no
@@ -26,6 +26,84 @@ Una entrada por versión, de la más nueva a la más antigua.
 | **MAJOR** | Una propuesta cambia de estado por decisión de negocio, se retira o se sustituye por otra. Cambia lo que el lector puede dar por decidido |
 | **MINOR** | Nacen propuestas nuevas, o cambia la evidencia, el alcance o una señal (`confidence`, `size`, `impact`) de alguna viva. Nada de lo ya leído deja de ser cierto |
 | **PATCH** | Correcciones que no tocan el fondo de ninguna propuesta: citas rotas, erratas, procedencia |
+
+---
+
+## 1.2.2 — 2026-08-28 · PATCH
+
+**Resello de procedencia contra `DOC-16-ROADMAP` 3.1.0, y tres correcciones de
+hash desactualizado en `inputs`. Ninguna propuesta cambia: ni de estado, ni de
+evidencia, ni de señal.**
+
+### Por qué se regenera
+
+Lo detectó **`S-16 · Cascada de obsolescencia`**: `DOC-25` 1.2.1 declaraba
+`DOC-16-ROADMAP.md` en `3.0.0`, y el roadmap había subido a `3.1.0`. El motivo
+del salto es ajeno a `A-15`: nació `DOC-27` —primer informe de la suite de
+servicio de `S-17`— y, junto con la resincronización de `DOC-07` a 1.10.0,
+`A-12` revisó las nueve `MEJ-nnn` de su roadmap contra esa evidencia.
+
+### Por qué PATCH y no MINOR ni MAJOR
+
+**No es MAJOR** porque ninguna propuesta ha cambiado de estado: las doce
+siguen en `proposed`. **No es MINOR** porque se comprobó explícitamente, tal
+como pide la instrucción de esta ronda, si alguna `FUN-nnn` cita `DOC-16` como
+evidencia de algo que hubiera cambiado —no como mapa de cobertura cruzado— o
+depende de una `MEJ-nnn` que hubiera cambiado de estado o de una cifra que
+este documento reproduzca. **Ninguna de las dos cosas ocurre**:
+
+- `DOC-16` 3.1.0 declara con todas las letras que **ninguna `MEJ-nnn` cambia
+  de estado y no nace ninguna nueva** esta ronda. Crece la evidencia de
+  `MEJ-002`, `MEJ-003` y `MEJ-004`, y se matiza la de `MEJ-006`, pero ninguna
+  de las cuatro sostiene ni cierra ninguna `FUN-nnn` de este documento (5.5 no
+  cambia ninguna de sus seis conclusiones).
+- `DOC-16/§6.1` y `§6.2`, en 3.1.0, **dejan de reenviar** `EXP-017`,
+  `EXP-026`, `EXP-019` y `EXP-003`: confirman explícitamente que están «ya
+  recogidos» como `FUN-009` a `FUN-012` en esta misma `DOC-25`, citando su
+  versión. Es una confirmación de que la puerta ya está cruzada, no evidencia
+  nueva que mueva ninguna señal.
+- `DOC-16/§6.3` confirma, sin matiz nuevo, la decisión que A-15 ya tomó en la
+  ronda 1.2.0 de no proponer `FUN-nnn` para `REQ-025`/`REQ-034` y de
+  redirigirlos a `A-14`.
+- Nace `DOC-16/§6.9` (si borrar un albarán debe devolver el stock de sus
+  líneas de pieza): va dirigido a **`A-02`**, no a `A-15`, y no se recoge en
+  este documento.
+
+Es, por tanto, un resello puro de la entrada `DOC-16` en `inputs`.
+
+### Qué ha cambiado
+
+**1 · La entrada `DOC-16-ROADMAP.md` en `inputs`.** Versión `3.0.0 → 3.1.0`,
+hash recalculado sobre el fichero actual
+(`sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81`), y
+`change_note` con el detalle de la comprobación. `commit_sha` de `source` se
+actualiza al `HEAD` tras la cascada (`511796975891e4ef74e644b0cc6e926d20ee4e8b`).
+
+**2 · Tres hashes desactualizados sin cambio de versión, corregidos por
+verificación propia, no por aviso de `S-16`.** Se comprobó versión declarada
+contra real y hash declarado contra calculado en todo el bloque `inputs` —el
+fallo que `S-16` no puede ver por sí solo, porque solo compara números de
+versión—:
+
+| Entrada | Declarado en 1.2.1 | Real | Por qué |
+|---|---|---|---|
+| `DOC-01-BASE-ASIS.md` | 1.1.0 · `0f074e68…` | 1.1.0 · **`828f05be…`** | Commit `c71c580` renombra la ruta de dos *specs* citadas como fuente de `BR-SHL-01`/`BR-SHL-02` (`specs/01-…` → `specs/implemented/SPE-01-…`). Verificado el diff completo: son las dos únicas líneas tocadas |
+| `DOC-06-MANUAL-USUARIO.md` | 1.3.0 · `90ea9dd6…` | 1.3.0 · **`c081aea1…`** | Mismo commit `c71c580`, mismo patrón, sobre las dos rutas de `SPEC 04`/`SPEC 05` que cita el front-matter. §6 y §9 —el único alcance que A-15 lee de este documento— no cambian ni una palabra |
+| `registro-ids.json` | `9f5b3679…` | **`bc54df9a…`** | Dos commits: `3f10869` (censo real de `FUN-009` a `FUN-012`, la propia ronda 1.2.0 de este documento) y `c71c580` (mismo renombrado de rutas). Recontado: siguen siendo las doce anclas `FUN` ya declaradas, todas `proposed` |
+
+Ninguna de las tres correcciones cambia contenido sustantivo: en `DOC-01` y
+`DOC-06` se verificó el diff completo (solo referencias de ruta), y en
+`registro-ids.json` se recontaron las anclas `FUN`. Se corrigen porque
+dejarlas mal declaradas habría significado que `S-16` no volviera a marcar
+este documento por esas entradas aunque cambiaran de verdad.
+
+### Qué no ha cambiado
+
+Las **doce propuestas**, con su número, su texto, su estado `proposed` y todas
+sus señales. La **recomendación** del apartado 2, en el mismo orden desde
+1.2.0. `DOC-01`, `DOC-04`, `DOC-06` y `DOC-24` siguen en las versiones
+declaradas en 1.2.1, sin cambio de contenido de negocio en ninguno. `DOC-14`
+sigue en 2.1.0, sin cambios desde 1.2.1.
 
 ---
 
