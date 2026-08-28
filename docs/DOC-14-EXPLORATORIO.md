@@ -1,22 +1,22 @@
 ---
 doc_id: DOC-14
 doc_name: DOC-14-EXPLORATORIO
-version: 2.1.0
+version: 2.1.1
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-24T10:00:00+02:00
+generated_at: 2026-08-28T10:57:52+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: f3b91fb908ce5d118dd8ff47e07eb21b1a2b7d7e
+  commit_sha: 511796975891e4ef74e644b0cc6e926d20ee4e8b
   working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta sesión
 inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
     version: 1.6.0
-    hash: sha256:a88ca2aac68a4b976650ce10fa70832a800568cf4b8efd1e390785a63282674c
+    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
   - id: automation/ui/**/*.feature
     from: S-10
     version: null
@@ -31,15 +31,15 @@ inputs:
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
     version: 1.3.0
-    hash: sha256:90ea9dd6102fbb62aae8d3133b3377a7f85be32181ac0f2a6c9de6c12bd82d15
+    hash: sha256:c081aea157c978d8ffcfffaed9fa9b33fc10106fa47498277f07c9720ef26067
   - id: DOC-24-BUGS.json
     from: A-14
     version: 1.0.0
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 3.0.0
-    hash: sha256:e70c3786b5dfe8e4f60e5adc0e02ab302cfcc85e657281da2af4b689423604de
+    version: 3.1.0
+    hash: sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
     version: 1.0.0
@@ -55,6 +55,51 @@ inputs:
 # DOC-14 · Informe de exploración QA · app-taller
 
 ## Procedencia
+
+**Nota de la versión 2.1.1 (resello de procedencia, sin exploración nueva).**
+La cascada de obsolescencia marcó esta versión como caducada porque su
+entrada `inputs` para `DOC-16-ROADMAP.md` seguía citando la versión `3.0.0`,
+mientras que la vigente ya es `3.1.0`. El motivo del salto, según
+`DOC-16-ROADMAP-HIST.md`: nació `docs/DOC-27-INFORME-API.md` (primer
+informe de ejecución de la suite de servicio de `S-17`), incorporado a
+`DOC-07` 1.10.0, y `A-12` revisó las nueve `MEJ-nnn` contra esa evidencia
+nueva. Ninguna `MEJ-nnn` cambió de estado (`implemented`/`accepted`/
+`rejected`); lo que cambió fue la evidencia citada en varias fichas
+(`MEJ-002`, `MEJ-003`, `MEJ-004`, `MEJ-006`) y el orden de la recomendación
+(`MEJ-002` sube al segundo puesto, `MEJ-006` baja al tercero).
+
+Se ha comprobado, hallazgo por hallazgo, si algún `EXP-nnn` de este informe
+cita `DOC-16` como evidencia de algo concreto. **Ninguno lo hace.** `DOC-16`
+solo aparece en este documento como mapa de cobertura de destino
+(`deriva_a: A-12`, para que la mejora correspondiente se censara como
+`MEJ-nnn`): `EXP-017`, `EXP-019`, `EXP-022` a `EXP-024`, `EXP-026` y
+`EXP-028`, y esta última cita además `MEJ-008` por su nombre en la
+sugerencia, como referencia de la familia de deuda técnica en la que
+encajaría, no como prueba de un hallazgo. Como ninguna `MEJ-nnn` cambió de
+estado en `DOC-16` 3.1.0, esa cita sigue siendo válida tal cual. No ha hecho
+falta abrir el navegador ni repetir ninguna carta: este cambio se limita a
+actualizar `version` y `hash` de la entrada `DOC-16-ROADMAP.md` en el
+front-matter y a dejar constancia en `DOC-14-EXPLORATORIO-HIST.md`.
+
+**Aprovechando esta revisión, se ha comprobado también la coherencia del
+resto del bloque `inputs`** — versión declarada contra versión real del
+fichero, hash declarado contra hash recalculado — porque hoy se ha detectado
+el mismo fallo silencioso (hash desfasado sin cambio de versión) en varios
+documentos del proyecto. Resultado: `DOC-23-INFORME.md`, `DOC-04-FUNCIONAL.md`
+y `DOC-24-BUGS.json` estaban correctos (versión y hash coinciden con el
+fichero real). **`DOC-05-PLAN-PRUEBAS.md` y `DOC-06-MANUAL-USUARIO.md`
+tenían la versión correcta (`1.6.0` y `1.3.0` respectivamente, sin cambios
+de contenido pendientes de reflejar) pero el `hash` declarado no
+correspondía al contenido real del fichero** — un desajuste ya arrastrado
+de una sesión anterior, no producido en esta. Se han recalculado y
+corregido ambos hashes en el front-matter. No se ha revisado ningún
+`EXP-nnn` a raíz de esto porque ninguno cita el hash de `DOC-05` ni de
+`DOC-06` como evidencia — `EXP-025` cita números de línea de `DOC-06`, que
+siguen siendo exactos (`:490` y `:806`, comprobado de nuevo), así que el
+desajuste era puramente de metadato, no de contenido observado. Las
+entradas `automation/ui/**/*.feature` (sin versión, a propósito — ver
+`DOC-14` 1.0.0) y las de `specs/implemented/` (sin campo de versión, solo
+`present: true`) no llevan hash que verificar.
 
 **Nota de la versión 2.1.0 (resincronización dirigida, sin exploración nueva del
 navegador).** La cascada de obsolescencia marcó esta versión como caducada

@@ -2,11 +2,11 @@
 doc_id: DOC-14-HIST
 doc_name: DOC-14-EXPLORATORIO-HIST
 of_document: DOC-14-EXPLORATORIO.md
-version: 2.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 2.1.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-24T10:00:00+02:00
+generated_at: 2026-08-28T10:59:47+02:00
 ---
 
 # DOC-14-EXPLORATORIO · Historial de versiones
@@ -17,6 +17,46 @@ reproduce nada de esto**: refleja solo el estado actual, con su `version`
 en el front-matter.
 
 ---
+
+## 2.1.1 — 2026-08-28 — PATCH
+
+**Resello de procedencia contra `DOC-16-ROADMAP.md` 3.1.0, sin exploración
+nueva.** La cascada de obsolescencia marcó `DOC-14` 2.1.0 como caducado
+porque su entrada `inputs` para `DOC-16` seguía citando `3.0.0`, mientras
+que la vigente ya es `3.1.0`. Según `DOC-16-ROADMAP-HIST.md`, el salto lo
+disparó `DOC-07` 1.10.0 al incorporar `docs/DOC-27-INFORME-API.md` (primer
+informe de la suite de servicio): `A-12` revisó las nueve `MEJ-nnn` contra
+esa evidencia, ninguna cambió de estado, y cuatro (`MEJ-002`, `MEJ-003`,
+`MEJ-004`, `MEJ-006`) ganaron o matizaron evidencia, con cambio de orden en
+la recomendación.
+
+**Por qué PATCH y no MINOR.** Se comprobó, hallazgo por hallazgo, si algún
+`EXP-nnn` de este informe cita `DOC-16` como evidencia de un hecho concreto.
+Ninguno lo hace: `DOC-16` solo aparece como mapa de cobertura de destino
+(`deriva_a: A-12`) en `EXP-017`, `EXP-019`, `EXP-022` a `EXP-024`,
+`EXP-026` y `EXP-028`, y como ninguna `MEJ-nnn` cambió de estado, esas citas
+siguen siendo válidas tal cual. Ningún `EXP-nnn` cambia de contenido, estado,
+severidad ni tipo; ninguna carta se repite; no se ha abierto el navegador ni
+tocado la aplicación ni creado ni destruido ningún dato.
+
+**Qué cambia.**
+
+- Front-matter: entrada `inputs` de `DOC-16-ROADMAP.md` de `version: 3.0.0`
+  a `version: 3.1.0`, con el hash recalculado
+  (`sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81`).
+  `commit_sha` de `source` actualizado al `HEAD` tras la cascada
+  (`511796975891e4ef74e644b0cc6e926d20ee4e8b`).
+- **Corrección adicional, aprovechando la revisión:** se comprobó versión y
+  hash declarados contra el fichero real en el resto del bloque `inputs`.
+  `DOC-05-PLAN-PRUEBAS.md` y `DOC-06-MANUAL-USUARIO.md` tenían la versión
+  correcta pero un `hash` que ya no correspondía al contenido real —un
+  desajuste heredado de una sesión anterior, no producido en esta—; se
+  recalculan y corrigen ambos. `DOC-23-INFORME.md`, `DOC-04-FUNCIONAL.md` y
+  `DOC-24-BUGS.json` estaban correctos. Ningún `EXP-nnn` dependía de esos
+  hashes como evidencia, así que la corrección no reabre ni modifica ningún
+  hallazgo.
+- Cuerpo: nueva nota en «Procedencia» explicando el resello y la
+  verificación de coherencia. Ningún otro apartado cambia.
 
 ## 2.1.0 — 2026-08-24 — MINOR
 
