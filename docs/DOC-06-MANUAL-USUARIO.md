@@ -1,94 +1,68 @@
 ---
 doc_id: DOC-06
 doc_name: DOC-06-MANUAL-USUARIO
-version: 1.3.0
+version: 1.4.0
 status: draft
 generator: A-04 manual de usuario
 generator_version: "1.2"
-generated_at: 2026-08-23T00:00:00+02:00
+generated_at: 2026-08-28T00:00:00+02:00
 language: es
 history: docs/DOC-06-MANUAL-USUARIO-HIST.md
 source:
-  repo_path: C:\Claude\appdani
+  repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: 44748fb66d19c5d90106d3bceaaf87dc92c7705b
+  branch: spec-SPE-06-albara-canvi-client
+  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.1.0
-    hash: null
-    hash_status: not_computed_by_A-04
+    version: 1.2.0
+    hash: sha256:e3fb11505afc6253fc801d043871fb8a749b4e618118031e4c9883cb41f79fee
+    hash_status: taken_from_DOC-04_inputs
     hash_note: >-
-      A-04 no dispone de shell en esta ejecución y no inventa un hash. DOC-01 subió de 1.0.0 a 1.1.0
-      (commit 7c5c39f, rama master) sin cambio de contenido de negocio: mismos actores, casos de uso y
-      reglas de negocio, verificado ancla a ancla por A-02 al resincronizar DOC-04 (commit 7bf2947, que
-      se quedó en 1.2.0 sin cambios de contenido, solo front-matter). Lo único que cambió en DOC-01 fue
-      cerrar una pregunta ya resuelta (Q-02, renumerada Q-12 en el registro global) y corregir un
-      comentario del árbol de carpetas. Sin efecto sobre ninguna tarea de este manual
+      A-04 no dispone de shell en esta ejecución y no calcula el hash. El valor es el que
+      DOC-04-FUNCIONAL 1.3.0 declara para DOC-01 1.2.0 en su propio bloque inputs. Que lo
+      verifique S-12 al censar o I-02 antes de publicar.
     usage: >-
       fuente del manual junto con DOC-04. De aquí salen el glosario del apartado 7, los nombres de las
-      ocho secciones del menú, los flujos detallados de línea de pieza, retirada de línea, emisión de
-      factura y registro de nómina, y la ausencia de identificación del apartado 2
+      ocho secciones del menú, los flujos detallados y, en 1.2.0, la regla nueva BR-ALB-10 y el caso
+      UC-ALB-06 ampliado: el vehículo de un albarán no facturado solo puede cambiarse por otro del
+      mismo cliente.
   - id: DOC-04-FUNCIONAL.md
     from: A-02
-    version: 1.2.0
+    version: 1.3.0
     hash: null
     hash_status: not_computed_by_A-04
     hash_note: >-
       A-04 no dispone de shell en esta ejecución y no inventa un hash. Ningún documento del proyecto
-      declara hoy el hash de DOC-04 1.2.0. Que lo rellene S-12 al censar, o I-02 antes de publicar
+      declara todavía el hash de DOC-04 1.3.0. Que lo rellene S-12 al censar, o I-02 antes de publicar.
     usage: >-
-      fuente de las 32 tareas, de las preguntas frecuentes, de los dos apartados de límites y de la
-      tabla de trazabilidad. Sin cambios desde 1.2.0
-  - id: specs/implemented/SPE-04-proteccio-enviaments-duplicats.md
-    from: implantación de la app (Estado: Implemented)
-    present: true
-    usage: >-
-      NO es fuente contractual habitual de DOC-06, que solo consume DOC-01 y DOC-04. Se lee en esta
-      revisión por instrucción explícita del agente que encarga la resincronización de la cascada, para
-      comprobar si el comportamiento que introduce —el botón de guardar se deshabilita y muestra
-      «Desant…»/«Guardando…» mientras la petición está en vuelo— dejaba alguna instrucción del manual
-      desactualizada. No la dejaba, pero es información nueva y útil para el usuario: se añade en el
-      apartado 2 como excepción justificada y anotada, no como cambio de política de fuentes del
-      documento
-  - id: specs/implemented/SPE-05-presentacio-imports-i-dates.md
-    from: implantación de la app (Estado: Implemented)
-    present: true
-    usage: >-
-      Misma excepción justificada que la anterior. Confirma tres cambios visibles para el usuario: los
-      importes se muestran con coma decimal y separador de miles (p. ej. `1.360,00 €`), la ficha de la
-      factura muestra ahora el importe del IVA en euros además del porcentaje, y la fecha del albarán se
-      muestra como DD/MM/AAAA en vez de una marca de tiempo ISO. Los tres se reflejan en el apartado 2 y
-      en las tareas A.16 y A.17
-  - id: registro-ids.json
-    from: S-12
-    present: true
-    usage: censo de identificadores. De aquí sale qué números `Q-nnn` están ocupados y quién es el dueño de cada uno
-    note: >-
-      leído el 2026-08-16. Q-01 a Q-15 de DOC-04, Q-16 a Q-19 de DOC-05, Q-20 a Q-29 de este documento.
-      Máximo ocupado Q-29. Q-30 se reclama en la revisión 1.2.0 y está pendiente de confirmación de S-12
-  - id: DOC-02-TECNICA.md
-    from: S-01
-    used: false
-    reason: prohibido para A-04; el manual no describe cómo está construido el sistema
+      fuente de las 32 tareas, de las preguntas frecuentes, de los apartados de límites y de la tabla
+      de trazabilidad. En 1.3.0 añade REQ-080 y REQ-081 (módulo albarans, ancla BR-ALB-10 / UC-ALB-06):
+      reflejados en la tarea A.13 y en los apartados 5, 6, 7 y 8.
 regeneration:
   full_regeneration: true
-  regenerated_against: DOC-01-BASE-ASIS 1.1.0 + DOC-04-FUNCIONAL 1.2.0
+  regenerated_against: DOC-01-BASE-ASIS 1.2.0 + DOC-04-FUNCIONAL 1.3.0
   previous_version_used_as_source: false
   reason: >-
-    cascada de obsolescencia: DOC-01 subió de 1.0.0 a 1.1.0. El contenido de negocio no cambió (ver
-    hash_note de DOC-01 arriba), así que esta revisión no reescribe las 32 tareas ni la trazabilidad;
-    solo actualiza el front-matter y añade las tres piezas de información nuevas que sí son visibles
-    para el usuario y que no venían de DOC-01/DOC-04 sino de los specs 04 y 05, ya implementados
+    cascada de obsolescencia: DOC-01 subió de 1.1.0 a 1.2.0 (MINOR, con cambio de negocio) y DOC-04 de
+    1.2.0 a 1.3.0 (MINOR). Ambas subidas recogen el mismo cambio, ya en producción (SPEC 06): al editar
+    la cabecera de un albarán no facturado, el selector de vehículo solo ofrece los del cliente actual
+    del albarán, y cualquier intento de moverlo a un vehículo de otro cliente se rechaza entero, sin
+    guardar ni el vehículo, ni la fecha, ni las notas (BR-ALB-10, REQ-080, REQ-081). Se rehace la tarea
+    A.13 y se actualizan los apartados 2, 5, 6.1, 6.2, 7, 8 y 9.
+  note_on_specs: >-
+    El comportamiento de SPEC 06 llega a este manual por sus fuentes canónicas —DOC-01 1.2.0 y DOC-04
+    1.3.0—, no por lectura del spec. A-04 no lee specs ni DOC-02-TECNICA.md. La lectura del censo
+    registro-ids.json para numerar las preguntas abiertas se explica en el apartado 9.1.
 revision_note: >-
-  Regeneración de front-matter contra DOC-01 1.1.0 (sin cambio de contenido de negocio) y de contenido
-  contra los specs 04 y 05, ya implementados, por instrucción explícita de la cascada de obsolescencia.
-  Se añaden en el apartado 2 dos avisos nuevos (protección de doble envío, formato de importes y
-  fechas), se amplía «Qué ves al terminar» de las tareas A.16 y A.17 con el importe del IVA en euros, y
-  se actualiza la pregunta frecuente del IVA. El resto del contenido no cambia. El historial completo de
-  versiones, incluida la saga de renumeración de preguntas de 1.0.0 a 1.1.0, se ha movido a
-  docs/DOC-06-MANUAL-USUARIO-HIST.md; este documento ya no lo reproduce.
+  Regeneración contra DOC-01 1.2.0 y DOC-04 1.3.0. Cambio de contenido: la tarea A.13 (corregir la
+  cabecera de un albarán) pasa de advertir de un riesgo —mover el albarán a otro cliente estaba
+  permitido y sin aviso— a describir que la aplicación lo impide, tanto en el selector como al guardar.
+  El apartado 6.2 baja de seis decisiones pendientes a cinco. La tarea A.7 gana un aviso sobre el
+  cambio de propietario de un vehículo con albaranes pendientes (DOC-04/Q-16, abierta). Nace la
+  pregunta propia Q-31. El historial completo está en docs/DOC-06-MANUAL-USUARIO-HIST.md; este
+  documento no lo reproduce.
 ---
 
 # DOC-06 · Manual de usuario — app-taller
@@ -173,10 +147,11 @@ coma para los decimales y punto para separar los miles, por ejemplo
 `1.360,00 €`. Las fechas se muestran como día/mes/año, por ejemplo
 `21/08/2026`.
 
-**Este manual cuenta lo que la aplicación hace hoy.** Hay seis cambios ya
-decididos por el taller que todavía no están hechos. No están en las tareas
-—buscarlos en la pantalla sería perder el tiempo— y los tienes reunidos en el
-apartado 6.2.
+**Este manual cuenta lo que la aplicación hace hoy.** El taller decidió seis
+cambios sobre cómo debe funcionar la aplicación; **uno ya está hecho** (no se
+puede mover un albarán al vehículo de otro cliente, tarea A.13) y **cinco
+siguen pendientes**. Esos cinco no están en las tareas —buscarlos en la pantalla
+sería perder el tiempo— y los tienes reunidos en el apartado 6.2.
 
 ## 3. Cómo moverte
 
@@ -387,6 +362,14 @@ propietario dentro de tus clientes.
 
 **Qué ves al terminar.** Los datos actualizados en la ficha y en el listado.
 
+**Cuidado si cambias el propietario.** Si le pones a este vehículo un cliente
+distinto, **sus albaranes pendientes de facturar se van con él**: pasarán a ser
+trabajo del nuevo propietario y es a ese a quien se los facturarás. Los albaranes
+ya facturados no se mueven. Cambiar el propietario de un vehículo con trabajo
+pendiente no es lo mismo que corregir una errata: repásalo antes de guardar. (El
+taller todavía no ha decidido si esto debería avisarse o impedirse; ver el
+apartado 9.)
+
 **Si algo va mal**
 
 - *Te dice que la matrícula ya existe*: otro vehículo la tiene. Comprueba cuál
@@ -559,20 +542,34 @@ la fecha o añadir una nota.
 
 1. Abre el albarán en *Albaranes*.
 2. Entra en la edición de la cabecera.
-3. Cambia el **vehículo**, la **fecha** o las **notas**.
+3. Cambia el **vehículo**, la **fecha** o las **notas**. En el selector de
+   vehículo **solo aparecen los vehículos del cliente actual del albarán**: no
+   verás los de ningún otro cliente.
 4. Guarda.
 
 **Qué ves al terminar.** El albarán actualizado. Sus líneas no se tocan.
 
-**Cuidado con cambiar el vehículo.** Si eliges un vehículo de **otro cliente**,
-el trabajo pasa a ser de ese otro cliente y es a él a quien acabarás
-facturándolo. La aplicación te deja hacerlo sin avisar. Revísalo antes de
-guardar. El taller ya ha decidido que esto deje de estar permitido: ver el
-apartado 6.2.
+**El albarán no se puede pasar a otro cliente.** Como el selector solo ofrece
+vehículos del cliente actual, un albarán se queda siempre con el cliente al que
+se le abrió. Si aun así llega a intentarse un cambio a un vehículo de otro
+cliente, **la aplicación rechaza la edición entera**: no se guarda ni el
+vehículo, ni la fecha, ni las notas. Tendrás que volver a hacer todos los
+cambios, esta vez con un vehículo del mismo cliente. Para corregir una errata sí
+puedes cambiar el vehículo por otro **del mismo cliente**.
+
+**¿Y si de verdad hay que facturárselo a otro cliente?** Eso no se arregla desde
+el albarán. La forma que hay hoy es borrar este albarán (tarea A.15) y abrir uno
+nuevo al vehículo correcto (tarea A.9); solo se puede si todavía no está
+facturado.
 
 **Si algo va mal**
 
-- *No te deja modificarlo*: el albarán ya está facturado.
+- *No te deja modificarlo*: el albarán ya está facturado. Un albarán facturado no
+  se toca por ningún motivo, tenga que ver o no con el vehículo.
+- *Rechaza la edición al guardar y no cambia nada*: el vehículo que has indicado
+  es de otro cliente. Vuelve a editar la cabecera y elige uno del cliente actual;
+  tus cambios de fecha y de notas también hay que rehacerlos, porque no se guardó
+  nada.
 
 ---
 
@@ -678,8 +675,9 @@ pasan las dos cosas o no pasa ninguna.
   has incluido dos veces. Quítalo de la selección; el trabajo ya está cobrado en
   otra factura.
 - *Te dice que los albaranes son de clientes distintos*: se ha colado el albarán
-  de otro cliente. Repasa la selección. Puede pasar si alguien cambió el vehículo
-  de un albarán (tarea A.13).
+  de otro cliente. Repasa la selección. Desde que la aplicación impide mover un
+  albarán a otro cliente (tarea A.13) esto casi no debería ocurrir, pero la
+  comprobación sigue ahí por si acaso.
 - *La has emitido con un error*: la aplicación no ofrece hoy forma de anularla ni
   de corregirla, y los albaranes quedan bloqueados. Es una limitación conocida, y
   el taller ya ha decidido cómo se resolverá el día que se construya: ver el
@@ -1160,6 +1158,19 @@ falta que lo calcules tú restando la base del total.
 **¿Puedo juntar en una factura los albaranes de dos clientes?**
 No. Todos los albaranes de una misma factura tienen que ser del mismo cliente.
 
+**Abrí un albarán al cliente equivocado. ¿Puedo pasárselo a otro?**
+No directamente. Al editar la cabecera, el selector de vehículo solo te muestra
+los del cliente actual, y si por otra vía se intenta el cambio a un vehículo de
+otro cliente, la aplicación rechaza la edición entera sin guardar nada. Si el
+albarán todavía no está facturado, la salida es borrarlo (tarea A.15) y abrir uno
+nuevo al vehículo correcto (tarea A.9).
+
+**Cambié el propietario de un vehículo y ahora sus albaranes pendientes están en
+el cliente nuevo. ¿Es normal?**
+Sí, hoy funciona así: cambiar el propietario de un vehículo se lleva con él los
+albaranes que aún no están facturados. Los facturados no se mueven. El taller
+todavía no ha decidido si esto debería avisarse o impedirse (apartado 9).
+
 **¿Puedo elegir el número de factura o de albarán?**
 No. Los pone la aplicación sola, correlativos por año: `año/A-nnnn` para los
 albaranes y `año/F-nnnn` para las facturas.
@@ -1195,7 +1206,7 @@ No. La aplicación no pide identificación y quien la abre puede hacerlo todo.
 ## 6. Qué no puede hacer la aplicación todavía
 
 Este apartado tiene dos partes y conviene no confundirlas. La **6.1** es lo que
-hoy no puedes hacer. La **6.2** son seis cambios que el taller **ya ha decidido**
+hoy no puedes hacer. La **6.2** son cinco cambios que el taller **ya ha decidido**
 y que todavía **no están construidos**: no los busques en la pantalla, porque no
 están.
 
@@ -1217,10 +1228,11 @@ Dicho sin rodeos, para que no pierdas tiempo buscándolo:
   → *decidido que cambie, ver 6.2*
 - **Se aceptan importes negativos.** Nada impide teclear un precio, un coste, un
   stock o un precio por hora por debajo de cero. → *decidido que cambie, ver 6.2*
-- **Puedes mover un albarán al vehículo de otro cliente.** Mientras no esté
-  facturado, la aplicación te deja cambiarle el vehículo por uno de otro cliente,
-  y con ello cambia a quién se le acaba facturando. No avisa.
-  → *decidido que cambie, ver 6.2*
+- **Cambiar el propietario de un vehículo arrastra sus albaranes pendientes.** Si
+  a un vehículo con trabajo sin facturar le cambias el cliente, ese trabajo pasa
+  al nuevo propietario, y sin ningún aviso. La aplicación impide mover un albarán
+  a otro cliente por la puerta de su cabecera (tarea A.13), pero no por esta
+  otra. El taller aún no ha decidido qué hacer con ella: ver el apartado 9.
 - **No hay recuento ni filtro de facturas pendientes de cobro**, ni de **nóminas
   pendientes de pago**. Ves el estado de pago de cada una por separado, pero no
   el conjunto de lo que te deben o de lo que debes. → *decidido que cambie, ver 6.2*
@@ -1241,11 +1253,13 @@ Dicho sin rodeos, para que no pierdas tiempo buscándolo:
 - **Es de un solo puesto.** Sus datos están en el ordenador donde está instalada.
   No se consulta desde otro ordenador ni desde el móvil.
 
-### 6.2 Seis cambios ya decididos que todavía no están hechos
+### 6.2 Cinco cambios ya decididos que todavía no están hechos
 
 El **16 de agosto de 2026** el taller decidió seis cosas sobre el funcionamiento
 de la aplicación. Las seis van en la misma dirección: lo que hoy hace la
-aplicación no es lo que el taller quiere, y va a cambiar.
+aplicación no es lo que el taller quiere. **Una ya está hecha** —no se puede
+mover un albarán al vehículo de otro cliente, y así lo cuenta la tarea A.13— y
+**las otras cinco siguen pendientes**.
 
 > **Nada de esto existe todavía.** Mientras no se construya, la aplicación se
 > comporta exactamente como cuentan las tareas del apartado 4. Si esperas alguno
@@ -1256,20 +1270,28 @@ aplicación no es lo que el taller quiere, y va a cambiar.
 |---|---|
 | Puedes anotar en un albarán más unidades de las que tienes, y el stock queda en negativo. | **Se bloqueará.** No se podrá anotar una pieza si no hay existencias suficientes, y el stock dejará de poder quedar en negativo. |
 | Una factura emitida por error no se puede corregir de ninguna forma. | **Habrá factura rectificativa.** Se emitirá una factura nueva que anule la anterior, y las dos quedarán en el histórico. La factura original seguirá sin poder modificarse. |
-| Puedes cambiar el vehículo de un albarán no facturado por uno de otro cliente, y cambia a quién se factura. | **Se impedirá.** Se podrá corregir el vehículo dentro del mismo cliente, pero no mover el albarán a otro cliente. |
 | Se aceptan precios, costes, stocks y precios por hora negativos. | **Se bloquearán.** Todos esos importes tendrán que ser positivos. |
 | No hay forma de ver de una vez qué facturas están pendientes de cobro. | **Habrá recuento y filtro** de facturas pendientes de cobro. |
 | No hay forma de ver de una vez qué nóminas están pendientes de pago. | **Habrá recuento y filtro** de nóminas pendientes de pago. |
 
-**Qué significa esto para este manual.** El día que estos cambios se construyan,
-once tareas dejarán de ser exactas y habrá que rehacer el manual: **A.10, A.11,
-A.13, A.16, A.17, A.18, B.1, B.2, B.3, C.6 y C.7**. Hasta ese día, lo que leas en
-ellas es lo que la aplicación hace.
+**Ya hecho.** La sexta decisión —que un albarán no facturado no se pueda mover al
+vehículo de otro cliente— **ya está en la aplicación**: el selector de vehículo
+al editar la cabecera solo ofrece los del cliente actual, y cualquier intento de
+saltárselo se rechaza sin guardar nada. Está contado en la tarea A.13. Lo que
+sigue abierto de este mismo asunto es la otra puerta: cambiar el propietario de
+un vehículo (tarea A.7) todavía arrastra sus albaranes pendientes al cliente
+nuevo. Ver el apartado 9.
 
-**Lo que estas seis decisiones no resuelven.** Siguen sin decidirse, entre otras
+**Qué significa esto para este manual.** El día que los cinco cambios pendientes
+se construyan, diez tareas dejarán de ser exactas y habrá que rehacer el manual:
+**A.10, A.11, A.16, A.17, A.18, B.1, B.2, B.3, C.6 y C.7**. Hasta ese día, lo que
+leas en ellas es lo que la aplicación hace.
+
+**Lo que estas decisiones no resuelven.** Siguen sin decidirse, entre otras
 cosas, si una nómina pagada debería quedar protegida, qué tipos de IVA puede
-aplicar el taller, qué debe contener la sección *Configuración* y para qué sirven
-el coste y la unidad de una pieza. Están en el apartado 9.
+aplicar el taller, qué debe contener la sección *Configuración*, para qué sirven
+el coste y la unidad de una pieza y qué hacer con el cambio de propietario de un
+vehículo con albaranes pendientes. Están en el apartado 9.
 
 ## 7. Glosario
 
@@ -1281,7 +1303,7 @@ significan.
 | Client | Cliente | La persona o la empresa dueña de uno o más vehículos, y a quien se le hacen las facturas. |
 | Vehicle | Vehículo | El coche de un cliente. Su matrícula es única: no puede repetirse en el taller. |
 | Peça | Pieza | Un artículo del catálogo del taller, con su precio y su stock. |
-| Albarà | Albarán | La hoja de trabajo de una intervención sobre un vehículo. Ahí se anotan las piezas usadas y las horas. Es el paso previo a la factura. |
+| Albarà | Albarán | La hoja de trabajo de una intervención sobre un vehículo. Ahí se anotan las piezas usadas y las horas. Es el paso previo a la factura. Mientras no esté facturado se le puede cambiar el vehículo, pero solo por otro **del mismo cliente**: un albarán no se puede pasar a otro cliente. |
 | Línia d'albarà | Línea de albarán | Cada apunte de un albarán. O es de pieza, o es de mano de obra; no hay más opciones, y lo que no sea una de las dos cosas no llega a registrarse. |
 | Ma d'obra | Mano de obra | El trabajo de las personas, cobrado por horas, con una descripción de lo que se hizo y un precio por hora. |
 | Estoc | Stock | Las unidades que te quedan de una pieza. Baja al anotarla en un albarán y sube al retirar esa anotación. |
@@ -1298,7 +1320,7 @@ significan.
 
 ## 8. Trazabilidad
 
-Cada tarea de este manual y los requisitos de `DOC-04-FUNCIONAL.md` **1.2.0** que
+Cada tarea de este manual y los requisitos de `DOC-04-FUNCIONAL.md` **1.3.0** que
 cubre. Sirve para que A-05 y el responsable documental comprueben la cobertura.
 
 | Tarea | Requisitos cubiertos |
@@ -1315,7 +1337,7 @@ cubre. Sirve para que A-05 y el responsable documental comprueben la cobertura.
 | A.10 · Anotar una pieza usada en el albarán | REQ-030, REQ-031, REQ-032, REQ-033, REQ-034, REQ-035 |
 | A.11 · Anotar las horas de mano de obra | REQ-036, REQ-037, REQ-031, REQ-032 |
 | A.12 · Retirar una línea equivocada | REQ-038, REQ-039, REQ-042 |
-| A.13 · Corregir la cabecera de un albarán | REQ-040, REQ-042 |
+| A.13 · Corregir la cabecera de un albarán | REQ-040, REQ-042, REQ-080, REQ-081 |
 | A.14 · Encontrar los albaranes de un vehículo o cliente | REQ-025 |
 | A.15 · Borrar un albarán entero | REQ-041, REQ-042 |
 | A.16 · Cobrar el trabajo: emitir la factura | REQ-043, REQ-044, REQ-045, REQ-046, REQ-047, REQ-048, REQ-050 |
@@ -1337,7 +1359,7 @@ cubre. Sirve para que A-05 y el responsable documental comprueben la cobertura.
 | D.2 · Cambiar entre tema claro y tema oscuro | REQ-077, REQ-078 |
 | *(sin tarea)* Apartado 6.1 · Qué no puedes hacer hoy | REQ-079 |
 
-**Cobertura: 32 tareas, los 79 requisitos de DOC-04 1.2.0 reflejados.**
+**Cobertura: 32 tareas, los 81 requisitos de DOC-04 1.3.0 reflejados.**
 
 **Requisitos sin tarea propia y por qué**
 
@@ -1351,20 +1373,23 @@ acción, sino un comportamiento de la aplicación. Aparecen dentro del apartado
 tarea propia: REQ-011, REQ-013, REQ-027, REQ-028, REQ-029, REQ-031, REQ-032,
 REQ-033, REQ-034, REQ-035, REQ-039, REQ-042, REQ-044, REQ-045, REQ-046, REQ-047,
 REQ-048, REQ-049, REQ-050, REQ-051, REQ-055, REQ-065, REQ-070, REQ-073, REQ-076,
-REQ-078.
+REQ-078, REQ-080, REQ-081.
 
-**Qué ha cambiado en la trazabilidad respecto a 1.1.0: nada en el mapa, algo en el
-contenido.** La tabla de arriba es la misma, porque los 79 requisitos son los
-mismos y ninguno se ha reformulado en 1.2.0. Lo que ha cambiado es **cómo se
-explica REQ-031** en las tareas A.10 y A.11: DOC-04 1.1.0 dejó de decir solo que
-hay dos tipos de línea y pasó a decir qué ocurre cuando la regla se rompe —la
-anotación no se registra y el albarán conserva sus líneas y sus importes—, y eso
-sí es visible para quien usa la aplicación, así que ahora está escrito.
+**Qué ha cambiado en la trazabilidad respecto a 1.3.0.** DOC-04 subió a 1.3.0
+con **dos requisitos nuevos**, `REQ-080` y `REQ-081` (módulo albarans, ancla
+`BR-ALB-10` / `UC-ALB-06`), y ninguno de los 79 anteriores se ha tocado. Los dos
+tienen cara visible para el usuario y se reflejan en la tarea **A.13**: `REQ-081`
+—el selector de vehículo solo ofrece los del cliente actual— dentro de los pasos,
+y `REQ-080` —el intento de cambio a otro cliente se rechaza entero, sin guardar
+ni el vehículo, ni la fecha, ni las notas— en «El albarán no se puede pasar a
+otro cliente» y en «Si algo va mal». Por eso A.13 pasa a cubrir cuatro requisitos
+en vez de dos. El resto del mapa no cambia.
 
-**Las seis respuestas de negocio no añaden ni quitan trazabilidad.** DOC-04 1.2.0
-no cambió ningún enunciado: cambió el estado de seis preguntas. Por eso ninguna
-tarea nueva nace de ellas y ningún requisito cambia de tarea. Su único reflejo en
-este manual es el apartado 6.2, que es informativo y no cubre requisitos.
+**Las respuestas de negocio de 2026-08-16 siguen sin añadir ni quitar
+trazabilidad.** De las seis, una (la del cambio de cliente por la cabecera del
+albarán) ya está implementada y **sí** genera requisitos: son `REQ-080` y
+`REQ-081`, cubiertos por A.13. Las otras cinco no cambian ningún enunciado y su
+único reflejo es el apartado 6.2, que es informativo y no cubre requisitos.
 
 ## 9. Preguntas abiertas
 
@@ -1379,16 +1404,23 @@ el manual —un manual necesita nombrar cosas que la documentación no nombra—
 ### 9.1 Cómo están numeradas
 
 `Q-nnn` es **un contador único de todo el proyecto**, compartido con S-01, A-02 y
-A-03. Las preguntas propias de este manual son `Q-20` a `Q-30`.
+A-03. Las preguntas propias de este manual son `Q-20` a `Q-31`.
 
 **La renumeración de 1.0.0 a 1.1.0, la tabla de equivalencia y el aviso a quien
 cite versiones anteriores de este manual están en el histórico**, no aquí:
 `docs/DOC-06-MANUAL-USUARIO-HIST.md`. Este documento refleja solo el estado
 actual y no reproduce esa saga.
 
-**La única pregunta propia nacida después de esa renumeración es `Q-30`.** Nace
-de la reformulación de REQ-031 y está pendiente de que S-12 la confirme; la
-orden está en el bloque de 9.5.
+**A-04 no dispone en esta ejecución de la herramienta `registry.js` de S-12**, de
+modo que no ha podido pedir número libre. Se ha leído `registro-ids.json` como
+censo: su máximo `Q-nnn` ocupado sigue siendo `Q-29`. `Q-30` (nacida en 1.2.0,
+de la reformulación de REQ-031) **todavía está reclamada sin ancla**, pendiente
+de que S-12 la registre —lo confirma `DOC-07` en su hallazgo A-05-09—. Esta
+versión añade `Q-31`, sobre lo que ve el usuario cuando la aplicación rechaza el
+cambio de albarán a otro cliente. **Las dos, `Q-30` y `Q-31`, quedan en estado
+`pending_registry_confirmation`**: si S-12 concede otros números, se renumera
+solo la afectada y se conserva el anterior en `previous_id`. La orden está en el
+bloque de 9.5.
 
 **Nota de formato, deliberada. No reordenar.** En las tablas de 9.2 los
 identificadores ajenos se escriben `DOC-04/Q-nn` y `DOC-05/Q-nn`, con el
@@ -1399,17 +1431,20 @@ línea que empiece por `- id: Q-nnn`, y **una cita no debe abrir entrada**. Si
 alguien quita el prefijo o «ordena» las claves, las citas vuelven a contarse como
 reclamaciones y la colisión de 1.0.0 reaparece.
 
-### 9.2 Las preguntas que este manual cita — 17
+### 9.2 Las preguntas que este manual cita — 18
 
 No son de A-04 y aquí no se renumeran nunca. Afectan a lo que el manual puede
 prometer al usuario: mientras no se respondan, o mientras lo respondido no se
 construya, el manual describe lo que la aplicación hace hoy, no lo que debería
 hacer.
 
-**Quince son de DOC-04. Seis de ellas ya tienen respuesta del negocio** del
-2026-08-16 —van marcadas *(respondida)*— y aun así **ninguna tarea de este manual
-cambia por ellas**: la respuesta dice hacia dónde hay que ir, no lo que la
-aplicación hace hoy. Su reflejo está en el apartado 6.2 y solo ahí.
+**Dieciséis son de DOC-04.** Una, `DOC-04/Q-10`, **ya está respondida e
+implementada** —el cambio está en la aplicación desde SPEC 06— y por eso la tarea
+A.13 sí cambia por ella. Cinco más *(respondida)* tienen respuesta del negocio
+del 2026-08-16 pero todavía **no están construidas**, así que ninguna tarea
+cambia por ellas y su reflejo está solo en el apartado 6.2. `DOC-04/Q-16` es
+nueva en esta versión: nace de la misma decisión de Q-10, pero por la otra
+puerta.
 
 | ID | Pregunta | Qué le impide decir al manual |
 |---|---|---|
@@ -1422,7 +1457,8 @@ aplicación hace hoy. Su reflejo está en el apartado 6.2 y solo ahí.
 | `DOC-04/Q-07` | Los albaranes no tienen situación intermedia entre pendiente y facturado. ¿El taller trabaja así? | No se puede explicar cómo marcar un trabajo «en curso» o «acabado pero sin facturar». |
 | `DOC-04/Q-08` | El idioma y el tema por defecto vienen de una especificación, no del comportamiento observado. ¿Coincide lo que hace la aplicación con lo descrito? | El apartado 2 y las tareas D.1 y D.2 describen un comportamiento no verificado. |
 | `DOC-04/Q-09` | Ninguna regla acota qué tipos de IVA son admisibles al emitir una factura. | La tarea A.16 no puede decirle al usuario qué tipos puede poner ni cuáles rechazará la aplicación. |
-| `DOC-04/Q-10` *(respondida)* | Se puede cambiar el vehículo de un albarán no facturado a uno de otro cliente, cambiando a quién se le factura. | La tarea A.13 sigue teniendo que avisar del riesgo, porque hoy está permitido. Lo decidido está en 6.2. |
+| `DOC-04/Q-10` *(respondida e implementada)* | Se podía cambiar el vehículo de un albarán no facturado a uno de otro cliente, cambiando a quién se le factura. | **Ya no bloquea nada.** El negocio decidió impedirlo y está en la aplicación (`REQ-080`, `REQ-081`). La tarea A.13 pasa de avisar de un riesgo a describir que la aplicación lo impide: selector filtrado y rechazo entero al guardar. |
+| `DOC-04/Q-16` | `BR-ALB-10` cierra el cambio de cliente por la cabecera del albarán, pero cambiar el cliente propietario de un vehículo con albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo. ¿Debe impedirse, avisarse o permitirse? | La tarea A.7 tiene que avisar de que cambiar el propietario de un vehículo se lleva sus albaranes pendientes, sin poder decir si eso es lo querido. El apartado 6.1 lo lista como límite actual. |
 | `DOC-04/Q-11` | Una nómina pagada se puede modificar y borrar sin restricción. ¿Debe bloquearse? | La tarea C.8 avisa del riesgo, pero no puede decir si el taller debe hacerlo o no. DOC-04 avisa de que la respuesta a Q-15 **no** contesta a esta. |
 | `DOC-04/Q-12` *(respondida)* | Ninguna regla acota a valores no negativos los precios, el coste, el stock ni el precio por hora. | Las tareas A.10, A.11, B.1 y B.3 siguen sin poder decir qué importes rechaza la aplicación, porque hoy no rechaza ninguno. Lo decidido está en 6.2. |
 | `DOC-04/Q-13` | «Estado» designa a la vez la situación del albarán y la de cobro de facturas y nóminas. ¿Con qué nombres deben aparecer en la interfaz y en los filtros? | El manual ha tenido que inventarse la distinción («situación del albarán» / «estado de pago») porque la pantalla usa la misma palabra para las dos cosas. Si la interfaz se aclara, cambian el glosario y las tareas A.14, A.18 y C.7. |
@@ -1441,16 +1477,16 @@ ve: el número del documento y el céntimo del total.
 **Dos preguntas ajenas no se citan, y es decisión, no olvido.** `DOC-05/Q-18` y
 `DOC-05/Q-19` son de método de prueba y no llegan al usuario.
 
-**Qué ha cambiado aquí respecto a 1.1.0.** `DOC-04/Q-14` y `DOC-04/Q-15` estaban
-declaradas como *no citadas*, con el argumento de que el recuento y el filtro no
-existen y por tanto no había nada que explicarle al usuario. Con el apartado 6.2
-sí hay algo que explicarle —que no existen y que está decidido que existan—, así
-que pasan a citadas. Las citas suben de 15 a 17 y las no citadas bajan de 4 a 2.
+**Qué ha cambiado aquí respecto a 1.3.0.** `DOC-04/Q-10` pasa de *(respondida)* a
+*(respondida e implementada)*: su decisión ya está en la aplicación y la tarea
+A.13 se ha rehecho para contarlo. Aparece la nueva `DOC-04/Q-16`, la fuga por la
+puerta del vehículo, citada desde la tarea A.7. Las citas suben de 17 a 18 (16
+de DOC-04, 2 de DOC-05); las no citadas de DOC-05 siguen en 2.
 
-### 9.3 Las preguntas propias de este manual — 11
+### 9.3 Las preguntas propias de este manual — 12
 
 Nacen de cosas que un manual necesita nombrar y que ni DOC-01 ni DOC-04 recogen.
-Siete de ellas —`Q-24` a `Q-30`— afectan directamente a **S-10**, que necesita
+Ocho de ellas —`Q-24` a `Q-31`— afectan directamente a **S-10**, que necesita
 nombres reales de pantalla, campo y botón para construir los Page Objects: donde
 falta el nombre, S-10 no puede más que dejar el hueco pendiente.
 
@@ -1462,16 +1498,19 @@ falta el nombre, S-10 no puede más que dejar el hueco pendiente.
 | Q-27 | **No está documentada la pantalla de emisión de factura.** No consta cómo se elige el cliente, cómo se seleccionan los albaranes pendientes, cómo se llama el campo del tipo de IVA ni el botón que emite. Es la operación irreversible de la aplicación y es la peor descrita. | Tarea A.16. S-10: el flujo crítico de facturación. |
 | Q-28 | **No está documentado dónde está el conmutador de pago** de facturas y nóminas: si en el listado, en el detalle o en ambos, ni cómo se llama. | Tareas A.18 y C.7. S-10: cambio de estado de pago. |
 | Q-29 | **No está documentada la lista completa de datos de cliente y de empleado.** De cliente solo consta que el nombre es obligatorio; de empleado, el nombre, el cargo y el contacto. ¿Hay teléfono, dirección, NIF, correo? El manual no puede enumerar lo que se rellena. | Tareas A.1, A.3, C.1, C.3. S-10: campos de los formularios de cliente y empleado. |
-| Q-30 | **Nueva.** REQ-031 dice que una anotación que no sea de pieza ni de mano de obra no llega a registrarse y que el albarán conserva sus líneas y sus importes, pero **no consta qué ve el usuario cuando eso pasa**: si la aplicación muestra un aviso, si la pantalla sencillamente no ofrece más tipos que esos dos —en cuyo caso la situación nunca se le presenta a quien usa la aplicación— o si puede llegar por otro camino. El manual ha tenido que describir la consecuencia sin poder describir la escena. | Tareas A.10 y A.11, y su apartado «Si algo va mal». S-10: si no hay forma de intentarlo desde la pantalla, no hay prueba negativa que construir aquí. |
+| Q-30 | REQ-031 dice que una anotación que no sea de pieza ni de mano de obra no llega a registrarse y que el albarán conserva sus líneas y sus importes, pero **no consta qué ve el usuario cuando eso pasa**: si la aplicación muestra un aviso, si la pantalla sencillamente no ofrece más tipos que esos dos —en cuyo caso la situación nunca se le presenta a quien usa la aplicación— o si puede llegar por otro camino. El manual ha tenido que describir la consecuencia sin poder describir la escena. | Tareas A.10 y A.11, y su apartado «Si algo va mal». S-10: si no hay forma de intentarlo desde la pantalla, no hay prueba negativa que construir aquí. |
+| Q-31 | **Nueva.** `REQ-081` filtra el selector de vehículo al cliente actual del albarán y `REQ-080` rechaza entero el intento de cambio a otro cliente, pero **no consta qué ve el usuario cuando el rechazo ocurre** ni si puede llegar a provocarlo desde la pantalla: si con el selector filtrado la situación es inalcanzable por interfaz, si hay un mensaje de error y qué dice, y si al rechazarse la edición la pantalla se lo indica o simplemente no guarda. El manual describe el rechazo y sus consecuencias sin poder describir la escena. | Tarea A.13, «El albarán no se puede pasar a otro cliente» y «Si algo va mal». S-10: nombre del selector de vehículo del formulario de cabecera de albarán y, si el rechazo no es alcanzable por interfaz, no hay prueba negativa que construir en pantalla (queda para la capa de servicio, como REQ-080 en DOC-05). |
 | Q-20 | **No está documentado si los listados de piezas, albaranes, facturas, personal y nóminas tienen búsqueda, ordenación y paginación.** DOC-04 solo se lo atribuye a los de clientes (REQ-001) y vehículos (REQ-009), y al de albaranes le atribuye filtros (REQ-025). ¿Los demás no las tienen, o simplemente no se documentaron? | Tareas A.14, A.17, B.2, C.2, C.6. |
 | Q-21 | **No consta si se puede imprimir o exportar un albarán o una factura.** Es la primera pregunta que hará quien tenga que entregarle algo en papel al cliente. Ningún requisito lo menciona: no se sabe si no existe o si no se documentó. | Tareas A.16 y A.17, apartado 6.1. |
 | Q-22 | **No consta ningún procedimiento de copia de seguridad.** Los datos viven en un solo ordenador y no hay requisito que hable de respaldarlos. Un manual honesto debería decirle al taller cómo proteger su facturación, y hoy no puede. | Apartado 2 y apartado 6.1. |
 | Q-23 | **No consta cómo se arranca la aplicación** ni qué ve el usuario al abrirla (pantalla de inicio, resumen, listado por defecto). El apartado «Antes de empezar» solo puede decir que no hay contraseña. | Apartado 2. S-10: punto de entrada de la automatización. |
 
-**Ninguna de las diez preguntas de 1.1.0 se cierra con DOC-04 1.2.0**, y no es
-casualidad: las diez preguntan por nombres de pantalla, de campo, de botón y de
-mensaje, y DOC-04 1.2.0 no tocó ningún enunciado. Una respuesta de negocio sobre
-qué debe hacer la aplicación no dice cómo se llama el botón que lo hace.
+**Ninguna de las preguntas propias anteriores se cierra con DOC-04 1.3.0.** Todas
+preguntan por nombres de pantalla, de campo, de botón y de mensaje, y DOC-04
+1.3.0 añade dos requisitos de comportamiento pero no nombra ninguna etiqueta de
+interfaz. `Q-31` nace por lo mismo: DOC-04 dice qué hace la aplicación al
+rechazar el cambio de cliente, no qué texto muestra ni si el usuario puede
+provocarlo.
 
 ### 9.4 Dos de estas preguntas ya han salido del manual
 
@@ -1501,18 +1540,20 @@ es este bloque**.
 version: 1
 owner: A-04
 document: DOC-06-MANUAL-USUARIO
-document_version: 1.3.0
-generated_at: 2026-08-23
+document_version: 1.4.0
+generated_at: 2026-08-28
 numbering:
   source: S-12
   registry: registro-ids.json
-  registry_state_read: "2026-08-16 · Q-01 a Q-15 de DOC-04-FUNCIONAL, Q-16 a Q-19 de DOC-05-PLAN-PRUEBAS, Q-20 a Q-29 de este documento. Maximo ocupado Q-29"
+  registry_state_read: "2026-08-28 · registro-ids.json leido como censo. Q-01 a Q-16 de DOC-04-FUNCIONAL (Q-16 nueva en DOC-04 1.3.0), Q-16 a Q-19 de DOC-05-PLAN-PRUEBAS (colision de numero entre documentos distintos, no de identidad: cada Q-nn lleva su documento delante), Q-20 a Q-29 de este documento con ancla. Maximo Q-nnn con ancla en el registro: Q-29"
+  tool_available: false
+  tool_note: "A-04 no dispone en esta ejecucion de la herramienta registry.js de S-12; no ha podido ejecutar `next`. Se numera Q-31 a partir del censo (Q-30 ya reclamada sin ancla, Q-29 ultimo con ancla)."
   kept: [Q-20, Q-21, Q-22, Q-23, Q-24, Q-25, Q-26, Q-27, Q-28, Q-29]
   kept_note: "Ninguna se mueve en esta regeneracion. Q-21 y Q-22 estan citadas fuera por A-15 y moverlas romperia DOC-25"
-  requested: [Q-30]
+  requested: [Q-30, Q-31]
   requested_status: pending_registry_confirmation
-  requested_command: "registry.js next registro-ids.json --prefix Q --count 1 --doc docs/DOC-06-MANUAL-USUARIO.md"
-  requested_note: "A-04 no dispone de shell en esta ejecucion. Q-30 se escribe porque el censo leido da Q-29 como maximo ocupado, pero la concesion la confirma S-12. Si S-12 devuelve otro numero, renumerar solo esta"
+  requested_command: "registry.js sync registro-ids.json --doc docs/DOC-06-MANUAL-USUARIO.md --block questions"
+  requested_note: "Q-30 se reclamo en 1.2.0 y sigue sin ancla (DOC-07, hallazgo A-05-09). Q-31 es nueva en 1.4.0. Si S-12 concede otros numeros al sincronizar, renumerar solo la afectada y conservar el anterior en previous_id."
 questions:
   - id: Q-20
     owner: A-04
@@ -1633,6 +1674,18 @@ questions:
     affects_requirements: [REQ-031]
     blocks_automation: "S-10 · si la pantalla no permite intentarlo, no hay prueba negativa que construir en el formulario de linea"
     registry_status: pending_confirmation
+  - id: Q-31
+    owner: A-04
+    question: "REQ-081 filtra el selector de vehículo del formulario de cabecera de albarán al cliente actual, y REQ-080 rechaza entero el intento de cambio a un vehículo de otro cliente sin guardar ni el vehículo, ni la fecha, ni las notas. No consta qué ve el usuario cuando el rechazo ocurre ni si puede provocarlo desde la pantalla: ¿con el selector filtrado la situación es inalcanzable por interfaz? Si es alcanzable, ¿hay mensaje de error y qué dice? ¿La pantalla indica que no se ha guardado nada o simplemente no guarda?"
+    status: open
+    created: 2026-08-28
+    new_in_version: 1.4.0
+    origin: "requisitos nuevos REQ-080 y REQ-081 de DOC-04 1.3.0 (ancla BR-ALB-10 / UC-ALB-06), entregados por SPEC 06 e incorporados a este manual en 1.4.0"
+    blocks: "§4/A.13 — «El albarán no se puede pasar a otro cliente» y «Si algo va mal»: el manual describe el rechazo y sus consecuencias sin poder describir la escena"
+    affects_tasks: [A.13]
+    affects_requirements: [REQ-080, REQ-081]
+    blocks_automation: "S-10 · nombre real del selector de vehículo del formulario de cabecera de albarán; si el rechazo no es alcanzable por interfaz, la prueba negativa de REQ-080 queda para la capa de servicio, como ya ocurre con otros casos de DOC-05"
+    registry_status: pending_confirmation
 cites:
   # Preguntas de OTRO documento que este manual solo menciona. `owner` va primero
   # a proposito: el extractor de S-12 abre una entrada nueva en cada linea que
@@ -1697,9 +1750,10 @@ cites:
     id: Q-10
     document: DOC-04-FUNCIONAL
     status_at_read: answered
-    resolution_at_read: gap_confirmed
+    resolution_at_read: gap_confirmed_and_implemented
+    implemented_by: "SPEC 06 · realizada en BR-ALB-10, REQ-080, REQ-081"
     cited_as_in_1_0_0: DOC-06/Q-10
-    affects_manual: "§4/A.13, §6.1 y §6.2 — la tarea sigue avisando del riesgo porque hoy esta permitido"
+    affects_manual: "§4/A.13 y §6.2 — la tarea A.13 pasa de avisar de un riesgo a describir que la aplicacion impide mover el albaran a otro cliente; ya no es un hueco"
   - owner: A-02
     id: Q-11
     document: DOC-04-FUNCIONAL
@@ -1736,12 +1790,20 @@ cites:
     newly_cited_in: 1.2.0
     previously: not_cited
     affects_manual: "§4/C.6, §4/C.7, §5 y §6.2 — lo mismo en nominas"
+  - owner: A-02
+    id: Q-16
+    document: DOC-04-FUNCIONAL
+    status_at_read: open
+    newly_cited_in: 1.4.0
+    previously: did_not_exist
+    affects_manual: "§4/A.7 y §6.1 — cambiar el cliente propietario de un vehiculo con albaranes pendientes arrastra ese trabajo al cliente nuevo; la tarea A.7 avisa, sin poder decir si es lo querido"
+    note: "DOC-04/Q-16, la fuga por la puerta del vehiculo. Continuacion de DOC-04/Q-10, ya implementada. NO confundir con DOC-05/Q-16 (numeracion anual), que este manual tambien cita mas abajo, ni con la Q-16 que este documento uso en 1.0.0, hoy Q-26."
   - owner: A-03
     id: Q-16
     document: DOC-05-PLAN-PRUEBAS
     status_at_read: open
     affects_manual: "§4/A.9 y §4/A.16 — no se puede decir si la numeracion vuelve a empezar en enero"
-    note: "No confundir con la Q-16 que este documento uso en 1.0.0, hoy Q-26."
+    note: "DOC-05/Q-16. No confundir con DOC-04/Q-16 (arriba) ni con la Q-16 que este documento uso en 1.0.0, hoy Q-26."
   - owner: A-03
     id: Q-17
     document: DOC-05-PLAN-PRUEBAS
@@ -1760,17 +1822,21 @@ not_cited:
     document: DOC-05-PLAN-PRUEBAS
     why: "Cobertura de los defectos confirmados por A-14. Es materia de metodo de prueba, ya respondida en DOC-05 1.3.0."
 summary:
-  own: 11
-  own_open: 11
+  own: 12
+  own_open: 12
   own_answered: 0
   own_closed_this_revision: 0
-  new_in_this_revision: [Q-30]
-  kept: [Q-20, Q-21, Q-22, Q-23, Q-24, Q-25, Q-26, Q-27, Q-28, Q-29]
+  new_in_this_revision: [Q-31]
+  kept: [Q-20, Q-21, Q-22, Q-23, Q-24, Q-25, Q-26, Q-27, Q-28, Q-29, Q-30]
   renumbered_this_revision: []
-  cited: 17
-  cited_new_this_revision: [Q-14, Q-15]
+  pending_registry_confirmation: [Q-30, Q-31]
+  cited: 18
+  cited_new_this_revision: ["DOC-04/Q-16"]
+  cited_status_changed_this_revision:
+    - id: "DOC-04/Q-10"
+      change: "answered → answered+implemented; deja de ser hueco y A.13 se rehace"
   not_cited: 2
-  doc04_census: 15
+  doc04_census: 16
   doc05_census: 4
   used_as_evidence_by_a15: [Q-21, Q-22]
 ```
@@ -1778,21 +1844,25 @@ summary:
 ---
 
 **Nota de vigencia.** Este manual está derivado de `DOC-04-FUNCIONAL.md`
-**1.2.0** y de `DOC-01-BASE-ASIS.md` **1.1.0**, que son sus dos únicas fuentes de
-contenido. DOC-01 subió de 1.0.0 a 1.1.0 sin cambio de contenido de negocio (ver
-`inputs` en el front-matter), así que esta regeneración no reescribe ninguna
-tarea por esa subida; los cambios de contenido de esta versión vienen de dos
-comportamientos ya implementados en la aplicación —protección de doble envío y
-formato de importes y fechas— que no tienen todavía requisito propio en DOC-04.
+**1.3.0** y de `DOC-01-BASE-ASIS.md` **1.2.0**, que son sus dos únicas fuentes de
+contenido. Las dos subieron de versión MINOR con un cambio de negocio real —el
+mismo, entregado por SPEC 06—: un albarán no facturado ya no se puede mover al
+vehículo de otro cliente (`BR-ALB-10`, `REQ-080`, `REQ-081`). Esta regeneración
+rehace la tarea A.13 para contarlo y ajusta los apartados 2, 5, 6 y 7. Del ciclo
+anterior siguen vivos dos comportamientos sin requisito propio en DOC-04 —la
+protección de doble envío al guardar y el formato de importes y fechas—, ya
+descritos en el apartado 2.
 
 **Cuándo vuelve a quedar obsoleto.** Si DOC-01 o DOC-04 suben de versión MINOR o
 MAJOR, hay que rehacerlo entero: la versión anterior no es fuente de nada. Si para
 entonces ya está publicado en Confluence, I-02 lo marcará `OUTDATED` hasta que se
 vuelva a publicar.
 
-**Lo que va a obligar a rehacerlo, y ya se sabe.** Las seis decisiones del
-2026-08-16 se convertirán en requisitos nuevos cuando A-06 escriba DOC-08, y esos
-requisitos entrarán en DOC-04. Ese día dejan de ser exactas once tareas —**A.10,
-A.11, A.13, A.16, A.17, A.18, B.1, B.2, B.3, C.6 y C.7**— y cinco puntos del
-apartado 6.1. El apartado 6.2 está escrito para que ese día se vea de un vistazo
-qué hay que tocar.
+**Lo que va a obligar a rehacerlo, y ya se sabe.** Las cinco decisiones del
+2026-08-16 que siguen pendientes se convertirán en requisitos nuevos cuando A-06
+escriba DOC-08, y esos requisitos entrarán en DOC-04. Ese día dejan de ser
+exactas diez tareas —**A.10, A.11, A.16, A.17, A.18, B.1, B.2, B.3, C.6 y
+C.7**— y cuatro puntos del apartado 6.1. El apartado 6.2 está escrito para que
+ese día se vea de un vistazo qué hay que tocar. La sexta decisión ya está hecha
+(tarea A.13); lo que queda abierto de ese asunto es `DOC-04/Q-16`, la puerta del
+vehículo, que afecta a la tarea A.7.

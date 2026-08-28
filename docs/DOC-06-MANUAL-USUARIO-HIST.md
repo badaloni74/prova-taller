@@ -2,11 +2,11 @@
 doc_id: DOC-06-HIST
 doc_name: DOC-06-MANUAL-USUARIO-HIST
 of_document: DOC-06-MANUAL-USUARIO.md
-version: 1.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.4.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-04 manual de usuario
 generator_version: "1.2"
-generated_at: 2026-08-23T00:00:00+02:00
+generated_at: 2026-08-28T00:00:00+02:00
 language: es
 ---
 
@@ -19,6 +19,75 @@ renumeración de preguntas de 1.0.0 a 1.1.0, que el documento principal ya no
 reproduce.
 
 Una entrada por versión, de la más nueva a la más antigua.
+
+---
+
+## 1.4.0 — 2026-08-28 (MINOR)
+
+**Fuentes.** Regenerado contra `DOC-01-BASE-ASIS.md` **1.2.0** y
+`DOC-04-FUNCIONAL.md` **1.3.0**. Las dos subieron de versión MINOR recogiendo el
+mismo cambio de negocio, ya en producción (SPEC 06, `status: Implemented`): al
+editar la cabecera de un albarán no facturado, el selector de vehículo solo
+ofrece los del cliente actual del albarán, y cualquier intento de moverlo a un
+vehículo de otro cliente se rechaza entero, sin guardar ni el vehículo, ni la
+fecha, ni las notas. En DOC-01 es la regla `BR-ALB-10` y el caso `UC-ALB-06`
+ampliado; en DOC-04 son los requisitos nuevos `REQ-080` (rechazo) y `REQ-081`
+(selector filtrado).
+
+**Qué cambió**
+
+- **Tarea A.13 (Corregir la cabecera de un albarán), rehecha.** Pasa de advertir
+  de un riesgo —«la aplicación te deja mover el albarán a otro cliente sin
+  avisar, revísalo»— a describir que la aplicación lo impide: el selector solo
+  muestra vehículos del cliente actual (paso 3), el intento de saltárselo se
+  rechaza sin guardar nada, y se explica que para facturar a otro cliente hay
+  que borrar el albarán y abrir uno nuevo. Nuevo apartado «Si algo va mal» para
+  el rechazo al guardar. Cubre ahora `REQ-040`, `REQ-042`, `REQ-080` y `REQ-081`.
+- **Tarea A.7 (Corregir los datos de un vehículo), aviso nuevo.** Cambiar el
+  propietario de un vehículo se lleva con él sus albaranes pendientes de
+  facturar. `BR-ALB-10` cierra la puerta del albarán pero no esta otra; el
+  negocio aún no ha decidido qué hacer con ella (`DOC-04/Q-16`, abierta).
+- **Apartado 2.** El párrafo «Este manual cuenta lo que la aplicación hace hoy»
+  pasa de «seis cambios decididos y no hechos» a «uno hecho, cinco pendientes».
+- **Apartado 5 (Preguntas frecuentes).** Dos preguntas nuevas: «Abrí un albarán
+  al cliente equivocado, ¿puedo pasárselo a otro?» y «Cambié el propietario de
+  un vehículo y sus albaranes pendientes se han ido con él, ¿es normal?». La
+  respuesta de «Te dice que los albaranes son de clientes distintos» de A.16 se
+  matiza: desde SPEC 06 casi no debería ocurrir.
+- **Apartado 6.1.** Se retira el punto «Puedes mover un albarán al vehículo de
+  otro cliente» (ya no es cierto) y se sustituye por «Cambiar el propietario de
+  un vehículo arrastra sus albaranes pendientes», que sí es un límite actual.
+- **Apartado 6.2.** De «seis cambios decididos» a «cinco»: la decisión sobre el
+  cambio de cliente se marca como hecha y sale de la tabla. La lista de tareas
+  que habrá que revisar el día que se construyan los evolutivos pendientes baja
+  de once a diez (sale A.13).
+- **Apartado 7 (Glosario).** La entrada «Albarà» añade que el vehículo solo
+  puede cambiarse por otro del mismo cliente.
+- **Apartado 8 (Trazabilidad).** DOC-04 pasa a 1.3.0; cobertura de 81 requisitos
+  (eran 79). A.13 cubre dos requisitos más. `REQ-080` y `REQ-081` se añaden a la
+  lista de requisitos que el usuario observa pero no ejecuta como tarea propia.
+- **Apartado 9 (Preguntas abiertas).**
+  - Pregunta propia nueva **Q-31**: qué ve el usuario cuando la aplicación
+    rechaza el cambio de albarán a otro cliente, y si puede provocarlo desde la
+    pantalla con el selector ya filtrado. Afecta a la tarea A.13 y a S-10
+    (nombre del selector de vehículo; posible prueba negativa solo en servicio).
+  - `DOC-04/Q-10` pasa de citada *(respondida)* a *(respondida e implementada)*:
+    su hueco ya no existe y la tarea A.13 se ha rehecho por ella.
+  - Se cita por primera vez `DOC-04/Q-16` (la fuga por la puerta del vehículo),
+    desde la tarea A.7. Las citas suben de 17 a 18.
+  - `Q-30` (nacida en 1.2.0) **sigue reclamada sin ancla**: A-04 no dispone de
+    la herramienta `registry.js` de S-12. `Q-30` y `Q-31` quedan en
+    `pending_registry_confirmation`.
+
+**Por qué el salto es MINOR y no MAJOR.** Ninguna tarea se elimina ni se parte en
+dos, y la operación de A.13 conserva sus pantallas y su secuencia (abrir el
+albarán → editar la cabecera → guardar). Lo que cambia es que una advertencia se
+convierte en una restricción real descrita, y que una fila del apartado 6.2 se
+marca como hecha. Es el mismo criterio con el que DOC-01 y DOC-04 trataron este
+cambio: MINOR.
+
+**Por qué no es PATCH.** Cambia lo que la aplicación hace en una tarea y nace una
+pregunta abierta nueva; no es solo redacción.
 
 ---
 
