@@ -2,11 +2,11 @@
 doc_id: DOC-05-HIST
 doc_name: DOC-05-PLAN-PRUEBAS-HIST
 of_document: DOC-05-PLAN-PRUEBAS.md
-version: 1.6.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.7.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-17T09:40:00+02:00
+generated_at: 2026-08-28T12:30:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -31,11 +31,76 @@ reconstruction_note: >
 Una entrada por versión, de la más nueva a la más antigua. El estado actual está en
 **`DOC-05-PLAN-PRUEBAS.md`**; este fichero no lo duplica.
 
-El plan tiene **110 casos de prueba desde 1.0.0** y **nunca se ha renumerado, ni
-retirado, ni reutilizado un `TC-nnn`**. Conviene tenerlo delante al leer lo que
-sigue: casi todas las subidas de versión de este documento han sido aditivas, y la
-única que tocó el contenido de un caso —1.3.0, sobre TC-041— necesitó autorización
-nominal.
+El plan tenía **110 casos de prueba desde 1.0.0 hasta 1.6.0**, y suma **9 más en
+1.7.0** (TC-111 a TC-119). **Nunca se ha renumerado, ni retirado, ni reutilizado
+un `TC-nnn`**. Conviene tenerlo delante al leer lo que sigue: casi todas las
+subidas de versión de este documento han sido aditivas, y las únicas que
+tocaron el contenido de un caso existente sin añadir ninguno —1.3.0, sobre
+TC-041— necesitaron autorización nominal.
+
+---
+
+## 1.7.0 — 2026-08-28 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `/spec-impl` cerró `specs/implemented/SPE-06-albara-canvi-client.md`
+(`Implemented`, origen `BUG-002`) y despachó a A-03 en modo «Revisión
+post-implementación»: no una regeneración completa —DOC-04 sigue en 1.2.0 y no
+la dispara— sino la revisión acotada de si este spec ya implementado deja algo
+del plan desactualizado. La respuesta, criterio a criterio sobre los once
+`AC-nnn` del spec: sí, en ocho casos nuevos, uno ya cubierto y uno cerrado
+desde otro módulo.
+
+**Qué cambia.**
+
+| Qué | 1.6.0 | 1.7.0 |
+|---|---|---|
+| Casos | 110 | **119** (TC-111 a TC-119) |
+| Pasos | 241 | **263** |
+| Prioridades | 49 C / 31 H / 28 M / 2 L | **55 C / 32 H / 30 M / 2 L** |
+| Reparto por tipo | 66 F / 31 N / 9 B / 4 I | **68 F / 34 N / 10 B / 7 I** |
+| Vía de verificación | 106 ui / 4 service / 0 mixed (real; el documento citaba 109/1/0 por desactualización) | **110 ui / 8 service / 1 mixed** |
+| Grado de automatización | 25 high / 80 medium / 4 low / 1 not-recommended | **27 high / 87 medium / 4 low / 1 not-recommended** |
+| Carril más largo / carriles totales | 17 / 67 | **20 / 72** |
+| `DS-nnn` | 10 | **12** |
+| `TC-nnn` modificado sin añadir contenido | — | `TC-055` (solo `automation.reason`) |
+
+**Los nueve casos nuevos, y a qué criterio responde cada uno**: `TC-111`
+(AC-002 y AC-007, fundidos en un caso), `TC-112` (AC-003), `TC-113` (AC-004),
+`TC-114` (AC-005), `TC-115` (AC-006), `TC-116` (AC-009, y cierra además el
+vector de `REQ-027` que el apartado 4.12 tenía declarado como no cubierto
+desde 1.5.0), `TC-117` (AC-010), `TC-118` (AC-011) y `TC-119` (AC-008, en el
+módulo Facturas). El detalle completo, con el porqué de cada decisión, está en
+el «Anexo · Versión 1.7.0» del documento principal.
+
+**`TC-055` se revisa y no se reescribe.** Cubre AC-001 sin necesitar ningún
+cambio de `steps` ni de `requirement`: el escenario —vehículo nuevo dentro del
+mismo cliente— sigue exactamente igual. Solo cambia su `automation.reason`,
+que dejaba de ser cierto tal como estaba escrito porque citaba una reescritura
+de `REQ-040` que ya había llegado.
+
+**Una corrección de mantenimiento, aprovechada aquí.** El recuento agregado de
+`verification_path` (front-matter y Anexo de validaciones) seguía en
+109/1/0 desde 1.5.0, sin recoger que 1.6.0 ya había pasado TC-045, TC-063 y
+TC-064 a `service`. El dato de cada caso siempre fue correcto; solo el
+recuento agregado no se había vuelto a calcular. Se corrige junto con esta
+subida en vez de abrir una revisión aparte.
+
+**`registro-ids.json`.** Nueve anclas `TC-nnn` nuevas (`TC-111`–`TC-119`),
+`type: test_case`, con su `module`, `requirement` y `external_id`. Ningún
+`TC-nnn` existente se renumera ni se retira.
+
+**Por qué MINOR y no otra cosa.** No es PATCH porque el contenido que
+consumen Rally, S-10, S-14 y S-17 cambia de verdad: nueve casos nuevos que
+exportar, un primer caso `mixed` real, un requisito que pasa de 1 a 8 casos.
+No es MAJOR porque nada de lo que ya existía se retira ni cambia de
+significado.
+
+**Qué queda obsoleto:** DOC-07, DOC-08 y DOC-16 (declaran DOC-05 1.6.0 como
+entrada). DOC-13 recibe dos encargos nuevos (`DS-011`, `DS-012`). DOC-19 no
+queda obsoleto. Rally/S-07 no es un no-op esta vez: hay 9 altas que exportar.
+Detalle en el Anexo · Versión 1.7.0 del documento principal.
 
 ---
 

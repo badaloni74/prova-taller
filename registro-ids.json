@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-23T12:19:10.717Z",
+  "updated_at": "2026-08-28T10:16:40.941Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -2908,6 +2908,87 @@
       "source": "evidence",
       "business_value": "medium",
       "size": "medium"
+    },
+    "TC-111": {
+      "text": "Rechazar por servicio el cambio de vehículo a otro cliente, con el selector ya filtrado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-111",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-112": {
+      "text": "Cambiar el vehículo dentro del mismo cliente no toca líneas, stock ni importe",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-112",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-113": {
+      "text": "Un cambio simultáneo de vehículo a otro cliente, fecha y notas no guarda nada de los tres",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-113",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-114": {
+      "text": "Guardar la cabecera de un albarán sin cambiar el vehículo funciona con normalidad",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-114",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-115": {
+      "text": "Sobre un albarán facturado, el rechazo de un cambio de vehículo sigue siendo el de facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-ALB-TC-115",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-116": {
+      "text": "Asignar un vehículo inexistente o ninguno al modificar la cabecera se rechaza por el motivo de siempre",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-027",
+      "external_id": "TALLER-ALB-TC-116",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-117": {
+      "text": "El selector de vehículo al editar muestra solo los del cliente actual",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-117",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-118": {
+      "text": "Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-118",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-119": {
+      "text": "Tras un intento rechazado de cambio de cliente, la factura sale al cliente original",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-FAC-TC-119",
+      "created": "2026-08-28",
+      "status": "active"
     }
   }
 }

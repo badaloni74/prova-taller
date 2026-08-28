@@ -1,21 +1,41 @@
 ---
 doc_id: DOC-05
 doc_name: DOC-05-PLAN-PRUEBAS
-version: 1.6.0
+version: 1.7.0
 status: draft
 history: DOC-05-PLAN-PRUEBAS-HIST.md   # este documento no lleva historial; solo estado actual
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-24T09:15:00+02:00
+generated_at: 2026-08-28T12:30:00+02:00
 project: app-taller
 project_code: TALLER
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: d9ccd37f346d6c9c64dce9394e171d4fdca22bfc
+  commit_sha: f805a32ced802eb9eddab45aff9f4116a06de49a
   working_tree_clean: true   # sin cambios sobre ficheros versionados; sin versionar (ajeno a este documento): ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
+  - id: SPE-06-albara-canvi-client.md
+    path: specs/implemented/SPE-06-albara-canvi-client.md
+    from: humano / propietario-del-proyecto (vía /spec-impl)
+    present: true
+    status: Implemented
+    implemented_on: 2026-08-28
+    commits: [65b23a2, e6ecc5b]
+    version_note: >-
+      los specs de `specs/` no llevan `version` semántica propia, solo un estado
+      (`Draft` | `Approved` | `Implemented`); se declara `status` e
+      `implemented_on` en su lugar, con los commits reales que lo implementan,
+      para que la procedencia sea comprobable sin inventar un número
+    usage: >-
+      disparador de esta revisión (modo «Revisión post-implementación»). Resuelve
+      DOC-04/Q-10 sin pasar por la regeneración de DOC-04: sus once AC-nnn se
+      contrastaron uno a uno contra los 110 casos existentes y contra el código
+      real (server/routes/albarans.js, AlbaraForm.tsx). Nueve nacen como caso
+      nuevo (TC-111 a TC-119), uno ya estaba cubierto (AC-001 por TC-055, que se
+      revisa sin reescribirse) y ninguno se retira. Detalle en el Anexo · Versión
+      1.7.0
   - id: DOC-04-FUNCIONAL.md
     from: A-02
     present: true
@@ -152,8 +172,8 @@ inputs:
     present: false
     note: no ha habido bootstrap inverso de Rally; los 110 TC-nnn se crean desde cero
 counts:
-  test_cases: 110
-  test_case_steps: 241
+  test_cases: 119               # 110 hasta 1.6.0 + 9 de SPE-06 (TC-111-TC-119) en 1.7.0
+  test_case_steps: 263          # 241 + 22
   requirements_covered: 79
   requirements_total: 79
   gap_plan: 0
@@ -161,29 +181,33 @@ counts:
   open_questions_own_open: 2
   open_questions_own_answered: 2
   open_questions_cited: 13
-verification_path:            # nuevo en 1.5.0; los 110 casos lo declaran, ninguno sin informar
-  ui: 109
-  service: 1                  # TC-041
-  mixed: 0
+verification_path:            # nuevo en 1.5.0; los 119 casos lo declaran, ninguno sin informar
+  ui: 110
+  service: 8                  # TC-041, TC-045, TC-063, TC-064, TC-111, TC-113, TC-115, TC-116
+  mixed: 1                    # TC-119, primer mixed real del plan
   vocabulary: [ui, service, mixed]
   criterion: >-
     un caso va por servicio SOLO cuando el vector no existe en la interfaz. Si el vector existe en la
     pantalla es `ui`, aunque por API también funcionara. No es una prueba de contrato de API: es la
     única vía de ejercer la regla. Ver apartado 4.12
+  correction_1.7.0: >-
+    109/1/0 era la cifra de 1.5.0. Este campo no se había actualizado en 1.6.0 pese a que ese salto
+    reclasificó TC-045, TC-063 y TC-064 a service (106/4/0 real tras 1.6.0). Corregido en 1.7.0 junto
+    con la suma de los casos de SPE-06. Detalle en el Anexo de verificación de las siete validaciones
 automation_projects:          # reorganizados el 2026-08-17 por decisión del propietario del proyecto
   ui: automation/ui           # Selenium + Cucumber, DOC-23, antes docs/DOC-23-AUTOMATION/ — lo genera S-10
   api: automation/api         # colección Postman, DOC-26, nueva — la genera S-17
-isolation:                    # los 110 casos llevan los cinco campos, ninguno sin declarar
+isolation:                    # los 119 casos llevan los cinco campos, ninguno sin declarar
   cases_with_depends_on: 3
-  cases_with_touches: 54
-  cases_restoring_state: 57
+  cases_with_touches: 58
+  cases_restoring_state: 62
   distinct_resources: 14
   execution_waves: 2
-  max_parallel_lanes: 67
-  longest_lane: 17
+  max_parallel_lanes: 72
+  longest_lane: 20
 automation:
-  high: 25
-  medium: 80
+  high: 27
+  medium: 87
   low: 4
   not_recommended: 1
   blocked: 0
@@ -204,12 +228,19 @@ automation:
 
 ## 1. Alcance y estrategia
 
-Este plan cubre los **79 requisitos** de DOC-04 (REQ-001 a REQ-079) con **110 casos
-de prueba** (TC-001 a TC-110) repartidos en los nueve módulos del sistema. Todos
+Este plan cubre los **79 requisitos** de DOC-04 (REQ-001 a REQ-079) con **119 casos
+de prueba** (TC-001 a TC-119) repartidos en los nueve módulos del sistema. Todos
 los requisitos tienen al menos un caso: **no hay ningún GAP PLAN**. Lo que sí hay
 —y se declara en el apartado 6— son **vectores deliberadamente no cubiertos**,
 todos ellos en zonas donde DOC-04 dejó una pregunta abierta y por tanto no existe
 un resultado esperado que se pueda escribir sin inventarlo.
+
+**Nueve casos nuevos desde 1.6.0, TC-111 a TC-119**, cubren `SPE-06 · Un
+albarán no puede cambiar de cliente` (`Implemented`, 2026-08-28, origen
+`BUG-002`), que resuelve en la aplicación el hueco que `DOC-04/Q-10` describe.
+No nacen de una regeneración contra un DOC-04 nuevo —DOC-04 sigue en 1.2.0 y
+`REQ-040` no ha cambiado de enunciado— sino de una revisión post-implementación
+sobre el spec ya cerrado: el detalle está en el **Anexo · Versión 1.7.0**.
 
 **Qué se prueba.** El ciclo central del negocio —cliente, vehículo, albarán,
 factura— con especial insistencia en los tres puntos donde el sistema mueve dos
@@ -274,6 +305,7 @@ Dónde duele más que falle, en orden, y cómo se traduce en la prioridad asigna
 | Riesgo | Por qué duele | Requisitos implicados | Prioridad asignada |
 |---|---|---|---|
 | **El importe facturado es incorrecto** | El taller cobra de menos o de más, y la factura ya emitida no se puede corregir (Q-06) | REQ-049, REQ-050, REQ-051 | `Critical` en el cálculo de base, IVA por defecto y redondeo; `High` en el IVA indicado a mano |
+| **Se factura al cliente equivocado** | Cambiar el vehículo de un albarán pendiente lo mueve al cliente del vehículo nuevo si no se impide; confirmado en producción como `BUG-002` — 114.835,05 € facturados a quien no encargó el trabajo. Cerrado por `SPE-06` en las dos capas (servidor y selector filtrado) | REQ-040, REQ-042, REQ-027 | `Critical` en el rechazo de servicio, en la atomicidad y en el bloqueo sobre facturado; `High` en el filtrado del selector |
 | **El stock deja de reflejar el almacén** | El taller compra piezas que tiene o vende las que no; el error es silencioso y se acumula | REQ-035, REQ-039 | `Critical` en descuento, devolución y en las dos pruebas de operación completa |
 | **Una operación doble se queda a medias** | Línea registrada sin mover stock, o factura emitida sin bloquear sus albaranes: el dato queda incoherente sin que nadie se entere | REQ-035, REQ-039, REQ-047 | `Critical` en los 4 casos `Integration` |
 | **Se borra algo de lo que cuelga trabajo o dinero** | Un cliente, un vehículo, una pieza o un empleado borrado deja huérfanos albaranes, facturas y nóminas | REQ-007, REQ-008, REQ-017, REQ-024, REQ-062 | `Critical` en los cinco bloqueos |
@@ -286,12 +318,15 @@ Dónde duele más que falle, en orden, y cómo se traduce en la prioridad asigna
 | **No se puede crear un eslabón del ciclo** | Sin cliente, sin vehículo, sin albarán o sin línea no hay nada que facturar: el taller trabaja y no cobra, y la línea es además donde nace el importe | REQ-002, REQ-010, REQ-026, REQ-030, REQ-036 | `Critical` en el camino principal de cada uno; `Medium` en la segunda vía de acceso a la misma operación |
 | **Un vocabulario cerrado deja de serlo** | Una línea sin tipo, o un documento en un estado que no es ni pendiente ni pagado, dejan importes fuera de todo recuento sin que salte ningún aviso | REQ-031, REQ-055, REQ-073 | `High` en el único caso de cada uno |
 
-**Reparto resultante:** 49 `Critical`, 31 `High`, 28 `Medium`, 2 `Low`. La
-prioridad discrimina: si A-09 necesita la suite mínima, los 49 `Critical`
-protegen dinero, stock, unicidad, bloqueos y la creación de los eslabones del
-ciclo; los 21 casos etiquetados `smoke` demuestran en unos minutos que la
-aplicación levanta y que el ciclo cliente-vehículo-albarán-factura funciona de
-punta a punta.
+**Reparto resultante:** 55 `Critical`, 32 `High`, 30 `Medium`, 2 `Low`. Los seis
+`Critical` que llegan con `SPE-06` (TC-111, TC-112, TC-113, TC-115, TC-116,
+TC-119) protegen exactamente el mismo riesgo que encabeza la tabla de arriba:
+que el importe se facture a quien no encargó el trabajo. La prioridad
+discrimina: si A-09 necesita la suite mínima, los 55 `Critical` protegen
+dinero, stock, unicidad, bloqueos y la creación de los eslabones del ciclo; los
+21 casos etiquetados `smoke` demuestran en unos minutos que la aplicación
+levanta y que el ciclo cliente-vehículo-albarán-factura funciona de punta a
+punta.
 
 **Dos criterios que compiten, y cuál manda.** La regla general de este plan es
 `High` para el camino feliz de cada requisito. Cuando ese camino feliz **es** el
@@ -359,7 +394,7 @@ Los 79 requisitos de DOC-04, con los casos que los cubren. **Sin GAP PLAN: 79 de
 | REQ-024 | peces | TC-031 | 1 |
 | REQ-025 | albarans | TC-032, TC-033 | 2 |
 | REQ-026 | albarans | TC-034, TC-035 | 2 |
-| REQ-027 | albarans | TC-036 | 1 |
+| REQ-027 | albarans | TC-036, TC-116 | 2 |
 | REQ-028 | albarans | TC-037 | 1 |
 | REQ-029 | albarans | TC-038, TC-039 | 2 |
 | REQ-030 | albarans | TC-040 | 1 |
@@ -372,9 +407,9 @@ Los 79 requisitos de DOC-04, con los casos que los cubren. **Sin GAP PLAN: 79 de
 | REQ-037 | albarans | TC-051 | 1 |
 | REQ-038 | albarans | TC-052 | 1 |
 | REQ-039 | albarans | TC-053, TC-054 | 2 |
-| REQ-040 | albarans | TC-055 | 1 |
+| REQ-040 | albarans | TC-055, TC-111, TC-112, TC-113, TC-114, TC-117, TC-118, TC-119 | 8 |
 | REQ-041 | albarans | TC-056 | 1 |
-| REQ-042 | albarans | TC-057, TC-058, TC-059 | 3 |
+| REQ-042 | albarans | TC-057, TC-058, TC-059, TC-115 | 4 |
 | REQ-043 | factures | TC-060, TC-061 | 2 |
 | REQ-044 | factures | TC-062 | 1 |
 | REQ-045 | factures | TC-063 | 1 |
@@ -413,25 +448,33 @@ Los 79 requisitos de DOC-04, con los casos que los cubren. **Sin GAP PLAN: 79 de
 | REQ-078 | shell | TC-109 | 1 |
 | REQ-079 | configuracio | TC-110 | 1 |
 
-**Requisitos sin cobertura: ninguno.** Los cinco requisitos que más casos
-concentran son REQ-032, REQ-042, REQ-067 y REQ-070 (tres casos cada uno), y no es
-casualidad: son los que combinan una regla que se puede violar con un límite
-numérico o con un estado final.
+**Requisitos sin cobertura: ninguno.** El requisito que más casos concentra
+desde 1.7.0 es **REQ-040, con 8** — el salto responde a `SPE-06` (`Un albarán
+no puede cambiar de cliente`), que multiplicó por ocho su cobertura para
+blindar el defecto de `BUG-002` en las dos capas que lo tocan. Los siguientes
+son REQ-032, REQ-067 y REQ-070 (tres casos cada uno) y REQ-042 (cuatro, tras
+sumar TC-115), y no es casualidad: son los que combinan una regla que se puede
+violar con un límite numérico o con un estado final.
 
 ## 4. Casos por módulo
 
-Nueve bloques `testcases`, uno por módulo, con numeración `TC-nnn` **global y
-continua** de TC-001 a TC-110. El `external_id` sigue el formato
-`TALLER-<MOD>-TC-nnn` y es la clave del upsert en Rally: si cambia, Rally duplica
-el caso en vez de actualizarlo.
+Nueve bloques `testcases`, uno por módulo, con numeración `TC-nnn` **global**
+de TC-001 a TC-119. El `external_id` sigue el formato `TALLER-<MOD>-TC-nnn` y
+es la clave del upsert en Rally: si cambia, Rally duplica el caso en vez de
+actualizarlo. **Hasta 1.6.0 el rango era continuo por módulo; desde 1.7.0 ya no
+lo es en dos de los nueve**: los 9 casos de `SPE-06` (TC-111 a TC-119) se
+numeraron a partir del último `TC-nnn` existente, en el orden en que este plan
+los redactó, no en el orden de su módulo — es el comportamiento esperado de un
+contador global y aditivo (apartado «Gobierno de identificadores»), no una
+inconsistencia.
 
 | Módulo | Código | Casos | Rango |
 |---|---|---|---|
 | clients | CLI | 11 | TC-001 – TC-011 |
 | vehicles | VEH | 12 | TC-012 – TC-023 |
 | peces | PEC | 8 | TC-024 – TC-031 |
-| albarans | ALB | 28 | TC-032 – TC-059 |
-| factures | FAC | 19 | TC-060 – TC-078 |
+| albarans | ALB | 36 | TC-032 – TC-059, TC-111 – TC-118 |
+| factures | FAC | 20 | TC-060 – TC-078, TC-119 |
 | personal | PER | 8 | TC-079 – TC-086 |
 | nomines | NOM | 18 | TC-087 – TC-104 |
 | shell | SHL | 5 | TC-105 – TC-109 |
@@ -442,8 +485,8 @@ el caso en vez de actualizarlo.
 recursos que el caso **modifica**, nunca los que solo lee), `restores_state`
 (verdadero solo si deja el sistema exactamente como lo encontró), un bloque
 `automation` con `grade`, `reason` y `blocked`, y **`verification_path`**, que
-dice por qué vía se prueba el caso. **Los 110 los llevan; ninguno queda sin
-declarar.** `blocked` es `false` en los 110: nadie ha prohibido automatizar nada,
+dice por qué vía se prueba el caso. **Los 119 los llevan; ninguno queda sin
+declarar.** `blocked` es `false` en los 119: nadie ha prohibido automatizar nada,
 y el grado es informativo —S-10 lo usa para decidir por dónde empieza, no para
 excluir—. Las tablas resumen de cada módulo siguen mostrando lo que un QA humano
 necesita para elegir qué ejecutar; lo que sale de estos campos —el orden, los
@@ -1270,9 +1313,31 @@ cases:
 
 ### 4.4 Albaranes
 
-Es el módulo con más casos (28 de 110) por tres motivos: concentra 18 de los 79
-requisitos, contiene las dos operaciones dobles sobre el stock y es el único con
-un estado final que bloquea el documento.
+Es el módulo con más casos (36 de 119) por cuatro motivos: concentra 18 de los 79
+requisitos, contiene las dos operaciones dobles sobre el stock, es el único con
+un estado final que bloquea el documento, y desde 1.7.0 blinda además el cambio
+de vehículo entre clientes que `SPE-06` cerró.
+
+**Ocho casos nuevos en 1.7.0, TC-111 a TC-118, cubren `SPE-06 · Un albarán no
+puede cambiar de cliente`** (`Origen: BUG-002`, `Implemented` el 2026-08-28).
+El spec resuelve `DOC-04/Q-10` con dos capas: el servidor rechaza con `409`
+cualquier `PUT` que mueva el albarán al vehículo de otro cliente
+(`server/routes/albarans.js:95-104`, ya existente antes del spec y solo
+confirmada por él), y el formulario de edición filtra el selector de vehículo
+a los del cliente actual (`AlbaraForm.tsx`, commit `e6ecc5b`). De los once
+`AC-nnn` del spec, ocho nacen aquí como caso nuevo, dos quedan cubiertos por un
+caso ya existente (`AC-001` por `TC-055`) o por otro módulo (`AC-008`, en
+Facturas, apartado 4.5) y uno (`AC-007`) comparte caso con `AC-002` porque
+ambos comprueban exactamente la misma llamada rechazada. El detalle completo
+—qué criterio cubre cada `TC-nnn` y por qué— está en el **Anexo · Versión
+1.7.0**, al final del documento.
+
+**`TC-055` se revisa y no cambia de contenido.** Section 6.3 la marcaba «a
+revisar cuando llegue el evolutivo de `Q-10`»: el evolutivo ha llegado, y el
+escenario que `TC-055` prueba —cambiar el vehículo **dentro** del mismo
+cliente— sigue siendo exactamente el mismo comportamiento, ahora con el
+selector filtrado en vez de abierto a todos los vehículos. Solo cambia su
+`automation.reason`, que ya no puede seguir citando una reescritura pendiente.
 
 **TC-041 es el único caso del plan que no se ejecuta entero por la interfaz**, y
 conviene saber por qué. REQ-031 afirma que una anotación que no sea de pieza ni
@@ -1317,6 +1382,14 @@ promete sobre el albarán. **Es el único caso del plan con
 | TC-057 | REQ-042 | Impedir modificar la cabecera de un albarán facturado | Critical | Negative | regresion |
 | TC-058 | REQ-042 | Impedir borrar un albarán facturado | Critical | Negative | regresion |
 | TC-059 | REQ-042 | Impedir añadir o retirar líneas en un albarán facturado | Critical | Negative | regresion |
+| TC-111 | REQ-040 | Rechazar por servicio el cambio de vehículo a otro cliente, con el selector ya filtrado | Critical | Negative | regresion |
+| TC-112 | REQ-040 | Cambiar el vehículo dentro del mismo cliente no toca líneas, stock ni importe | Critical | Integration | regresion |
+| TC-113 | REQ-040 | Un cambio simultáneo de vehículo a otro cliente, fecha y notas no guarda nada de los tres | Critical | Integration | regresion |
+| TC-114 | REQ-040 | Guardar la cabecera de un albarán sin cambiar el vehículo funciona con normalidad | Medium | Functional | regresion |
+| TC-115 | REQ-042 | Sobre un albarán facturado, el rechazo de un cambio de vehículo sigue siendo el de facturado | Critical | Negative | regresion |
+| TC-116 | REQ-027 | Asignar un vehículo inexistente o ninguno al modificar la cabecera se rechaza por el motivo de siempre | Critical | Negative | regresion |
+| TC-117 | REQ-040 | El selector de vehículo al editar muestra solo los del cliente actual | High | Functional | regresion |
+| TC-118 | REQ-040 | Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona | Medium | Boundary | regresion |
 
 ```yaml testcases
 version: 1
@@ -1911,7 +1984,7 @@ cases:
     restores_state: false
     automation:
       grade: medium
-      reason: "REQ-040 se reescribe con el evolutivo de DOC-04/Q-10, ya respondida: habrá que impedir el cambio de vehículo entre clientes, de modo que el caso cambia de enunciado en cuanto llegue"
+      reason: "revisado en 1.7.0 al implementarse SPE-06 (AC-001): el escenario -cambio de vehículo dentro del mismo cliente- no cambia, pero desde ese spec el selector de vehículo en edición carga sus opciones por fetch (listByClient); es el mismo tipo de punto que ya produjo un flake dependiente del orden en el desplegable de pieza (DOC-23)"
       blocked: false
   - id: TC-056
     external_id: TALLER-ALB-TC-056
@@ -2013,13 +2086,219 @@ cases:
       grade: medium
       reason: "comprueba que el sistema avisa, y DOC-04 no documenta el literal de ningún mensaje de error: el test tiene que fijar un texto que cambia con cualquier retoque de la interfaz y con el cambio de idioma"
       blocked: false
+  - id: TC-111
+    external_id: TALLER-ALB-TC-111
+    name: "Rechazar por servicio el cambio de vehículo a otro cliente, con el selector ya filtrado"
+    requirement: REQ-040
+    priority: Critical
+    type: Negative
+    component: albarans
+    preconditions: "El albarán pendiente de facturar de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC, con base 95,00 €; el vehículo 9012GHI pertenece a 'Tallers Puig SL'"
+    steps:
+      - input: "Enviar una petición de modificación de cabecera del albarán indicando como vehículo 9012GHI, sin pasar por el formulario -el selector de edición ya solo ofrece los vehículos de 'Garcia Motors SL' (ver TC-117)-"
+        expected: "El sistema rechaza la petición con código 409 y un mensaje que indica que no se puede cambiar el vehículo a uno de otro cliente"
+      - input: "Consultar de nuevo el albarán"
+        expected: "El albarán sigue sobre el vehículo 1234ABC, pendiente de facturar, con sus líneas y su base de 95,00 € intactas"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: service
+
+    depends_on: []
+    touches: []
+    restores_state: true
+    automation:
+      grade: medium
+      reason: "vector no compostable por UI: desde 1.7.0 (SPE-06) el selector de vehículo en edición solo ofrece los del cliente actual (TC-117), así que un vehículo de otro cliente no se puede seleccionar desde el formulario; el intento tiene que ejercerse contra PUT /api/albarans/:id directamente, igual que TC-041, TC-045, TC-063 y TC-064. Cubre a la vez AC-002 y AC-007 de SPE-06: son la misma llamada rechazada vista desde dos motivos distintos"
+      blocked: false
+  - id: TC-112
+    external_id: TALLER-ALB-TC-112
+    name: "Cambiar el vehículo dentro del mismo cliente no toca líneas, stock ni importe"
+    requirement: REQ-040
+    priority: Critical
+    type: Integration
+    component: albarans
+    preconditions: "El albarán pendiente de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC, con una línea de pieza FIL-001 (2 unidades a 12,50 €) y una línea de mano de obra (2 h a 35,00 €), base 95,00 €; el catálogo muestra stock 40 para FIL-001; el mismo cliente tiene además el vehículo 5678DEF"
+    steps:
+      - input: "Comprobar las líneas y la base del albarán, y el stock de FIL-001 en el catálogo, antes del cambio"
+        expected: "El albarán muestra sus dos líneas con base 95,00 € y el catálogo muestra stock 40 para FIL-001"
+      - input: "Abrir el albarán pendiente, cambiar el vehículo a 5678DEF y guardar"
+        expected: "El sistema guarda el cambio sin ningún aviso de error"
+      - input: "Revisar de nuevo las líneas y la base del albarán, y el stock de FIL-001"
+        expected: "El albarán conserva las mismas dos líneas y la base de 95,00 €, y el catálogo sigue mostrando stock 40 para FIL-001"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: ui
+
+    depends_on: []
+    touches: [albarans]
+    restores_state: false
+    automation:
+      grade: medium
+      reason: "lee un valor de stock y de líneas compartido con el resto del carril de albaranes (apartado 4.10): el caso da por hecho que FIL-001 sigue en 40 y que las dos líneas de DS-005/DS-011 no han cambiado antes de empezar. Cubre AC-003 de SPE-06"
+      blocked: false
+  - id: TC-113
+    external_id: TALLER-ALB-TC-113
+    name: "Un cambio simultáneo de vehículo a otro cliente, fecha y notas no guarda nada de los tres"
+    requirement: REQ-040
+    priority: Critical
+    type: Integration
+    component: albarans
+    preconditions: "El albarán pendiente de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC, con fecha 05/03/2026 y nota 'Revisión inicial'; el vehículo 9012GHI pertenece a 'Tallers Puig SL'"
+    steps:
+      - input: "Enviar una petición de modificación de cabecera indicando a la vez vehículo 9012GHI, fecha 12/03/2026 y nota 'Cambio de aceite', sin pasar por el formulario"
+        expected: "El sistema rechaza la petición con código 409 por tratarse de un cambio de vehículo a otro cliente"
+      - input: "Consultar de nuevo el albarán"
+        expected: "El albarán conserva el vehículo 1234ABC, la fecha 05/03/2026 y la nota 'Revisión inicial': ninguno de los tres campos se ha guardado"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: service
+
+    depends_on: []
+    touches: []
+    restores_state: true
+    automation:
+      grade: medium
+      reason: "mismo vector no compostable por UI que TC-111: el selector filtrado no permite formular un cambio a vehículo de otro cliente desde el formulario; el intento se ejerce contra PUT /api/albarans/:id directamente. Cubre AC-004 de SPE-06, la garantía de atomicidad del PUT"
+      blocked: false
+  - id: TC-114
+    external_id: TALLER-ALB-TC-114
+    name: "Guardar la cabecera de un albarán sin cambiar el vehículo funciona con normalidad"
+    requirement: REQ-040
+    priority: Medium
+    type: Functional
+    component: albarans
+    preconditions: "El albarán pendiente de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC"
+    steps:
+      - input: "Abrir el albarán pendiente, reseleccionar el mismo vehículo 1234ABC en el selector, cambiar la nota a 'Revisado en recepción' y guardar"
+        expected: "El sistema guarda el cambio sin ningún aviso de rechazo por cambio de cliente"
+      - input: "Abrir de nuevo el detalle del albarán"
+        expected: "El albarán sigue sobre el vehículo 1234ABC y muestra la nota 'Revisado en recepción'"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: ui
+
+    depends_on: []
+    touches: [albarans]
+    restores_state: false
+    automation:
+      grade: high
+      reason: null
+      blocked: false
+  - id: TC-115
+    external_id: TALLER-ALB-TC-115
+    name: "Sobre un albarán facturado, el rechazo de un cambio de vehículo sigue siendo el de facturado"
+    requirement: REQ-042
+    priority: Critical
+    type: Negative
+    component: albarans
+    preconditions: "Existe un albarán ya facturado de 'Garcia Motors SL' sobre el vehículo 1234ABC, enlazado a una factura emitida (DS-012), con el vehículo 5678DEF disponible como alternativa del mismo cliente; el vehículo 9012GHI pertenece a 'Tallers Puig SL'"
+    steps:
+      - input: "Enviar una petición de modificación de cabecera del albarán facturado indicando como vehículo 9012GHI, sin pasar por el formulario"
+        expected: "El sistema rechaza la petición con código 409 y el mensaje de que el albarán ya está facturado, no el mensaje de cambio de cliente"
+      - input: "Consultar de nuevo el albarán y la factura"
+        expected: "El albarán sigue sobre el vehículo 1234ABC, en situación de facturado, y la factura sigue mostrándolo entre los albaranes que agrupa"
+    test_data_ref: DS-012
+    tags: [regresion]
+    verification_path: service
+
+    depends_on: []
+    touches: []
+    restores_state: true
+    automation:
+      grade: medium
+      reason: "comprueba cuál de dos mensajes de rechazo devuelve el servidor -el de facturado debe llegar antes que el de cambio de cliente-, y ninguno de los dos literales está documentado en DOC-04; el vector tampoco es compostable por UI porque el selector de edición ya filtra por cliente (TC-117). Cubre AC-006 de SPE-06"
+      blocked: false
+  - id: TC-116
+    external_id: TALLER-ALB-TC-116
+    name: "Asignar un vehículo inexistente o ninguno al modificar la cabecera se rechaza por el motivo de siempre"
+    requirement: REQ-027
+    priority: Critical
+    type: Negative
+    component: albarans
+    preconditions: "El albarán pendiente de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC; no existe ningún vehículo con id 9999"
+    steps:
+      - input: "Enviar una petición de modificación de cabecera sin informar ningún vehicle_id"
+        expected: "El sistema rechaza la petición con código 400 y avisa de que el campo vehicle_id es obligatorio, no del cambio de cliente"
+      - input: "Enviar una petición de modificación de cabecera indicando el vehicle_id 9999, que no existe"
+        expected: "El sistema rechaza la petición con código 400 y avisa de que el vehículo indicado no existe, no del cambio de cliente"
+      - input: "Consultar de nuevo el albarán"
+        expected: "El albarán sigue sobre el vehículo 1234ABC, sin cambios"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: service
+
+    depends_on: []
+    touches: []
+    restores_state: true
+    automation:
+      grade: medium
+      reason: "vector no compostable por UI: el selector de vehículo no permite dejar el campo vacío ni escribir un id inexistente; el intento se ejerce contra PUT /api/albarans/:id directamente. Cierra además, sobre la vía de modificación, el vector declarado en el apartado 4.12 para REQ-027: TC-036 solo ejercía la mitad vacía desde la creación. Cubre AC-009 de SPE-06"
+      blocked: false
+  - id: TC-117
+    external_id: TALLER-ALB-TC-117
+    name: "El selector de vehículo al editar muestra solo los del cliente actual"
+    requirement: REQ-040
+    priority: High
+    type: Functional
+    component: albarans
+    preconditions: "El albarán pendiente de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC; el mismo cliente tiene además el vehículo 5678DEF; el vehículo 9012GHI pertenece a 'Tallers Puig SL'"
+    steps:
+      - input: "Abrir el albarán pendiente y pulsar Editar"
+        expected: "El formulario se abre con el selector de vehículo mostrando 1234ABC y 5678DEF"
+      - input: "Revisar todas las opciones del selector de vehículo"
+        expected: "El selector no ofrece el vehículo 9012GHI ni ningún otro vehículo de 'Tallers Puig SL'"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: ui
+
+    depends_on: []
+    touches: []
+    restores_state: true
+    automation:
+      grade: medium
+      reason: "el desplegable de vehículo en edición carga sus opciones por fetch (listByClient); es el mismo punto donde el desplegable de pieza produjo ya un flake dependiente del orden (DOC-23). Cubre AC-010 de SPE-06"
+      blocked: false
+  - id: TC-118
+    external_id: TALLER-ALB-TC-118
+    name: "Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona"
+    requirement: REQ-040
+    priority: Medium
+    type: Boundary
+    component: albarans
+    preconditions: "'Ferreteria Soler' tiene un único vehículo, matrícula 2468PQR, con un albarán pendiente de facturar (DS-011)"
+    steps:
+      - input: "Abrir el albarán pendiente de 'Ferreteria Soler' y pulsar Editar"
+        expected: "El selector de vehículo muestra 2468PQR ya seleccionado, sin quedar vacío"
+      - input: "Cambiar la nota a 'Revisado' sin tocar el vehículo, y guardar"
+        expected: "El sistema guarda el cambio sin ningún aviso de error"
+      - input: "Abrir de nuevo el detalle del albarán"
+        expected: "El albarán sigue sobre el vehículo 2468PQR y muestra la nota 'Revisado'"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: ui
+
+    depends_on: []
+    touches: [albarans]
+    restores_state: false
+    automation:
+      grade: high
+      reason: null
+      blocked: false
 ```
 
 ### 4.5 Facturas
 
 Es el módulo donde el error cuesta dinero y no se puede corregir después (Q-06),
-así que 10 de sus 19 casos son `Critical`. Los cinco casos de cálculo —TC-069 a
-TC-073— llevan cifras exactas: si el sistema devuelve otra, el caso falla.
+así que 10 de sus 19 casos originales son `Critical`. Los cinco casos de
+cálculo —TC-069 a TC-073— llevan cifras exactas: si el sistema devuelve otra,
+el caso falla.
+
+**Un caso nuevo en 1.7.0, TC-119, cierra `AC-008` de `SPE-06`**: comprueba que
+un intento rechazado de mover un albarán a otro cliente no deja ningún residuo
+que llegue a torcer la factura — la misma garantía de `BUG-002` pero vista
+desde el lado que cobra. Va aquí y no en Albaranes porque lo que afirma es
+sobre la factura resultante, igual que TC-065/TC-066 viven aquí aunque tocan
+`albarans.estat`.
 
 | TC | REQ | Nombre | Prioridad | Tipo | Tags |
 |---|---|---|---|---|---|
@@ -2042,6 +2321,7 @@ TC-073— llevan cifras exactas: si el sistema devuelve otra, el caso falla.
 | TC-076 | REQ-054 | Marcar una factura como pagada | High | Functional | regresion |
 | TC-077 | REQ-054 | Devolver una factura pagada a pendiente de cobro | Medium | Functional | regresion |
 | TC-078 | REQ-055 | El estado de pago de la factura solo admite pendiente o pagada | High | Functional | — |
+| TC-119 | REQ-040 | Tras un intento rechazado de cambio de cliente, la factura sale al cliente original | Critical | Integration | regresion |
 
 ```yaml testcases
 version: 1
@@ -2512,6 +2792,32 @@ cases:
     automation:
       grade: low
       reason: "su única comprobación es que el desplegable ofrece exactamente dos valores; depende del rótulo de cada estado (DOC-04/Q-13) y REQ-055 se reescribe con el evolutivo de DOC-04/Q-14, ya respondida: automatizarlo hoy es escribir un test para tirarlo dentro de dos versiones"
+      blocked: false
+  - id: TC-119
+    external_id: TALLER-FAC-TC-119
+    name: "Tras un intento rechazado de cambio de cliente, la factura sale al cliente original"
+    requirement: REQ-040
+    priority: Critical
+    type: Integration
+    component: factures
+    preconditions: "El albarán pendiente de facturar de 'Garcia Motors SL' (DS-011) está sobre el vehículo 1234ABC, con base 95,00 €; el vehículo 9012GHI pertenece a 'Tallers Puig SL'"
+    steps:
+      - input: "Enviar una petición de modificación de cabecera del albarán indicando como vehículo 9012GHI, sin pasar por el formulario"
+        expected: "El sistema rechaza la petición con código 409 y el albarán sigue sobre el vehículo 1234ABC"
+      - input: "Emitir desde la interfaz una factura para 'Garcia Motors SL' agrupando ese albarán"
+        expected: "La factura queda emitida y aparece en el listado de facturas asociada a 'Garcia Motors SL'"
+      - input: "Abrir el detalle de la factura"
+        expected: "La factura muestra como cliente a 'Garcia Motors SL', no a 'Tallers Puig SL', y su base es 95,00 €"
+    test_data_ref: DS-011
+    tags: [regresion]
+    verification_path: mixed
+
+    depends_on: []
+    touches: [factures, albarans.estat]
+    restores_state: false
+    automation:
+      grade: medium
+      reason: "combina una llamada de servicio -el intento rechazado, no compostable por UI porque el selector ya filtra por cliente (TC-117)- con una emisión por pantalla; automatizarlo de punta a punta exige coordinar S-10 y S-17, igual que TC-041. Cubre AC-008 de SPE-06"
       blocked: false
 ```
 
@@ -3385,16 +3691,16 @@ carril es un caso que no estorba a nadie.
 
 | Ola | Casos | Carriles | Carril más largo |
 |---|---|---|---|
-| 0 | 107 | 67 | 17 casos |
+| 0 | 116 | 72 | 20 casos |
 | 1 | 3 | 3 | 1 caso |
 
-**Los 67 carriles de la ola 0 son 9 carriles con varios casos y 58 con uno
+**Los 72 carriles de la ola 0 son 9 carriles con varios casos y 63 con uno
 solo.** Los nueve que importan:
 
 | Carril | Recursos que se disputan | Casos |
 |---|---|---|
-| **17 casos** | `albarans`, `albara_linies`, `peces`, `peces.estoc` | TC-029, TC-030, TC-034, TC-035, TC-037, TC-038, TC-039, TC-040, TC-044, TC-046, TC-047, TC-048, TC-050, TC-052, TC-053, TC-055, TC-056 |
-| **9 casos** | `factures`, `albarans.estat` | TC-060, TC-065, TC-067, TC-068, TC-069, TC-070, TC-071, TC-072, TC-073 |
+| **20 casos** | `albarans`, `albara_linies`, `peces`, `peces.estoc` | TC-029, TC-030, TC-034, TC-035, TC-037, TC-038, TC-039, TC-040, TC-044, TC-046, TC-047, TC-048, TC-050, TC-052, TC-053, TC-055, TC-056, TC-112, TC-114, TC-118 |
+| **10 casos** | `factures`, `albarans.estat` | TC-060, TC-065, TC-067, TC-068, TC-069, TC-070, TC-071, TC-072, TC-073, TC-119 |
 | **9 casos** | `nomines` | TC-088, TC-089, TC-094, TC-096, TC-098, TC-099, TC-100, TC-101, TC-104 |
 | 3 casos | `clients` | TC-003, TC-007, TC-008 |
 | 3 casos | `vehicles` | TC-013, TC-021, TC-022 |
@@ -3403,7 +3709,7 @@ solo.** Los nueve que importan:
 | 2 casos | `preferencies.idioma` | TC-105, TC-107 |
 | 2 casos | `preferencies.tema` | TC-108, TC-109 |
 
-Y los **58 carriles de un solo caso** no son un artificio: **56 de ellos son
+Y los **63 carriles de un solo caso** no son un artificio: **61 de ellos son
 casos que no modifican nada** —los que intentan una operación que el sistema
 rechaza, y los de solo consulta— y por eso llevan `touches: []` con
 `restores_state: true`, que es la combinación ideal. Los otros dos son **TC-054**,
@@ -3411,16 +3717,20 @@ que suma 5 unidades al stock y las devuelve, único caso del plan que restaura
 estado tocando un recurso disputado, y **TC-102**, único que toca
 `nomines.estat_pagament`.
 
-**Los cuellos de botella, por orden.** El carril de 17 casos es el módulo de
-albaranes, y colisiona por una razón concreta: los diecisiete trabajan sobre **el
-mismo albarán de DS-005 y la misma pieza FIL-001 de DS-003**. `albara_linies` es
-el recurso más disputado del plan, con 10 casos, y `peces.estoc` el segundo, con
-8; siete de esos diez modifican los dos a la vez, que es justo la operación doble
-que REQ-035 y REQ-039 describen y la que más caro sale equivocar. No
-es una limitación del sistema sino del dataset: **en cuanto S-06 dé a cada caso
-su propio albarán y su propia pieza, ese carril se parte en varios y la ola 0 se
-acerca a los 80 carriles.** Mientras tanto, ejecutar el módulo de albaranes en
-paralelo consigo mismo es exactamente lo que produjo el rojo de TC-048.
+**Los cuellos de botella, por orden.** El carril de 20 casos es el módulo de
+albaranes, y colisiona por una razón concreta: dieciséis de los veinte trabajan
+sobre **el mismo albarán de DS-005 y la misma pieza FIL-001 de DS-003**, y los
+tres que llegan con `SPE-06` (TC-112, TC-114, TC-118) tocan el mismo recurso
+`albarans` por ser cambios de cabecera, aunque usen el dataset propio de
+`DS-011`. `albara_linies` es el recurso más disputado del plan, con 10 casos, y
+`peces.estoc` el segundo, con 8; siete de esos diez modifican los dos a la vez,
+que es justo la operación doble que REQ-035 y REQ-039 describen y la que más
+caro sale equivocar. No es una limitación del sistema sino del dataset y de la
+granularidad del modelo —`touches` declara la entidad, no la fila—: **en cuanto
+S-06 dé a cada caso su propio albarán y su propia pieza, ese carril se parte en
+varios y la ola 0 se acerca a los 84 carriles.** Mientras tanto, ejecutar el
+módulo de albaranes en paralelo consigo mismo es exactamente lo que produjo el
+rojo de TC-048.
 
 `factures` y `albarans.estat` van juntos a propósito: emitir una factura cambia
 la situación de sus albaranes, que es la operación doble de REQ-047. En cambio
@@ -3471,7 +3781,7 @@ se traslada a S-06 como requisito, no como sugerencia.
 ### 4.11 Grado de automatización
 
 `automation.grade` es **informativo**: no impide automatizar nada. Solo
-`blocked: true` lo impediría, y **`blocked` es `false` en los 110 casos**, porque
+`blocked: true` lo impediría, y **`blocked` es `false` en los 119 casos**, porque
 nadie ha prohibido automatizar ninguno. El criterio que más pesa no es la
 dificultad técnica sino **la tasa de cambio**: un caso que habría que reescribir
 en cada release enseña al equipo a ignorar los rojos, y eso cuesta más que no
@@ -3479,8 +3789,8 @@ tenerlo.
 
 | Grado | Casos | Qué significa aquí |
 |---|---|---|
-| `high` | **25** | Actúan sobre campos de `EntityForm`, que llevan `id={field.name}` y son estables (DOC-23), y comprueban en el listado o en la ficha un dato que el propio caso ha escrito. Se automatizan y se olvidan |
-| `medium` | **80** | Automatizables con mantenimiento previsible. Cinco familias, abajo |
+| `high` | **27** | Actúan sobre campos de `EntityForm`, que llevan `id={field.name}` y son estables (DOC-23), y comprueban en el listado o en la ficha un dato que el propio caso ha escrito. Se automatizan y se olvidan |
+| `medium` | **87** | Automatizables con mantenimiento previsible. Cinco familias, abajo |
 | `low` | **4** | TC-078, TC-103, TC-108, TC-110 |
 | `not-recommended` | **1** | TC-109 |
 
@@ -3502,13 +3812,33 @@ TC-049, TC-051— y los cuatro rechazos de la emisión —TC-062, TC-063, TC-064
 TC-066— dependen **también** del literal del aviso, de modo que los casos
 afectados por el texto de error no son 25 sino **34**.
 
-Los **nueve `medium` restantes** tienen motivo propio: TC-028 (el papel del coste
-y la unidad depende de `Q-01` y `Q-03`), TC-041 (su tercer paso no se ejecuta por
-la pantalla y necesita la misma llamada directa que TC-900), TC-055 (REQ-040 se
-reescribe con la respuesta a `Q-10`), TC-073 (`Q-17` sobre el modo de redondeo),
-TC-087 (el orden esperado depende de qué nóminas existan), TC-097 (comprueba las
-etiquetas de los tres importes) y los tres del marco, TC-105 a TC-107, que
-dependen del catálogo de traducciones y del almacenamiento del navegador.
+Los **nueve `medium` restantes de antes de 1.7.0** tienen motivo propio: TC-028
+(el papel del coste y la unidad depende de `Q-01` y `Q-03`), TC-041 (su tercer
+paso no se ejecuta por la pantalla y necesita la misma llamada directa que
+TC-900), TC-055 (revisado en 1.7.0: ya no depende de una reescritura
+pendiente de `Q-10` sino del mismo `fetch` que degrada al siguiente grupo),
+TC-073 (`Q-17` sobre el modo de redondeo), TC-087 (el orden esperado depende de
+qué nóminas existan), TC-097 (comprueba las etiquetas de los tres importes) y
+los tres del marco, TC-105 a TC-107, que dependen del catálogo de traducciones
+y del almacenamiento del navegador.
+
+**Siete `medium` más llegan con `SPE-06` en 1.7.0**, y se cuentan aparte porque
+no encajan en ninguna de las cinco familias de arriba tal como están definidas:
+**TC-111, TC-113, TC-115 y TC-116** comparten el motivo de
+TC-041/TC-045/TC-063/TC-064 —el vector no se puede componer por interfaz, esta
+vez porque el selector de vehículo ya filtra por cliente (`TC-117`)—; **TC-119**
+añade a ese mismo motivo la necesidad de coordinar `S-10` y `S-17` porque es
+`mixed`, igual que TC-041; **TC-117** depende del mismo desplegable cargado por
+`fetch` que ya degrada al grupo «Formulario de línea», aunque aquí sea el
+selector de cabecera y no el de una línea; y **TC-112** tiene un motivo
+distinto de los otros seis —lee un valor de stock y de líneas que el resto del
+carril de 20 casos puede alterar antes de que se ejecute (apartado 4.10),
+el mismo riesgo que ya declaraban TC-024, TC-028, TC-031, TC-049, TC-059 y
+TC-087 sin degradar su grado hasta ahora—. Ninguno de los siete se suma a las
+cinco familias de arriba porque su vector concreto —cabecera de albarán, no
+línea— es distinto; se cuentan como grupo propio para no forzar una familia que
+no los describe con precisión. **TC-114 y TC-118 son `high`**: no arrastran
+ninguno de estos motivos.
 
 **Los cuatro `low`, uno a uno.** TC-078 y TC-103 comprueban una sola cosa —que el
 desplegable de estado ofrece exactamente dos valores— que depende del rótulo de
@@ -3527,12 +3857,12 @@ preferencia real del usuario, de modo que el test daría verde sin haber probado
 lo que el requisito dice. **Sigue siendo un caso válido**: se ejecuta a mano y
 S-10 lo salta.
 
-**Dónde está la palanca.** No en escribir mejores tests. **34 de los 80 `medium`
+**Dónde está la palanca.** No en escribir mejores tests. **34 de los 87 `medium`
 lo son, del todo o en parte, por una sola carencia documental** —ningún texto de
 error está fijado en DOC-04— y **otros nueve por una sola carencia técnica**: los
 formularios de línea de albarán no llevan `id`. Documentar los mensajes de error
-y poner un identificador estable en esos formularios subiría **43 de los 80
-`medium`**, más de la mitad, sin tocar un solo caso de este plan. Es la
+y poner un identificador estable en esos formularios subiría **43 de los 87
+`medium`**, casi la mitad, sin tocar un solo caso de este plan. Es la
 recomendación más rentable que sale de este documento y va dirigida a quien
 mantenga la aplicación, no a quien la automatice.
 
@@ -3559,7 +3889,9 @@ No es una política inventada para esta versión: es **la que este plan ya
 practicaba**. `TC-041` va por servicio desde 1.3.0 y el motivo escrito entonces
 —«el tercer tipo de línea que REQ-031 prohíbe no se puede ni formular desde la
 pantalla»— es literalmente el criterio. Lo único que cambia en 1.5.0 es que deja
-de ser la excepción de un caso y pasa a ser la regla que decide los 110.
+de ser la excepción de un caso y pasa a ser la regla que decide los 110, y en
+1.7.0 la política produce por primera vez varios casos `service` a la vez
+—cinco, con `SPE-06`— y su primer caso `mixed` real, `TC-119`.
 
 **Las tres consecuencias que se siguen, y conviene decirlas porque son las que
 alguien va a querer discutir:**
@@ -3575,21 +3907,34 @@ alguien va a querer discutir:**
    Ese hueco no genera casos aquí: escribir hoy «el servicio rechaza el importe
    negativo» produciría un rojo permanente contra el AS-IS, que es exactamente lo
    que `Q-19` cerró que no se hace. Nace con el evolutivo, por la vía normal.
-3. **`mixed` existe y hoy está vacío.** Ningún caso del plan lo usa: TC-041 se
-   declara `service` porque el campo clasifica **el vector**, no cada paso —los
-   pasos 1, 2 y 4 sí se ejecutan por la pantalla, y así queda anotado en su
-   `verification_path_note`—. Bajo el criterio de A-06, que clasifica el
+3. **`mixed` existía y estaba vacío hasta 1.7.0.** TC-041 se declara `service`
+   porque el campo clasifica **el vector**, no cada paso —los pasos 1, 2 y 4 sí
+   se ejecutan por la pantalla, y así queda anotado en su
+   `verification_path_note`—, y bajo el criterio de A-06, que clasifica el
    criterio de aceptación completo, ese mismo caso sería `mixta` (compárese con
-   `EVO-001/AC-008`). La divergencia es deliberada y se declara: aquí pesa **quién
-   lo tiene que automatizar**, y en TC-041 el intento y la comprobación del efecto
-   los ejecuta `S-17` de punta a punta. El primer `mixed` real de este plan
-   llegará con los casos de EVO-001.
+   `EVO-001/AC-008`). La divergencia es deliberada y se declara: aquí pesa
+   **quién lo tiene que automatizar**. **`TC-119` es el primer `mixed` real del
+   plan**: combina una llamada de servicio —el intento rechazado de cambio de
+   vehículo, que ya no se puede componer por interfaz— con una emisión de
+   factura que sí se ejecuta por pantalla, y su automatización exige coordinar
+   `S-10` y `S-17` de punta a punta, igual que se predijo aquí para los casos de
+   `EVO-001`.
 
 | Vía | Casos | Cuáles | Quién los automatiza |
 |---|---|---|---|
-| `ui` | **109** | todos menos TC-041 | `S-10 · Automatizador QA` (Selenium + Cucumber, `automation/ui/`) |
-| `service` | **1** | TC-041 | `S-17 · Automatizador QA de servicio` (Postman, `automation/api/`) |
-| `mixed` | **0** | — | los dos, coordinados |
+| `ui` | **110** | todos menos los nueve de abajo | `S-10 · Automatizador QA` (Selenium + Cucumber, `automation/ui/`) |
+| `service` | **8** | TC-041, TC-045, TC-063, TC-064, TC-111, TC-113, TC-115, TC-116 | `S-17 · Automatizador QA de servicio` (Postman, `automation/api/`) |
+| `mixed` | **1** | TC-119 | los dos, coordinados |
+
+**Nota de corrección, aprovechando esta revisión.** Esta tabla —y el bloque
+`verification_path` del front-matter— seguían en **109 `ui` / 1 `service` / 0
+`mixed`** desde 1.5.0, sin recoger la reclasificación de TC-045, TC-063 y
+TC-064 a `service` que 1.6.0 sí aplicó en los tres casos y en su propio anexo
+de versión. Es un desfase anterior a `SPE-06`, detectado al recalcular estas
+cifras para 1.7.0 y corregido aquí de una vez: el reparto correcto **antes**
+de `SPE-06` era 106 `ui` / 4 `service` / 0 `mixed`, no 109/1/0. Ningún
+`verification_path` de caso estaba mal —TC-045, TC-063 y TC-064 ya llevaban
+`service` desde 1.6.0—; lo que estaba desactualizado era el recuento agregado.
 
 **Los cuatro dudosos, nombrados.** El campo se ha decidido caso a caso sobre los
 110, no puesto a `ui` por defecto y corregido en uno. El barrido se concentró en
@@ -3630,16 +3975,20 @@ la única forma de saber que TC-041 no es automatizable por pantalla era leer un
 párrafo de prosa en 4.4 y una frase dentro de un `automation.reason`. Ahora es un
 campo, y la respuesta es un filtro.
 
-**Lo que ya se ve venir, dicho aquí para que no sorprenda.** A-06 ha determinado
-que **cuatro de los once criterios de `EVO-001` solo son alcanzables por
-servicio** —`AC-002`, `AC-004`, `AC-007` y `AC-009`—, incluido el que impide
-facturar al cliente equivocado. No es una anomalía: al decidir negocio que el
-desplegable **filtre** los vehículos por cliente, desapareció la forma de
-intentarlo desde la pantalla, y filtrar no sustituye a comprobar. Cuando esos
-casos nazcan en la regeneración de este plan, el reparto de `verification_path`
-dejará de ser 109/1/0. **Eso no relaja la política**: esos cuatro criterios van
-por servicio precisamente porque su vector ya no existe en la interfaz, que es la
-única razón que la política admite.
+**Lo que se veía venir, ya llegado.** Esta misma sección predecía, sobre
+`EVO-001/DOC-08`, que cuatro criterios —`AC-002`, `AC-004`, `AC-007` y
+`AC-009`— solo serían alcanzables por servicio en cuanto el desplegable
+filtrara los vehículos por cliente, y que el reparto dejaría de ser 109/1/0.
+Ha llegado, pero no por la vía prevista: no fue `A-02` regenerando DOC-04 con
+`EVO-001` incorporado, sino `SPE-06` —migrado directamente de `DOC-08` a
+`specs/` e implementado el 2026-08-28— resolviendo el mismo `DOC-04/Q-10` sin
+esperar a esa regeneración. `TC-111` y `TC-113` son exactamente esos dos
+criterios (`AC-002`+`AC-007` fundidos en un caso, y `AC-004`); `AC-009` nace
+como `TC-116`. **Eso no relaja la política**: los tres van por servicio
+precisamente porque su vector ya no existe en la interfaz —el propio
+`AlbaraForm.tsx` en edición ya no ofrece un vehículo de otro cliente en el
+desplegable—, que es la única razón que la política admite. Detalle completo
+en el **Anexo · Versión 1.7.0**.
 
 ## 5. Datos de prueba requeridos
 
@@ -3660,6 +4009,8 @@ preparación previa.
 | DS-008 | Empleados con y sin nóminas | 'Joan Serra' sin ninguna nómina, para poder borrarlo; 'Marta Vidal' con al menos una nómina registrada, para el bloqueo de baja | TC-079, TC-082, TC-083, TC-084, TC-085, TC-086, TC-090, TC-095, TC-096 |
 | DS-009 | Nóminas con importes de cálculo | Nóminas de 'Marta Vidal': 03/2026 con bruto 1.850,00 € y deducciones 320,50 €; 11/2025 y 01/2026 para comprobar la ordenación; una con bruto 2.345,67 € y deducciones 411,11 € para el redondeo | TC-087, TC-091, TC-097, TC-098, TC-099, TC-100, TC-101, TC-102, TC-103, TC-104 |
 | DS-010 | Instalación limpia del marco | Aplicación sin ninguna preferencia de idioma ni de tema guardada, y equipo con preferencia de tema oscuro, para los dos valores por defecto | TC-106, TC-107, TC-109 |
+| DS-011 | Cliente con dos vehículos y vehículo de otro cliente (SPE-06) | 'Garcia Motors SL' con el vehículo 1234ABC —con el albarán pendiente de DS-005: línea de pieza FIL-001 (2 unidades a 12,50 €) y línea de mano de obra (2 h a 35,00 €), base 95,00 €— y además el vehículo 5678DEF sin albaranes; 'Tallers Puig SL' con el vehículo 9012GHI; 'Ferreteria Soler' con un único vehículo, matrícula 2468PQR, con un albarán pendiente propio | TC-111, TC-112, TC-113, TC-114, TC-116, TC-117, TC-118, TC-119 |
+| DS-012 | Albarán facturado con vehículo alternativo del mismo cliente (SPE-06) | Igual que DS-006 —albarán ya facturado de 'Garcia Motors SL' sobre el vehículo 1234ABC, enlazado a una factura emitida— pero con el vehículo 5678DEF disponible como alternativa del mismo cliente y el vehículo 9012GHI de 'Tallers Puig SL' ya existente | TC-115 |
 
 **Nota para S-06.** Los importes de DS-003, DS-005, DS-007 y DS-009 están
 elegidos para que los resultados esperados sean exactos y no dependan del modo de
@@ -3675,6 +4026,15 @@ usaba como «un albarán con líneas», y un tercer registro de más no habría 
 nada. A partir de ahora sí: si el dataset gana una línea, TC-041 falla por el
 dato, no por el sistema. No hace falta un `DS-nnn` nuevo; hace falta que DS-005
 sea exacto, y por eso se dice aquí en vez de darlo por supuesto.
+
+**Cuarta nota para S-06, la única de 1.7.0.** `DS-011` y `DS-012` reutilizan el
+albarán y las líneas de `DS-005`, y `DS-012` reutiliza el albarán facturado de
+`DS-006`, en vez de inventar cifras nuevas: es a propósito, para que TC-111 a
+TC-119 puedan comparar sus resultados con los mismos importes exactos que ya
+usan TC-041 y TC-069 a TC-073, y para no multiplicar los datasets que S-06
+tiene que sembrar. `2468PQR` y `'Ferreteria Soler'` son matrícula y cliente
+nuevos, elegidos por no coincidir con ninguno de los ya usados en este plan
+(apartado 5).
 
 **Tercera nota para S-06: tres encargos concretos que salen del
 plan de ejecución.** Los campos de aislamiento han dejado a la vista que buena
@@ -3770,7 +4130,7 @@ que encuentra vienen del bloque.
 | DOC-04/Q-12 | A-02 | Ninguna regla acota a no negativos el precio, el coste, el stock ni el precio por hora — **respondida: siempre positivos** | **Vector no cubierto.** No hay casos con importes negativos en TC-025, TC-029, TC-047 ni TC-050. Los cuatro casos `Negative` que hacen falta nacen con el evolutivo. A-14 ya confirmó el hueco en la aplicación real (BUG-003) |
 | DOC-04/Q-11 | A-02 | La nómina pagada se puede modificar y borrar sin restricción, a diferencia del albarán facturado | TC-101 y TC-104 se ejecutan sobre nóminas **pendientes de pago**, no pagadas. El caso de la nómina pagada no se diseña porque el resultado esperado es justo lo que está en duda. La respuesta a `Q-15` de A-02 no cubre esto |
 | DOC-04/Q-06 | A-02 | Una factura no se puede modificar ni anular; sus albaranes quedan bloqueados de forma permanente — **respondida: factura rectificativa** | No hay ningún caso de anulación ni de rectificación. Todo el módulo de facturas se prueba en un único sentido: emitir y cobrar. La rectificativa es entidad nueva con numeración propia: su plan de pruebas es del evolutivo |
-| DOC-04/Q-10 | A-02 | Se puede cambiar el vehículo de un albarán no facturado, incluso a un vehículo de otro cliente — **respondida: impedirlo entre clientes** | TC-055 cambia el vehículo **dentro del mismo cliente**, que es el caso sin ambigüedad y sigue siendo válido tras la respuesta. El cambio entre clientes queda sin cubrir; A-14 lo reprodujo (BUG-002) |
+| DOC-04/Q-10 | A-02 | Se puede cambiar el vehículo de un albarán no facturado, incluso a un vehículo de otro cliente — **respondida: impedirlo entre clientes** | **Cubierto desde 1.7.0.** TC-055 cambia el vehículo **dentro del mismo cliente** y sigue siendo válido. El cambio entre clientes, que A-14 reprodujo como `BUG-002`, lo cubren TC-111 a TC-119: `SPE-06` implementó el rechazo (`Implemented`, 2026-08-28) sin esperar a que A-02 regenerara DOC-04, así que el `statement` de REQ-040 sigue siendo el de 1.2.0 mientras el sistema ya hace lo que la respuesta pedía |
 | DOC-04/Q-13 | A-02 | El término «estado» designa a la vez la situación del albarán y la situación de cobro | Los `expected` de TC-033, TC-037, TC-078 y TC-103 se han escrito nombrando el concepto («pendiente de facturar», «pendiente de cobro», «pendiente de pago») y no la etiqueta literal de la pantalla. Si la interfaz unifica nombres, hay que revisar esos cuatro |
 | DOC-04/Q-01 · DOC-04/Q-03 | A-02 | El coste y la unidad de la pieza no intervienen en ningún cálculo | TC-028 solo comprueba que ambos se **muestran**, nunca que se usen. Si el negocio decide que el coste calcula margen, el caso se queda corto |
 | DOC-04/Q-04 | A-02 | La sección de Configuración no está desarrollada y nada describe su contenido | TC-110 prueba el único comportamiento real que existe: el aviso. Todo el módulo es 1 caso `Low` |
@@ -3802,6 +4162,18 @@ Lo que sí queda anotado es **qué caso desbloquea cada respuesta**, en el campo
 TC-047, TC-048, TC-050, TC-055, TC-071, TC-072, TC-078, TC-101, TC-103, TC-104 y
 TC-110. Son los once de 1.1.0 más TC-078 y TC-103, que entran por las respuestas
 de A-02 sobre los estados de pago.
+
+**El evolutivo de `Q-10` ya llegó, por una vía distinta de la prevista, y
+`TC-055` queda fuera de esta lista desde 1.7.0.** No fue la secuencia normal
+—A-06 → DOC-08 → DOC-04 regenerado → DOC-05 regenerado—, sino `SPE-06`,
+implementado directamente sobre `DOC-08` sin esperar a que A-02 regenerara
+DOC-04 (que sigue en 1.2.0, con `REQ-040` sin reformular). `TC-055` se ha
+revisado como exige el contrato de «Revisión post-implementación»: su
+escenario —cambio de vehículo **dentro** del mismo cliente— no ha cambiado de
+resultado, así que **no se ha reescrito**, solo su `automation.reason`. El
+vector que antes no tenía caso —el cambio **entre** clientes— lo cubren
+TC-111 a TC-119, nuevos en 1.7.0. Detalle completo en el **Anexo · Versión
+1.7.0**.
 
 ### 6.4 Lo que A-14 encontró, y dónde vive la vigilancia · `Q-19` cerrada
 
@@ -4210,38 +4582,49 @@ había quedado atrás, no un atajo para saltársela.
 
 Comprobadas una a una sobre el documento entregado, con los bloques YAML
 extraídos y parseados por un analizador independiente que los reconstruye como
-objetos —no con expresiones regulares—: **9 bloques, 110 casos, 241 pasos, cero
+objetos —no con expresiones regulares—: **9 bloques, 119 casos, 263 pasos, cero
 errores**. Se vuelven a pasar enteras en cada versión, también cuando la versión
 no toca ningún caso: dar por bueno lo que ya pasó una vez es cómo se cuelan los
 desfases que después destapa S-16.
 
+**Nota de mantenimiento, encontrada al volver a pasarlas para 1.7.0.** Esta
+sección y el bloque `verification_path` del front-matter habían quedado sin
+actualizar desde 1.5.0: seguían citando 110 casos, 241 pasos y el reparto
+109/1/0 de vía de verificación, sin recoger ni los nueve casos de `SPE-06`
+—que es lo que motiva esta revisión— **ni la reclasificación de TC-045,
+TC-063 y TC-064 que 1.6.0 ya había aplicado a los tres casos**. Es un desfase
+de mantenimiento del propio Anexo, no de los datos que describe: los tres
+casos ya llevaban `verification_path: service` desde 1.6.0. Queda corregido
+aquí de una vez, con las cifras de 1.6.0 y de 1.7.0 juntas donde ayuda a verlo.
+
 | # | Validación | Resultado |
 |---|---|---|
-| 1 | IDs de caso duplicados | **PASA.** 110 `id` distintos, TC-001 a TC-110, sin repeticiones ni huecos |
-| 2 | Caso sin requisito asociado | **PASA.** Los 110 casos llevan `requirement` informado; ninguno es `null` |
-| 3 | Campos obligatorios vacíos | **PASA.** `id`, `external_id`, `name`, `requirement`, `priority`, `type` y `steps` informados en los 110 casos |
-| 4 | Step sin `expected` | **PASA.** Los 241 pasos del documento llevan `input` y `expected`, ambos no vacíos. Siguen siendo 241: **1.5.0 no toca ningún paso** |
-| 5 | Prioridad fuera del vocabulario | **PASA.** Solo `Critical` (49), `High` (31), `Medium` (28) y `Low` (2) |
-| 6 | `REQ-nnn` inexistente en DOC-04 | **PASA.** Los 79 requisitos referenciados existen en `registro-ids.json` con `type: requirement` y `status: active`; no hay ninguna referencia a un REQ fuera del rango REQ-001 – REQ-079 |
-| 7 | `external_id` ausente | **PASA.** Los 110 casos llevan `external_id` con formato `TALLER-<MOD>-TC-nnn`, único, y con el código de módulo coherente con el bloque en el que está |
+| 1 | IDs de caso duplicados | **PASA.** 119 `id` distintos, TC-001 a TC-119, sin repeticiones |
+| 2 | Caso sin requisito asociado | **PASA.** Los 119 casos llevan `requirement` informado; ninguno es `null` |
+| 3 | Campos obligatorios vacíos | **PASA.** `id`, `external_id`, `name`, `requirement`, `priority`, `type` y `steps` informados en los 119 casos |
+| 4 | Step sin `expected` | **PASA.** Los 263 pasos del documento llevan `input` y `expected`, ambos no vacíos (241 hasta 1.6.0 + 22 de los nueve casos de `SPE-06`) |
+| 5 | Prioridad fuera del vocabulario | **PASA.** Solo `Critical` (55), `High` (32), `Medium` (30) y `Low` (2) |
+| 6 | `REQ-nnn` inexistente en DOC-04 | **PASA.** Los 79 requisitos referenciados existen en `registro-ids.json` con `type: requirement` y `status: active`; no hay ninguna referencia a un REQ fuera del rango REQ-001 – REQ-079. Los nueve casos nuevos referencian REQ-040, REQ-042 y REQ-027, los tres ya existentes |
+| 7 | `external_id` ausente | **PASA.** Los 119 casos llevan `external_id` con formato `TALLER-<MOD>-TC-nnn`, único, y con el código de módulo coherente con el bloque en el que está — incluidos los ocho `TALLER-ALB-TC-11x` y el `TALLER-FAC-TC-119`, cuyo número no es contiguo con el resto de su módulo (apartado 4) |
 
 Comprobaciones adicionales exigidas al agente:
 
-- **Prosa y YAML coinciden en los dos sentidos.** Los 110 `TC-nnn` de las tablas
+- **Prosa y YAML coinciden en los dos sentidos.** Los 119 `TC-nnn` de las tablas
   resumen del apartado 4 y de la tabla de cobertura del apartado 3 son exactamente
-  los 110 de los bloques YAML. **Un único identificador `TC-` de la prosa no está
+  los 119 de los bloques YAML. **Un único identificador `TC-` de la prosa no está
   en ningún bloque: `TC-900`**, y es a propósito: no es un caso de este plan sino
   del proyecto de automatización de interfaz (DOC-23, hoy `automation/ui/`), se
   nombra en 6.4 al explicar el reparto y por eso vive en la serie `TC-9nn`, fuera
   del rango del plan. No lo exporta S-07.
 - **Cobertura completa.** Los 79 requisitos de DOC-04 aparecen en la tabla de
   cobertura; ninguno queda como GAP PLAN.
-- **`verification_path` informado en los 110 casos.** Vocabulario cerrado
+- **`verification_path` informado en los 119 casos.** Vocabulario cerrado
   `ui | service | mixed`, sin ningún valor fuera de él y sin ningún caso sin
-  declarar: **109 `ui`, 1 `service` (TC-041), 0 `mixed`**. El reparto y el criterio
-  que lo decide están en 4.12, y el criterio se aplicó **caso a caso sobre los
-  110**, no por defecto: los cuatro casos dudosos están nombrados ahí mismo con el
-  motivo de haberse quedado en `ui`.
+  declarar: **110 `ui`, 8 `service` (TC-041, TC-045, TC-063, TC-064, TC-111,
+  TC-113, TC-115, TC-116), 1 `mixed` (TC-119)**. El reparto y el criterio que lo
+  decide están en 4.12, y el criterio se aplicó **caso a caso sobre los 119**,
+  no por defecto: los cuatro casos dudosos heredados de 1.5.0 siguen nombrados
+  ahí mismo con el motivo de haberse quedado en `ui`.
 - **Las preguntas abiertas cumplen su propio contrato.** Van en el bloque
   `open_questions` de 6.6, con `owner` en cada entrada y con `questions`
   separado de `cites`. La tabla de 6.2 y el bloque contienen exactamente las
@@ -4270,64 +4653,65 @@ Comprobaciones adicionales exigidas al agente:
   versión **no reclama ningún `Q-nnn` nuevo**, así que no hay colisión posible que
   resolver; la equivalencia de la renumeración histórica vive en el `-HIST.md` y,
   para máquinas, en el `previous_id` de cada entrada.
-- **Los seis campos de aislamiento, automatización y vía están en los 110 casos.**
+- **Los seis campos de aislamiento, automatización y vía están en los 119 casos.**
   `depends_on`, `touches`, `restores_state`, el bloque `automation` con `grade`,
   `reason` y `blocked`, y `verification_path`: **cero casos sin declarar**, y S-14
   lo confirma con `cases_without_isolation_declared: 0`. `grade` está dentro del
-  vocabulario cerrado en los 110 (25 `high`, 80 `medium`, 4 `low`,
-  1 `not-recommended`), `reason` está informado en los **85** que no son `high` y
-  es `null` en los 25 que sí lo son, y `blocked` es `false` en los 110: **el
+  vocabulario cerrado en los 119 (27 `high`, 87 `medium`, 4 `low`,
+  1 `not-recommended`), `reason` está informado en los **92** que no son `high` y
+  es `null` en los 27 que sí lo son, y `blocked` es `false` en los 119: **el
   usuario no ha prohibido automatizar ningún caso**.
 - **Las tres reglas bloqueantes de S-14, comprobadas.** Ninguna dependencia apunta
   a un caso inexistente —las tres declaradas son TC-022, TC-030 y TC-085, y las
-  tres existen—, ningún caso depende de sí mismo y **no hay ciclos**: el grafo
-  tiene dos niveles y `depends_on` solo apunta de un alta a la baja que la precede.
-- **Nada de lo que 1.5.0 añade cambia lo que S-07 exporta.** Los siete campos que
-  Rally consume —`id`, `external_id`, `name`, `requirement`, `priority`, `type`,
-  `steps`— son idénticos byte a byte a los de 1.4.1 en los 110 casos.
-  `verification_path` es información para S-10, S-14 y S-17, no una columna de
-  Rally: **la reimportación es un no-op**.
+  tres existen; los nueve casos nuevos de `SPE-06` llevan `depends_on: []`—,
+  ningún caso depende de sí mismo y **no hay ciclos**: el grafo tiene dos niveles
+  y `depends_on` solo apunta de un alta a la baja que la precede.
+- **Lo que S-07 exporta cambia de verdad esta vez, y es lo esperado.** Los siete
+  campos que Rally consume —`id`, `external_id`, `name`, `requirement`,
+  `priority`, `type`, `steps`— son idénticos byte a byte a los de 1.6.0 en los
+  110 casos que ya existían: **la reimportación de esos 110 sigue siendo un
+  no-op**. Los **9 casos nuevos** (TC-111 a TC-119) sí son alta nueva en Rally, y
+  `TC-055` reimporta igual —solo cambió su `automation.reason`, que S-07 no
+  exporta—.
 - **Equilibrio de prioridad verificado con S-14.** La pasada `pre` sobre este
   documento no reporta ningún aviso `desequilibrio_prioridad`: todo requisito
   `critical` de DOC-04 tiene al menos un caso `Critical` y todo requisito `high`
   tiene al menos un caso `High`.
-- **S-14 vuelto a pasar en 1.5.0**, contra DOC-04 1.2.0 y el registro de hoy:
-  **110 casos, cobertura 100 % (79/79), GAP PLAN 0 y cero anomalías bloqueantes**,
-  y el mismo plan de ejecución de siempre —2 olas, 67 carriles, carril más largo
-  de 17 casos— porque `verification_path` no interviene en el aislamiento.
-  `DOC-07-MATRIZ.csv` **no cambia**: sus diez columnas —`requirement_id`,
-  `requirement_statement`, `module`, `priority`, `test_case_ids`,
-  `test_case_count`, `exists_in_rally`, `executed`, `result`, `diagnosis`— no
-  transportan ni la vía de verificación ni el grado de automatización. La salida
-  se ha escrito en el scratchpad; **este documento no escribe en `docs/`**, que
-  DOC-07 es de A-05.
-- **`registro-ids.json`: dos ediciones nominales y ningún ancla nueva.** Ningún
-  `TC-nnn` se añade, retira, renumera ni cambia de `name`, así que no hay deriva
-  de significado que aceptar y **no se ejecuta `sync --block testcases`**. Lo
-  único que esta versión escribe son las dos anclas propias que lo necesitan:
-  `Q-18` pasa a `status: answered` con su `resolution` en dos mitades, y `Q-19`
-  gana la nota de corrección de ruta **junto** a su `resolution`, nunca dentro.
-  Se hacen de forma nominal porque `sync` solo añade anclas: no actualiza el
-  `status` de una existente, y darlo por hecho habría dejado el registro diciendo
-  que `Q-18` sigue abierta.
-- **S-16 no marca este documento.** `cascada.js` sobre `docs/` lo da al día: las
-  entradas declaradas —DOC-04 1.2.0, DOC-08 2.0.0, DOC-25 1.1.1— coinciden con la
-  versión real de cada fichero, con su hash comprobado hoy. Lo que sí marca es la
-  **cascada hacia abajo**: **DOC-07, DOC-08 y DOC-16** declaran DOC-05 `1.4.1` y
-  quedan obsoletos por el MINOR, en ese orden de regeneración. Es la consecuencia
-  esperada de subir MINOR, no un defecto, y **no la arregla este documento**: cada
-  uno se resella en su turno.
+- **S-14 vuelto a pasar en 1.7.0**, contra DOC-04 1.2.0 y el registro de hoy:
+  **119 casos, cobertura 100 % (79/79), GAP PLAN 0 y cero anomalías bloqueantes**,
+  y el plan de ejecución actualizado —2 olas, **72** carriles, carril más largo
+  de **20** casos (apartado 4.10)— porque `verification_path` no interviene en
+  el aislamiento pero `touches` sí, y tres de los nueve casos nuevos comparten el
+  recurso `albarans` con el carril de 17 ya existente. `DOC-07-MATRIZ.csv`
+  **sí cambia** esta vez: las filas de REQ-040 (1→8 casos), REQ-042 (3→4) y
+  REQ-027 (1→2) ganan `test_case_ids` nuevos y sus `test_case_count` suben; el
+  resto de las 79 filas queda igual. La salida se ha escrito en el scratchpad;
+  **este documento no escribe en `docs/`**, que DOC-07 es de A-05.
+- **`registro-ids.json`: nueve anclas `TC-nnn` nuevas, sin renumerar nada.**
+  `TC-111` a `TC-119` se añaden con `type: test_case`, `module`, `requirement`,
+  `external_id`, `created: 2026-08-28` y `status: active` — la primera vez desde
+  1.0.0 que este plan ejecuta `sync --block testcases` con altas reales. Ningún
+  `TC-nnn` existente se renumera, se retira ni cambia de `external_id`.
+- **S-16 marcará este documento hasta que DOC-04 se regenere, y es lo
+  esperado.** El front-matter sigue declarando `DOC-04 1.2.0` porque es la
+  versión real, y `REQ-040` no ha cambiado de `statement` en ella —el spec se
+  implementó sin esperar a esa regeneración (apartado 6.2, fila `Q-10`)—. Lo que
+  sí cambia es que este plan pasa a declarar `SPE-06` como entrada nueva de
+  `inputs`. Cascada hacia abajo: **DOC-07, DOC-08 y DOC-16** declaran DOC-05
+  `1.6.0` y quedan obsoletos por este MINOR, en ese orden de regeneración. Es la
+  consecuencia esperada de subir MINOR, no un defecto, y **no la arregla este
+  documento**: cada uno se resella en su turno.
 - **El fichero de historial declara la versión que acompaña.**
-  `DOC-05-PLAN-PRUEBAS-HIST.md` lleva `doc_id: DOC-05-HIST` y `version: 1.5.0`, la
-  misma que el documento que historia, para que S-16 no lo lea como artefacto sin
-  versión ni lo compare consigo mismo. No lleva bloque `inputs` a propósito: la
-  procedencia vive aquí y solo aquí.
+  `DOC-05-PLAN-PRUEBAS-HIST.md` lleva `doc_id: DOC-05-HIST` y pasa a
+  `version: 1.7.0`, la misma que el documento que historia, para que S-16 no lo
+  lea como artefacto sin versión ni lo compare consigo mismo. No lleva bloque
+  `inputs` a propósito: la procedencia vive aquí y solo aquí.
 - **`status: draft`.**
 
-**Aviso a las fases posteriores.** La versión vigente es **1.5.0**, una subida
-**MINOR** desde 1.4.1. Por qué esa y no otra, y qué queda obsoleto, en el
-apartado siguiente. El detalle de las versiones anteriores está en
-**`DOC-05-PLAN-PRUEBAS-HIST.md`**.
+**Aviso a las fases posteriores.** La versión vigente es **1.7.0**, una subida
+**MINOR** desde 1.6.0. Por qué esa y no otra, y qué queda obsoleto, en el
+**Anexo · Versión 1.7.0**, más abajo. El detalle de las versiones anteriores
+está en **`DOC-05-PLAN-PRUEBAS-HIST.md`**.
 
 ## Anexo · Versión 1.5.0 · qué queda obsoleto
 
@@ -4417,6 +4801,104 @@ de ahí. `automation/api/` (S-17, DOC-26) pasa a tener estos tres casos entre
 sus encargos. DOC-07 no cambia de fondo: ya reflejaba TC-064 como `A-05-11a`;
 TC-045 y TC-063 son la misma familia de hallazgo y su fila de matriz no varía
 (sigue habiendo un caso por requisito).
+
+---
+
+## Anexo · Versión 1.7.0 · SPE-06 — nueve casos nuevos para el cambio de vehículo entre clientes
+
+**Disparador.** `/spec-impl` cerró `specs/implemented/SPE-06-albara-canvi-client.md`
+(`Estado: Implemented`, `Origen: BUG-002`, 2026-08-28) y despachó a A-03 en modo
+«Revisión post-implementación»: no una regeneración del plan entero —DOC-04
+sigue en 1.2.0 y no la dispara— sino la pregunta acotada de si este cambio
+concreto deja algo de DOC-05 desactualizado. La respuesta es sí, en tres
+frentes: ocho criterios de aceptación sin caso, uno servido ya por `TC-055` y
+uno cerrado en Facturas.
+
+**Los once `AC-nnn` del spec, uno a uno:**
+
+| `AC` | Qué exige | Resultado en este plan |
+|---|---|---|
+| AC-001 | Cambiar el vehículo dentro del mismo cliente funciona, con fecha y notas intactas | **Ya cubierto.** `TC-055`, sin cambio de contenido — solo se revisa y se actualiza su `automation.reason` (ver más abajo) |
+| AC-002 | Una petición que mueve el albarán a otro cliente se rechaza, aunque no se pueda componer desde el desplegable | **Nuevo: `TC-111`** (`service`), fundido con AC-007 — ver nota |
+| AC-003 | Con líneas ya anotadas, cambiar de vehículo dentro del mismo cliente no toca líneas, stock ni importe | **Nuevo: `TC-112`** (`ui`, `Integration`) |
+| AC-004 | Cambiar a otro cliente **y a la vez** fecha o notas no guarda nada de los tres | **Nuevo: `TC-113`** (`service`, `Integration`) |
+| AC-005 | Guardar sin tocar el vehículo (o reseleccionando el mismo) funciona con normalidad | **Nuevo: `TC-114`** (`ui`) |
+| AC-006 | Sobre un albarán facturado, el rechazo sigue siendo el de «facturado», no el de cambio de cliente | **Nuevo: `TC-115`** (`service`) |
+| AC-007 | Aun con el selector ya filtrado, un cambio a otro cliente que llegue sin pasar por el formulario se rechaza igual | **Mismo caso que AC-002: `TC-111`** — ver nota |
+| AC-008 | Tras un intento rechazado, la factura que se emita después sale al cliente original | **Nuevo: `TC-119`** (`mixed`), en el módulo Facturas |
+| AC-009 | Vehículo inexistente o no informado se rechaza por el motivo de siempre (REQ-027), no por el nuevo | **Nuevo: `TC-116`**, mapeado a `REQ-027` — cierra el hueco que 4.12 ya tenía declarado para ese requisito |
+| AC-010 | El selector de vehículo al editar solo muestra los del cliente actual | **Nuevo: `TC-117`** (`ui`) |
+| AC-011 | Con exactamente un vehículo, el selector lo muestra seleccionado y guardar funciona | **Nuevo: `TC-118`** (`ui`, `Boundary`) |
+
+**Por qué AC-002 y AC-007 comparten caso.** Los dos exigen la misma
+comprobación observable —un `PUT` que mueve el albarán al vehículo de otro
+cliente se rechaza con `409`— y difieren solo en el énfasis: AC-002 lo pide
+como garantía general, AC-007 lo pide **a propósito** para que filtrar el
+desplegable (AC-010) no se confunda con haber terminado la implementación
+(riesgo que el propio spec nombra en su tabla de riesgos, citando
+`REQ-046`/`TC-064` como precedente de una regla duplicada que ya divergió una
+vez). Escribir dos casos idénticos no añadía cobertura; `TC-111` lo dice en su
+propio `name` y en su `automation.reason`.
+
+**Por qué AC-008 vive en Facturas y no en Albaranes.** Lo que afirma es sobre
+la factura resultante —que sale al cliente correcto—, no sobre el albarán en
+sí. Mismo criterio que ya separa TC-065/TC-066 (componente `factures`, tocan
+`albarans.estat`) de los casos que sí son puramente de cabecera de albarán.
+
+**Por qué AC-009 se mapea a `REQ-027` y no a `REQ-040`.** `REQ-027` («todo
+albarán queda asociado a un vehículo que ya existe en el sistema») es la
+misma regla de negocio que el propio spec cita al justificar AC-009, aplicada
+aquí sobre la vía de modificación en lugar de la de alta. El apartado 4.12 ya
+había declarado, desde 1.5.0, que `REQ-027` tenía un vector no cubierto —la
+mitad de «referencia inexistente», que `TC-036` no ejerce por ser solo
+alcanzable por servicio—; `TC-116` es exactamente ese caso pendiente, llegado
+por la puerta de `SPE-06` en vez de por una tarea dedicada a cerrarlo.
+
+**`TC-055` se revisa, no se reescribe.** Su escenario —vehículo nuevo dentro
+del mismo cliente— es un subconjunto exacto de lo que `DS-011` describe para
+AC-001, y el comportamiento no cambia: sigue guardando sin aviso. Lo único que
+cambia es la causa de su `automation.grade: medium`, que ya no puede seguir
+citando una reescritura pendiente de `Q-10` —esa reescritura ya llegó— y pasa
+a citar el `fetch` del que ahora depende el propio selector de vehículo en
+edición.
+
+**Qué cambia, en cifras:**
+
+| Qué | 1.6.0 | 1.7.0 |
+|---|---|---|
+| Casos | 110 | **119** (9 nuevos: TC-111 a TC-119) |
+| Pasos | 241 | **263** |
+| Prioridades | 49 C / 31 H / 28 M / 2 L | **55 C / 32 H / 30 M / 2 L** |
+| Reparto por tipo | 66 F / 31 N / 9 B / 4 I | **68 F / 34 N / 10 B / 7 I** |
+| Vía de verificación | 106 ui / 4 service / 0 mixed *(cifra real tras 1.6.0; el Anexo de validaciones citaba 109/1/0 por desactualización, corregida en esta misma versión)* | **110 ui / 8 service / 1 mixed** |
+| Grado de automatización | 25 high / 80 medium / 4 low / 1 not-recommended | **27 high / 87 medium / 4 low / 1 not-recommended** |
+| Requisito con más casos | REQ-032 / REQ-042 / REQ-067 / REQ-070 (3 cada uno) | **REQ-040, con 8** |
+| Carril más largo (4.10) | 17 casos | **20 casos** |
+| Carriles totales (4.10) | 67 | **72** |
+| `DS-nnn` | 10 | **12** (DS-011, DS-012) |
+| `registro-ids.json` | 110 anclas `TC-*` | **119**, `TC-111`–`TC-119` con `created: 2026-08-28` |
+
+**Por qué MINOR y no otra cosa.** No es PATCH porque **el contenido que Rally,
+S-10, S-14 y S-17 consumen cambia de verdad**: nueve `id` nuevos, un `REQ-nnn`
+con ocho veces más casos, un primer caso `mixed` real. No es MAJOR porque nada
+de lo que ya existía se retira ni cambia de significado: los 110 casos previos
+a `TC-055` siguen siendo exactamente los mismos, y `TC-055` solo actualiza un
+campo informativo (`automation.reason`) sin tocar `steps` ni `requirement`.
+
+**Qué queda obsoleto:** ver el «Aviso a las fases posteriores» más arriba y el
+bullet de S-16 en el Anexo de validaciones. En resumen, **DOC-07, DOC-08 y
+DOC-16** (que declaran DOC-05 1.6.0 como entrada) quedan obsoletos por este
+MINOR. **DOC-13** (S-06) recibe dos encargos nuevos: materializar `DS-011` y
+`DS-012`. **DOC-19** no queda obsoleto: ninguna ejecución previa deja de ser
+válida, porque ningún caso existente cambió de contenido. **Rally/S-07**: no es
+un no-op esta vez —hay 9 altas nuevas que exportar—.
+
+**Lo que este anexo no hace.** No regenera el plan contra un DOC-04 nuevo —no
+lo hay— ni resuelve `Q-16` o `Q-17`, que siguen `open` y son de negocio. Y no
+toca `automation/ui/`: a quién le toca actuar sobre esos nueve casos nuevos
+—inventariarlos y decidir si se automatizan ya— es `s10-auto-tcs`, la próxima
+vez que trabaje ahí, siguiendo su propio principio de «inventaria antes de
+generar» sobre este mismo documento.
 
 ---
 
@@ -4544,3 +5026,35 @@ que las entradas declaradas entonces —incluida `DOC-08 2.0.0`— coincidían c
 versión real de cada fichero. Era cierto el 2026-08-17 y se deja tal cual: es el
 registro de lo que se verificó en aquella versión, no una afirmación sobre hoy.
 El estado vigente es el del bloque `inputs`.
+
+**1.7.0 · `SPE-06`, entrada nueva sin `version` semántica.** `specs/` no
+versiona sus documentos con semver, solo con un estado (`Draft` → `Approved` →
+`Implemented`), así que la entrada declara `status: Implemented`,
+`implemented_on` y los commits reales (`65b23a2`, `e6ecc5b`) en vez de una
+`version` inventada — el mismo criterio que ya usa la entrada
+`DOC-23-AUTOMATION` con su `version_note` para código sin versión semántica.
+`present: true` es correcto porque el fichero existe y está en el estado que
+esta revisión necesita.
+
+**1.7.0 · corrección de un desfase de 1.6.0, no de `SPE-06`.** Al recalcular
+`verification_path` para sumar los casos nuevos se encontró que el recuento
+agregado —tanto en el front-matter como en el «Anexo · Verificación de las
+siete validaciones»— seguía en **109 `ui` / 1 `service` / 0 `mixed`** desde
+1.5.0, sin recoger que 1.6.0 ya había pasado `TC-045`, `TC-063` y `TC-064` a
+`service`. El dato de cada caso individual siempre fue correcto: solo el
+recuento vivía desactualizado en dos sitios. Se corrige aquí, junto con la
+suma de `SPE-06`, en vez de abrir una revisión aparte solo para eso —el
+detalle completo está en el Anexo de verificación y en el Anexo · Versión
+1.7.0—.
+
+**Por qué `SPE-06` no dispara una regeneración completa contra DOC-04.**
+DOC-04 sigue en **1.2.0** y su `REQ-040` no ha cambiado de `statement`: la
+secuencia normal —evolutivo (A-06, DOC-08) → DOC-04 regenerado → DOC-05
+regenerado— no se ha completado. Lo que ha ocurrido es que `/spec-impl`
+implementó el mismo evolutivo de `DOC-04/Q-10` directamente desde `DOC-08`,
+sin pasar por esa regeneración. Esta revisión sigue el contrato de «Revisión
+post-implementación», que es distinto y más acotado: decide caso a caso qué
+`AC-nnn` del spec ya implementado deja algo de este plan desactualizado, sin
+inventar el enunciado de un `REQ-nnn` que A-02 no ha escrito todavía. La
+entrada `DOC-04-FUNCIONAL.md` de `inputs` no cambia de `version` ni de `hash`
+por este motivo, y es correcto que no cambie.
