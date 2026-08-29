@@ -226,6 +226,10 @@ obsolescence_ack:
     upto: 1.4.1
     date: 2026-08-29
     note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las propuestas funcionales."
+  - input: DOC-16
+    upto: 3.2.0
+    date: 2026-08-29
+    note: "Delta 3.2.0: DOC-16 solo mueve evidencia de MEJ-nnn por DOC-27 1.1.0. Resync circular; ninguna FUN-nnn depende del roadmap técnico."
 ---
 
 # DOC-25 · Propuestas de funcionalidad — app-taller

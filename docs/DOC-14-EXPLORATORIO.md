@@ -63,6 +63,10 @@ obsolescence_ack:
     upto: 1.4.1
     date: 2026-08-29
     note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las troballas EXP-nnn."
+  - input: DOC-16
+    upto: 3.2.0
+    date: 2026-08-29
+    note: "Delta 3.2.0: DOC-16 solo mueve evidencia de MEJ-002/003/006 por DOC-27 1.1.0. Resync circular; ninguna troballa EXP-nnn depende del roadmap."
 ---
 
 # DOC-14 · Informe de exploración QA · app-taller
