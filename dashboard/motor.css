@@ -48,3 +48,14 @@
 .span-8{grid-column:span 8}
 .span-9{grid-column:span 9}
 .span-12{grid-column:span 12}
+
+/* Preguntas: ID y Pregunta más anchos; Respuesta y Ambito mas estrechos */
+table[data-kind="questions"]{table-layout:fixed}
+table[data-kind="questions"] th:nth-child(1),table[data-kind="questions"] td:nth-child(1){width:8%}
+table[data-kind="questions"] th:nth-child(2),table[data-kind="questions"] td:nth-child(2){width:44%}
+table[data-kind="questions"] th:nth-child(3),table[data-kind="questions"] td:nth-child(3){width:10%}
+table[data-kind="questions"] th:nth-child(4),table[data-kind="questions"] td:nth-child(4){width:8%}
+table[data-kind="questions"] th:nth-child(5),table[data-kind="questions"] td:nth-child(5){width:14%}
+table[data-kind="questions"] th:nth-child(6),table[data-kind="questions"] td:nth-child(6){width:6%}
+table[data-kind="questions"] th:nth-child(7),table[data-kind="questions"] td:nth-child(7){width:10%}
+table[data-kind="questions"] td{overflow-wrap:break-word;word-break:break-word}
