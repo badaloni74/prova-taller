@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Taller API · Casos de servicio (DOC-26)",
-    "description": "Colección Postman generada por S-17 · api-qa. Ejerce los 4 casos de docs/DOC-05-PLAN-PRUEBAS.md marcados verification_path: service (TC-041, TC-045, TC-063, TC-064): reglas de negocio que la interfaz no permite ni intentar formular. Ejecutar de arriba a abajo, con newman o el runner de Postman: cada carpeta encadena _setup → TC-nnn → _teardown en orden, usando variables de entorno para pasar ids entre peticiones. Ver README.md para detalles de procedencia, aislamiento y hallazgos.",
+    "description": "Colección Postman generada por S-17 · api-qa. Ejerce los casos de docs/DOC-05-PLAN-PRUEBAS.md con verification_path service (TC-041, TC-045, TC-063, TC-064) y la mitad de servicio de los casos SPE-06 que el selector de vehículo filtrado dejó fuera de la interfaz (TC-111, TC-113, TC-115, TC-116 y la mitad de servicio del mixto TC-119): reglas de negocio que la pantalla no permite ni intentar formular. Ejecutar de arriba a abajo, con newman o el runner de Postman: cada carpeta encadena _setup → TCSnnn → _teardown en orden, usando variables de entorno para pasar ids entre peticiones. Ver README.md para procedencia, aislamiento y hallazgos.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -489,6 +489,807 @@
               }
             }
           ]
+        },
+        {
+          "name": "_setup · Crear albarán pendiente sobre vehículo del cliente A, para TC-111",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-111\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-111 · el albarán se crea pendiente y sin líneas\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "  pm.expect(body.linies).to.have.lengthOf(0);",
+                  "});",
+                  "pm.environment.set(\"alb111Id\", body.id);",
+                  "pm.environment.set(\"alb111VehicleId\", String(body.vehicle_id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Añadir primera línea de mano de obra al albarán de TC-111",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb111Id}}/linies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb111Id}}",
+                "linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"ma_obra\",\n  \"descripcio\": \"Revisió general\",\n  \"quantitat\": 2,\n  \"preu\": 35\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_setup TC-111 · primera línea añadida\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(pm.response.json().linies).to.have.lengthOf(1);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Añadir segunda línea de mano de obra al albarán de TC-111",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb111Id}}/linies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb111Id}}",
+                "linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"ma_obra\",\n  \"descripcio\": \"Comprovació de frens\",\n  \"quantitat\": 1,\n  \"preu\": 40\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-111 · el albarán de partida queda con dos líneas\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.linies).to.have.lengthOf(2);",
+                  "});",
+                  "const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "pm.environment.set(\"base111\", base.toFixed(2));",
+                  "pm.environment.set(\"count111\", body.linies.length);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS011 · TC-111 · Rechazar por servicio el cambio de vehículo a otro cliente (PUT directo) — AC-002 y AC-007",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb111Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb111Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleBId}}\"\n}"
+            },
+            "description": "Cubre a la vez AC-002 (rechazo del cambio de cliente) y AC-007 (el mismo PUT visto como intento de mover el albarán a otro cliente): es la misma llamada rechazada por dos motivos. El selector de vehículo en edición (SPE-06, TC-117) ya no permite componer este vector desde el formulario."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-111 · contrato: responde 409\", () => {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"TC-111 · datos: el mensaje indica que no se puede cambiar a un vehículo de otro cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS012 · TC-111 · El albarán sigue sobre su vehículo, pendiente, con líneas y base intactas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb111Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb111Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-111 · efecto lateral: el albarán sigue sobre su vehículo original\", () => {",
+                  "  pm.expect(String(body.vehicle_id)).to.eql(pm.environment.get(\"alb111VehicleId\"));",
+                  "});",
+                  "pm.test(\"TC-111 · efecto lateral: el albarán sigue pendiente\", () => {",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "});",
+                  "pm.test(\"TC-111 · efecto lateral: conserva sus dos líneas y su base\", () => {",
+                  "  pm.expect(body.linies).to.have.lengthOf(Number(pm.environment.get(\"count111\")));",
+                  "  const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "  pm.expect(base.toFixed(2)).to.eql(pm.environment.get(\"base111\"));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán de TC-111",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb111Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb111Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-111 queda borrado\", () => { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear albarán pendiente con fecha y nota, para TC-113",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"data\": \"2026-03-05\",\n  \"notes\": \"Revisió inicial\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-113 · el albarán se crea pendiente con su fecha y su nota\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "  pm.expect(body.data).to.eql('2026-03-05');",
+                  "  pm.expect(body.notes).to.eql('Revisió inicial');",
+                  "});",
+                  "pm.environment.set(\"alb113Id\", body.id);",
+                  "pm.environment.set(\"alb113VehicleId\", String(body.vehicle_id));",
+                  "pm.environment.set(\"alb113Data\", body.data);",
+                  "pm.environment.set(\"alb113Notes\", body.notes);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS013 · TC-113 · Rechazar un PUT que cambia a la vez vehículo (otro cliente), fecha y nota — AC-004",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb113Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb113Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleBId}}\",\n  \"data\": \"2026-03-12\",\n  \"notes\": \"Canvi d'oli\"\n}"
+            },
+            "description": "AC-004 de SPE-06: garantía de atomicidad del PUT. Se envían los tres campos a la vez; el rechazo por el vehículo debe impedir que se guarde también la fecha y la nota."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-113 · contrato: responde 409\", () => {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"TC-113 · datos: el rechazo es por cambio de vehículo a otro cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS014 · TC-113 · Atomicidad: ni vehículo, ni fecha, ni nota se han guardado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb113Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb113Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-113 · efecto lateral: el vehículo no ha cambiado\", () => {",
+                  "  pm.expect(String(body.vehicle_id)).to.eql(pm.environment.get(\"alb113VehicleId\"));",
+                  "});",
+                  "pm.test(\"TC-113 · efecto lateral: la fecha sigue siendo 2026-03-05\", () => {",
+                  "  pm.expect(body.data).to.eql(pm.environment.get(\"alb113Data\"));",
+                  "});",
+                  "pm.test(\"TC-113 · efecto lateral: la nota sigue siendo 'Revisió inicial'\", () => {",
+                  "  pm.expect(body.notes).to.eql(pm.environment.get(\"alb113Notes\"));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán de TC-113",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb113Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb113Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-113 queda borrado\", () => { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Localizar un albarán ya facturado de la base sembrada, para TC-115",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans?estat=facturat",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ],
+              "query": [
+                {
+                  "key": "estat",
+                  "value": "facturat"
+                }
+              ]
+            },
+            "description": "Se reutiliza un albarán facturado de la base sembrada (mismo enfoque que TC-063). Petición propia y no compartida con la de la carpeta Factures porque newman ejecuta Albarans antes que Factures y sus variables de entorno todavía no existen aquí."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_setup TC-115 · la base sembrada ofrece al menos un albarán facturado\", () => {",
+                  "  pm.expect(pm.response.json().length).to.be.above(0);",
+                  "});",
+                  "const a = pm.response.json()[0];",
+                  "pm.environment.set(\"alb115Id\", a.id);",
+                  "pm.environment.set(\"alb115VehicleId\", String(a.vehicle_id));",
+                  "pm.environment.set(\"alb115FacturaId\", String(a.factura_id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Elegir un vehículo de un cliente distinto al del albarán facturado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/vehicles/{{alb115VehicleId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{alb115VehicleId}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_setup TC-115 · se obtiene el vehículo del albarán facturado\", () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const cid = String(pm.response.json().client_id);",
+                  "const clientA = String(pm.environment.get(\"clientAId\"));",
+                  "const otherVehicle = (cid === clientA) ? pm.environment.get(\"vehicleBId\") : pm.environment.get(\"vehicleAId\");",
+                  "const otherClient = (cid === clientA) ? String(pm.environment.get(\"clientBId\")) : clientA;",
+                  "pm.test(\"_setup TC-115 · el vehículo elegido pertenece a otro cliente\", () => {",
+                  "  pm.expect(otherClient, \"no hay un vehículo de otro cliente disponible\").to.not.eql(cid);",
+                  "});",
+                  "pm.environment.set(\"alb115OtherVehicleId\", otherVehicle);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS015 · TC-115 · Sobre un albarán facturado el PUT se rechaza con el mensaje de facturado, no el de cambio de cliente — AC-006",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb115Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb115Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{alb115OtherVehicleId}}\"\n}"
+            },
+            "description": "AC-006 de SPE-06. Ninguno de los dos literales está en DOC-04; se declaran tal como los devuelve server/routes/albarans.js: el de \"facturat\" (línea ~82, comprobado antes que nada) y el de \"altre client\" (línea ~101)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-115 · contrato: responde 409\", () => {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"TC-115 · datos: el mensaje es el de albarán ya facturado\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"L'albarà ja està facturat i no es pot modificar\");",
+                  "});",
+                  "pm.test(\"TC-115 · datos: NO devuelve el mensaje de cambio de cliente (el de facturado tiene prioridad)\", () => {",
+                  "  pm.expect(pm.response.json().error).to.not.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS016 · TC-115 · El albarán sigue facturado sobre su vehículo original",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb115Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb115Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-115 · efecto lateral: el albarán sigue facturado\", () => {",
+                  "  pm.expect(body.estat).to.eql('facturat');",
+                  "});",
+                  "pm.test(\"TC-115 · efecto lateral: sigue sobre su vehículo original\", () => {",
+                  "  pm.expect(String(body.vehicle_id)).to.eql(pm.environment.get(\"alb115VehicleId\"));",
+                  "});",
+                  "pm.test(\"TC-115 · efecto lateral: sigue enlazado a la misma factura\", () => {",
+                  "  pm.expect(String(body.factura_id)).to.eql(pm.environment.get(\"alb115FacturaId\"));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS017 · TC-115 · La factura sigue agrupando el albarán",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/factures/{{alb115FacturaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "factures",
+                "{{alb115FacturaId}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-115 · efecto lateral: la factura sigue mostrando el albarán entre los que agrupa\", () => {",
+                  "  const ids = (body.albarans || []).map(a => String(a.id));",
+                  "  pm.expect(ids).to.include(String(pm.environment.get(\"alb115Id\")));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear albarán pendiente, para TC-116",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-116\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-116 · el albarán se crea pendiente\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "});",
+                  "pm.environment.set(\"alb116Id\", body.id);",
+                  "pm.environment.set(\"alb116VehicleId\", String(body.vehicle_id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS018 · TC-116 · Un PUT sin vehicle_id se rechaza por campo obligatorio, no por cambio de cliente — AC-009",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb116Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb116Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"S-17 TC-116 sense vehicle\"\n}"
+            },
+            "description": "AC-009 de SPE-06. Cierra sobre la vía de modificación (PUT) el vector de REQ-027 que TC-036 solo tocaba en creación."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-116 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-116 · datos: avisa de que vehicle_id es obligatorio\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"El camp vehicle_id és obligatori\");",
+                  "});",
+                  "pm.test(\"TC-116 · datos: NO devuelve el mensaje de cambio de cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.not.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS019 · TC-116 · Un PUT con vehicle_id inexistente (9999) se rechaza porque el vehículo no existe",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb116Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb116Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": 9999\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-116 · contrato: responde 400\", () => {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"TC-116 · datos: avisa de que el vehículo indicado no existe\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"El vehicle indicat no existeix\");",
+                  "});",
+                  "pm.test(\"TC-116 · datos: NO devuelve el mensaje de cambio de cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.not.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS020 · TC-116 · El albarán sigue sobre su vehículo, sin cambios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb116Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb116Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-116 · efecto lateral: el albarán sigue sobre su vehículo original\", () => {",
+                  "  pm.expect(String(body.vehicle_id)).to.eql(pm.environment.get(\"alb116VehicleId\"));",
+                  "});",
+                  "pm.test(\"TC-116 · efecto lateral: el albarán sigue pendiente\", () => {",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán de TC-116",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb116Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb116Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-116 queda borrado\", () => { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -931,6 +1732,204 @@
                   "pm.test(\"_teardown · el albarán del cliente B queda borrado\", () => {",
                   "  pm.response.to.have.status(204);",
                   "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Crear albarán pendiente del cliente A, para TC-119",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleAId}}\",\n  \"notes\": \"Fixture S-17 · TC-119\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-119 · el albarán se crea pendiente\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "});",
+                  "pm.environment.set(\"alb119Id\", body.id);",
+                  "pm.environment.set(\"alb119VehicleId\", String(body.vehicle_id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_setup · Añadir una línea de mano de obra al albarán de TC-119",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb119Id}}/linies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb119Id}}",
+                "linies"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipus\": \"ma_obra\",\n  \"descripcio\": \"Revisió general\",\n  \"quantitat\": 2,\n  \"preu\": 35\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"_setup TC-119 · la línea se añade\", () => {",
+                  "  pm.expect(pm.response.code).to.eql(201);",
+                  "  pm.expect(body.linies).to.have.lengthOf(1);",
+                  "});",
+                  "const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "pm.environment.set(\"base119\", base.toFixed(2));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS021 · TC-119 · El PUT que cambia el albarán a un vehículo de otro cliente se rechaza (precede a la emisión UI) — AC-008",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb119Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb119Id}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle_id\": \"{{vehicleBId}}\"\n}"
+            },
+            "description": "Mitad de servicio de TC-119 (verification_path: mixed). La mitad de pantalla —emitir la factura y ver que sale al cliente original— la cubre automation/ui/factures.feature (commit 1ba6196). Coordinado por el tag TC-119, igual que TC-041. NO se emite la factura por API: eso duplicaría lo que la suite UI ya verifica."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"TC-119 · contrato: responde 409\", () => {",
+                  "  pm.response.to.have.status(409);",
+                  "});",
+                  "pm.test(\"TC-119 · datos: el rechazo es por cambio de vehículo a otro cliente\", () => {",
+                  "  pm.expect(pm.response.json().error).to.eql(\"No es pot canviar el vehicle a un que pertany a un altre client\");",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TCS022 · TC-119 · Tras el 409 el albarán sigue sobre su vehículo original y pendiente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb119Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb119Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.test(\"TC-119 · efecto lateral: el albarán sigue sobre su vehículo original (garantiza que la factura UI salga al cliente correcto)\", () => {",
+                  "  pm.expect(String(body.vehicle_id)).to.eql(pm.environment.get(\"alb119VehicleId\"));",
+                  "});",
+                  "pm.test(\"TC-119 · efecto lateral: el albarán sigue pendiente y con su base\", () => {",
+                  "  pm.expect(body.estat).to.eql('pendent');",
+                  "  const base = body.linies.reduce((s, l) => s + Number(l.quantitat) * Number(l.preu), 0);",
+                  "  pm.expect(base.toFixed(2)).to.eql(pm.environment.get(\"base119\"));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "_teardown · Borrar el albarán de TC-119",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/albarans/{{alb119Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "albarans",
+                "{{alb119Id}}"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"_teardown · el albarán de TC-119 queda borrado\", () => { pm.response.to.have.status(204); });"
                 ]
               }
             }

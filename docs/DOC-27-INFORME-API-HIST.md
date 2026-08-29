@@ -6,7 +6,7 @@ version: 1.0.0        # no se versiona por separado: refleja la versión del doc
 status: draft
 generator: S-17 s17-api-qa (ejecución newman, sesión Claude Code)
 generator_version: "1.1"
-generated_at: 2026-08-24T11:05:00+02:00
+generated_at: 2026-08-29T12:20:00+02:00
 project: app-taller
 purpose: >-
   Historial de versiones de DOC-27. El documento principal refleja solo la
@@ -15,6 +15,55 @@ purpose: >-
 ---
 
 # DOC-27 · Historial de versiones
+
+## 1.1.0 — 2026-08-29 — MINOR (casos de servicio de SPE-06)
+
+Segunda ejecución registrada de la suite. Amplía la colección (`DOC-26`,
+`automation/api/`) con la mitad de servicio de los casos de `SPE-06` que el
+selector de vehículo filtrado (`REQ-081` / `TC-117`) sacó de la interfaz, y
+vuelve a correrla entera.
+
+**Qué se añade — 12 `TCS-nnn` nuevos, `TCS011`…`TCS022`, para 5 `TC-nnn`:**
+
+| `TC-nnn` | REQ | `TCS` nuevos | Qué cubren |
+|---|---|---|---|
+| `TC-111` | `REQ-080` | `TCS011`, `TCS012` | `PUT` de cambio de vehículo a otro cliente → 409; albarán intacto. AC-002 + AC-007 |
+| `TC-113` | `REQ-080` | `TCS013`, `TCS014` | `PUT` simultáneo vehículo-otro-cliente + fecha + nota → 409; atomicidad (nada se guarda). AC-004 |
+| `TC-115` | `REQ-042` | `TCS015`, `TCS016`, `TCS017` | Sobre albarán facturado, el mensaje de "facturat" gana al de "otro cliente". AC-006 |
+| `TC-116` | `REQ-027` | `TCS018`, `TCS019`, `TCS020` | `PUT` sin `vehicle_id` → 400 obligatorio; con `vehicle_id` 9999 → 400 no existe. AC-009 |
+| `TC-119` | `REQ-080` | `TCS021`, `TCS022` | Mitad de servicio del único `mixed`: el `PUT` rechazado que precede a la emisión UI. AC-008 |
+
+**Peticiones:** 25 creadas, 1 reutilizada (la fixture compartida `_setup ·
+Obtener dos vehículos de clientes distintos`, de la que dependen los cinco casos
+nuevos sin duplicarla). La colección pasa de 28 a 53 peticiones y de 10 a 22
+`TCS`.
+
+**Decisión sobre `TC-119`:** no se emite la factura por API. La mitad de pantalla
+(emitir y ver que sale al cliente original) ya la cubre
+`automation/ui/factures.feature` (commit `1ba6196`); emitirla también por API
+duplicaría esa aserción. La mitad de servicio se limita al `PUT` rechazado y a
+verificar que el albarán no se movió. Coordinación por el tag `TC-119`, igual que
+`TC-041`.
+
+**Decisión sobre `TC-115`:** los dos literales de rechazo (`L'albarà ja està
+facturat i no es pot modificar` y `No es pot canviar el vehicle a un que pertany a
+un altre client`) no están en `DOC-04`; se declaran tal como los devuelve
+`server/routes/albarans.js`, y `TCS015` añade una assertion negativa que fija la
+prioridad (gana el de facturado).
+
+**Resultado:** 22 `TCS` de 22 en verde, 53 peticiones, 74 assertions, 0 fallos,
+4,4 s. Base **resembrada** antes de ejecutar (1 factura, 4 albaranes, 7 líneas,
+stock total 167) e **idéntica** después. Dos pasadas seguidas sin resembrar dan
+el mismo recuento.
+
+**Procedencia:** derivado de `automation/api/newman/run.json` (reporter JSON de
+newman 6.2.2), no de leer la consola.
+
+**Ciclo de vida:** el documento conserva `lifecycle: snapshot`. Esta versión trae
+sus `inputs` al día (`DOC-05` 1.8.0,
+`sha256:fef49cbc57eec8822b3b5482471ffb205d149bb638bbc76c28f1bf4de6d17cb1`), con
+lo que la nota de 2026-08-29 de más abajo —que anunciaba esta descongelación—
+queda cumplida.
 
 ## Nota — 2026-08-29 — declaración de ciclo de vida, sin cambio de versión
 
