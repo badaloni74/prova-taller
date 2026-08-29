@@ -50,6 +50,19 @@ inputs:
   - id: specs/implemented/SPE-05-presentacio-imports-i-dates.md
     from: implantación de la app (Estado: Implemented)
     present: true
+obsolescence_ack:
+  - input: DOC-04
+    upto: 1.3.1
+    date: 2026-08-29
+    note: "SPE-06: +REQ-080/081 (rechazo del cambio de albarán a otro cliente) y renumeración Q-16→Q-30. Ninguna troballa EXP-nnn de este informe explora esa superficie."
+  - input: DOC-05
+    upto: 1.8.0
+    date: 2026-08-29
+    note: "SPE-06: +9 casos TC-111..TC-119. Un informe exploratorio no depende del censo de casos del plan de pruebas."
+  - input: DOC-06
+    upto: 1.4.1
+    date: 2026-08-29
+    note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las troballas EXP-nnn."
 ---
 
 # DOC-14 · Informe de exploración QA · app-taller

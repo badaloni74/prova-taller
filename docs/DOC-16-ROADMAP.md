@@ -72,6 +72,19 @@ inputs:
   - id: DOC-19-RALLY-TESTCASES.csv
     from: S-07
     present: false
+obsolescence_ack:
+  - input: DOC-02
+    upto: 1.2.0
+    date: 2026-08-29
+    note: "SPE-06: AlbaraForm filtra el selector de vehículo + guarda en el router de albaranes. Ningún MEJ-nnn del roadmap se apoya en esa zona del código."
+  - input: DOC-05
+    upto: 1.8.0
+    date: 2026-08-29
+    note: "SPE-06: +9 casos TC-111..TC-119. El roadmap técnico no depende del censo de casos del plan."
+  - input: DOC-07
+    upto: 1.11.0
+    date: 2026-08-29
+    note: "SPE-06: cobertura pasa de 79/79 a 81/81, sigue 100% y 0 GAP PLAN. Ningún MEJ-nnn cambia de prioridad por dos requisitos nuevos ya cubiertos; las citas 79/79 se actualizan al regenerar."
 ---
 
 # DOC-16 · Mejoras y roadmap técnico — app-taller
