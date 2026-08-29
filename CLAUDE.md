@@ -97,14 +97,42 @@ cop**, perquè `core.hooksPath` és configuració local i no es versiona:
 git config core.hooksPath .githooks
 ```
 
-L'esborra `s16-cascada-obsolescencia` en tancar una onada amb 0 obsolets,
-actualitzant alhora `.resync-watermark` — la marca versionada de l'últim
-tancament, i l'única veritat persistent del mecanisme. Si el fitxer senyal es
-perd, `.githooks/registrar-pendiente.sh --rebuild` el reconstrueix idèntic.
+L'esborra `s16-cascada-obsolescencia` en tancar una onada amb **0 obsolets
+bloquejants**, actualitzant alhora `.resync-watermark` — la marca versionada de
+l'últim tancament, i l'única veritat persistent del mecanisme. Si el fitxer
+senyal es perd, `.githooks/registrar-pendiente.sh --rebuild` el reconstrueix
+idèntic.
 
 Serveix per **acumular**: cinc canvis petits es resincronitzen en una sola
 passada en comptes de cinc. El preu és deriva acumulada, així que no el deixis
 créixer indefinidament — tanca'l abans d'acabar un spec o una entrega.
+
+### `ack`: acceptar una obsolescència revisada sense impacte
+
+Un document viu pot quedar obsolet **només de metadades**: una entrada seva va
+pujar MINOR però res del que ell afirma en depèn. Passa a cada onada amb els
+documents fora de la cadena canònica (DOC-14 exploratori, DOC-16 roadmap, DOC-25
+propostes) quan es propaga un MINOR per DOC-01/02/04/05/06/07. Regenerar-los per
+refrescar un front-matter no aporta res.
+
+```bash
+node ~/.claude/skills/s16-cascada-obsolescencia/scripts/cascada.js ack \
+  docs/DOC-25-PROPUESTAS-FUNCIONALES.md --input DOC-04 --upto 1.3.1 \
+  --note "MINOR sense impacte: cap FUN-nnn depèn de REQ-080/081"
+```
+
+Escriu un bloc `obsolescence_ack` al front-matter. `cascada.js` el classifica
+com **`STALE ACEPTADO`**: secció pròpia, nota visible, compta a `scanned`, **no
+dispara l'exit 1**. **No toca `inputs`** (segueix sent el registre fidel del que
+es va llegir) i **caduca sol** quan l'entrada passa de `--upto`. Per entrada i
+per versió; `--note` obligatori; es nega si no hi ha res a acceptar. És la
+contrapart de l'`accept` de `s12-registro-ids`: detecció automàtica, acceptació
+humana i per ID.
+
+**Qui el corre:** qui tanca l'onada, **mai l'agent que regenera** el document
+(que en regenerar es carrega el bloc). I només **després de llegir el diff real
+de l'entrada** i confirmar que no afecta res: no és un «aquests documents sempre
+valen». Si t'ho has de pensar gaire, regenera.
 
 ## Proves automatitzades
 
