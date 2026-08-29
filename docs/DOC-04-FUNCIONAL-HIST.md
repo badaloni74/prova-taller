@@ -2,11 +2,11 @@
 doc_id: DOC-04-HIST
 doc_name: DOC-04-FUNCIONAL-HIST
 of_document: DOC-04-FUNCIONAL.md
-version: 1.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.3.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-28T16:20:00+02:00
+generated_at: 2026-08-29T09:10:00+02:00
 ---
 
 # DOC-04-FUNCIONAL · Historial de versiones
@@ -23,6 +23,86 @@ esta regeneración, y son fieles a lo que allí constaba. Se señalan como
 reconstruidas. Las fechas de 1.0.0 y 1.1.0 son aproximadas, tomadas de
 `registro-ids.json` (anclas `REQ-*` creadas el 2026-08-15, preguntas `Q-*`
 creadas el 2026-08-16).
+
+---
+
+## 1.3.1 — 2026-08-29 — PATCH — renumeración de `Q-16` a `Q-30` por colisión de identificador
+
+Cambio quirúrgico de identificador, **sin ningún cambio de contenido
+funcional**. El bloque `requirements` es idéntico byte a byte al de 1.3.0.
+
+**Motivo.** DOC-04 1.3.0 emitió en su bloque `open_questions` una pregunta con
+`id: Q-16` (heredada de `DOC-01/Q-08`, recoge `PD-002` de SPE-06: la fuga de
+cliente por la puerta de `UC-VEH-04`). Ese número **ya estaba ocupado** por la
+`Q-16` de `DOC-05-PLAN-PRUEBAS.md`, anterior (creada el 2026-08-16, sobre la
+numeración anual de albarán y factura al cambiar de ejercicio), registrada en
+`registro-ids.json` con `document: DOC-05-PLAN-PRUEBAS.md`.
+
+**Resolución.** Regla de gobierno de identificadores (14.1 / `registro-ids.json`):
+ante colisión, **cede el reclamante**. El reclamante es A-02, porque su `Q-16` es
+posterior. DOC-05 conserva su `Q-16` (ya dejó constancia en su §6.7 y en su
+`-HIST`). La pregunta de A-02 pasa al siguiente `Q-nnn` libre del registro,
+**`Q-30`** (`Q-01`…`Q-29` ocupados).
+
+**Alcance del cambio en DOC-04.**
+
+- Bloque `open_questions`: la entrada `Q-16` pasa a `id: Q-30`. Texto,
+  `blocks: REQ-015`, `affects_requirements: [REQ-015, REQ-080]`,
+  `inherited_from: DOC-01/Q-08` y `status: open` **no cambian**. Se amplía
+  `origin_note` para dejar constancia de la renumeración. Se actualiza también
+  la `note` del `evolutivo` de `Q-10`, que remitía a `Q-16`.
+- Prosa: apartado 3.2 (modificación de vehículo), apartado 6 («Nota de
+  numeración», fila de la tabla 6.1, epígrafe «Sobre `Q-16`» → «Sobre `Q-30`»
+  con nota nueva sobre la colisión, cierre de 6.2 sobre `Q-10`) y el apartado
+  «Procedencia» (nueva nota de versión 1.3.1, «Consecuencia sobre los
+  requisitos», «Qué se ha leído de cada entrada»).
+- `open_questions_summary`: sin cambios. Siguen siendo 16 preguntas
+  (10 abiertas, 6 respondidas); los recuentos son por número de preguntas, no
+  por ID.
+
+**Por qué PATCH.** El bloque estructurado de requisitos no cambia y el de
+preguntas solo cambia un identificador, sin alterar semántica, estado ni
+requisitos afectados. La regla de regeneración manda PATCH cuando solo cambia
+la redacción/forma y no el contenido. **DOC-05, DOC-06 y DOC-07 no quedan
+obsoletos por este cambio** en cuanto a requisitos; DOC-05 ya había gestionado
+su lado de la colisión.
+
+**`registro-ids.json`.** Se añade `Q-30` (`document: DOC-04-FUNCIONAL.md`,
+`created: 2026-08-29`, `status: open`, `blocks: REQ-015`, `source: yaml`) vía
+`s12-registro-ids` (`sync --block questions`). El esquema `questions` de la
+skill no persiste `inherited_from` —ninguna entrada `Q-*` del registro lo
+lleva—; la herencia consta en el bloque `open_questions` de DOC-04. La `Q-16`
+del registro **no se toca**: sigue siendo la de DOC-05.
+
+---
+
+## 1.3.0 — 2026-08-28 — MINOR *(entrada reconstruida)* — propagación de `BR-ALB-10`
+
+Entrada reconstruida a partir del commit `2453935` y del apartado
+«Procedencia» del documento principal: el ciclo 1.3.0 bumpeó el front-matter
+de este fichero a 1.3.0 pero no llegó a dejar aquí su entrada de cuerpo.
+
+Consume `DOC-01-BASE-ASIS.md` 1.2.0 (antes 1.1.0), que incorpora la regla
+nueva `BR-ALB-10`, el flujo detallado de `UC-ALB-06` y la pregunta nueva
+`Q-08` de DOC-01.
+
+- **Dos requisitos nuevos en el módulo `albarans`**: `REQ-080` (el sistema
+  rechaza por completo sustituir el vehículo de un albarán no facturado por
+  uno de otro cliente; ni la fecha ni las notas quedan guardadas) y `REQ-081`
+  (el selector de vehículo del formulario de edición solo ofrece los vehículos
+  del cliente actual del albarán). Ambos con ancla de origen
+  `BR-ALB-10` / `UC-ALB-06`.
+- **Ninguno de los 79 requisitos anteriores** se reformula, se elimina ni
+  cambia de prioridad, confianza o ancla. `REQ-040` se conserva tal cual.
+- **`open_questions`**: se añade `Q-16` (heredada de la `Q-08` nueva de
+  DOC-01, recoge `PD-002` de SPE-06). La `Q-10` pasa de `answered` con
+  evolutivo pendiente a `answered` con evolutivo **implementado** (entregado
+  como SPEC 06, realizado en `BR-ALB-10`, `REQ-080`, `REQ-081`).
+- `registro-ids.json`: se añaden `REQ-080` y `REQ-081` vía `s12-registro-ids`.
+
+**Por qué MINOR.** El bloque `requirements` gana dos entradas nuevas. Al subir
+MINOR, `DOC-05`, `DOC-06` y `DOC-07` quedaron desfasados y fueron revisados
+por sus propietarios.
 
 ---
 

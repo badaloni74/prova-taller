@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-28T18:30:00.000Z",
+  "updated_at": "2026-08-29T07:15:09.921Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3029,6 +3029,15 @@
       "source": "server/routes/albarans.js:95",
       "created": "2026-08-28",
       "status": "active"
+    },
+    "Q-30": {
+      "text": "BR-ALB-10 impide mover un albarán a otro cliente por la puerta de la cabecera del albarán, pero cambiar el cliente propietario de un vehículo (UC-VEH-04) que tiene albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo, sin aviso. ¿Debe impedirse también, avisarse, o permitirse dejar el trabajo ya hecho con el propietario anterior?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "REQ-015",
+      "source": "yaml"
     }
   }
 }

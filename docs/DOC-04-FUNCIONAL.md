@@ -1,17 +1,17 @@
 ---
 doc_id: DOC-04
 doc_name: DOC-04-FUNCIONAL
-version: 1.3.0
+version: 1.3.1
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-28T16:20:00+02:00
+generated_at: 2026-08-29T09:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: spec-SPE-06-albara-canvi-client
-  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
-  working_tree_clean: false   # DOC-01/DOC-02 regenerados sin commitear todavía y ficheros ajenos sin versionar (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el resto del árbol versionado está limpio
+  commit_sha: 621ea3bb07e316abd203593a4c3be1aaf3c2c138
+  working_tree_clean: false   # renumeración Q-16 -> Q-30 sin commitear todavía y ficheros ajenos sin versionar (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el resto del árbol versionado está limpio
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
@@ -21,7 +21,7 @@ inputs:
   - id: registro-ids.json
     from: S-01
     version: "1"
-    hash: sha256:a5e125ccdcc8e29ef11a760251a5bc5fbfbed12ac5c3159e25ffa7f9d8383332
+    hash: sha256:10a49e22b052dc50f9006d5ef533559b0f0602b3ccd35c3b53aef37dc3f7cf09
     present: true
   - id: DOC-03-API.md
     from: S-03
@@ -53,8 +53,17 @@ Este apartado explica de dónde sale el documento y cómo se ha usado cada entra
 El dato en crudo —versión y hash de cada fuente— está en el bloque `inputs` del
 front-matter, que es lo que lee `S-16 · Cascada de obsolescencia`.
 
-**Motivo del ciclo.** `DOC-01-BASE-ASIS.md` ha pasado de **1.1.0** a **1.2.0**
-(MINOR). Ese cambio sí toca negocio, a diferencia del ciclo anterior:
+**Motivo de la versión 1.3.1 (PATCH).** Renumeración de la pregunta abierta
+`Q-16` a `Q-30` por colisión de identificador con la `Q-16` de `DOC-05`, que es
+anterior. Regla de gobierno de identificadores: ante colisión cede el
+reclamante, y el reclamante es A-02. No cambia ningún requisito ni el sentido de
+ninguna pregunta; el bloque `requirements` es idéntico al de 1.3.0. Detalle en
+el epígrafe «Sobre `Q-30`» del apartado 6.1 y en `DOC-04-FUNCIONAL-HIST.md`.
+`DOC-05`, `DOC-06` y `DOC-07` no quedan obsoletos por este cambio. El resto de
+este apartado describe el ciclo 1.3.0, que sigue vigente.
+
+**Motivo del ciclo 1.3.0.** `DOC-01-BASE-ASIS.md` ha pasado de **1.1.0** a
+**1.2.0** (MINOR). Ese cambio sí toca negocio, a diferencia del ciclo anterior:
 
 - **Regla nueva `BR-ALB-10`** en el módulo `albarans`: al modificar la cabecera
   de un albarán no facturado, su vehículo no puede sustituirse por otro que
@@ -82,8 +91,9 @@ nuevo debe ser del mismo cliente— se enuncia como requisito propio, igual que
 `UC-CLI-05` tiene un `REQ` para la acción de borrar y otros dos para las
 condiciones que la impiden. En el bloque `open_questions`, la pregunta `Q-10`
 —que hasta ahora describía un hueco pendiente de evolutivo— pasa a `implementada`
-y deja de contar como evolutivo pendiente; se añade `Q-16`, heredada de la
-`Q-08` nueva de DOC-01.
+y deja de contar como evolutivo pendiente; se añade `Q-30` (renumerada desde
+`Q-16` por colisión con la `Q-16` de DOC-05, ver 6.1), heredada de la `Q-08`
+nueva de DOC-01.
 
 **Por qué MINOR y no PATCH.** El bloque `requirements` gana dos entradas nuevas.
 La regla de regeneración manda subir MINOR cuando hay requisitos añadidos.
@@ -106,7 +116,9 @@ de las anclas.
   registradas por A-02 y la entrada `BR-ALB-10` que S-01 registró en este mismo
   ciclo. Se han **añadido** `REQ-080` y `REQ-081` con su `text`, `module`,
   `source_anchors`, `created: 2026-08-28` y `status: active`. No se ha deprecado
-  ninguna entrada existente.
+  ninguna entrada existente. En 1.3.1 se añade además `Q-30` vía
+  `s12-registro-ids` (`sync --block questions`); la `Q-16` del registro
+  —propiedad de `DOC-05`— no se toca.
 - **`DOC-03-API.md`** — no existe en este proyecto (no hay `S-03`). Declarado
   `present: false`.
 - **Contexto de Confluence (`I-02`)** — `DOC-18-CONFLUENCE-SYNC.json` no existe.
@@ -181,7 +193,7 @@ Gestión de los vehículos de cada cliente, identificados por su matrícula.
 que ya existe (`REQ-011`) y su matrícula es única en todo el sistema
 (`REQ-013`). La baja se impide si tiene albaranes asociados (`REQ-017`). La
 modificación de un vehículo (`REQ-015`) incluye poder cambiar su cliente
-propietario; ese cambio está señalado por `Q-16` (ver apartado 6), porque es la
+propietario; ese cambio está señalado por `Q-30` (ver apartado 6), porque es la
 otra vía —además de la cabecera del albarán— por la que el trabajo de un albarán
 pendiente puede acabar cargándose a otro cliente.
 
@@ -435,10 +447,14 @@ DOC-01 y ocho nacidas en A-02. El 2026-08-16 el negocio contestó a **seis**.
 Ninguna pregunta se borra nunca de este apartado: cambia de estado y conserva su
 ID.
 
-**Nota de numeración.** Este documento numera sus preguntas en su propia serie
-`Q-nn`, que no coincide con la de DOC-01. La `Q-08` de este documento (idioma y
-tema por defecto) es nativa de A-02 y **no** tiene relación con la `Q-08` de
-DOC-01 1.2.0 (cambio de propietario de vehículo), que aquí se recoge como `Q-16`.
+**Nota de numeración.** La serie `Q-nnn` es un contador de proyecto que
+comparten DOC-04 y DOC-05 a través de `registro-ids.json`, y **no** coincide con
+la numeración de preguntas de DOC-01. Por eso los IDs de este documento no son
+contiguos: `Q-16` a `Q-29` pertenecen a DOC-05. La `Q-08` de este documento
+(idioma y tema por defecto) es nativa de A-02 y **no** tiene relación con la
+`Q-08` de DOC-01 1.2.0 (cambio de propietario de vehículo), que aquí se recoge
+como `Q-30` (renumerada desde `Q-16` por colisión con la `Q-16` de DOC-05; ver
+6.1).
 
 **Los tres estados posibles:**
 
@@ -467,18 +483,27 @@ Siguen sin respuesta del negocio y cuentan para el Go/No-Go.
 | Q-09 | El tipo de IVA de una factura se puede indicar al emitirla y solo el valor por defecto está fijado. Ninguna regla acota qué tipos son admisibles. ¿Qué tipos puede aplicar el taller y quién los autoriza? | Nueva (A-02) | REQ-050, REQ-049 |
 | Q-11 | Una nómina se puede modificar y borrar sin restricción, incluso después de marcarla como pagada, a diferencia del albarán facturado, que queda bloqueado. ¿Debe bloquearse la nómina pagada? | Nueva (A-02) | REQ-071, REQ-074 |
 | Q-13 | El término «estado» designa a la vez la situación del albarán (pendiente o facturado) y la situación de cobro de facturas y nóminas (pendiente o pagada). El glosario lo marca como ambiguo. ¿Con qué nombres deben aparecer ambos conceptos en la interfaz y en los filtros? | Nueva (A-02) | REQ-025, REQ-052, REQ-055, REQ-073 |
-| Q-16 | `BR-ALB-10` impide mover un albarán a otro cliente por la puerta de la cabecera del albarán, pero cambiar el cliente propietario de un vehículo que tiene albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo. ¿Debe impedirse también, avisarse, o permitirse dejar el trabajo ya hecho con el propietario anterior? | Heredada de DOC-01/Q-08 (recoge `PD-002` de SPE-06) | REQ-015, REQ-080 |
+| Q-30 | `BR-ALB-10` impide mover un albarán a otro cliente por la puerta de la cabecera del albarán, pero cambiar el cliente propietario de un vehículo que tiene albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo. ¿Debe impedirse también, avisarse, o permitirse dejar el trabajo ya hecho con el propietario anterior? | Heredada de DOC-01/Q-08 (recoge `PD-002` de SPE-06) | REQ-015, REQ-080 |
 
 Estas diez preguntas afectan a **18 requisitos**: REQ-015, REQ-018, REQ-021,
 REQ-025, REQ-028, REQ-049, REQ-050, REQ-052, REQ-055, REQ-064, REQ-069, REQ-071,
 REQ-073, REQ-074, REQ-076, REQ-078, REQ-079 y REQ-080.
 
-**Sobre `Q-16`.** Es la continuación natural de `Q-10`, ya resuelta. `Q-10`
+**Sobre `Q-30`.** Esta pregunta se emitió en DOC-04 1.3.0 con el `id: Q-16`, pero
+ese número ya estaba ocupado por una pregunta anterior de DOC-05 (creada el
+2026-08-16, sobre la numeración anual de albarán y factura al cambiar de
+ejercicio). Por la regla de gobierno de identificadores —ante colisión, cede el
+reclamante, y el reclamante aquí es A-02 por ser su `Q-16` posterior— se renumera
+a `Q-30`, el siguiente `Q-nnn` libre del registro. Solo cambia el número: el
+texto, las anclas, `blocks`, `affects_requirements` y el `inherited_from` se
+conservan.
+
+En cuanto al fondo: es la continuación natural de `Q-10`, ya resuelta. `Q-10`
 preguntaba por el cambio de cliente a través de la cabecera del albarán; el
-negocio decidió impedirlo y ya está implementado (`REQ-080`). `Q-16` pregunta por
+negocio decidió impedirlo y ya está implementado (`REQ-080`). `Q-30` pregunta por
 **la misma fuga por la otra puerta**: `REQ-015` permite cambiar el cliente
 propietario de un vehículo sin ninguna comprobación sobre los albaranes
-pendientes de ese vehículo. Mientras `Q-16` esté abierta, «un albarán ya no puede
+pendientes de ese vehículo. Mientras `Q-30` esté abierta, «un albarán ya no puede
 cambiar de cliente» es cierto solo por la puerta del albarán, no por la del
 vehículo. A-02 no reformula `REQ-015` ni emite un requisito nuevo: el sentido del
 cambio lo tiene que fijar el negocio.
@@ -510,7 +535,7 @@ existe**: el sistema lo cierra mediante `REQ-080` (rechazo del cambio de cliente
 y `REQ-081` (selector filtrado). `Q-10` se conserva en el censo por la regla de
 que ninguna pregunta se borra, pero deja de contar como evolutivo pendiente y sus
 requisitos ya no son un hueco por describir. Lo que queda abierto del mismo asunto
-—la puerta del vehículo— es `Q-16`.
+—la puerta del vehículo— es `Q-30`.
 
 **Matices sobre `Q-14` y `Q-15`.** Se contestaron en su parte operativa (qué
 recuento o filtro espera el negocio), no en qué debería verse si el estado de pago
@@ -1307,7 +1332,7 @@ open_questions:
     evolutivo:
       scope: small
       status: implemented
-      note: "Entregado directamente como SPEC 06, sin pasar por A-06 ni DOC-08. La puerta del vehículo (UC-VEH-04) sigue abierta: ver Q-16."
+      note: "Entregado directamente como SPEC 06, sin pasar por A-06 ni DOC-08. La puerta del vehículo (UC-VEH-04) sigue abierta: ver Q-30."
   - id: Q-11
     question: "Una nómina se puede modificar y borrar sin restricción, incluso después de marcarla como pagada, a diferencia del albarán facturado, que queda bloqueado. ¿Debe bloquearse la nómina pagada?"
     blocks: REQ-071
@@ -1368,12 +1393,12 @@ open_questions:
       status: pending
       owner: A-06
       target_doc: DOC-08
-  - id: Q-16
+  - id: Q-30
     question: "BR-ALB-10 impide mover un albarán a otro cliente por la puerta de la cabecera del albarán, pero cambiar el cliente propietario de un vehículo (UC-VEH-04) que tiene albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo, sin aviso. ¿Debe impedirse también, avisarse, o permitirse dejar el trabajo ya hecho con el propietario anterior?"
     blocks: REQ-015
     affects_requirements: [REQ-015, REQ-080]
     inherited_from: DOC-01/Q-08
-    origin_note: "Recoge PD-002 de specs/implemented/SPE-06-albara-canvi-client.md. Continuación de Q-10, ya implementada."
+    origin_note: "Recoge PD-002 de specs/implemented/SPE-06-albara-canvi-client.md. Continuación de Q-10, ya implementada. Emitida en DOC-04 1.3.0 como Q-16; renumerada a Q-30 en 1.3.1 por colisión con la Q-16 anterior de DOC-05 (regla de gobierno de IDs: cede el reclamante)."
     status: open
 open_questions_summary:
   total: 16
