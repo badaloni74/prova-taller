@@ -32,6 +32,7 @@ const peces = [
 
 const vehicles = [
   { clientNif: '12345671A', marca: 'Seat', model: 'Ibiza', matricula: '1234ABC', bastidor: 'VF1AB123456789012', anyMatriculacio: 2018, quilometratge: 85000, color: 'Blanc' },
+  { clientNif: '12345671A', marca: 'Honda', model: 'Civic', matricula: '6789GHI', bastidor: 'VF1GH789012345678', anyMatriculacio: 2015, quilometratge: 130000, color: 'Gris' },
   { clientNif: '12345672B', marca: 'Volkswagen', model: 'Golf', matricula: '5678BCD', bastidor: 'VF1BC234567890123', anyMatriculacio: 2020, quilometratge: 42000, color: 'Gris' },
   { clientNif: '12345673C', marca: 'Renault', model: 'Clio', matricula: '9012CDE', bastidor: 'VF1CD345678901234', anyMatriculacio: 2016, quilometratge: 120000, color: 'Vermell' },
   { clientNif: '12345674D', marca: 'Peugeot', model: '308', matricula: '3456DEF', bastidor: 'VF1DE456789012345', anyMatriculacio: 2019, quilometratge: 60000, color: 'Blau' },

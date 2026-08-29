@@ -1,6 +1,6 @@
 # SPEC 06 — Un albarán no puede cambiar de cliente
 
-> **Estado:** Approved
+> **Estado:** Implemented
 > **Origen:** BUG-002
 > **Resuelve:** DOC-04/Q-10 (respondida por negocio el 2026-08-16), BUG-002 (DOC-24, `critical`, reproducido)
 > **Depende de:** SPEC 02 (núcleo del taller: albaranes, vehículos, facturas)
@@ -60,17 +60,17 @@ Este spec no introduce ninguna estructura de datos nueva. Reutiliza el modelo ex
 
 ## Criterios de aceptación
 
-- [ ] **AC-001** — Con un cliente que tiene al menos dos vehículos: cambiar el vehículo de un albarán pendiente por otro del mismo cliente y guardar deja el albarán sobre el vehículo nuevo, pendiente de facturar, con fecha y notas intactas.
-- [ ] **AC-010** — Con un cliente con al menos dos vehículos (y existiendo vehículos de otros clientes en el sistema): al editar la cabecera, el selector de vehículo muestra todos los del cliente actual y ninguno de otro cliente.
-- [ ] **AC-011** (borde) — Con un cliente con exactamente un vehículo: el selector lo muestra seleccionado, no queda vacío, y guardar sigue funcionando.
-- [ ] **AC-002** — Una petición que mueve el albarán al vehículo de otro cliente, aunque no se pueda componer desde el desplegable (vía servicio), se rechaza: el albarán sigue sobre su vehículo original y la respuesta explica el motivo.
-- [ ] **AC-003** (borde) — Con líneas de pieza y mano de obra ya anotadas: cambiar el vehículo por otro del mismo cliente no toca ninguna línea, ni el stock, ni el importe.
-- [ ] **AC-004** (borde) — Una petición que cambia el vehículo a otro cliente **y a la vez** la fecha o las notas no guarda nada de lo tres: ni vehículo, ni fecha, ni notas.
-- [ ] **AC-005** (borde) — Guardar sin tocar el vehículo (o reseleccionando el mismo) funciona con normalidad, sin que aparezca el rechazo nuevo.
-- [ ] **AC-006** (borde) — Sobre un albarán ya facturado, el intento de cambiar el vehículo se rechaza por estar facturado, con el mensaje de siempre — no con el mensaje nuevo de cambio de cliente.
-- [ ] **AC-007** (borde) — Aun con el selector ya filtrando (AC-010), un cambio a vehículo de otro cliente que llegue sin pasar por el formulario se rechaza igual.
-- [ ] **AC-008** (borde) — Tras un intento rechazado de mover el albarán a otro cliente, la factura que se emita después sale al cliente original.
-- [ ] **AC-009** (borde) — Asignar un vehículo inexistente, o no informar ninguno, se rechaza por el motivo de siempre (REQ-027) — no por el motivo nuevo.
+- [x] **AC-001** — Con un cliente que tiene al menos dos vehículos: cambiar el vehículo de un albarán pendiente por otro del mismo cliente y guardar deja el albarán sobre el vehículo nuevo, pendiente de facturar, con fecha y notas intactas.
+- [x] **AC-010** — Con un cliente con al menos dos vehículos (y existiendo vehículos de otros clientes en el sistema): al editar la cabecera, el selector de vehículo muestra todos los del cliente actual y ninguno de otro cliente.
+- [x] **AC-011** (borde) — Con un cliente con exactamente un vehículo: el selector lo muestra seleccionado, no queda vacío, y guardar sigue funcionando.
+- [x] **AC-002** — Una petición que mueve el albarán al vehículo de otro cliente, aunque no se pueda componer desde el desplegable (vía servicio), se rechaza: el albarán sigue sobre su vehículo original y la respuesta explica el motivo.
+- [x] **AC-003** (borde) — Con líneas de pieza y mano de obra ya anotadas: cambiar el vehículo por otro del mismo cliente no toca ninguna línea, ni el stock, ni el importe.
+- [x] **AC-004** (borde) — Una petición que cambia el vehículo a otro cliente **y a la vez** la fecha o las notas no guarda nada de lo tres: ni vehículo, ni fecha, ni notas.
+- [x] **AC-005** (borde) — Guardar sin tocar el vehículo (o reseleccionando el mismo) funciona con normalidad, sin que aparezca el rechazo nuevo.
+- [x] **AC-006** (borde) — Sobre un albarán ya facturado, el intento de cambiar el vehículo se rechaza por estar facturado, con el mensaje de siempre — no con el mensaje nuevo de cambio de cliente.
+- [x] **AC-007** (borde) — Aun con el selector ya filtrando (AC-010), un cambio a vehículo de otro cliente que llegue sin pasar por el formulario se rechaza igual.
+- [x] **AC-008** (borde) — Tras un intento rechazado de mover el albarán a otro cliente, la factura que se emita después sale al cliente original.
+- [x] **AC-009** (borde) — Asignar un vehículo inexistente, o no informar ninguno, se rechaza por el motivo de siempre (REQ-027) — no por el motivo nuevo.
 
 **Vía de comprobación.** AC-001, AC-010, AC-011, AC-003, AC-005 se comprueban por interfaz. AC-002, AC-004, AC-007, AC-009 solo son alcanzables por servicio — el selector filtrado ya no permite componer el intento desde pantalla. AC-006 y AC-008 son mixtos. Es una decisión ya tomada por `A-03` (`DOC-05/Q-18`, cerrada 2026-08-17): un caso va por servicio solo cuando el vector no existe en la interfaz.
 

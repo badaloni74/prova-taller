@@ -1,9 +1,9 @@
 # Marca de agua del control de resincronizacion.
 #
 # SHA del ultimo commit en que se verifico que TODA la documentacion estaba al
-# dia (cascada.js: 0 obsoletos). Lo actualiza S-16 al cerrar una onada; no se
-# edita a mano.
+# dia (cascada.js: 0 obsoletos bloqueantes; los STALE ACEPTADO llevan su ack).
+# Lo actualiza S-16 al cerrar una onada; no se edita a mano.
 #
 # Es la unica verdad persistente de este mecanismo: PENDIENTE-RESINCRONIZAR.md
 # es una cache reconstruible a partir de esta marca.
-d24ca4d1d6c213c07536c240e9ddb0db26a04eaa
+d635c679757996a04e973bc6daa852251e5cd9c1

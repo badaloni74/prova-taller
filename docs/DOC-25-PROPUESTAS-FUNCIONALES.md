@@ -213,6 +213,19 @@ obsolescence_response:
             criterio que ya aplica este documento a los avisos en catalan (un requisito vigente no
             cumplido es defecto, no funcionalidad ausente), se redirige a A-14. Ver apartados 5.4,
             5.6 y 6
+obsolescence_ack:
+  - input: DOC-01
+    upto: 1.2.0
+    date: 2026-08-29
+    note: "SPE-06: nueva regla BR-ALB-10 y Q-08 en la base AS-IS. Ninguna propuesta FUN-001..FUN-012 depende de esa superficie."
+  - input: DOC-04
+    upto: 1.3.1
+    date: 2026-08-29
+    note: "SPE-06: +REQ-080/081 y renumeración Q-16→Q-30. Ninguna FUN-nnn nace ni se descarta por ello; el censo FUN-001..FUN-012 no cambia."
+  - input: DOC-06
+    upto: 1.4.1
+    date: 2026-08-29
+    note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las propuestas funcionales."
 ---
 
 # DOC-25 · Propuestas de funcionalidad — app-taller

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-23T12:19:10.717Z",
+  "updated_at": "2026-08-29T07:52:40.817Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -1414,6 +1414,28 @@
         "UC-SHL-03"
       ],
       "created": "2026-08-15",
+      "status": "active"
+    },
+    "REQ-080": {
+      "text": "El sistema impide que, al modificar la cabecera de un albarán no facturado, su vehículo se sustituya por uno perteneciente a un cliente distinto del actual; el intento se rechaza por completo y ni el vehículo, ni la fecha, ni las notas quedan modificados.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-10",
+        "UC-ALB-06"
+      ],
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "REQ-081": {
+      "text": "Al modificar la cabecera de un albarán no facturado, el selector de vehículo solo ofrece los vehículos del cliente actual del albarán.",
+      "type": "requirement",
+      "module": "albarans",
+      "source_anchors": [
+        "BR-ALB-10",
+        "UC-ALB-06"
+      ],
+      "created": "2026-08-28",
       "status": "active"
     },
     "TC-001": {
@@ -2908,6 +2930,132 @@
       "source": "evidence",
       "business_value": "medium",
       "size": "medium"
+    },
+    "TC-111": {
+      "text": "Rechazar por servicio el cambio de vehículo a otro cliente, con el selector ya filtrado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
+      "external_id": "TALLER-ALB-TC-111",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-112": {
+      "text": "Cambiar el vehículo dentro del mismo cliente no toca líneas, stock ni importe",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-112",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-113": {
+      "text": "Un cambio simultáneo de vehículo a otro cliente, fecha y notas no guarda nada de los tres",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
+      "external_id": "TALLER-ALB-TC-113",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-114": {
+      "text": "Guardar la cabecera de un albarán sin cambiar el vehículo funciona con normalidad",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-040",
+      "external_id": "TALLER-ALB-TC-114",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-115": {
+      "text": "Sobre un albarán facturado, el rechazo de un cambio de vehículo sigue siendo el de facturado",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-ALB-TC-115",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-116": {
+      "text": "Asignar un vehículo inexistente o ninguno al modificar la cabecera se rechaza por el motivo de siempre",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-027",
+      "external_id": "TALLER-ALB-TC-116",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-117": {
+      "text": "El selector de vehículo al editar muestra solo los del cliente actual",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-081",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
+      "external_id": "TALLER-ALB-TC-117",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-118": {
+      "text": "Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-081",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
+      "external_id": "TALLER-ALB-TC-118",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "TC-119": {
+      "text": "Tras un intento rechazado de cambio de cliente, la factura sale al cliente original",
+      "type": "test_case",
+      "module": "factures",
+      "requirement": "REQ-080",
+      "requirement_prev": "REQ-040",
+      "requirement_changed_on": "2026-08-28",
+      "external_id": "TALLER-FAC-TC-119",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "BR-ALB-10": {
+      "text": "Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera, y el selector del formulario solo ofrece los vehículos del cliente actual",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:95",
+      "created": "2026-08-28",
+      "status": "active"
+    },
+    "Q-30": {
+      "text": "BR-ALB-10 impide mover un albarán a otro cliente por la puerta de la cabecera del albarán, pero cambiar el cliente propietario de un vehículo (UC-VEH-04) que tiene albaranes pendientes sigue arrastrando ese trabajo al cliente nuevo, sin aviso. ¿Debe impedirse también, avisarse, o permitirse dejar el trabajo ya hecho con el propietario anterior?",
+      "type": "open_question",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "REQ-015",
+      "source": "yaml"
+    },
+    "Q-31": {
+      "text": "REQ-031 dice que una anotación que no sea de pieza ni de mano de obra no llega a registrarse y que el albarán conserva sus líneas y sus importes, pero no consta qué ve el usuario cuando eso ocurre: ¿hay un aviso, la pantalla sencillamente no ofrece más tipos que esos dos, o se puede llegar por otro camino?",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "§4/A.10 y §4/A.11 — el manual describe la consecuencia sin poder describir la escena",
+      "source": "yaml"
+    },
+    "Q-32": {
+      "text": "REQ-081 filtra el selector de vehículo del formulario de cabecera de albarán al cliente actual, y REQ-080 rechaza entero el intento de cambio a un vehículo de otro cliente sin guardar ni el vehículo, ni la fecha, ni las notas. No consta qué ve el usuario cuando el rechazo ocurre ni si puede provocarlo desde la pantalla: ¿con el selector filtrado la situación es inalcanzable por interfaz? Si es alcanzable, ¿hay mensaje de error y qué dice? ¿La pantalla indica que no se ha guardado nada o simplemente no guarda?",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "§4/A.13 — «El albarán no se puede pasar a otro cliente» y «Si algo va mal»: el manual describe el rechazo y sus consecuencias sin poder describir la escena",
+      "source": "yaml"
     }
   }
 }

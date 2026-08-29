@@ -16,6 +16,27 @@ purpose: >-
 
 # DOC-27 · Historial de versiones
 
+## Nota — 2026-08-29 — declaración de ciclo de vida, sin cambio de versión
+
+No es una entrada de versión: no ha habido nueva ejecución de la suite y ni un
+resultado `TCS-nnn` cambia. Se añade al front-matter del documento principal el
+campo `lifecycle: snapshot`.
+
+**Motivo.** DOC-27 es el informe de **una corrida concreta** de newman (la del
+2026-08-24). `S-16 · Cascada de obsolescencia` lo marcaba obsoleto cada vez que
+`DOC-05-PLAN-PRUEBAS.md` subía de versión —lo hizo al pasar de 1.6.0 a 1.8.0 con
+los 9 casos nuevos de SPE-06, TC-111…TC-119—, pero un informe de ejecución que no
+se ha vuelto a ejecutar no tiene una versión «desfasada»: dice la verdad de lo que
+pasó aquel día. `cascada.js` reconoce `lifecycle: snapshot` y saca el documento
+del cálculo de forma **visible** (aparece en la sección `CONGELADOS`, sigue
+contando en `scanned`, nunca desaparece en silencio). Mismo tratamiento que da
+`DOC-23` a la suite de navegador cuando no se re-ejecuta.
+
+**Qué lo descongela.** Que S-17 vuelva a correr la suite —previsiblemente cuando
+`automation/api/` cubra los 4 casos `service` nuevos de DOC-05 1.8.0 (TC-111,
+TC-113, TC-115, TC-116)— y publique una versión nueva de este informe. Esa
+versión llevará sus `inputs` al día y volverá a entrar en el cálculo.
+
 ## 1.0.0 — 2026-08-24 — MAJOR (primera versión)
 
 Primera ejecución registrada de la suite de servicio. La colección (`DOC-26`,
