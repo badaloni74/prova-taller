@@ -511,3 +511,53 @@ Característica: Facturas — casos críticos de DOC-05 (REQ prioridad critical)
     Ejemplos:
       | matricula | cliente             | descripcion         |
       | 8001TST   | Autoescola Vilanova | TC-078 automatizado |
+
+  # ---------------------------------------------------------------------------
+  # SPE-06 — TC-119: tras un intento (rechazado) de cambiar el albarán a otro
+  # cliente, la factura que se emita después sale al cliente ORIGINAL.
+  #
+  # DOC-05 lo marca `verification_path: mixed`: la mitad de servicio —el PUT
+  # que intenta mover el albarán a un vehículo de otro cliente y recibe 409—
+  # NO es compostable por esta interfaz (el selector de edición ya filtra por
+  # cliente, ver TC-117) y la ejerce S-17 en automation/api, igual que se
+  # coordinó TC-041. Aquí se automatiza solo la mitad de pantalla: emitir la
+  # factura y comprobar que queda asociada al cliente correcto con su base.
+  # El intento rechazado no cambia el resultado observable de esta mitad (el
+  # albarán sigue sobre su vehículo original tanto si el 409 ocurrió como si
+  # no), así que el escenario es válido sin él.
+  #
+  # DATOS: DOC-05 narra "Garcia Motors SL" / 1234ABC (inexistente en el seed).
+  # Se usa Jordi Camps Ribas / 3456DEF (Peugeot 308 del seed): cliente sin
+  # albaranes en el seed y que ningún otro escenario toca, así que su lista de
+  # "albaranes pendientes" nace y se mantiene limpia -> "Casilla: única" es
+  # inequívoca en cualquier orden de ejecución.
+  # ---------------------------------------------------------------------------
+  @TC-119 @doc05 @critical
+  Esquema del escenario: TC-119 Tras un intento rechazado de cambio de cliente, la factura sale al cliente original
+    Cuando se navega a "/albarans"
+    Y se muestra la pantalla "Albaranes"
+    Y se pulsa en "Boton: Nuevo albarán"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Cuando se rellena "Lista: Tipo" con "Mano de obra"
+    Y se rellena "Campo: Descripción" con "<descripcion>"
+    Y se rellena "Campo: Horas" con "<horas>"
+    Y se rellena "Campo: Precio/hora" con "<precioHora>"
+    Y se pulsa en "Boton: Añadir línea"
+    Entonces se valida "Lineas: 1"
+    Cuando se navega a "/factures"
+    Y se muestra la pantalla "Facturas"
+    Y se pulsa en "Boton: Nueva factura"
+    Entonces se muestra la pantalla "FacturaForm"
+    Cuando se rellena "Lista: Cliente" con "<cliente>"
+    Y se pulsa en "Casilla: única"
+    Y se pulsa en "Boton: Crea la factura"
+    Entonces se muestra la pantalla "FacturaDetalle"
+    Y se valida "Literal: <cliente>"
+    Y se valida "Literal: <baseEsperada>"
+
+    Ejemplos:
+      | matricula | cliente           | descripcion         | horas | precioHora | baseEsperada |
+      | 3456DEF   | Jordi Camps Ribas | TC-119 automatizado | 1     | 95.00      | 95,00        |

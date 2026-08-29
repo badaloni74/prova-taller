@@ -529,3 +529,120 @@ Característica: Albaranes — casos de DOC-05, módulo albarans
     Ejemplos:
       | matricula | descripcion         |
       | 1234ABC   | TC-056 automatizado |
+
+  # ---------------------------------------------------------------------------
+  # SPE-06 — cambio de vehículo de un albarán (TC-112, TC-114, TC-117, TC-118).
+  #
+  # DATOS: DOC-05 1.8.0 narra estos casos con clientes ficticios ("Garcia
+  # Motors SL", vehículos "5678DEF"/"9012GHI", "Ferreteria Soler"/"2468PQR")
+  # que NO existen en el seed —el mismo desajuste ya anotado para TC-048—. Se
+  # usan los datos reales del seed, con el mismo criterio:
+  #   - "cliente con dos vehículos"  -> Anna Puig Ferrer (1234ABC Seat Ibiza +
+  #     6789GHI Honda Civic; el segundo lo añadió SPE-06, commit 65b23a2).
+  #   - "vehículo de otro cliente"   -> 5678BCD (Marc Vidal Soler).
+  #   - "cliente con un solo vehículo" -> Laura Serra Camps (9012CDE), sobre su
+  #     albarán pendiente del seed (/albarans/4).
+  #
+  # Se opera sobre los albaranes pendientes del seed (/albarans/1 de Anna Puig,
+  # /albarans/4 de Laura Serra) en vez de crear albaranes nuevos: así no se
+  # altera el recuento de albaranes por cliente del que dependen otros casos
+  # (clients.feature TC-011, "2 / 2" para Anna Puig). Cada escenario restaura
+  # lo que toca (vehículo, notas).
+  # ---------------------------------------------------------------------------
+
+  @TC-112 @doc05 @critical
+  Esquema del escenario: TC-112 Cambiar el vehículo dentro del mismo cliente no toca líneas, stock ni importe
+    Cuando se navega a "/peces"
+    Y se muestra la pantalla "Piezas"
+    Entonces se valida "Stock: <pieza>=<stock>"
+    Cuando se navega a "<ruta>"
+    Y se muestra la pantalla "AlbaranDetalle"
+    Entonces se valida "Lineas: <lineas>"
+    Y se valida "Literal: <base>"
+    Y se valida "Literal: <vehiculoInicial>"
+    Cuando se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<vehiculoNuevo>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <vehiculoNuevoEtiqueta>"
+    Y se valida "Lineas: <lineas>"
+    Y se valida "Literal: <base>"
+    Cuando se navega a "/peces"
+    Y se muestra la pantalla "Piezas"
+    Entonces se valida "Stock: <pieza>=<stock>"
+    # Restaura el vehículo original.
+    Cuando se navega a "<ruta>"
+    Y se muestra la pantalla "AlbaranDetalle"
+    Y se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matriculaInicial>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <vehiculoInicial>"
+
+    Ejemplos:
+      | ruta        | pieza               | stock | lineas | base     | vehiculoInicial       | matriculaInicial | vehiculoNuevo | vehiculoNuevoEtiqueta  |
+      | /albarans/1 | Oli motor 5W30 (5L) | 24    | 3      | 75,50    | Seat Ibiza — 1234ABC  | 1234ABC          | 6789GHI       | Honda Civic — 6789GHI  |
+
+  @TC-114 @doc05 @medium
+  Esquema del escenario: TC-114 Guardar la cabecera de un albarán sin cambiar el vehículo funciona con normalidad
+    Cuando se navega a "<ruta>"
+    Y se muestra la pantalla "AlbaranDetalle"
+    Y se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Lista: Vehículo" con "<matricula>"
+    Y se rellena "Campo: Notas" con "<notasNuevas>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <notasNuevas>"
+    Y se valida "Literal: <vehiculoEsperado>"
+    # Restaura las notas originales.
+    Cuando se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Campo: Notas" con "<notasOriginales>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <notasOriginales>"
+
+    Ejemplos:
+      | ruta        | matricula | notasNuevas           | vehiculoEsperado      | notasOriginales    |
+      | /albarans/1 | 1234ABC   | Revisado en recepción | Seat Ibiza — 1234ABC  | Revisió periòdica  |
+
+  @TC-117 @doc05 @high
+  Esquema del escenario: TC-117 El selector de vehículo al editar muestra solo los del cliente actual
+    Cuando se navega a "<ruta>"
+    Y se muestra la pantalla "AlbaranDetalle"
+    Y se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Y se valida "Opcion: <vehiculoCliente1>"
+    Y se valida "Opcion: <vehiculoCliente2>"
+    Y se valida "Sin opcion: <vehiculoOtroCliente>"
+
+    Ejemplos:
+      | ruta        | vehiculoCliente1 | vehiculoCliente2 | vehiculoOtroCliente |
+      | /albarans/1 | 1234ABC          | 6789GHI          | 5678BCD             |
+
+  @TC-118 @doc05 @medium
+  Esquema del escenario: TC-118 Con un cliente de un solo vehículo, el selector lo muestra seleccionado y guardar funciona
+    Cuando se navega a "<ruta>"
+    Y se muestra la pantalla "AlbaranDetalle"
+    Y se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Y se valida "Seleccionado: <matricula>"
+    Cuando se rellena "Campo: Notas" con "<notasNuevas>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <notasNuevas>"
+    Y se valida "Literal: <vehiculoEsperado>"
+    # Restaura las notas originales.
+    Cuando se pulsa en "Boton: Editar"
+    Entonces se muestra la pantalla "AlbaranForm"
+    Cuando se rellena "Campo: Notas" con "<notasOriginales>"
+    Y se pulsa en "Boton: Guardar"
+    Entonces se muestra la pantalla "AlbaranDetalle"
+    Y se valida "Literal: <notasOriginales>"
+
+    Ejemplos:
+      | ruta        | matricula | notasNuevas | vehiculoEsperado        | notasOriginales   |
+      | /albarans/4 | 9012CDE   | Revisado    | Renault Clio — 9012CDE  | Revisió general   |
