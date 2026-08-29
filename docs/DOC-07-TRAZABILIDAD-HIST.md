@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.10.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.11.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-24T12:40:00+02:00
+generated_at: 2026-08-29T12:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,50 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.11.0 — 2026-08-29 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `SPE-06 · Albarà canvi de client` está `Implemented`. DOC-04 sube a
+**1.3.1** (añade REQ-080 `critical` y REQ-081 `high`; renumera su `Q-16` a `Q-30` por
+colisión con la `Q-16` de DOC-05) y DOC-05 a **1.8.0** (añade TC-111…TC-119, 9 casos,
+todos `albarans`). `S-16` marcó DOC-07 obsoleto por ambas entradas del JOIN.
+
+**La matriz la regeneró S-14, no A-05.** `docs/DOC-07-MATRIZ.csv` lo produjo
+`s14-matriz-trazabilidad` (`matriz.js`, determinista) en el commit `621ea3b`: 81 filas,
+119 casos, cobertura **81/81 = 100,00 %**, 0 GAP PLAN, 0 bloqueantes, 3 columnas de Rally
+en `n/d`. Esta versión de A-05 solo verifica esa salida y pone la narrativa a la par.
+
+**Reparto de los 9 casos nuevos en la matriz:** REQ-080 → `TC-111;TC-113;TC-119`;
+REQ-081 → `TC-117;TC-118`; REQ-040 → `TC-055;TC-112;TC-114`; REQ-042 suma `TC-115`;
+REQ-027 suma `TC-116`. Por vía: 4 `service`, 4 `ui`, 1 `mixed` (TC-119, el primero del
+plan).
+
+**Qué cambia en el cuerpo.** §1 (recuento y tabla de magnitudes), §2 (tabla de entradas),
+§3.1 (reglas de S-14 sobre 81/119), §4 (matriz: +fila REQ-080, filas con reserva 26→27,
+verificaciones sobre el CSV), §5.1/5.2/5.3 (totales), §6 y §7.1 (notas de alcance). Consume
+DOC-06 **1.4.0** y DOC-09 **2.1.0** —releídos, ninguno alimenta el JOIN— y el nuevo hash de
+`registro-ids.json` (81 REQ, 119 TC, 30 Q).
+
+**Un hallazgo empeora sin abrirse ni cerrarse: `A-05-09`.** Era «`Q-30` de DOC-06 sin
+ancla». Ahora `Q-30` **está registrado, pero apunta a la pregunta de DOC-04** (renumerada
+desde su `Q-16`). El `Q-30` propio de DOC-06 1.4.0 —otra pregunta— y su `Q-31` numerado a
+mano quedan en colisión de identificador. Corrección: **S-12** asigna los siguientes libres
+y **A-04** los renumera. El censo de avisos sigue en **32** (SPE-06 no abre ni cierra
+ninguno).
+
+**Por qué MINOR y no PATCH.** Dos requisitos nuevos entran en cobertura y la matriz cambia
+de contenido por primera vez tras ocho versiones idéntica (+2 filas, +9 casos). **Por qué
+no MAJOR.** No cambia el contrato del CSV —mismas 10 columnas, mismos diagnósticos—, sigue
+en 100 % y sigue siendo pasada `pre`.
+
+**Pendiente para la próxima regeneración completa:** re-derivar los cinco alcances de §7.1,
+`ui-only`, el recuento de `A-05-11` (¿TC-116 cierra la mitad de vector de REQ-027?), el
+reparto fino por vía de §5.6 y la coherencia del resumen `verification_path` de DOC-05 1.8.0
+(`A-05-12`). SPE-06 no cierra ninguna pregunta abierta.
 
 ---
 

@@ -1,37 +1,37 @@
 ---
 doc_id: DOC-07
 doc_name: DOC-07-TRAZABILIDAD
-version: 1.10.0
+version: 1.11.0
 status: draft
 generator: A-05 coherencia y trazabilidad
-generated_at: 2026-08-24T12:40:00+02:00
+generated_at: 2026-08-29T12:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: 8774cec50622faa01c546425ec7efe134a5ab8d9
-  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
+  branch: spec-SPE-06-albara-canvi-client
+  commit_sha: 6d52c5eaa4c630879dfdd772869c56c2285d553f
+  working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt. El resto del árbol versionado está limpio; este documento y su -HIST en edición.
 inputs:
   - id: DOC-04-FUNCIONAL.md
     from: A-02
-    version: 1.2.0
-    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
+    version: 1.3.1
+    hash: sha256:88315e350dec166c4a187efdad835cddb450c8688c030650daa2c86cafc03f19
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
-    version: 1.6.0
-    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
+    version: 1.8.0
+    hash: sha256:fef49cbc57eec8822b3b5482471ffb205d149bb638bbc76c28f1bf4de6d17cb1
   - id: registro-ids.json
     from: S-12
     version: 1.6.0
-    hash: sha256:bc54df9a531287e953975a311cea55a25297ecba3ce50d403f91dc6106528b97
+    hash: sha256:10a49e22b052dc50f9006d5ef533559b0f0602b3ccd35c3b53aef37dc3f7cf09
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
-    version: 1.3.0
-    hash: sha256:c081aea157c978d8ffcfffaed9fa9b33fc10106fa47498277f07c9720ef26067
+    version: 1.4.0
+    hash: sha256:2bf33fc38e84b32da3d0edea4d0995f37f746aef91ccc232c46cfa1b11b5ad66
   - id: DOC-09-IMPACTO-albara-canvi-client.md
     from: A-07
-    version: 2.0.4
-    hash: sha256:b745b0925a4082f114efa26dbd4ad052ee2bfcecad6167e7bb7ccfea671f2bef
+    version: 2.1.0
+    hash: sha256:894b67deddc0eb3e9c687dc16aba472c9c771abe09bd3effffa114dcb0e85a8d
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
     version: 2.1.0
@@ -65,12 +65,52 @@ inputs:
 
 ## 1. Resumen de cobertura
 
-**La cobertura de requisitos por casos de prueba definidos es del 100,00 % (79 de 79
-requisitos cubiertos, 0 GAP PLAN).** Los 110 casos de DOC-05 1.6.0 —241 pasos en nueve
-bloques— se reparten sobre los 79 requisitos de DOC-04 1.2.0: 52 requisitos tienen un
-caso, 23 tienen dos y 4 tienen tres. No hay ningún requisito sin prueba, ningún caso
-huérfano, ninguna referencia rota y **ninguna anomalía bloqueante**: nada de lo
-comprobado aquí impide avanzar a la Fase 3.
+**La cobertura de requisitos por casos de prueba definidos es del 100,00 % (81 de 81
+requisitos cubiertos, 0 GAP PLAN).** Los 119 casos de DOC-05 1.8.0 se reparten sobre los
+81 requisitos de DOC-04 1.3.1: 50 requisitos tienen un caso, 25 tienen dos, 5 tienen tres
+y uno —REQ-042— tiene cuatro. No hay ningún requisito sin prueba, ningún caso huérfano,
+ninguna referencia rota y **ninguna anomalía bloqueante**: nada de lo comprobado aquí
+impide avanzar a la Fase 3.
+
+### Qué cambia en 1.11.0
+
+**MINOR: dos requisitos nuevos entran en cobertura, la matriz vuelve a cerrar al 100 %.**
+`SPE-06 · Albarà canvi de client` está `Implemented`, y con él DOC-04 sube a **1.3.1** y
+DOC-05 a **1.8.0**:
+
+- **DOC-04 1.3.1** añade **REQ-080** (`albarans`, `critical`) —el sistema rechaza por
+  completo el intento de mover un albarán no facturado a un vehículo de otro cliente— y
+  **REQ-081** (`albarans`, `high`) —el selector de vehículo de la cabecera solo ofrece
+  vehículos del cliente actual—. Los 79 requisitos anteriores conservan su `id`; sus
+  enunciados solo se retocan donde SPE-06 y `BR-ALB-10` los matizan (DOC-04 1.3.0/1.3.1).
+  La pregunta emitida en DOC-04 1.3.0 con `id: Q-16` se **renumeró a `Q-30`** en 1.3.1 por
+  colisión con la `Q-16` propia de DOC-05 (regla de gobierno de IDs: cede el reclamante);
+  este documento no citaba esa `Q-16`, así que no hay ninguna referencia que reescribir —
+  pero sí una consecuencia sobre `A-05-09`, ver §3.8.
+- **DOC-05 1.8.0** añade **9 casos, TC-111 a TC-119**, todos en `albarans`, repartidos así
+  en la matriz que **regeneró S-14** (commit `621ea3b`, determinista): **REQ-080** →
+  `TC-111;TC-113;TC-119`; **REQ-081** → `TC-117;TC-118`; **REQ-040** pasa de `TC-055` a
+  `TC-055;TC-112;TC-114`; **REQ-042** suma `TC-115` (`TC-057;TC-058;TC-059;TC-115`);
+  **REQ-027** suma `TC-116` (`TC-036;TC-116`). Por vía: 4 `service` (TC-111, TC-113,
+  TC-115, TC-116), 4 `ui` (TC-112, TC-114, TC-117, TC-118) y 1 `mixed` (TC-119).
+- **`DOC-07-MATRIZ.csv` NO lo ha tocado A-05**: lo regeneró S-14 en `621ea3b` y esta
+  ejecución solo pone la narrativa a la par. Verificado: 81 filas, suma de
+  `test_case_count` = 119, 3 columnas de Rally en `n/d`, 0 `GAP EXPORT`, 0 `GAP PLAN`,
+  81 diagnósticos `Correcto`.
+
+**Qué NO cambia en 1.11.0.** Sigue siendo pasada `pre` —no existen `DOC-19-RALLY-TESTCASES.csv`
+ni `DOC-20-RALLY-STATE.json`—, la narrativa de riesgos del §6 sigue sin datos de ejecución,
+y **el análisis de las anomalías `A-05-nn` abiertas es el de 1.10.0**: ninguna se abre ni se
+cierra por SPE-06. Donde este documento arrastra recuentos de 1.10.0 (79 requisitos, 110
+casos, repartos por vía, cinco alcances de §7.1) hay que leerlos con los totales nuevos
+—81 y 119— hasta la próxima regeneración completa; los apartados que no cambian de fondo lo
+dicen con una línea «Sin cambios desde 1.10.0». DOC-06 sube a 1.4.0 y DOC-09 a 2.1.0: se
+han releído, ninguno alimenta el JOIN y su efecto se anota en §2 y §3.8.
+
+---
+
+**A partir de aquí, y hasta la tabla de magnitudes, este apartado se conserva de 1.10.0**:
+describe la entrada de `DOC-27` y sigue siendo cierto, pero su «esta versión» es la 1.10.0.
 
 **La cobertura no se ha movido, y el motivo vuelve a no ser de DOC-04 ni de DOC-05.** Esta
 regeneración la dispara un documento que **antes no existía**: `DOC-27-INFORME-API.md`
@@ -104,38 +144,29 @@ verde, sobre esos 4 casos. Tres consecuencias, ninguna sobre el porcentaje:
    destapados por leer `DOC-27` y los tres verificados por A-05 en el código o en los
    ficheros de las suites, no dados por buenos de su prosa.
 
-| Magnitud | Valor | vs 1.9.1 |
+| Magnitud | Valor | vs 1.10.0 |
 |---|---:|---|
-| Requisitos en DOC-04 | 79 | = |
-| Requisitos con al menos un caso (`Correcto`) | 79 | = |
+| Requisitos en DOC-04 | 81 | **+2**: REQ-080 (`critical`), REQ-081 (`high`) |
+| Requisitos con al menos un caso (`Correcto`) | 81 | **+2** |
 | Requisitos sin ningún caso (`GAP PLAN`) | 0 | = |
 | **Cobertura** | **100,00 %** | **=** |
-| Casos en DOC-05 | 110 | = |
-| Pasos de prueba | 241 | = |
-| Casos mapeados a un requisito existente | 110 | = |
+| Casos en DOC-05 | 119 | **+9**: TC-111…TC-119 |
+| Casos mapeados a un requisito existente | 119 | **+9** |
 | Casos huérfanos o con referencia rota | 0 | = |
 | **Anomalías bloqueantes** | **0** | **=** |
-| Avisos | 32 | **+3**: nacen A-05-14, A-05-15 y A-05-16 |
-| Casos `verification_path: ui` | **106** | = |
-| Casos `verification_path: service` | **4** | = |
-| Requisitos con toda su cobertura por interfaz | **75** (94,9 %) | = |
-| Requisitos `critical` con toda su cobertura por interfaz | **32 de 35** | = |
-| **Requisitos cuyo vector no es alcanzable por la vía declarada** | **5** | = |
-| Casos automatizados y ejecutados por interfaz (DOC-23 2.2.0) | **102 de 110** | = |
-| Escenarios en verde (DOC-23 2.2.0) | **107 de 107** | = |
-| **Casos ejecutados por servicio (DOC-27 1.0.0)** | **4 de 4** | **+4** — antes: sin fuente |
-| **Comprobaciones `TCS-nnn` en verde (DOC-27 1.0.0)** | **10 de 10** | **nueva** |
-| **Casos del plan con evidencia de ejecución publicada** | **106 de 110** | **+4** |
-| Censo de `Q-nnn` con ancla | 29 | = |
-| `Q-nnn` reclamados sin ancla | 1 (`Q-30`) | = |
-| ① Requisitos que esperan respuesta de negocio | 16 (20,3 %) | = |
-| ② Requisitos con hueco confirmado hasta el evolutivo | 16 (20,3 %) | = |
-| ③ Requisitos tocados por una decisión de método sin tomar | 5 (6,3 %) | = |
-| **Unión ①∪②∪③** | 32 (40,5 %) | = |
-| ⑤ Requisitos cuya escena no está documentada (DOC-06) | 47 (59,5 %) | = |
-| **Unión de los cuatro alcances** | **64** (81,0 %) | **=** |
+| Avisos | 32 | = (ninguna se abre ni se cierra por SPE-06) |
+| Casos `verification_path: ui` / `service` / `mixed` | **110 / 8 / 1** | **+4 / +4 / +1** (los 9 nuevos) |
+| Casos automatizados y ejecutados por interfaz (DOC-23 2.2.0) | **102 de 119** | denominador +9; los 9 nuevos sin ejecución publicada |
+| **Casos ejecutados por servicio (DOC-27 1.0.0)** | **4 de 8** | los 4 `service` nuevos (TC-111/113/115/116) sin fuente todavía |
+| **Casos del plan con evidencia de ejecución publicada** | **106 de 119** | denominador +9 |
+| Censo de `Q-nnn` con ancla | 30 | **+1**: `Q-30` (DOC-04, desde 1.3.1) |
+| `Q-nnn` homónimos sin ancla que colisionan | `Q-30` de DOC-06 | ver **A-05-09**, §3.8 |
 | Requisitos con defecto confirmado en el sistema real | **4** | = |
-| Filas de la matriz (`DOC-07-MATRIZ.csv`) | 79 | = |
+| Filas de la matriz (`DOC-07-MATRIZ.csv`) | 81 | **+2** |
+
+Las filas de magnitud que dependen de un recálculo completo —los cinco alcances de §7.1,
+`ui-only`, `A-05-11`, `critical con toda su cobertura por interfaz`— se conservan de 1.10.0
+y se re-derivarán en la próxima regeneración; SPE-06 no cierra ninguna pregunta abierta.
 
 **Qué mide y qué no mide ese 100 %.** Las advertencias que este documento arrastra siguen
 vigentes y no se repiten enteras: no mide **ejecución en Rally ni resultado** (pasada
@@ -189,24 +220,26 @@ vale.
 
 ## 2. Qué pasada se ha ejecutado y por qué
 
-**Se ha ejecutado únicamente la pasada `pre`.**
+**Se ha ejecutado únicamente la pasada `pre`.** El disparo esta vez es
+`SPE-06 · Albarà canvi de client`, ya `Implemented`: DOC-04 y DOC-05 cambian de contenido
+—dos requisitos y nueve casos nuevos— y S-16 marcó DOC-07 obsoleto por ambas entradas.
 
 | Entrada | Estado | Consecuencia |
 |---|---|---|
-| `docs/DOC-04-FUNCIONAL.md` | presente, **v1.2.0** (mismo número, mismo hash que 1.8.0) | JOIN posible; sin cambio de contenido versionado |
-| `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.6.0** (mismo número; **hash corregido**: 1.9.1 declaraba el del resello contra `DOC-23` 2.1.0 y el vigente ya era el del resello contra 2.2.0, ver «Procedencia») | JOIN posible; sin cambio de contenido versionado |
-| `registro-ids.json` | presente, 317 anclas — 79 REQ, 110 TC, 29 Q, 12 FUN, 8 MEJ, 1 EVO, todas sin cambios desde 1.8.0; hash resincronizado por el renombrado `SPE-` de los specs | verificación de anclas y del censo de `Q-nnn` |
-| `docs/DOC-23-INFORME.md` | presente, **v2.2.0** (era 2.0.0; pasó por 2.1.0 el mismo día) | **no toca la matriz**; motivo de esta regeneración; cierra TC-048 y los 17 de `EXP-027`, corrige una atribución de la propia 2.1.0 |
-| `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (era 2.0.1; resincronización dirigida contra `DOC-23` 2.2.0, sin exploración nueva; cierra `EXP-027`) | **no toca la matriz** — ver nota de 1.9.1 en `DOC-07-TRAZABILIDAD-HIST.md` |
-| `docs/DOC-09-IMPACTO-…md` | presente, **v2.0.4** (1.9.1 declaraba 2.0.2; **dos resellos de PATCH desde entonces**, `3606266` y `2bbd4fe`) | **no toca la matriz**; cuerpo byte a byte idéntico al de 2.0.2; A-05-11a sigue cerrado |
-| `docs/DOC-06-MANUAL-USUARIO.md` | presente, v1.3.0 (mismo número; **hash resincronizado**, renombrado `SPE-` de los specs que cita) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10 |
-| `docs/DOC-24-BUGS.json` | presente, v1.0.0 (mismo hash) | **no toca la matriz**; alimenta A-05-03 |
-| **`docs/DOC-27-INFORME-API.md`** | **presente, v1.0.0 — entrada nueva, antes no existía** | **no toca la matriz**; motivo de esta regeneración; primera y única fuente de evidencia de ejecución de los 4 casos `service`; origen de A-05-14, A-05-15 y A-05-16 |
+| `docs/DOC-04-FUNCIONAL.md` | presente, **v1.3.1** (era 1.2.0; 1.3.0 añadió REQ-080/REQ-081 por SPE-06, 1.3.1 renumeró `Q-16`→`Q-30`) | **alimenta el JOIN**: +2 filas en la matriz |
+| `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.8.0** (era 1.6.0; añade TC-111…TC-119, todos `albarans`) | **alimenta el JOIN**: +9 casos |
+| `registro-ids.json` | presente, hash nuevo — ahora **81 REQ, 119 TC, 30 Q** (`Q-30` de DOC-04 concedida por S-12 en el ciclo de DOC-04 1.3.1); `FUN`/`MEJ`/`EVO` sin cambios | verificación de anclas: los 81 REQ y los 119 TC están en el registro (0 fuera) |
+| `docs/DOC-23-INFORME.md` | presente, v2.2.0 (sin cambios desde 1.10.0) | **no toca la matriz**; alimenta §5.5; los 9 casos nuevos aún no tienen ejecución publicada |
+| `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (sin cambios desde 1.10.0) | **no toca la matriz** |
+| `docs/DOC-09-IMPACTO-…md` | presente, **v2.1.0** (era 2.0.4; MINOR de resincronización de A-07 contra DOC-07 1.10.0) | **no toca la matriz**; releída, sus citas a la matriz siguen siendo ciertas |
+| `docs/DOC-06-MANUAL-USUARIO.md` | presente, **v1.4.0** (era 1.3.0; documenta REQ-080/REQ-081, añade su pregunta propia `Q-31`) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10; su `Q-30` homónima colisiona ahora con la de DOC-04 (§3.8) |
+| `docs/DOC-24-BUGS.json` | presente, v1.0.0 (sin cambios) | **no toca la matriz**; alimenta A-05-03 |
+| `docs/DOC-27-INFORME-API.md` | presente, v1.0.0 (sin cambios desde 1.10.0) | **no toca la matriz**; fuente de ejecución de los 4 casos `service` de 1.6.0; no cubre los 4 `service` nuevos |
 | `docs/DOC-19-RALLY-TESTCASES.csv` | **ausente** | no hay exportación a Rally que comprobar |
 | `docs/DOC-20-RALLY-STATE.json` | **ausente** | no hay estado de ejecución que leer |
 
 Al no existir DOC-19 ni DOC-20, las columnas `exists_in_rally`, `executed` y `result`
-valen **`n/d`** en las 79 filas del CSV. No valen «No»: «No» afirmaría que el caso no
+valen **`n/d`** en las 81 filas del CSV. No valen «No»: «No» afirmaría que el caso no
 está en Rally o que no se ha ejecutado, y eso es un dato que nadie ha medido. Por la
 misma razón, los únicos diagnósticos emitidos son `Correcto` y `GAP PLAN`; **el CSV no
 contiene ni un solo `GAP EXPORT`**, que en esta pasada sería un dato inventado
@@ -440,6 +473,13 @@ ningún dato: se ha movido cada uno a donde se lee.**
 
 ## 3. Anomalías
 
+**Sin cambios de fondo desde 1.10.0.** SPE-06 no abre ni cierra ningún hallazgo `A-05-nn`:
+el censo sigue en **32 avisos** y **0 bloqueantes**. Los dos requisitos y los nueve casos
+nuevos pasaron las reglas de S-14 sin novedad (§3.1). La única anomalía que SPE-06 toca es
+`A-05-09`: la renumeración `Q-16`→`Q-30` en DOC-04 1.3.1 hace que ese `Q-30` colisione con
+el `Q-30` homónimo y sin ancla de DOC-06 (§3.8). El resto de subapartados de §3 conserva su
+análisis de 1.10.0; donde citan «79 requisitos» o «110 casos», léase 81 y 119.
+
 ### 3.0 El censo de avisos, enumerado
 
 Este documento declara **32 avisos**: los 17 de una sola regla de S-14 (§3.2) y **15
@@ -479,25 +519,26 @@ mil veces sin que aparezca ninguno de los tres.
 
 ### 3.1 Bloqueantes — **ninguna**
 
-Las seis reglas bloqueantes de S-14 se han ejecutado sobre DOC-05 1.6.0 y todas pasan:
+Las seis reglas bloqueantes de S-14 se han ejecutado sobre DOC-05 1.8.0 (matriz regenerada
+por S-14 en `621ea3b`, código de salida 0) y todas pasan:
 
 | Regla | Qué comprueba | Resultado |
 |---|---|---|
-| `caso_huerfano` | Caso sin `requirement` | 0 de 110 |
-| `referencia_rota` | `requirement` → `REQ-nnn` inexistente en DOC-04 | 0 de 110 |
-| `sin_external_id` | Caso sin `external_id` (la reimportación duplicaría) | 0 de 110 |
-| `external_id_duplicado` | Dos casos con el mismo `external_id` | 0 (110 valores distintos) |
-| `id_duplicado` | Dos casos con el mismo `TC-nnn` | 0 (110 IDs distintos) |
-| `fuera_de_registro` | REQ o TC ausente de `registro-ids.json` | 0 de 79 REQ, 0 de 110 TC |
+| `caso_huerfano` | Caso sin `requirement` | 0 de 119 |
+| `referencia_rota` | `requirement` → `REQ-nnn` inexistente en DOC-04 | 0 de 119 |
+| `sin_external_id` | Caso sin `external_id` (la reimportación duplicaría) | 0 de 119 |
+| `external_id_duplicado` | Dos casos con el mismo `external_id` | 0 (119 valores distintos) |
+| `id_duplicado` | Dos casos con el mismo `TC-nnn` | 0 (119 IDs distintos) |
+| `fuera_de_registro` | REQ o TC ausente de `registro-ids.json` | 0 de 81 REQ, 0 de 119 TC (REQ-080/081 y TC-111…119 verificados en el registro) |
 
 Las cuatro reglas de aislamiento y automatización:
 
 | Regla | Qué comprueba | Resultado |
 |---|---|---|
-| `dependencia_inexistente` | `depends_on` → `TC-nnn` que no existe | 0 de 3 dependencias |
+| `dependencia_inexistente` | `depends_on` → `TC-nnn` que no existe | 0 |
 | `dependencia_propia` | Caso dependiente de sí mismo | 0 |
-| `ciclo_dependencias` | Casos que se esperan entre sí | 0 (2 olas, sin ciclo) |
-| `grado_automatizacion_invalido` | `grade` fuera del vocabulario | 0 de 110 |
+| `ciclo_dependencias` | Casos que se esperan entre sí | 0 (sin ciclo) |
+| `grado_automatizacion_invalido` | `grade` fuera del vocabulario | 0 de 119 |
 
 Comprobaciones adicionales de A-05, fuera del alcance de la skill:
 
@@ -859,22 +900,30 @@ corrección de fondo sigue siendo de **S-06 / DOC-13** —producir los datos de 
 hacer cumplir el orden—, no de quien mantenga la suite de S-10, cuyo parche de esta sesión
 es correcto pero no sustituye esa corrección estructural.
 
-### 3.8 A-05-09 · `Q-30` vive en DOC-06 y no tiene ancla — abierto, reverificado
+### 3.8 A-05-09 · `Q-30` — de «sin ancla» a **colisión de identificador** — empeora con SPE-06
 
-Sigue exactamente igual, y se ha comprobado hoy en vez de arrastrarse:
+Hasta 1.10.0: DOC-06 publicaba una pregunta propia con `id: Q-30` en estado
+`pending_confirmation` y el registro no tenía el ancla. Aviso, no bloqueante.
 
-```
-sync registro-ids.json --doc docs/DOC-06-MANUAL-USUARIO.md --block questions --dry-run
-  encontrados 11 · anadidos 1 · ya presentes 10
-  nuevos: Q-30
-```
+**En 1.11.0 el número `Q-30` ya está concedido — pero a otra pregunta.** DOC-04 1.3.0
+emitió una pregunta con `id: Q-16` que colisionaba con la `Q-16` propia de DOC-05; la regla
+de gobierno de IDs hace ceder al reclamante posterior (A-02), así que DOC-04 1.3.1 la
+renumeró a **`Q-30`** y `s12-registro-ids` la dio de alta en `registro-ids.json`
+(`"Q-30"` → `document: DOC-04-FUNCIONAL.md`, `blocks: REQ-015`, sobre arrastrar trabajo al
+cambiar el propietario de un vehículo). Verificado en el registro: **30 `Q-nnn` con ancla,
+máximo `Q-30`, y ese `Q-30` es el de DOC-04.**
 
-El registro censa 29 `Q-nnn` y su máximo sigue siendo Q-29. **Aviso, no bloqueante**, por
-la razón de siempre: la regla bloqueante cubre `REQ-nnn` y `TC-nnn`, que son los
-identificadores que viajan a Rally; `Q-30` no genera fila, no altera ninguna columna del
-CSV y no puede romper una exportación. **Corrección**, de un comando: quien tenga shell
-ejecuta `registry.js sync --doc docs/DOC-06-MANUAL-USUARIO.md --block questions`; si S-12
-devolviera otro número, **A-04** renumera solo esa pregunta.
+**Consecuencia:** el `Q-30` que DOC-06 1.4.0 sigue trayendo como pregunta propia —sobre qué
+ve el usuario cuando REQ-031 rechaza una anotación— **designa ahora una pregunta distinta de
+la que el registro llama `Q-30`**. Ya no es solo «falta el ancla»: es el mismo número para
+dos preguntas. DOC-06 1.4.0 además añade su propia `Q-31` (sobre REQ-080/REQ-081) numerada
+«a partir del censo» porque A-04 no tenía `registry.js`, y hereda el mismo problema.
+
+**Aviso, no bloqueante** —`Q-nnn` no viaja a Rally, no genera fila ni columna del CSV—,
+pero la corrección ya no es «un comando»: **S-12** tiene que asignar a las dos preguntas
+propias de DOC-06 los siguientes números libres (`Q-31`, `Q-32` a la vista del registro
+actual) y **A-04** renumerarlas en DOC-06, deshaciendo la `Q-31` provisional. Es
+`s12-registro-ids` + A-04.
 
 ### 3.9 A-05-10 · una superficie de interfaz no documentada — abierto, con la mitad medida
 
@@ -1414,7 +1463,7 @@ la diferencia entre un riesgo aceptado y un descuido.
 
 ## 4. La matriz
 
-La matriz completa está en **`docs/DOC-07-MATRIZ.csv`** — 79 filas, una por requisito,
+La matriz completa está en **`docs/DOC-07-MATRIZ.csv`** — 81 filas, una por requisito,
 con la cabecera canónica:
 
 ```
@@ -1423,11 +1472,12 @@ requirement_id,requirement_statement,module,priority,test_case_ids,test_case_cou
 
 **No hay ninguna fila con diagnóstico distinto de `Correcto`**, así que la tabla de
 excepciones que normalmente ocuparía esta sección está vacía. Se remite al CSV para el
-detalle requisito a requisito. Las filas con reserva en este documento son **veintiséis**,
-una más que en 1.9.1: entra **REQ-041** por `A-05-15`. Otras cuatro cambian de texto sin
-entrar ni salir: **REQ-031** gana `A-05-14`, y **REQ-033**, **REQ-045** y **REQ-046** pasan
-de «su vía ya está corregida» a «su vía está corregida **y ejercida**», que es lo que
-`DOC-27` añade.
+detalle requisito a requisito. Las filas con reserva en este documento son **veintisiete**,
+una más que en 1.10.0: entra **REQ-080** porque la pregunta `Q-30` de DOC-04 (`open`) lo
+alcanza junto a REQ-015. Los **9 casos nuevos** (TC-111…TC-119) no crean ninguna otra
+reserva: los cinco requisitos que los reciben ya la tenían o cierran limpio (REQ-042,
+REQ-081). El texto de 1.10.0 sobre `A-05-14` y la confirmación por ejecución de REQ-033 /
+REQ-045 / REQ-046 se conserva sin cambios.
 
 | requirement_id | module | priority | test_case_ids | count | diagnosis | Reserva |
 |---|---|---|---:|---|---|---|
@@ -1435,22 +1485,23 @@ de «su vía ya está corregida» a «su vía está corregida **y ejercida**», 
 | **REQ-011** | vehicles | critical | TC-015 | 1 | Correcto | **A-05-11b** (mitad del vector) · `critico_caso_unico` |
 | REQ-019 | peces | high | TC-025 | 1 | Correcto | A-05-08 (toda la cobertura en ola 1) · A-05-03 BUG-003 · ② |
 | **REQ-025** | albarans | high | TC-032;TC-033 | 2 | Correcto | **A-05-11c** — **los dos casos son inejecutables**; decisión de producto |
-| **REQ-027** | albarans | critical | TC-036 | 1 | Correcto | **A-05-11b** (mitad del vector) · `critico_caso_unico` |
+| **REQ-027** | albarans | critical | TC-036;TC-116 | 2 | Correcto | **A-05-11b** (mitad del vector; TC-116 `service` nuevo — ¿la cierra? pendiente de §3.11) · `critico_caso_unico` |
 | REQ-028 | albarans | critical | TC-037 | 1 | Correcto | A-05-08b (caso único en el carril de 17) · ① |
-| REQ-029 | albarans | high | TC-038;TC-039 | 2 | Correcto | ③ Q-16 |
+| REQ-029 | albarans | high | TC-038;TC-039 | 2 | Correcto | ③ Q-16 (de DOC-05, sin cambios) |
 | REQ-030 | albarans | critical | TC-040 | 1 | Correcto | A-05-08b · TC-040 causó el rojo de TC-048 en `DOC-23` 2.1.0; **aislado y corregido en 2.2.0** — el riesgo estructural del carril sigue abierto |
-| **REQ-031** | albarans | high | TC-041 | 1 | Correcto | A-05-01a **cerrado**; queda ⑤ Q-30. `service`, **ejecutado y verde** (`DOC-27`) · **A-05-14**: su paso 2 no lo ejerce ninguna suite |
+| **REQ-031** | albarans | high | TC-041 | 1 | Correcto | A-05-01a **cerrado**; queda ⑤ `Q-30` **de DOC-06** (ahora en colisión con la `Q-30` de DOC-04, §3.8). `service`, **ejecutado y verde** (`DOC-27`) · **A-05-14**: su paso 2 no lo ejerce ninguna suite |
 | REQ-032 | albarans | critical | TC-042;TC-043;TC-044 | 3 | Correcto | ⑤ |
 | REQ-033 | albarans | critical | TC-045 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto y confirmado**: `service`, ejercido en `DOC-27` (`TCS003`–`TCS004`) |
 | **REQ-034** | albarans | high | TC-046;TC-047 | 2 | Correcto | **A-05-11c** (TC-047 inejecutable; TC-046 sí) |
 | REQ-035 | albarans | critical | TC-048;TC-049 | 2 | Correcto | A-05-03 · BUG-001 · ② · TC-048 fue el rojo por aislamiento de `DOC-23` 2.1.0, **corregido y verde en 2.2.0** |
 | REQ-036 | albarans | critical | TC-050 | 1 | Correcto | A-05-08b (caso único en el carril de 17) · ② |
-| REQ-040 | albarans | medium | TC-055 | 1 | Correcto | A-05-03 · BUG-002 · ② · DOC-09 §3.1 |
+| REQ-040 | albarans | medium | TC-055;TC-112;TC-114 | 3 | Correcto | A-05-03 · BUG-002 · ② · DOC-09 §3.1 (SPE-06 suma TC-112/TC-114: el cambio de vehículo **dentro** del mismo cliente) |
 | **REQ-041** | albarans | medium | TC-056 | 1 | Correcto | **A-05-15** — borrar el albarán no devuelve el stock; ni DOC-04 lo decide ni TC-056 lo mira |
+| **REQ-080** | albarans | critical | TC-111;TC-113;TC-119 | 3 | Correcto | **nuevo (SPE-06)** · ① `Q-30` de DOC-04 (`open`, alcanza REQ-015 y REQ-080) · cobertura mixta: TC-111/TC-113 `service`, TC-119 `mixed` |
 | REQ-043 | factures | critical | TC-060;TC-061 | 2 | Correcto | A-05-03 · BUG-004 · ② · ⑤ Q-24, Q-27 |
 | REQ-045 | factures | critical | TC-063 | 1 | Correcto | `critico_caso_unico`; **A-05-11 resuelto y confirmado**: `service`, ejercido en `DOC-27` (`TCS005`–`TCS007`) |
 | REQ-046 | factures | critical | TC-064 | 1 | Correcto | **A-05-11a CERRADO y confirmado por ejecución** (`DOC-27`, `TCS008`–`TCS010`); quedan ② y `critico_caso_unico` |
-| REQ-048 | factures | high | TC-067;TC-068 | 2 | Correcto | ③ Q-16 |
+| REQ-048 | factures | high | TC-067;TC-068 | 2 | Correcto | ③ Q-16 (de DOC-05, sin cambios) |
 | **REQ-051** | factures | high | TC-073 | 1 | Correcto | **A-05-03b** (defecto corregido; el caso sigue sin comprobar el IVA) · ③ Q-17 |
 | **REQ-053** | factures | high | TC-075 | 1 | Correcto | **A-05-03b** (defecto corregido; el caso sigue sin comprobar el IVA) |
 | REQ-055 | factures | high | TC-078 | 1 | Correcto | A-05-01b · ① · ② |
@@ -1458,7 +1509,7 @@ de «su vía ya está corregida» a «su vía está corregida **y ejercida**», 
 | **REQ-065** | nomines | critical | TC-090 | 1 | Correcto | **A-05-11b** (mitad del vector) · `critico_caso_unico` |
 | REQ-073 | nomines | high | TC-103 | 1 | Correcto | A-05-01b · ① · ② |
 
-Las veintiséis filas de arriba dicen `Correcto` y las veintiséis tienen reserva. **No es
+Las veintisiete filas de arriba dicen `Correcto` y las veintisiete tienen reserva. **No es
 una contradicción, es el alcance del fichero**: la columna `diagnosis` responde a «¿hay
 caso?», no a «¿sirve el caso?», ni a «¿está sano el requisito?», ni a «¿se ha decidido ya
 qué probar?», ni a «¿puede ejecutarse ese caso por sí solo?», ni a «¿puede ese caso
@@ -1466,32 +1517,25 @@ componer su vector por la vía que declara?», ni —desde hoy— a «**¿compru
 su nombre anuncia?**». La columna «Reserva» es de esta tabla y **no existe en el CSV**:
 añadirla rompería el contrato que consume S-07.
 
-**Qué NO cambia en el CSV respecto de 1.9.1: nada.** Es **byte a byte idéntico** (md5
-`087a03779bd36a00d09f9e87943588c0`, sha256 `1676546a…`), por **octava vez consecutiva**, y
-otra vez sin que hubiera un cambio de versión que comprobar en DOC-04 o DOC-05: el disparo
-fue `DOC-27`, que no es una entrada del JOIN (§2). El JOIN se ha vuelto a ejecutar de todos
-modos —no se ha copiado el fichero de la versión anterior— porque la única manera de
-afirmar que un fichero no ha cambiado es regenerarlo y comparar.
+**Qué cambia en el CSV respecto de 1.10.0.** Tras ocho versiones byte a byte idéntico, el
+fichero **sí cambia**: +2 filas (REQ-080, REQ-081) y +9 casos, porque esta vez sí han
+cambiado de contenido las dos entradas del JOIN. **No lo ha regenerado A-05**: lo hizo S-14
+en el commit `621ea3b` (`matriz.js`, determinista); esta ejecución de A-05 solo verifica su
+salida y pone la prosa a la par. La cabecera, las 10 columnas y los diagnósticos posibles
+(`Correcto`, `GAP PLAN`) no cambian; sigue sin haber ni un `GAP EXPORT`.
 
-**Y la advertencia de 1.7.0 se mantiene, con el mejor ejemplo que ha tenido hasta hoy.**
-Ocho versiones de CSV idéntico, y en esta ha pasado lo siguiente sin que el fichero se
-inmute: cuatro casos han dejado de no tener ninguna fuente de evidencia de ejecución y ahora
-la tienen; un cierre que se sostenía en leer código ha quedado confirmado ejecutándolo; y
-han nacido tres avisos, uno de los cuales señala que la aplicación pierde stock por un
-camino que ningún requisito gobierna. **La estabilidad del fichero sigue sin ser evidencia
-de que nada relevante haya cambiado**: es evidencia de que este fichero mide una sola cosa
-—¿hay caso?— y la mide bien. Todo lo demás vive en la prosa de este documento, y por eso
-este documento existe.
+**La advertencia de 1.7.0 se mantiene**: la columna `diagnosis` mide una sola cosa —¿hay
+caso?— y la mide bien. Todo lo demás —vía de verificación, evidencia de ejecución, salud
+del requisito— vive en la prosa de este documento, y por eso este documento existe.
 
-**Verificaciones hechas sobre el CSV antes de entregarlo.** Las 79 filas parsean con 10
-columnas cada una según RFC 4180; los enunciados que contienen coma van entrecomillados y
-sobreviven al ida y vuelta de parseo; los **110** `TC-nnn` de DOC-05 aparecen en alguna
+**Verificaciones hechas sobre el CSV (salida de S-14) antes de citarlo.** Las 81 filas
+parsean con 10 columnas cada una según RFC 4180; los enunciados con coma van entrecomillados
+y sobreviven al ida y vuelta de parseo; los **119** `TC-nnn` de DOC-05 aparecen en alguna
 fila y ninguna fila cita un `TC-nnn` inexistente; cada `REQ-nnn` de DOC-04 aparece en
-**exactamente una** fila (79 IDs distintos); la suma de `test_case_count` es **110**; las
-tres columnas de Rally valen `n/d` en **las 79**; el fichero **no contiene la cadena
-`GAP EXPORT`** (0 ocurrencias); los 79 diagnósticos son `Correcto` y **ninguno es
-`GAP PLAN`**; y los 110 casos del CSV son exactamente los 110 que S-14 coloca en alguna
-ola.
+**exactamente una** fila (81 IDs distintos); la suma de `test_case_count` es **119**; las
+tres columnas de Rally valen `n/d` en **las 81**; el fichero **no contiene la cadena
+`GAP EXPORT`** (0 ocurrencias); los 81 diagnósticos son `Correcto` y **ninguno es
+`GAP PLAN`**.
 
 ## 5. Cobertura por módulo, por prioridad, por orden de ejecución y por vía
 
@@ -1502,45 +1546,44 @@ ola.
 | clients | 8 | 8 | 0 | 11 | 1,38 | 0 | 5 | **5** | 8 |
 | vehicles | 9 | 9 | 0 | 12 | 1,33 | 0 | 6 | **6** | 9 |
 | peces | 7 | 7 | 0 | 8 | 1,14 | 4 | 3 | **7** | 7 |
-| albarans | 18 | 18 | 0 | 28 | 1,56 | **8** | **6** | **14** | **16** |
-| factures | 13 | 13 | 0 | 19 | 1,46 | 10 | 3 | **13** | **11** |
+| albarans | **20** | **20** | 0 | **37** | **1,85** | 9 \* | 6 \* | 15 \* | 16 \* |
+| factures | 13 | 13 | 0 | 19 | 1,46 | 10 \* | 3 \* | 13 \* | 11 \* |
 | personal | 7 | 7 | 0 | 8 | 1,14 | 0 | 6 | **6** | 7 |
 | nomines | 12 | 12 | 0 | 18 | 1,50 | 7 | 3 | **10** | 12 |
 | shell | 4 | 4 | 0 | 5 | 1,25 | 2 | 0 | **2** | 4 |
 | configuracio | 1 | 1 | 0 | 1 | 1,00 | 1 | 0 | **1** | 1 |
-| **Total** | **79** | **79** | **0** | **110** | **1,39** | **32** | **32** | **64** | **75** |
+| **Total** | **81** | **81** | **0** | **119** | **1,47** | 33 \* | 32 \* | 65 \* | 75 \* |
 
-No hay huecos de cobertura que localizar por módulo. La concentración se mantiene:
-**`factures` (10 de 13) y `albarans` (8 de 18) reúnen 18 de los 32 requisitos con algo
-pendiente** —el ciclo del dinero, donde además están los cuatro defectos de A-14—. Con
-`factures` hay que seguir siendo preciso: sumando el quinto alcance, **los 13 de 13 tienen
-algo pendiente**. Es el módulo donde menos se puede decir que esté todo claro y el que
-produce dinero.
+No hay huecos de cobertura que localizar por módulo: **los dos requisitos nuevos de SPE-06,
+REQ-080 y REQ-081, entran cubiertos**, y con ellos `albarans` pasa a 20 de 20 y a 37 casos
+(1,85 por requisito, el módulo más denso). La concentración de trabajo pendiente sigue en el
+ciclo del dinero, `factures` y `albarans`.
 
-**El único cambio de esta tabla está en la columna `ui-only`**, y es consecuencia directa
-de DOC-05 1.6.0: `albarans` baja de 17 a 16 (sale REQ-033, cuyo TC-045 pasa a `service`) y
-`factures` de 13 a 11 (salen REQ-045 y REQ-046). El total pasa de 78 a **75**. Ninguna
-columna de cobertura se mueve, que es exactamente lo que debía ocurrir.
+**Columnas marcadas `\*`:** los alcances `①∪②∪③`, `⑤ solo`, `Unión` y `ui-only` se
+conservan de 1.10.0 con el único ajuste seguro —REQ-080 entra en `①` por `Q-30`, lo que
+sube `albarans` y el total en una unidad—; el reparto fino por vía de los 9 casos nuevos y
+su efecto en `ui-only` se re-derivará en la próxima regeneración completa (§5.6).
 
 ### 5.2 Por prioridad del requisito
 
-| Prioridad (DOC-04) | Requisitos | Cubiertos | GAP PLAN | Casos | ①∪②∪③ | ⑤ solo | **Unión** | Defecto confirmado | ui-only | **A-05-11** |
+| Prioridad (DOC-04) | Requisitos | Cubiertos | GAP PLAN | Casos | ①∪②∪③ \* | ⑤ solo \* | Unión \* | Defecto confirmado | ui-only \* | A-05-11 \* |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| critical | 35 | 35 | 0 | 56 | **10** | **16** | **26** | **2** | **32** | **3** |
-| high | 27 | 27 | 0 | 35 | 14 | 8 | **22** | **1** | 26 | **2** |
-| medium | 15 | 15 | 0 | 17 | 6 | 8 | **14** | **1** | 15 | 0 |
-| low | 2 | 2 | 0 | 2 | 2 | 0 | **2** | 0 | 2 | 0 |
+| critical | **36** | **36** | 0 | **61** | 11 | 16 | 27 | 2 | 32 | 3 |
+| high | **28** | **28** | 0 | **37** | 14 | 8 | 22 | 1 | 26 | 2 |
+| medium | 15 | 15 | 0 | **19** | 6 | 8 | 14 | 1 | 15 | 0 |
+| low | 2 | 2 | 0 | 2 | 2 | 0 | 2 | 0 | 2 | 0 |
 
-Diez de los 35 `critical` (29 %) y catorce de los 27 `high` (52 %) tienen algo pendiente
-en los tres alcances clásicos. El quinto alcance golpea distinto: **16 de los 35
-`critical` entran en él y en ningún otro**, lo que los lleva a 26 de 35 (74 %).
+**REQ-080 (`critical`) y REQ-081 (`high`) entran cubiertos.** Las columnas `\*` se
+conservan de 1.10.0 con el único ajuste seguro: REQ-080 entra en `①` vía `Q-30`, así que
+los `critical` con algo pendiente pasan de 10 a 11 y su unión de 26 a 27. El resto —el
+reparto por vía y `ui-only` de los 9 casos nuevos, y si REQ-027 sale de `A-05-11` al ganar
+TC-116— se re-derivará en la próxima regeneración completa (§5.6, §3.11).
 
-**Las dos últimas columnas se movieron en direcciones opuestas en 1.7.0 y no se han vuelto
-a mover.** `ui-only` bajó de 78 a **75** porque A-03 llevó tres casos `critical` a
-`service`: los `critical` con toda su cobertura por interfaz pasaron de 35 de 35 a **32 de
-35**, y esa bajada fue una mejora, no un deterioro. Sigue en 75 y en 32.
+**A-05-11: pendiente de recuento.** En 1.10.0 eran 5 requisitos (3 `critical` de A-05-11b +
+2 `high` de A-05-11c). SPE-06 no crea ninguno nuevo, pero TC-116 (`service`) podría cerrar
+la mitad de vector que le faltaba a REQ-027; queda para §3.11 de la próxima regeneración.
 
-**A-05-11 pasa de 4 requisitos a 5, y cambia de forma.** En 1.6.0 los cuatro eran
+**A-05-11 en 1.10.0 —análisis que se conserva—:** En 1.6.0 los cuatro eran
 `critical`; hoy son **tres `critical`** —REQ-011, REQ-027 y REQ-065, los de A-05-11b— y
 **dos `high`** —REQ-025 y REQ-034, los nuevos de A-05-11c—. El argumento estructural de
 1.6.0 se mantiene para la mitad `critical` y hay que corregirlo para la otra: los
@@ -1561,17 +1604,17 @@ abierto—, es que deja de ser un defecto de sistema confirmado.
 
 ### 5.3 Por prioridad y por tipo del caso
 
-| Prioridad (DOC-05) | Casos | vs 1.8.0 |
+| Prioridad (DOC-05) | Casos | vs 1.10.0 |
 |---|---:|---|
-| Critical | 49 | = |
-| High | 31 | = |
-| Medium | 28 | = |
+| Critical | 55 | **+6** (TC-111/112/113/115/116/119) |
+| High | 32 | **+1** (TC-117) |
+| Medium | 30 | **+2** (TC-114, TC-118) |
 | Low | 2 | = |
-| **Total** | **110** | **=** |
+| **Total** | **119** | **+9** |
 
-Por tipo: **66 `Functional`, 31 `Negative`, 9 `Boundary` y 4 `Integration`**, sin cambios.
-Los 35 requisitos críticos reciben 56 casos y **los 35 tienen al menos un caso `Critical`**
-(verificado: 0 excepciones).
+Por tipo: **68 `Functional`, 34 `Negative`, 10 `Boundary` y 7 `Integration`** (SPE-06 suma
+2 · 3 · 1 · 3). Los 36 requisitos `critical` reciben 61 casos y **los 36 tienen al menos un
+caso `Critical`** (REQ-080, el único nuevo, con TC-111).
 
 ### 5.4 Por orden de ejecución — A-05-08, sin cambios
 
@@ -1581,14 +1624,19 @@ verdad que derivaría en silencio. Lo que sí es de A-05 es la intersección ent
 la matriz, porque hay una pregunta que sólo se puede contestar con los dos delante: **¿puede
 producirse la evidencia de este requisito por sí sola?**
 
-| | Valor | vs 1.8.0 |
+**El plan de ejecución de DOC-05 para los 9 casos nuevos no se ha vuelto a derivar en esta
+pasada** (§ «Qué cambia en 1.11.0»): la tabla siguiente es la de 1.10.0. Lo único seguro es
+que `Casos sin aislamiento declarado` sigue en 0 —DOC-05 1.8.0 declara `touches` y
+precondiciones en los 119—.
+
+| | Valor | vs 1.10.0 |
 |---|---:|---|
-| Olas | 2 | = |
-| Ola 0 | 107 casos en 67 carriles | = |
+| Olas | 2 | = (recuento por confirmar) |
+| Ola 0 | 107 casos en 67 carriles | 1.10.0; +9 casos por ubicar |
 | Ola 1 | 3 casos en 3 carriles | = |
-| Paralelismo máximo | 67 | = |
-| Carril más largo | 17 casos | = |
-| Casos sin aislamiento declarado | **0 de 110** | = |
+| Paralelismo máximo | 67 | 1.10.0 |
+| Carril más largo | 17 casos | 1.10.0 |
+| Casos sin aislamiento declarado | **0 de 119** | = |
 
 **A-05-08 · cobertura condicionada**, sin cambios:
 
@@ -1613,6 +1661,12 @@ parche de esa sesión no cubre a los otros dos.
 **Corrección:** de **S-06 / DOC-13**, no de A-03. Coste: tres datos de prueba.
 
 ### 5.5 Grados de automatización y ejecución real — contexto, no cobertura, y por primera vez con dos fuentes
+
+**Análisis sin cambios desde 1.10.0** salvo por los denominadores. Los 9 casos nuevos de
+SPE-06 (4 `service`, 4 `ui`, 1 `mixed`) **aún no tienen ejecución publicada** en ninguna de
+las dos suites: ni `DOC-23` 2.2.0 ni `DOC-27` 1.0.0 los cubren. La evidencia de ejecución
+publicada sigue siendo de **106 casos, ahora sobre 119** (era sobre 110); la brecha pasa de
+4 a 13. Las cifras de grado de automatización de abajo son las de 1.10.0.
 
 | Grado | Casos | Qué significa |
 |---|---:|---|
@@ -1704,30 +1758,35 @@ el cuarto se ejecuta a mano por decisión del plan—, pero siguen siendo cuatro
 que, si mañana se pregunta en el Go/No-Go «¿esto se ha probado?», la respuesta honesta es
 que no consta.
 
-**Nada de esto entra en el CSV ni cambia un diagnóstico.** 106 de 110 con evidencia de
+**Nada de esto entra en el CSV ni cambia un diagnóstico.** 106 de 119 con evidencia de
 ejecución es una cifra de madurez de las suites, no de cobertura de requisitos: la cobertura
-sigue siendo 100 % porque los 110 casos existen y los 79 requisitos tienen el suyo. Un caso
+sigue siendo 100 % porque los 119 casos existen y los 81 requisitos tienen el suyo. Un caso
 sin escenario automatizado sigue cubriendo su requisito; lo que no hace es producir
 evidencia sin que alguien se siente a ejecutarlo.
 
 ### 5.6 Por vía de verificación
 
-DOC-05 1.6.0 declara `verification_path` en los 110 casos. A-05 lo ha contado sobre el
-YAML: **106 `ui`, 4 `service`, 0 `mixed`, 0 sin declarar** (eran 109/1 en 1.5.0).
+DOC-05 1.8.0 declara `verification_path` en los 119 casos. Contado sobre el YAML por A-05:
+**110 `ui`, 8 `service`, 1 `mixed`, 0 sin declarar** (eran 106/4/0 en 1.6.0). Los 9 casos
+nuevos aportan 4 `service` (TC-111, TC-113, TC-115, TC-116), 4 `ui` (TC-112, TC-114,
+TC-117, TC-118) y el **primer `mixed` del plan**, TC-119.
 
-**Estas cifras salen de los bloques `testcases`, no del resumen del front-matter de
-DOC-05**, que sigue declarando el reparto de 1.5.0 y por tanto ya no es cierto. Ver
-**A-05-12**, §3.12. Es una de las pocas ocasiones en que la regla «nunca leas la prosa,
-lee el YAML» cambia el resultado en vez de solo garantizarlo.
+**A-05-12 (§3.12) — pendiente de re-verificar contra DOC-05 1.8.0.** El resumen del
+front-matter de DOC-05 llevaba desde 1.6.0 sin cuadrar con su propio YAML; la nota de DOC-05
+1.8.0 sugiere que A-03 lo ha tocado en este ciclo. La comprobación de coherencia entre
+resumen y datos se rehará en la próxima regeneración completa.
 
-Llevado a la matriz, requisito a requisito:
+**El análisis por requisito de abajo es el de 1.10.0** (`ui-only` 75, `service` 4,
+`critical` ui-only 32/35); SPE-06 añade a `albarans` requisitos con cobertura por servicio
+y el primero con cobertura `mixed` (REQ-080, por TC-119), lo que baja `ui-only` — el nuevo
+recuento exacto queda para la regeneración completa.
 
-| | Requisitos | % | vs 1.9.1 |
+| | Requisitos | % | Nota |
 |---|---:|---:|---|
-| Cobertura enteramente por interfaz (`ui`) | **75** | 94,9 % | = |
-| Cobertura enteramente por servicio | **4** (REQ-031, REQ-033, REQ-045, REQ-046) | 5,1 % | = · **los cuatro, con evidencia de ejecución desde `DOC-27` 1.0.0** |
-| Cobertura mixta (casos por las dos vías) | 0 | 0 % | = |
-| **`critical` con cobertura enteramente por interfaz** | **32 de 35** | 91,4 % | = |
+| Cobertura enteramente por interfaz (`ui`) | 75 \* | — | 1.10.0; baja con SPE-06 |
+| Cobertura enteramente por servicio | 4 \* (REQ-031, REQ-033, REQ-045, REQ-046) | — | + los nuevos de `albarans` (REQ-080/081/027/042 tienen casos `service`) |
+| Cobertura mixta (casos por las dos vías) | **1** | — | **REQ-080**, por TC-119 — primera del plan |
+| **`critical` con cobertura enteramente por interfaz** | 32 de 36 \* | — | 1.10.0, denominador +1 |
 
 **Cómo NO hay que leer este 94,9 %.** No es un hueco de cobertura y no se presenta como
 tal. La política de A-03 —*un caso va por servicio sólo cuando el vector no existe en la
@@ -1784,9 +1843,15 @@ En consecuencia, y ahora con la corrección hecha:
 
 ## 6. Narrativa de riesgos
 
+**Sin cambios de fondo desde 1.10.0.** SPE-06 no cambia ningún riesgo de este apartado;
+solo añade que los **9 casos nuevos** de albaranes se exportarán sin evidencia de ejecución
+—ninguna de las dos suites los cubre todavía (§5.5)— y que **4 de ellos son `service`**, así
+que su vía dependerá de que S-17 amplíe la colección. El resto de la narrativa es la de
+1.10.0.
+
 **Aún no hay datos de ejecución en Rally.** Esta sección es propia de la pasada `post` y
 no puede escribirse ahora: no existen `DOC-19-RALLY-TESTCASES.csv` ni
-`DOC-20-RALLY-STATE.json`, es decir, los 110 casos no se han exportado, no constan
+`DOC-20-RALLY-STATE.json`, es decir, los 119 casos no se han exportado, no constan
 ejecutados en Rally y no tienen resultado registrado allí. Cualquier afirmación sobre qué
 diría esa ejecución sería especulación, no trazabilidad.
 
@@ -1881,13 +1946,14 @@ sección se escribirá con datos.
 
 ## 7. Preguntas abiertas
 
-### 7.1 El alcance, recalculado y sin cambios
+### 7.1 El alcance — pendiente de recálculo completo
 
-Es el dato que A-11 usa para el Go/No-Go. A-05 lo ha recalculado desde los bloques YAML de
-los tres documentos —`open_questions` de DOC-04 vía `status` y `affects_requirements`,
-`open_questions.questions` de DOC-05 vía `affects_requirements` y `affects_cases`, y
-`open_questions.questions` de DOC-06 vía `affects_requirements`— sin leer ninguna tabla de
-prosa.
+**Este apartado NO se ha vuelto a derivar en la pasada de 1.11.0.** La tabla es la de
+1.10.0. SPE-06 la mueve en al menos tres sitios que hay que recalcular en la próxima
+regeneración: `Q-30` de DOC-04 (`open`) entra en `①` y alcanza REQ-015 y **REQ-080**;
+DOC-06 1.4.0 añade su pregunta propia `Q-31` (sobre REQ-080/REQ-081) a `⑤`; y los 9 casos
+nuevos cambian los denominadores de casos de `①`, `②` y `③`. Ninguna pregunta se cierra:
+SPE-06 fue entregada directamente como spec sin pasar por A-06, y `Q-30` sigue `open`.
 
 | | Preguntas | Requisitos | Casos | Quién debe actuar | vs 1.8.0 |
 |---|---:|---:|---:|---|---|
@@ -2000,6 +2066,9 @@ contestada, y también sí: commit `5366e18`, verificado por A-05 en el código.
 tres son baratas de contestar y ninguna es de A-05: una es de S-12, otra de producto y la
 tercera de A-03. La lista pasa de 15 a **18**.
 
+**1.11.0 añade una —19—, de SPE-06.** Ver al final de la lista. La pregunta 12 (`Q-30`)
+cambia de contenido: ya no es «¿se concede?», sino la colisión de §3.8.
+
 1. **¿Describen REQ-025 y REQ-034 lo que se quiere que haga la aplicación?** Nacida en
    1.7.0, sigue sin respuesta y **no es de QA**. REQ-025 promete un listado de
    albaranes filtrable por vehículo, por cliente y por situación; la interfaz solo ofrece
@@ -2067,8 +2136,10 @@ tercera de A-03. La lista pasa de 15 a **18**.
     exposición sigue en **34 entradas repartidas entre dos documentos** (§3.6). Mientras la
     convención sólo la sostenga un comentario, el modo de fallo sigue disponible. Corrección
     de **S-12**.
-12. **¿Se concede formalmente `Q-30`?** Un comando de S-12 y, si el número concedido fuera
-    otro, una renumeración de una sola pregunta por parte de **A-04** (§3.8).
+12. **¿Cómo se resuelve la colisión de `Q-30`?** DOC-04 1.3.1 renumeró su `Q-16` a `Q-30`
+    y S-12 la registró; DOC-06 1.4.0 sigue trayendo un `Q-30` propio —otra pregunta— más un
+    `Q-31` numerado a mano. **S-12** asigna a las dos de DOC-06 los siguientes libres y
+    **A-04** las renumera en el manual (§3.8).
 13. **¿Basta un solo caso para los 17 requisitos críticos de `critico_caso_unico`?** La
     pregunta mejoró en 1.7.0 y no se ha movido desde entonces: para catorce sigue siendo
     «¿basta un caso?» y para **tres —REQ-011, REQ-027 y REQ-065— sigue siendo «¿basta medio
@@ -2110,3 +2181,9 @@ tercera de A-03. La lista pasa de 15 a **18**.
     reescribe el caso para que no prometa lo que nadie hará, o el paso sale a un caso
     hermano `ui`. **Es de A-03**, y cuesta menos que cualquiera de las otras diecisiete
     preguntas de esta lista.
+19. **¿Se exportan a Rally los 4 casos `service` nuevos de SPE-06 sin evidencia de
+    ejecución?** TC-111, TC-113, TC-115 y TC-116 nacen `verification_path: service` y hoy
+    **ninguna suite los cubre**: `automation/api/` (DOC-26/DOC-27) no los tiene. Igual que
+    los 4 `service` de 1.6.0 antes de `DOC-27`, quedan correctamente asignados a **S-17**
+    pero sin fuente que diga si se han ejecutado. Decisión de **A-11** sobre si el Go/No-Go
+    exige esa evidencia; trabajo de **S-17** para producirla.
