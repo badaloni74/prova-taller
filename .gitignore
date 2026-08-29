@@ -10,3 +10,6 @@ target/
 # Cache del control de resincronizacion: se reconstruye desde .resync-watermark
 PENDIENTE-RESINCRONIZAR.md
 automation/api/newman/
+
+# Volcados de crash de MSYS/Git Bash
+*.stackdump

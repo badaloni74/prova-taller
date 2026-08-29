@@ -1,0 +1,535 @@
+Crea un dashboard interactivo, detallado y visualmente profesional para el proyecto “app-taller”, utilizando como fuente los documentos almacenados en la carpeta de SharePoint indicada por el usuario.
+
+El dashboard debe estar completamente en CASTELLANO.
+
+OBJETIVO
+Crear un dashboard de trazabilidad, calidad, riesgos y estado del proyecto que permita a usuarios de negocio, analistas, QA y responsables técnicos entender rápidamente:
+
+1. Estado global del proyecto.
+2. Cobertura de requisitos.
+3. Estado de los casos de prueba.
+4. Defectos confirmados.
+5. Preguntas abiertas y decisiones pendientes.
+6. Riesgos relevantes.
+7. Evolutivos en curso o pendientes.
+8. Mejoras técnicas aceptadas o propuestas.
+9. Requisitos más problemáticos.
+10. Documentos clave y enlaces rápidos.
+
+FUENTES A UTILIZAR
+Lee y cruza automáticamente la información de estos documentos, si existen en la carpeta de SharePoint:
+
+- DOC-01-BASE-ASIS.md
+- DOC-02-TECNICA.md
+- DOC-04-FUNCIONAL.md
+- DOC-05-PLAN-PRUEBAS.md
+- DOC-06-MANUAL-USUARIO.md
+- DOC-07-MATRIZ.csv
+- DOC-07-TRAZABILIDAD.md
+- DOC-08-ESPEC-EVOLUTIVO-albara-canvi-client.md
+- DOC-09-IMPACTO-albara-canvi-client.md
+- DOC-16-ROADMAP.md
+- DOC-24-BUGS.json
+- DOC-25-PROPUESTAS-FUNCIONALES.md
+
+La fuente principal para métricas de cobertura y trazabilidad debe ser DOC-07-TRAZABILIDAD.md y DOC-07-MATRIZ.csv.
+
+La fuente principal para defectos debe ser DOC-24-BUGS.json.
+
+La fuente principal para mejoras técnicas debe ser DOC-16-ROADMAP.md.
+
+La fuente principal para evolutivos debe ser DOC-08 y DOC-09.
+
+REGLA IMPORTANTE SOBRE DATOS
+No inventes datos.
+
+Si un dato no existe o no puede calcularse, muéstralo como:
+- “No disponible”
+- “Pendiente de calcular”
+- “No evaluado”
+
+No uses valores fijos si pueden calcularse desde los documentos.
+
+El dashboard debe actualizarse con los datos actuales de los documentos de SharePoint cada vez que se regenere o actualice.
+
+IDIOMA Y TONO
+Todo el contenido visible debe estar en castellano.
+
+Usa lenguaje claro, sencillo y útil para negocio y equipos técnicos.
+
+Evita términos demasiado técnicos si no son necesarios. Si se usan, acompáñalos de una explicación breve.
+
+ESTILO VISUAL
+Diseña un dashboard moderno, oscuro, elegante y profesional.
+
+Estilo recomendado:
+- Fondo oscuro azul/gris.
+- Tarjetas con bordes suaves.
+- Colores de estado:
+  - Verde: correcto o sin bloqueo.
+  - Amarillo/ámbar: riesgo moderado o pendiente.
+  - Rojo: crítico o acción urgente.
+  - Azul: información o navegación.
+- Iconografía simple y consistente.
+- Tablas claras.
+- Gráficos legibles.
+- Evitar exceso de gráficos tipo donut.
+
+Mantén una barra lateral izquierda con navegación.
+
+ESTRUCTURA GENERAL DEL DASHBOARD
+
+1. Barra lateral izquierda
+Debe incluir estas secciones:
+
+- Resumen General
+- Requisitos
+- Casos de Prueba
+- Cobertura
+- Preguntas Abiertas
+- Defectos
+- Mejoras Roadmap
+- Riesgos y Alertas
+- Evolutivos
+- Ejecución de Pruebas
+- Documentos
+- Glosario
+
+En la parte inferior de la barra lateral mostrar:
+
+- Nombre del proyecto: app-taller
+- Versión del dashboard
+- Fecha de generación
+- Fuente principal
+- Rama o commit, si está disponible
+- Indicador de actualización automática, si aplica
+
+2. Filtros globales
+En la parte superior del dashboard incluir filtros:
+
+- Módulo
+- Prioridad
+- Estado
+- Tipo
+- Documento fuente
+- Fecha de generación
+
+Los filtros deben afectar a tablas y gráficos cuando sea posible.
+
+3. KPIs superiores
+Crear tarjetas principales con estos indicadores:
+
+A. Requisitos totales
+- Valor esperado según DOC-07: 79.
+- Mostrar también cuántos están cubiertos.
+
+B. Casos de prueba
+- Valor esperado según DOC-07: 110.
+- Mostrar también pasos de prueba, si está disponible. Según DOC-07 son 241 pasos.
+
+C. Cobertura de requisitos
+- Mostrar porcentaje de cobertura funcional.
+- Según DOC-07, la cobertura es 100% y el GAP PLAN es 0.
+- Importante: dejar claro que cobertura funcional no equivale a calidad validada.
+
+D. Defectos confirmados
+- Según DOC-24, hay 4 defectos confirmados.
+- Separar por severidad: 2 críticos y 2 altos.
+
+E. Preguntas abiertas
+- Calcular desde los documentos.
+- Según DOC-07, el censo total es 29 preguntas.
+- DOC-07 indica 22 preguntas abiertas y 7 no abiertas o ya respondidas.
+- Mostrar como “22 abiertas de 29” si el cálculo actual coincide.
+- No mostrar “22 resueltas de 29” salvo que los documentos lo indiquen explícitamente.
+
+F. Mejoras aceptadas
+- Según DOC-16, hay 6 mejoras técnicas.
+- Mostrar aceptadas, propuestas, rechazadas e implementadas.
+- Según DOC-16: 3 aceptadas, 3 propuestas, 0 rechazadas, 0 implementadas.
+
+G. Anomalías bloqueantes
+- Según DOC-07, 0 anomalías bloqueantes.
+
+H. Estado global del proyecto
+No mostrar automáticamente “ON TRACK” solo porque la cobertura sea 100%.
+
+Calcular un estado global con esta lógica:
+
+- GREEN / En seguimiento correcto:
+  - 0 defectos críticos
+  - 0 anomalías bloqueantes
+  - pocas preguntas abiertas
+  - sin riesgos críticos abiertos
+
+- AMBER / Requiere atención:
+  - existe cobertura funcional completa, pero hay defectos críticos, preguntas abiertas, hallazgos A-05 o evolutivos pendientes
+
+- RED / Bloqueado:
+  - existen anomalías bloqueantes
+  - defectos críticos sin tratamiento
+  - roturas de trazabilidad
+  - imposibilidad de avanzar a la siguiente fase
+
+Para el estado actual, si se detectan 4 defectos confirmados, 2 críticos, preguntas abiertas y hallazgos A-05 abiertos, mostrar “AMBER / Requiere atención”.
+
+SECCIONES DEL RESUMEN GENERAL
+
+1. Cobertura de requisitos por prioridad
+Usar barras horizontales en vez de donut.
+
+Mostrar:
+- Prioridad
+- Requisitos totales
+- Requisitos cubiertos
+- Porcentaje
+- Requisitos con reserva o riesgo, si se puede calcular
+
+Según DOC-07:
+- Critical: 35 requisitos, cubiertos 35.
+- High: 27 requisitos, cubiertos 27.
+- Medium: 15 requisitos, cubiertos 15.
+- Low: 2 requisitos, cubiertos 2.
+
+2. Requisitos por módulo
+Mostrar barras horizontales o tabla resumida.
+
+Según DOC-07, mostrar módulos como:
+- clients
+- vehicles
+- peces
+- albarans
+- factures
+- personal
+- nomines
+- shell
+- configuracio
+
+Incluir:
+- requisitos por módulo
+- casos asociados
+- requisitos con reservas
+- incidencias o defectos asociados
+
+3. Casos de prueba por grado de automatización
+Usar barras horizontales.
+
+Según DOC-07:
+- High: 25
+- Medium: 80
+- Low: 4
+- Not recommended: 1
+- Blocked: 0
+
+4. Reparto por vía de verificación
+Mostrar preferiblemente barras o tarjeta comparativa.
+
+Según DOC-07:
+- UI: 109 de 110 casos
+- Service: 1 de 110 casos
+- Mixed: 0
+- Sin declarar: 0
+
+Añadir alerta:
+“El predominio de UI no es un problema por sí mismo, pero hay requisitos críticos cuyo vector no es alcanzable por la vía declarada.”
+
+5. Calidad validada
+Crear indicador separado de la cobertura funcional.
+
+No decir que la calidad es 100% si hay defectos confirmados.
+
+Mostrar:
+- Cobertura funcional: 100%
+- Calidad validada: calcular o marcar como “Requiere atención”
+- Motivos:
+  - 4 defectos confirmados
+  - 2 defectos críticos
+  - hallazgos A-05-11
+  - preguntas abiertas
+  - requisitos con reserva
+
+Si no se puede calcular un porcentaje fiable de calidad, mostrar:
+“Calidad validada: Requiere atención”
+en vez de inventar un porcentaje.
+
+SECCIÓN DE RIESGOS
+Crear una tarjeta llamada “Resumen de Riesgos”.
+
+Debe incluir:
+
+- Preguntas abiertas
+- Bugs críticos
+- Bugs altos
+- Hallazgos A-05 abiertos
+- Requisitos con vector no alcanzable
+- Evolutivos pendientes
+- Mejoras técnicas propuestas pendientes de decisión
+
+Asignar nivel:
+- Alto
+- Medio
+- Bajo
+
+Reglas sugeridas:
+- Bugs críticos: Alto
+- Preguntas abiertas numerosas: Alto
+- A-05-11: Alto
+- Evolutivos pendientes: Medio
+- Mejoras propuestas sin decidir: Medio
+- Anomalías bloqueantes: si > 0, Crítico
+
+SECCIÓN DE REQUISITOS MÁS PROBLEMÁTICOS
+Sustituir el “Top 10 requisitos con más casos” por una tabla más útil llamada:
+
+“Requisitos más problemáticos”
+
+Columnas:
+- Requisito
+- Descripción breve
+- Módulo
+- Prioridad
+- Casos asociados
+- Bugs asociados
+- Preguntas abiertas relacionadas
+- Hallazgos A-05
+- Impacto
+- Estado recomendado
+
+Incluir especialmente:
+- REQ-040, asociado a BUG-002 y EVO-001.
+- REQ-035, asociado a BUG-001.
+- REQ-019, asociado a BUG-003.
+- REQ-043, asociado a BUG-004.
+- REQ-046, asociado a A-05-11a y al análisis de impacto de EVO-001.
+- REQ-011, REQ-027 y REQ-065, asociados a A-05-11b.
+
+SECCIÓN A-05-11
+Crear bloque específico:
+
+“Vectores no alcanzables por la vía declarada”
+
+Mostrar:
+- REQ-046 / TC-064 / UI / Crítico / El intento no se puede componer en FacturaForm.
+- REQ-011 / TC-015 / UI / Crítico / El caso ejerce solo parte del vector.
+- REQ-027 / TC-036 / UI / Crítico / El caso ejerce solo parte del vector.
+- REQ-065 / TC-090 / UI / Crítico / El caso ejerce solo parte del vector.
+
+Explicar de forma sencilla:
+“El requisito tiene caso de prueba y por eso la matriz lo cuenta como cubierto, pero el caso no permite comprobar completamente el comportamiento por la vía declarada.”
+
+SECCIÓN DE PREGUNTAS ABIERTAS
+Crear bloque:
+
+“Preguntas abiertas y decisiones pendientes”
+
+Debe leer preguntas desde:
+- DOC-04
+- DOC-05
+- DOC-06
+- DOC-08, si contiene decisiones pendientes
+
+Mostrar:
+- Total de preguntas censadas
+- Abiertas
+- Respondidas
+- Sin ancla, si existen
+- Documento origen
+- Prioridad o impacto
+- Requisitos afectados
+
+Incluir advertencia si aparece Q-30 sin ancla, tal como indica DOC-07.
+
+En el caso de DOC-08, mostrar decisiones pendientes:
+- PD-002: qué pasa cuando un vehículo cambia de dueño y tiene albaranes pendientes.
+- PD-003: qué hace el usuario cuando ya se equivocó y existen líneas anotadas.
+- Gate pendiente de validación por el peticionario de negocio.
+
+SECCIÓN DE DEFECTOS CONFIRMADOS
+Crear bloque:
+
+“Defectos confirmados”
+
+Leer desde DOC-24-BUGS.json.
+
+Mostrar:
+- ID
+- Severidad
+- Requisito afectado
+- Pregunta relacionada
+- Título
+- Impacto
+- Estado
+- Detectado por
+- Si es alcanzable desde UI
+
+Incluir resumen:
+- BUG-001: crítico, REQ-035, stock negativo.
+- BUG-002: crítico, REQ-040, cambio de vehículo cambia cliente de facturación.
+- BUG-003: alto, REQ-019, importes negativos.
+- BUG-004: alto, REQ-043, factura emitida no se puede anular ni corregir.
+
+SECCIÓN DE EVOLUTIVOS
+Crear bloque:
+
+“Evolutivos”
+
+Leer desde DOC-08 y DOC-09.
+
+Mostrar para EVO-001:
+- ID
+- Título
+- Estado
+- Origen
+- Requisitos afectados
+- Requisitos contradichos
+- Criterios de aceptación
+- Decisiones pendientes
+- Gate
+- Señal de esfuerzo
+- Riesgos silenciosos
+- Documentos que quedarán desactualizados
+
+Para EVO-001 mostrar:
+- Afecta a REQ-040 y REQ-046.
+- Contradice parcialmente REQ-040.
+- Refuerza REQ-046.
+- El análisis de impacto indica effort_signal: medium.
+- El alcance funcional declarado es small, pero la verificación empuja la señal a medium.
+
+SECCIÓN ROADMAP TÉCNICO
+Crear bloque:
+
+“Roadmap técnico”
+
+Leer desde DOC-16.
+
+Mostrar:
+- Mejoras totales: 6
+- Aceptadas: 3
+- Propuestas: 3
+- Rechazadas: 0
+- Implementadas: 0
+
+Mostrar tarjetas o tabla:
+- MEJ-001: Identificadores estables de prueba en la interfaz. Estado accepted.
+- MEJ-003: Suite de pruebas automáticas del servidor y CI mínima. Estado accepted.
+- MEJ-005: Estado de base reproducible entre escenarios. Estado accepted.
+- MEJ-002: Catálogo único de literales de error del servidor. Estado proposed.
+- MEJ-004: Un sitio donde vivan las reglas de escritura. Estado proposed.
+- MEJ-006: Fijar versión de Node y ruta configurable de base. Estado proposed.
+
+Destacar dependencias:
+- MEJ-003 y MEJ-005 dependen de MEJ-006, que todavía está propuesta.
+- MEJ-004 depende de MEJ-003.
+
+SECCIÓN ACTIVIDAD RECIENTE
+Crear bloque:
+
+“Actividad reciente”
+
+Ordenar por fecha, si los documentos ofrecen generated_at, decided_on o fechas internas.
+
+Incluir eventos como:
+- Generación de DOC-07.
+- Confirmación de bugs en DOC-24.
+- Decisión de mejoras en DOC-16.
+- Generación de DOC-08 y DOC-09.
+- Cierre o cambio de estado de preguntas como Q-18.
+- Decisión PD-001 en DOC-08.
+
+Si no hay fecha fiable, mostrar “Fecha no disponible”.
+
+SECCIÓN DOCUMENTOS
+Crear bloque:
+
+“Documentos del proyecto”
+
+Mostrar enlaces rápidos a:
+- Matriz de trazabilidad
+- Requisitos funcionales
+- Plan de pruebas
+- Manual de usuario
+- Bugs
+- Roadmap
+- Evolutivo actual
+- Análisis de impacto
+- Propuestas funcionales
+
+Cada enlace debe abrir el documento original de SharePoint si es posible.
+
+INTERACTIVIDAD
+El dashboard debe permitir:
+
+- Filtrar por módulo.
+- Filtrar por prioridad.
+- Filtrar por estado.
+- Filtrar por tipo de elemento.
+- Buscar por ID: REQ, TC, BUG, Q, MEJ, EVO, AC.
+- Hacer clic en un requisito y ver una vista 360.
+
+VISTA REQUISITO 360
+Crear una vista detallada cuando el usuario seleccione un requisito.
+
+Debe mostrar:
+- ID del requisito.
+- Enunciado.
+- Módulo.
+- Prioridad.
+- Estado.
+- Casos de prueba asociados.
+- Vía de verificación.
+- Bugs relacionados.
+- Preguntas relacionadas.
+- Evolutivos relacionados.
+- Hallazgos A-05 relacionados.
+- Documentos donde aparece.
+- Riesgo estimado.
+- Recomendación.
+
+Esta vista es especialmente importante para:
+- REQ-040
+- REQ-046
+- REQ-035
+- REQ-043
+- REQ-019
+- REQ-011
+- REQ-027
+- REQ-065
+
+REGLAS DE COHERENCIA
+Antes de generar el dashboard, validar:
+
+1. Que los totales de DOC-07 y DOC-07-MATRIZ.csv coinciden.
+2. Que todos los requisitos del CSV tienen diagnóstico válido.
+3. Que la suma de casos asociados coincide con 110.
+4. Que no se confunde cobertura funcional con ejecución real.
+5. Que no se interpreta “Correcto” como “sin defectos”.
+6. Que los bugs de DOC-24 se representan como calidad/riesgo, no como GAP PLAN.
+7. Que las preguntas abiertas se calculan desde el estado real de los documentos.
+8. Que el estado global no sea GREEN si hay defectos críticos abiertos o riesgos altos.
+9. Que si hay documentos ausentes, se indique claramente.
+
+SALIDA ESPERADA
+Genera un dashboard interactivo en formato HTML/CSS/JavaScript o el formato más adecuado para SharePoint/Microsoft 365.
+
+Debe poder guardarse en la carpeta “Dashboard” del mismo SharePoint.
+
+El dashboard debe estar diseñado para que pueda actualizarse cuando cambien los documentos fuente.
+
+Si no es posible actualización automática en el entorno actual, deja preparada la estructura para regenerarlo fácilmente desde los documentos actualizados.
+
+NOMBRE PROPUESTO DEL ARCHIVO
+dashboard-app-taller-trazabilidad-estado-proyecto.html
+
+TÍTULO VISUAL
+app-taller
+Dashboard de Trazabilidad y Estado del Proyecto
+
+SUBTÍTULO
+Seguimiento de requisitos, pruebas, defectos, riesgos, evolutivos y roadmap técnico
+
+PRINCIPIO CLAVE
+No ocultes los riesgos detrás de una cobertura del 100%.
+
+El mensaje principal debe ser:
+“El proyecto tiene cobertura funcional completa, pero requiere atención por defectos confirmados, preguntas abiertas y riesgos de verificación.”

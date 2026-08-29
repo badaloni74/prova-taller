@@ -1,0 +1,27 @@
+- Al crear l'app el nom dels elements ha d'estar en castellà
+- Al automatitzar el nom dels elements ha d'estar en castellà (derivat del primer punt).
+- Revisar les automatitzacions per a que cada pantalla tingui els seus localitzadors i la funció corresponent per accedir-hi sempre i quan no es pugui accedir a ells de manera dinàmica
+- El nom dels agents no ha de ser a01- ..., a02-....
+a01-orquestador -> AG Orquestador
+a02-funcional -> AG Analista Funcional
+a03-pruebas -> AG QA de Plan Pruebas
+a04-manual -> User Manual Builder
+a05-trazabilidad -> Traceability & Coverage Agent 
+a06-refinamiento -> Business Refinement Agent 
+a07-impacto -> Impact Analysis Agent
+a08-estimacion -> Effort Estimation Agent
+a09-regresion -> Regression Planning Agent
+a12-roadmap -> RefactorizadorTechnical Strategy Advisor
+a15-funcionalidad -> Product Strategy Advisor
+
+- donar una volta a tot ho que hi ha per refactoritzar-ho i fer-ho més àgil i econòmic en tokens 
+
+- Una vegada feta una implementació, s'ha de revisar el pla de proves per saber quines noves proves s'han de crear, quines han quedat obsoletes, quines han variat
+- Una vegada es validen els canvis de TCs per la última implementació es crida a l'agent de regressió per a que faci informe sobre TCs a executar, de Acceptació i de regressió-
+- A partir de l'informe del pla de proves s'executaran les proves pertinents i l'agent explorador qa es centrarà en la part implementada i es generarà un informe 
+- ?? Faria falta un document amb un resum de ho que fa cada TC per revisar-ho després de cada implantació i fer més fàcil la tria? 
+- Fa falta un agent que publiqui els documents al confluence
+- Fa falta un agent que publiqui els docs. al one drive o sharepoint 
+- fa falta preparar el dashboard per mostrar les dades dels documents
+- fa falta un agent que accedeixi a la documentació de one drive o sharepoint i al git i respongui a preguntes. 
+  important poder saber tot ho que hi ha, què s'ha implementat i poder fer el seguient al git
