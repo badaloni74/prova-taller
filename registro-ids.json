@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T07:15:09.921Z",
+  "updated_at": "2026-08-29T07:52:40.817Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3037,6 +3037,24 @@
       "created": "2026-08-29",
       "status": "open",
       "blocks": "REQ-015",
+      "source": "yaml"
+    },
+    "Q-31": {
+      "text": "REQ-031 dice que una anotación que no sea de pieza ni de mano de obra no llega a registrarse y que el albarán conserva sus líneas y sus importes, pero no consta qué ve el usuario cuando eso ocurre: ¿hay un aviso, la pantalla sencillamente no ofrece más tipos que esos dos, o se puede llegar por otro camino?",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "§4/A.10 y §4/A.11 — el manual describe la consecuencia sin poder describir la escena",
+      "source": "yaml"
+    },
+    "Q-32": {
+      "text": "REQ-081 filtra el selector de vehículo del formulario de cabecera de albarán al cliente actual, y REQ-080 rechaza entero el intento de cambio a un vehículo de otro cliente sin guardar ni el vehículo, ni la fecha, ni las notas. No consta qué ve el usuario cuando el rechazo ocurre ni si puede provocarlo desde la pantalla: ¿con el selector filtrado la situación es inalcanzable por interfaz? Si es alcanzable, ¿hay mensaje de error y qué dice? ¿La pantalla indica que no se ha guardado nada o simplemente no guarda?",
+      "type": "open_question",
+      "document": "DOC-06-MANUAL-USUARIO.md",
+      "created": "2026-08-29",
+      "status": "open",
+      "blocks": "§4/A.13 — «El albarán no se puede pasar a otro cliente» y «Si algo va mal»: el manual describe el rechazo y sus consecuencias sin poder describir la escena",
       "source": "yaml"
     }
   }

@@ -2,11 +2,11 @@
 doc_id: DOC-06-HIST
 doc_name: DOC-06-MANUAL-USUARIO-HIST
 of_document: DOC-06-MANUAL-USUARIO.md
-version: 1.4.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.4.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-04 manual de usuario
 generator_version: "1.2"
-generated_at: 2026-08-28T00:00:00+02:00
+generated_at: 2026-08-29T00:00:00+02:00
 language: es
 ---
 
@@ -19,6 +19,47 @@ renumeración de preguntas de 1.0.0 a 1.1.0, que el documento principal ya no
 reproduce.
 
 Una entrada por versión, de la más nueva a la más antigua.
+
+---
+
+## 1.4.1 — 2026-08-29 (PATCH — renumeración de preguntas, sin cambio de contenido)
+
+**Qué cambió.** Solo identificadores de preguntas abiertas. Ninguna tarea del
+manual cambia de texto.
+
+- Las preguntas propias `Q-30` (nacida en 1.2.0, sobre lo que ve el usuario
+  cuando `REQ-031` rechaza una anotación que no es de pieza ni de mano de obra)
+  y `Q-31` (nacida en 1.4.0, sobre lo que ve el usuario cuando `REQ-080` /
+  `REQ-081` rechazan el cambio de cliente de un albarán) nunca llegaron a
+  registrarse: 1.4.0 las dejó en `pending_registry_confirmation` porque A-04 no
+  tenía la herramienta de S-12.
+- Entretanto, el registro concedió `Q-30` a **otra** pregunta: la de A-02 en
+  `DOC-04`, que A-02 renumeró desde su propia `Q-16` en DOC-04 1.3.1 al chocar
+  con `DOC-05/Q-16`. En `registro-ids.json`, `Q-30` → `DOC-04-FUNCIONAL`.
+- Regla de gobierno de identificadores: cede quien no registró. DOC-06 nunca
+  registró las suyas, así que renumera: `Q-30` → **`Q-31`** y `Q-31` → **`Q-32`**,
+  conservando el número anterior en `previous_id`. `Q-31` y `Q-32` estaban libres
+  y quedan concedidas a este manual (S-12 las ancla en el commit de
+  sincronización posterior). No se toca ningún identificador de otro documento.
+- Citas actualizadas: donde el manual citaba `DOC-04/Q-16` ahora cita
+  `DOC-04/Q-30` (mismo asunto: la fuga por la puerta del vehículo, tarea A.7),
+  en el apartado 9.2, en la nota de trazabilidad del apartado 8 y en el bloque
+  estructurado de 9.5. La `Q-16` que este manual cita de **DOC-05**
+  (`DOC-05/Q-16`, numeración anual) **no cambia**.
+
+**Tabla de equivalencia**
+
+| Hasta 1.4.0 | Desde 1.4.1 | De qué trata |
+|---|---|---|
+| `DOC-06/Q-30` | `DOC-06/Q-31` | Qué ve el usuario cuando `REQ-031` rechaza una anotación que no es de pieza ni de mano de obra |
+| `DOC-06/Q-31` | `DOC-06/Q-32` | Qué ve el usuario cuando `REQ-080` / `REQ-081` rechazan el cambio de cliente de un albarán |
+| cita `DOC-04/Q-16` | cita `DOC-04/Q-30` | A-02 la renumeró desde su `Q-16` en DOC-04 1.3.1 |
+
+**Por qué es PATCH.** No cambia ninguna tarea, ningún requisito cubierto ni
+ningún contenido de negocio: solo la numeración de dos preguntas abiertas propias
+y la actualización de una cita a la nueva numeración de DOC-04. El contenido
+funcional sigue siendo el de 1.4.0, regenerado contra DOC-01 1.2.0 y DOC-04
+1.3.0.
 
 ---
 
