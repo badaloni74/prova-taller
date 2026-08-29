@@ -2,11 +2,11 @@
 doc_id: DOC-16-HIST
 doc_name: DOC-16-ROADMAP-HIST
 of_document: DOC-16-ROADMAP.md
-version: 3.1.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 3.2.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-24T17:15:00+02:00
+generated_at: 2026-08-29T20:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -38,6 +38,80 @@ señalan como reconstruidas para que nadie las tome por notas escritas en su mom
 histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
 añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
 `DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## 3.2.0 — 2026-08-29 — MINOR
+
+**Delta acotada sobre la 3.1.0, no ronda de análisis nueva.** `S-16` volvió a marcar
+`DOC-16` como obsoleto. La pasada trata **solo** las dos entradas movidas por evidencia de
+ejecución nueva (no por SPE-06):
+
+```
+DOC-27: declara 1.0.0, actual 1.1.0  [MINOR]  (35ff50b)
+DOC-07: declara 1.10.0, actual 1.12.0 [MINOR x2]  (cf7f4c0)
+```
+
+**Qué trajeron.**
+
+- **`DOC-27` 1.1.0** — `S-17` amplió `automation/api/`: de **10 a 22 `TCS`**
+  (TCS011…TCS022), de **28 a 53 peticiones**, 74 aserciones, 0 rojos, base resembrada y sin
+  residuo. Cubren por servicio los casos de SPE-06 que el selector de vehículo filtrado sacó
+  de la interfaz: TC-111/113 (`REQ-080`), TC-115 (`REQ-042`), TC-116 (`REQ-027`) y la mitad
+  de servicio de TC-119.
+- **`DOC-07` 1.12.0** — la 1.11.0 incorporó SPE-06 (cobertura **79/79 → 81/81**, sigue
+  100 %, 0 GAP PLAN — ya reconocido en `obsolescence_ack` de la 3.1.0); la 1.12.0 incorpora
+  `DOC-27` 1.1.0 (evidencia de ejecución publicada **106 → 111\* de 119**). La pregunta
+  abierta 19 de `DOC-07` (casos service de SPE-06 sin evidencia) pasa a parcialmente
+  respondida.
+
+**Ninguna mejora nace, se retira ni cambia de estado.** Tres mueven evidencia, ninguna
+cambia tamaño, dificultad, impacto, urgencia ni prioridad:
+
+- **`MEJ-002` crece.** La colección de servicio afirma ahora **8 de los 71 literales** de
+  error con igualdad exacta (`to.eql`), el doble que en la 3.1.0. Los cuatro nuevos son de
+  la ruta `PUT /albarans/:id` (`albarans.js:82`/`:87`/`:92`/`:101`), verificados verbatim
+  contra el código en `HEAD` (`cf7f4c0`); tres con aserción negativa añadida. Sigue #2 en
+  la recomendación.
+- **`MEJ-003` se matiza — y el argumento «sigue haciendo falta» se refuerza, no se
+  debilita.** Cabría esperar que una suite de servicio que **dobla de tamaño** acercara el
+  proyecto a lo que `MEJ-003` compra. El dato dice lo contrario: **todo el crecimiento fue
+  profundidad sobre `albarans`/`factures`** —los dos routers ya cubiertos— y **cero avance**
+  en CI, en ficheros dentro de `server/` y en los otros cinco routers
+  (`clients`/`vehicles`/`peces`/`personal`/`nomines`). Dejar crecer la colección externa
+  sola no converge hacia `MEJ-003`. Sigue `accepted`, sin ejecutar.
+- **`MEJ-006` se matiza (reforzado).** `DOC-27` 1.1.0 confirma por los dos lados que la
+  suite se ejecuta de forma repetible sin nada de lo que `MEJ-006` propone: dos pasadas sin
+  resembrar dan el mismo recuento (53/74/0) y, con resembrado, el estado medido queda
+  idéntico antes y después. El argumento «bloquea a dos aceptadas» se ablanda un poco más.
+  Sigue `opinion`, `urgency: medium`, #3 en la recomendación. Queda en pie solo la mitad de
+  ruta de base configurable: la corrida de entrega de la 1.1.0 partió de `npm run seed`,
+  que reescribe `data/taller.db` en el sitio.
+- **`MEJ-004` no se mueve** en esta delta: la profundidad añadida sobre `albarans`/`factures`
+  no toca los routers de sus defectos abiertos (`nomines`, `vehicles`).
+
+**La recomendación no cambia de orden** (`MEJ-009`, `MEJ-002`, `MEJ-006`): `DOC-27` 1.1.0
+solo refuerza los movimientos que ya hizo la 3.1.0.
+
+**Alcance deliberadamente estrecho.** No se reconsumen `DOC-02` 1.2.0, `DOC-05` 1.8.0
+(SPE-06, sin impacto en ningún `MEJ-nnn`; `server/routes/` no cambió: 893 líneas, 86
+`res.status`, 71 literales en `cf7f4c0` — la ruta `PUT /albarans/:id` ya existía desde el
+fix `ed61c24`) ni `DOC-14` 2.1.1 / `DOC-25` 1.2.2 (resyncs circulares de la propia 3.1.0).
+Se registran en `obsolescence_ack`. Tampoco se han barrido todas las citas «79/79» /
+«110 casos» del cuerpo heredado —solo las de §1, §1.7 y §5.5—; el resto se corrige en la
+próxima ronda de análisis completa.
+
+**Front-matter.** `inputs`: `DOC-27` 1.0.0 → 1.1.0 (`178d4b14` → `2ae7596b`),
+`DOC-07` 1.10.0 → 1.12.0 (`f3eb60be` → `4b3e99db`); `source.commit_sha` `40bbd43` →
+`cf7f4c0`. Nueva sección `§1.7` en el cuerpo con la tabla del delta.
+
+**Por qué MINOR y no PATCH.** No es un resello de procedencia: hay contenido nuevo
+verificable —`MEJ-002` gana cuatro literales citados verbatim, `MEJ-003` y `MEJ-006` mueven
+su argumento, nace `§1.7`—. Mismo criterio que la 2.1.0 y la 3.1.0: evidencia que crece o
+se matiza en varias fichas es `MINOR` aunque ningún `MEJ-nnn` cambie de estado. No es MAJOR
+porque no se renumera, retira ni cambia de estado ningún identificador.
+
+**`registro-ids.json` no se toca.** Ningún `MEJ-nnn` nuevo, retirado ni reformulado.
 
 ---
 

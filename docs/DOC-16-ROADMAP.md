@@ -1,22 +1,22 @@
 ---
 doc_id: DOC-16
 doc_name: DOC-16-ROADMAP
-version: 3.1.0
+version: 3.2.0
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-24T17:15:00+02:00
+generated_at: 2026-08-29T20:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 40bbd43a7cf722dbd5a12259c994f1a415317479
+  commit_sha: cf7f4c084dbf2a6cd392a06e8e485db5ad476280
   working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
 inputs:
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 3.0.1
-    hash: sha256:545330c910c20fb070ad01cbbb8be1e00ce8fac1c8008c93a98d98d5751bee10
+    version: 3.1.0
+    hash: sha256:3baf09b197aef0fe758569befb44b0066fe92e0ccbdfd46bb497cb7f6440287a
     present: true
   - id: DOC-02-TECNICA.md
     from: S-01
@@ -30,8 +30,8 @@ inputs:
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.10.0
-    hash: sha256:f3eb60be92de53c46245bb92637446551d102333761576119d85f9a84f9c5a86
+    version: 1.12.0
+    hash: sha256:4b3e99db4a6275027e9830ee17a5731bf1e5b14dada0aad22c57eaf76efa6ffe
     present: true
   - id: DOC-14-EXPLORATORIO.md
     from: A-10
@@ -45,8 +45,8 @@ inputs:
     present: true
   - id: DOC-27-INFORME-API.md
     from: S-17
-    version: 1.0.0
-    hash: sha256:178d4b14e0202ec9f8846b661f1dda465e552cb6d3aa5f563e19d9b9c5b82573
+    version: 1.1.0
+    hash: sha256:2ae7596bf44f875ce2a675715344b739f0a1520301cf224746b8aafd8d192e20
     present: true
   - id: DOC-24-BUGS.json
     from: A-14
@@ -76,15 +76,23 @@ obsolescence_ack:
   - input: DOC-02
     upto: 1.2.0
     date: 2026-08-29
-    note: "SPE-06: AlbaraForm filtra el selector de vehículo + guarda en el router de albaranes. Ningún MEJ-nnn del roadmap se apoya en esa zona del código."
+    note: "SPE-06: AlbaraForm filtra el selector de vehículo + guarda en el router de albaranes. Ningún MEJ-nnn del roadmap se apoya en esa zona del código. server/routes/ no cambió (893 líneas, 86 res.status, 71 literales, recontado en cf7f4c0). Fuera del alcance de la delta 3.2.0; se consumirá en la próxima ronda de análisis."
   - input: DOC-05
     upto: 1.8.0
     date: 2026-08-29
-    note: "SPE-06: +9 casos TC-111..TC-119. El roadmap técnico no depende del censo de casos del plan."
-  - input: DOC-07
-    upto: 1.11.0
+    note: "SPE-06: +9 casos TC-111..TC-119. El roadmap técnico no depende del censo de casos del plan. Fuera del alcance de la delta 3.2.0."
+  - input: DOC-14
+    upto: 2.1.1
     date: 2026-08-29
-    note: "SPE-06: cobertura pasa de 79/79 a 81/81, sigue 100% y 0 GAP PLAN. Ningún MEJ-nnn cambia de prioridad por dos requisitos nuevos ya cubiertos; las citas 79/79 se actualizan al regenerar."
+    note: "Resync circular de A-10 tras DOC-16 3.1.0. Sin cambio de contenido; ningún EXP-nnn nace ni cierra. Fuera del alcance de la delta 3.2.0."
+  - input: DOC-25
+    upto: 1.2.2
+    date: 2026-08-29
+    note: "Resync de A-15 tras DOC-14. No alimenta el análisis de deuda/cobertura/defectos. Fuera del alcance de la delta 3.2.0."
+  - input: registro-ids.json
+    upto: 1.6.0
+    date: 2026-08-29
+    note: "SPE-06 añadió REQ-080/081, TC-111..119 y Q-30. Anclas MEJ sin cambios: siguen MEJ-001..MEJ-008 (MEJ-009 aún sin censar, findings_for_others target S-12). Fuera del alcance de la delta 3.2.0."
 ---
 
 # DOC-16 · Mejoras y roadmap técnico — app-taller
@@ -98,15 +106,44 @@ obsolescence_ack:
 > `version` en el front-matter. El historial está en **`docs/DOC-16-ROADMAP-HIST.md`**.
 >
 > `status: draft`. Nueve mejoras: dos `implemented`, tres `accepted` que siguen sin entrar
-> en `A-07` y cuatro esperando decisión. **Esta ronda no nace ninguna mejora nueva y ninguna
-> cambia de estado**; lo que cambia es la evidencia de cuatro de ellas (`MEJ-002`, `MEJ-003`,
-> `MEJ-004`, `MEJ-006`) y la corrección del cuerpo que la 3.0.1 dejó desfasado. **Las decide
-> una persona, no A-12.**
+> en `A-07` y cuatro esperando decisión. La 3.1.0 fue la última ronda de análisis; **la
+> 3.2.0 es una delta acotada sobre ella**: `S-17` amplió la suite de servicio (`DOC-27`
+> 1.0.0 → 1.1.0) y `A-05` regeneró la trazabilidad (`DOC-07` 1.10.0 → 1.12.0). **No nace
+> ninguna mejora nueva y ninguna cambia de estado**; lo que se mueve es la evidencia de
+> tres de ellas —`MEJ-002` crece (de 4 a 8 literales afirmados con igualdad exacta),
+> `MEJ-003` y `MEJ-006` se matizan (ver §1.7)—. **Las decide una persona, no A-12.**
 
 ## Procedencia
 
 Cómo se han usado las entradas, por qué la versión es la que es y qué se ha decidido en
 esta ronda sobre la forma del propio documento.
+
+### Ronda 3.2.0 (2026-08-29) — delta acotada, no ronda de análisis
+
+`S-16` volvió a marcar `DOC-16` como obsoleto. Esta pasada trata **solo** las dos entradas
+que se movieron por evidencia de ejecución nueva, no por SPE-06:
+
+- **`DOC-27` 1.0.0 → 1.1.0** (`35ff50b`). `S-17` amplió `automation/api/`: de 10 a 22
+  `TCS` (TCS011…TCS022), de 28 a 53 peticiones, 74 aserciones, 0 rojos, base **resembrada**
+  y sin residuo. Leídos §1, §2.2, §2.3, §3, §4, §5 y §6, y la propia colección
+  (`tallerMecaniccollection.json`) para contar los `to.eql` sobre literales del servidor.
+- **`DOC-07` 1.10.0 → 1.12.0** (`cf7f4c0`). La 1.11.0 incorporó SPE-06 (cobertura 79/79 →
+  81/81, sigue 100 %, 0 GAP PLAN — ya reconocido en `obsolescence_ack`); la 1.12.0
+  incorpora `DOC-27` 1.1.0 (evidencia de ejecución 106 → 111\* de 119). Leídos el
+  front-matter, §1.12.0 del `-HIST`, y las secciones que cruzan `DOC-27`.
+- **Código, recontado en `HEAD` (`cf7f4c0`).** El merge de SPE-06 (`c771e35`) tocó solo
+  `client/src/pages/albarans/AlbaraForm.tsx` y `server/db/seed.js`: **`server/routes/` no
+  cambió** — 893 líneas, 86 `res.status`, 71 literales de error, igual que en la 3.1.0. La
+  ruta `PUT /albarans/:id` con la comprobación de «vehículo de otro cliente» ya existía
+  desde el fix de bugs `ed61c24`, no la trajo SPE-06.
+
+**Lo que esta delta NO ha hecho, a propósito.** No ha reconsumido `DOC-02` 1.2.0, `DOC-05`
+1.8.0, `registro-ids.json` 1.6.0, `DOC-14` 2.1.1 ni `DOC-25` 1.2.2 (ver `obsolescence_ack`):
+los tres primeros son SPE-06 sin impacto en ningún `MEJ-nnn` —`server/routes/` no cambió y
+las anclas `MEJ` del registro siguen en `MEJ-001`…`MEJ-008`—, los dos últimos son resyncs
+circulares de la propia 3.1.0. No ha barrido todas las citas «79/79» ni «110 casos» del
+cuerpo heredado —solo las de las secciones que esta delta toca (§1, §1.7, §5.5)—; el resto
+se corrige en la próxima ronda de análisis completa.
 
 ### Ronda 3.1.0 (2026-08-24) — lo que se ha leído y lo que se ha corregido del bloque `inputs`
 
@@ -173,20 +210,20 @@ que ninguna entrada nueva ha desmentido:
 
 ## 1. Qué ha cambiado desde el roadmap anterior
 
-**No es la primera ejecución.** La última con análisis fue la **3.0.0** (2026-08-23), que
-llevó `MEJ-007` y `MEJ-008` a `implemented` — ese cierre está documentado en el apartado 3.1
-y no se repite aquí. La **3.0.1** fue un resello de procedencia que, por decisión escrita en
-el `-HIST.md`, dejó el cuerpo sin tocar con citas ya desfasadas. Esta ronda las corrige —
-ver 1.6.
+**No es la primera ejecución.** La última ronda de análisis fue la **3.1.0** (2026-08-24);
+esta **3.2.0** es una delta acotada sobre ella (§1.7). Los apartados 1.1 a 1.6 de abajo son
+el análisis de la 3.1.0, actualizado en cifras donde la delta lo toca; el resumen de qué se
+movió en la delta está en **§1.7**. La 3.0.0 llevó `MEJ-007` y `MEJ-008` a `implemented`
+(apartado 3.1).
 
 | Entrada | Qué cambió | Qué aporta a este documento |
 |---|---|---|
-| **`DOC-07` 1.10.0** (era 1.9.0) | Nacen `A-05-14`, `A-05-15` y `A-05-16`. La evidencia de ejecución publicada pasa de 102 a 106 de 110 casos | Una mejora gana evidencia (`MEJ-004`), otra queda parcialmente satisfecha (`MEJ-003`) y aparece un hallazgo que **no** se convierte en mejora, con el motivo escrito |
-| **`DOC-27` 1.0.0** (entrada nueva) | Existe y se ha ejecutado una suite de servicio: 10 `TCS-nnn`, 28 peticiones, 31 aserciones, 0 rojos, sin residuo en la base | Es la primera verificación automática del servidor que existe en este proyecto. Obliga a repreguntar si `MEJ-003` sigue haciendo falta, y destapa evidencia nueva para `MEJ-002` |
+| **`DOC-07` 1.10.0** (era 1.9.0; **1.12.0 en la 3.2.0**, ver §1.7) | Nacen `A-05-14`, `A-05-15` y `A-05-16`. La evidencia de ejecución publicada pasa de 102 a 106 y, con la 1.12.0, a 111\* de 119 casos | Una mejora gana evidencia (`MEJ-004`), otra queda parcialmente satisfecha (`MEJ-003`) y aparece un hallazgo que **no** se convierte en mejora, con el motivo escrito |
+| **`DOC-27` 1.0.0** (entrada nueva; **1.1.0 en la 3.2.0**, ver §1.7) | Suite de servicio: 10 → 22 `TCS-nnn`, 28 → 53 peticiones, 74 aserciones, 0 rojos, sin residuo en la base | Es la primera verificación automática del servidor que existe en este proyecto. Obligó a repreguntar si `MEJ-003` sigue haciendo falta (sí, reforzado en 3.2.0), y destapa evidencia nueva para `MEJ-002` (4 → 8 literales) |
 
-**La cobertura no se mueve, y conviene decirlo antes que nada.** `DOC-07` 1.10.0 mantiene
-**100,00 % (79/79)**, **0 `GAP PLAN`**, **0 anomalías bloqueantes**, y su
-`DOC-07-MATRIZ.csv` vuelve a salir con el mismo md5, octava vez consecutiva. Además,
+**La cobertura no se mueve, y conviene decirlo antes que nada.** `DOC-07` (1.10.0 en la
+3.1.0; **1.12.0** en la 3.2.0) mantiene **100,00 %** —**79/79** hasta SPE-06, **81/81** con
+`REQ-080`/`REQ-081` ya cubiertos—, **0 `GAP PLAN`**, **0 anomalías bloqueantes**. Además,
 **ningún `MEJ-nnn` de este documento citaba `DOC-07` en su `evidence_refs`** hasta esta
 ronda — comprobado una a una sobre las nueve fichas del bloque estructurado antes de tocar
 nada; las únicas menciones eran narrativas (`A-05-06` en 5.4, `A-05-11c` en 6.3, las tres
@@ -205,28 +242,29 @@ satisfecha**, pero tampoco sigue igual: **queda parcialmente satisfecha, y por p
 su forma no es una hipótesis**.
 
 **Lo que sí ha llegado.** `automation/api/` es una colección Postman ejecutable con
-`newman`, y `DOC-27` 1.0.0 publica su resultado: **10 `TCS-nnn` en verde, 28 peticiones, 31
-aserciones, 0 fallidas, 1,75 s**. Verifica reglas que la interfaz no permite ni intentar
-—un tipo de línea que el desplegable no ofrece, facturar un albarán ya facturado, mezclar
-clientes en una factura— y **no deja residuo**: facturas 12→12, albaranes 37→37, stock de
-`FO-100` 37→37, medido antes y después. Es exactamente la clase de comprobación que
-`MEJ-003` compraba, y es real.
+`newman`, y `DOC-27` **1.1.0** publica su resultado: **22 `TCS-nnn` en verde** (10 previos
++ 12 de SPE-06), **53 peticiones, 74 aserciones, 0 fallidas, 4,4 s**. Verifica reglas que
+la interfaz no permite ni intentar —un tipo de línea que el desplegable no ofrece, facturar
+un albarán ya facturado, mezclar clientes en una factura y, desde 1.1.0, cambiar por
+servicio el vehículo de un albarán a uno de otro cliente— y **no deja residuo**: facturas
+1→1, albaranes 4→4, líneas 7→7, stock del catálogo 167→167, medido antes y después sobre
+base resembrada. Es exactamente la clase de comprobación que `MEJ-003` compraba, y es real.
 
-**Lo que no ha llegado, recontado en `HEAD` (`40bbd43`) y no deducido de la prosa de nadie.**
+**Lo que no ha llegado, recontado en `HEAD` (`cf7f4c0`) y no deducido de la prosa de nadie.**
 
-| Lo que `MEJ-003` pedía | Estado hoy |
+| Lo que `MEJ-003` pedía | Estado hoy (3.2.0, `DOC-27` 1.1.0) |
 |---|---|
-| Pruebas automáticas del servidor | **Parcial.** `find server -name '*.test.*' -o -name '*.spec.*'` sigue devolviendo **0 ficheros**. La suite existe, pero vive fuera de `server/`, se dispara a mano y **necesita el servidor levantado** para ejecutarse |
-| Cobertura de los routers | **2 de 7.** Las peticiones de la colección tocan `albarans-router` y `factures-router`; `clients`, `vehicles` y `peces` solo como lectura de fixture, y `personal` y `nomines` **no aparecen** |
-| Densidad | **10 comprobaciones frente a 86 `res.status`** en `server/routes/`. No es una red: es un cable tenso sobre tres reglas concretas |
+| Pruebas automáticas del servidor | **Parcial.** `find server -name '*.test.*' -o -name '*.spec.*'` sigue devolviendo **0 ficheros**. La suite ha doblado de tamaño pero sigue viviendo fuera de `server/`, se dispara a mano y **necesita el servidor levantado** para ejecutarse |
+| Cobertura de los routers | **2 de 7, igual que en 1.0.0.** Los doce `TCS` de SPE-06 caen sobre `albarans-router` (`PUT /:id`) y `factures-router`; `clients`, `vehicles` y `peces` solo como lectura de fixture, y `personal` y `nomines` **siguen sin aparecer**. La suite creció en profundidad, no en alcance |
+| Densidad | **22 comprobaciones frente a 86 `res.status`** en `server/routes/` (893 líneas, 71 literales, recontado en `HEAD` `cf7f4c0` — SPE-06 no tocó `server/routes/`). Más tensa sobre `albarans`/`factures`, igual de ausente en el resto |
 | CI mínima | **Nada.** No hay `.github/`, ni `.gitlab-ci.yml`, ni script `test` en la raíz ni en `server/package.json`, ni una sola dependencia de test declarada |
 
 **La consecuencia para `MEJ-004`, que es lo que de verdad importa.** `MEJ-004` (mover las
 reglas de escritura de los siete routers a un módulo por dominio) `depends_on: [MEJ-003]`
-por un motivo concreto: sin red, mover reglas es apostar. Diez comprobaciones sobre dos
-routers **no son esa red**. En particular, `nomines-router` y `vehicles-router` —donde viven
-`EXP-004`, `EXP-005` y `EXP-015`— no tienen hoy ni una sola comprobación automática de
-servicio. **La dependencia se mantiene entera.**
+por un motivo concreto: sin red, mover reglas es apostar. Veintidós comprobaciones sobre los
+mismos dos routers **siguen sin ser esa red**. En particular, `nomines-router` y
+`vehicles-router` —donde viven `EXP-004`, `EXP-005` y `EXP-015`— siguen sin tener ni una
+sola comprobación automática de servicio. **La dependencia se mantiene entera.**
 
 **Lo que sí ha cambiado, y no es poco: la pregunta de forma está respondida.** Hasta hoy
 `MEJ-003` llevaba `confidence: medium` en parte porque nadie sabía qué forma tendría la
@@ -236,6 +274,15 @@ la base a su estado**. Quien haga `A-07` sobre `MEJ-003` ya no diseña desde cer
 o decide no extender. **Eso es una decisión de una persona, no de A-12**, y por eso no se
 tocan aquí ni el tamaño ni la dificultad de una mejora ya `accepted`: cambiarle los números
 sin pasar por `A-07` sería volver a decidir lo ya decidido.
+
+**¿La suite que ha doblado de tamaño debilita el argumento de `MEJ-003`? No: lo refuerza.**
+Cabría pensar que una colección de servicio el doble de grande acerca el proyecto a lo que
+`MEJ-003` compra y hace la mejora menos urgente. El dato dice lo contrario: el crecimiento
+de `automation/api/` entre 1.0.0 y 1.1.0 fue **todo profundidad sobre `albarans`/`factures`**
+—los routers que ya cubría— y **cero avance** en las tres piezas que faltan (CI, ficheros
+dentro de `server/`, los otros cinco routers). Es la evidencia de que dejar crecer la
+colección orgánicamente no converge hacia `MEJ-003`: la red sobre `nomines`, `personal`,
+`clients`, `vehicles` y `peces` no va a aparecer sola.
 
 **`MEJ-003` sigue `accepted`, sin implementar, y A-12 no la repropone.**
 
@@ -288,27 +335,34 @@ cruzaran tres documentos (`DOC-27`, `DOC-07` y el código) para verlo. La eviden
 
 ### 1.4 `MEJ-002` gana un segundo consumidor de los literales, y es más estricto que el primero
 
-Es el hallazgo con más consecuencia práctica de la ronda, y no lo señalaba ningún documento:
-sale de leer la colección directamente. **`automation/api/tallerMecaniccollection.json`
-afirma cuatro de los 71 literales de error del servidor con igualdad exacta**, no con
-`include`:
+Es el hallazgo con más consecuencia práctica, y no lo señalaba ningún documento: sale de
+leer la colección directamente. En la 3.1.0 eran **cuatro**; con `DOC-27` 1.1.0 son **ocho
+de los 71 literales de error del servidor afirmados con igualdad exacta** (`to.eql`), no
+con `include`:
 
-| Aserción en la colección | Literal en el servidor |
-|---|---|
-| `to.eql('Tots els albarans han d\'estar pendents de facturar')` | `server/routes/factures.js:69` |
-| `to.eql('Tots els albarans han de ser del mateix client')` | `server/routes/factures.js:76` |
-| `to.eql('El camp tipus ha de ser "peca" o "ma_obra"')` | `server/routes/albarans.js:146` |
-| `to.eql('La peça indicada no existeix')` | `server/routes/albarans.js:161` |
+| Aserción en la colección | Literal en el servidor | Desde |
+|---|---|---|
+| `to.eql("Tots els albarans han d'estar pendents de facturar")` | `factures.js:69` | 3.1.0 |
+| `to.eql('Tots els albarans han de ser del mateix client')` | `factures.js:76` | 3.1.0 |
+| `to.eql('El camp tipus ha de ser "peca" o "ma_obra"')` | `albarans.js:146` | 3.1.0 |
+| `to.eql('La peça indicada no existeix')` | `albarans.js:161` | 3.1.0 |
+| `to.eql("L'albarà ja està facturat i no es pot modificar")` | `albarans.js:82` (`PUT /:id`) | **3.2.0** |
+| `to.eql("No es pot canviar el vehicle a un que pertany a un altre client")` | `albarans.js:101` | **3.2.0** |
+| `to.eql("El camp vehicle_id és obligatori")` | `albarans.js:87` | **3.2.0** |
+| `to.eql("El vehicle indicat no existeix")` | `albarans.js:92` | **3.2.0** |
 
-**Los cuatro verificados verbatim contra el código en `HEAD`.** Y los cuatro están en
-catalán, que es exactamente el objeto de `DOC-14/EXP-006` (`deriva_a: A-14`: la interfaz en
-castellano devuelve avisos en catalán).
+**Los ocho verificados verbatim contra el código en `HEAD` (`cf7f4c0`).** Y los ocho están
+en catalán, que es exactamente el objeto de `DOC-14/EXP-006` (`deriva_a: A-14`: la interfaz
+en castellano devuelve avisos en catalán). Tres de los cuatro nuevos (`TCS015`, `TCS018`,
+`TCS019`) añaden además una aserción **negativa** —que el mensaje *no* sea el de cambio de
+cliente—, con lo que el texto exacto queda clavado por partida doble.
 
 **Por qué esto sube la evidencia y no es una curiosidad.** Hasta ahora `MEJ-002` se sostenía
 en un acoplamiento: 25 casos de la familia «Literal del aviso» de `DOC-05` §4.11 anclados a
 los 71 literales. Ahora son **dos suites, de dos tecnologías distintas, con dos dueños
 distintos** (`s10-auto-tcs` y `S-17`) ancladas al mismo texto, y la segunda con igualdad
-exacta. El día que `A-14` corrija el idioma de `EXP-006`, rompe las dos a la vez.
+exacta en ocho puntos —el doble que en la 3.1.0—. El día que `A-14` corrija el idioma de
+`EXP-006`, rompe las dos a la vez.
 
 **Y el ensayo general ya ocurrió.** `EXP-027` fue precisamente esto: `SPEC 05` cambió un
 formato de presentación y **17 escenarios se pusieron en rojo** porque validaban el literal
@@ -322,28 +376,31 @@ que podría pasar: es lo que pasó hace un día, contado, con su informe. La dif
 Sería fácil escribir aquí que `MEJ-006` gana urgencia porque ahora hay una suite más que
 necesita entorno reproducible. **Sería falso, y el dato apunta al revés.**
 
-`DOC-27` §5 dice que la base **no se resembró** antes de ejecutar, y que fue deliberado:
-«comprobar que la colección es repetible sobre una base ya usada es parte de lo que se
-quería verificar». Salió bien: 10/10 en verde y la base idéntica antes y después. Es decir,
-**la suite de servicio demostró que se puede ejecutar de forma repetible sin nada de lo que
-`MEJ-006` propone**. El argumento de «bloquea a dos aceptadas» se ablanda, no se refuerza.
+En la 1.0.0, `DOC-27` §5 anotaba que la base **no se resembró** y que la corrida salió
+igualmente limpia. La 1.1.0 lo confirma desde los dos lados: esta vez **sí se resembró**
+(corrida de entrega) y, aun así, `DOC-27` §1 y §6 dejan constancia de que **dos pasadas
+seguidas sin resembrar dan el mismo recuento (53 / 74 / 0)** y de que el estado medido
+antes y después es idéntico (facturas 1→1, albaranes 4→4, líneas 7→7, stock 167→167). Es
+decir: **la suite de servicio se ejecuta de forma repetible con y sin resembrado, sin nada
+de lo que `MEJ-006` propone.** El argumento de «bloquea a dos aceptadas» se ablanda un poco
+más, no se refuerza.
 
-Lo que sí queda, y es citable por primera vez, es la otra mitad: el mismo `DOC-27` §5 añade
-que «un informe de entrega sí debería partir de `npm run seed`», y `npm run seed` **rehace
-`data/taller.db` en el sitio**, destruyendo la base de trabajo. Esa es exactamente la
-incomodidad que resuelve hacer configurable la ruta. Sigue sin haber **ni un solo dato** que
-mida un incidente causado por la mitad de `engines`/`.nvmrc`.
+Lo que sí queda es la otra mitad: `DOC-27` §6 confirma que la 1.1.0 fue «una corrida de
+entrega» y **partió de `npm run seed`**, que **rehace `data/taller.db` en el sitio**,
+destruyendo la base de trabajo. Ya no es hipótesis: es lo que hubo que hacer esta vez. Esa
+es exactamente la incomodidad que resuelve hacer configurable la ruta. Sigue sin haber **ni
+un solo dato** que mida un incidente causado por la mitad de `engines`/`.nvmrc`.
 
 **Conclusión: `MEJ-006` no sube de urgencia, sigue en `medium` y sigue marcada `opinion`.**
-Se documenta el matiz porque `MEJ-006` viene recomendada en el podio desde hace tres rondas
-por lo que desbloquea, y esa justificación es hoy más débil que ayer. **Baja al tercer
-puesto — ver apartado 2.**
+La 3.1.0 ya la bajó al tercer puesto del podio por lo que desbloquea (que se ha visto
+contradicho); `DOC-27` 1.1.0 solo refuerza esa lectura. **Se mantiene en el tercer puesto —
+ver apartado 2.**
 
 **Un apunte lateral que sí es útil para `MEJ-005`** (aceptada, sin empezar): el patrón
-`_setup`/`_teardown` de la colección —18 peticiones de fixture que devuelven la base a su
-estado, medido— es una demostración funcionando, dentro del repositorio, de la técnica que
-`MEJ-005` quiere para la suite de navegador. No cambia su estado ni su prioridad; es
-material para quien la ejecute.
+`_setup`/`_teardown` de la colección —31 peticiones de fixture que devuelven la base a su
+estado, medido antes y después— es una demostración funcionando, dentro del repositorio, de
+la técnica que `MEJ-005` quiere para la suite de navegador. No cambia su estado ni su
+prioridad; es material para quien la ejecute.
 
 ### 1.6 Lo que esta ronda corrige del cuerpo heredado
 
@@ -367,33 +424,51 @@ vivo que `BUG-001` y `BUG-002` funcionan. `BUG-003` (con decisión de negocio de
 `MEJ-001`, `MEJ-003` y `MEJ-005`. Ninguna ha entrado en el ciclo. Para `MEJ-003` esta ronda
 sí trae información nueva (1.1); para `MEJ-001` y `MEJ-005`, no.
 
+### 1.7 Delta 3.2.0 (2026-08-29) — `S-17` amplía la suite de servicio, `A-05` regenera trazabilidad
+
+Delta acotada sobre la 3.1.0, no ronda de análisis nueva. Dos entradas se movieron y
+**ninguna hace nacer, retirar ni cambiar de estado un `MEJ-nnn`**:
+
+| Entrada | 3.1.0 → 3.2.0 | Qué aporta |
+|---|---|---|
+| **`DOC-27` 1.0.0 → 1.1.0** (`35ff50b`) | La colección de servicio pasa de 10 a 22 `TCS` (TCS011…TCS022) y de 28 a 53 peticiones; 74 aserciones, 0 rojos, base resembrada y sin residuo. Cubre por servicio TC-111/113 (`REQ-080`), TC-115 (`REQ-042`), TC-116 (`REQ-027`) y la mitad de servicio de TC-119 — los vectores que el selector filtrado de SPE-06 sacó de la interfaz | `MEJ-002` gana cuatro literales más afirmados con igualdad exacta (1.4); `MEJ-003` mueve su «parcialmente satisfecha» sin cambiar de estado, con el argumento reforzado (1.1); `MEJ-006` ve su matiz reforzado por una segunda corrida (1.5) |
+| **`DOC-07` 1.10.0 → 1.12.0** (`cf7f4c0`) | La 1.11.0 incorporó SPE-06 (cobertura 79/79 → 81/81, sigue 100 %, 0 GAP PLAN); la 1.12.0 incorpora `DOC-27` 1.1.0: evidencia de ejecución publicada 106 → 111\* de 119 casos. La pregunta abierta 19 (casos service de SPE-06 sin evidencia) pasa a parcialmente respondida | Ningún `MEJ-nnn` la cita como `evidence_ref` por la cobertura; el salto no mueve ninguna prioridad |
+
+Los routers cubiertos por servicio **siguen siendo dos** —`albarans` y `factures`—: los doce
+`TCS` nuevos caen sobre las mismas rutas y no amplían el alcance a `nomines`, `personal`,
+`clients`, `vehicles` ni `peces`. Siguen **0 ficheros de prueba dentro de `server/` y 0 CI**.
+`server/routes/` no cambió con SPE-06 (893 líneas, 86 `res.status`, 71 literales, recontado
+en `cf7f4c0`).
+
 ## 2. Recomendación
 
 Las tres primeras por relación valor/dificultad **entre las cuatro que esperan decisión**.
 Las tres aceptadas y las dos implementadas quedan fuera: recomendar lo ya decidido o lo ya
-hecho no ayuda a nadie. **El orden cambia respecto a la ronda anterior** — ver el motivo en
-1.5: no porque `MEJ-006` haya empeorado, sino porque el argumento que la sostenía en el
-podio (bloquear a dos aceptadas) se ha visto contradicho por un hecho nuevo.
+hecho no ayuda a nadie. **El orden no cambia respecto a la 3.1.0** (`MEJ-009`, `MEJ-002`,
+`MEJ-006`); la 3.1.0 ya bajó `MEJ-006` al tercer puesto y `DOC-27` 1.1.0 solo refuerza ese
+movimiento (1.5).
 
 | # | Mejora | Por qué ésta |
 |---|---|---|
 | 1 | **MEJ-009 · Aplicar `formatDate` a `Personal.dataAlta`** | Coste casi nulo: el módulo de formato ya existe, probado y usado en seis páginas; falta una línea en `PersonalDetail.tsx`. Cierra la única inconsistencia de presentación que queda documentada tras `MEJ-008` |
-| 2 | **MEJ-002 · Catálogo único de los literales de error del servidor** | Sube por evidencia nueva, no por antigüedad: además de `DOC-14/EXP-006` y los 102 casos de interfaz, **la colección de servicio afirma cuatro de los 71 literales con igualdad exacta** (1.4). Dos suites de dos dueños distintos dependen ya del mismo texto, y `EXP-027` ya demostró qué pasa cuando un formato cambia sin avisar a quien lo valida |
-| 3 | **MEJ-006 · Fijar la versión de Node y hacer configurable la ruta de la base** | Baja del primer puesto: `DOC-27` demostró que la suite de servicio se ejecuta de forma repetible sin nada de lo que `MEJ-006` propone (1.5), así que el argumento de «bloquea a dos aceptadas» pesa menos que antes. Sigue siendo `opinion`, sigue sin incidente medido, y sigue siendo la más barata de las de mayor alcance |
+| 2 | **MEJ-002 · Catálogo único de los literales de error del servidor** | Sube por evidencia, no por antigüedad: además de `DOC-14/EXP-006` y los 102 casos de interfaz, **la colección de servicio afirma ocho de los 71 literales con igualdad exacta** —el doble que en la 3.1.0, tras la ampliación de SPE-06 (1.4)—. Dos suites de dos dueños distintos dependen ya del mismo texto, y `EXP-027` ya demostró qué pasa cuando un formato cambia sin avisar a quien lo valida |
+| 3 | **MEJ-006 · Fijar la versión de Node y hacer configurable la ruta de la base** | Sigue en el tercer puesto: `DOC-27` 1.1.0 refuerza que la suite de servicio se ejecuta de forma repetible —con y sin resembrado— sin nada de lo que `MEJ-006` propone (1.5), así que el argumento de «bloquea a dos aceptadas» pesa aún menos. Sigue siendo `opinion`, sigue sin incidente medido, y sigue siendo la más barata de las de mayor alcance |
 
 **MEJ-004 sigue siendo la de más valor absoluto del documento y no está en el podio**, por
 el mismo motivo que en la ronda anterior: dificultad `high`, toca los ocho componentes por
 los que pasa toda escritura, y depende de `MEJ-003`, que sigue aceptada sin haber entrado
-en `A-07`. **Esta ronda sí le crece evidencia** (1.3, `A-05-15`), pero no le cambia ni la
-dificultad ni la dependencia, así que no cambia su posición fuera del podio.
+en `A-07`. La 3.1.0 le hizo crecer evidencia (1.3, `A-05-15`); la delta 3.2.0 **no la
+mueve** —la ampliación de servicio es profundidad sobre `albarans`/`factures`, no sobre los
+routers de sus defectos abiertos—, y sigue sin cambiarle dificultad ni dependencia, así que
+no cambia su posición fuera del podio.
 
 ## 3. Mejoras
 
 Nueve en total: seis heredadas, dos `implemented` desde la 3.0.0 y una `proposed` nacida
-entonces. **Ninguna nace ni cambia de estado esta ronda**; tres ganan o matizan evidencia
-(`MEJ-002`, `MEJ-003`, `MEJ-004`, `MEJ-006` — ver apartado 1). Ocho de nueve salen de
-evidencia con fuente citable; una (`MEJ-006`) es de criterio, marcada como `opinion` para
-poder filtrarse de un vistazo. Ninguna añade funcionalidad.
+entonces. **Ninguna nace ni cambia de estado esta ronda**; en la delta 3.2.0 tres ganan o
+matizan evidencia (`MEJ-002` crece, `MEJ-003` y `MEJ-006` se matizan — ver §1.7). Ocho de
+nueve salen de evidencia con fuente citable; una (`MEJ-006`) es de criterio, marcada como
+`opinion` para poder filtrarse de un vistazo. Ninguna añade funcionalidad.
 
 ### 3.0 El patrón, recontado: la mitad del cliente se cierra, la del servidor sigue igual
 
@@ -562,7 +637,7 @@ siguiente paso es `A-07`, y siete días después no ha ocurrido con ninguna de l
 | Mejora | Estado | Nota de esta ronda |
 |---|---|---|
 | **MEJ-001 · Identificadores estables de prueba en la interfaz** | `accepted`, sin ejecutar | Sin cambios en su evidencia (26 POs, 20 `By.xpath` frente a 1 `By.id`). El reloj sigue corriendo: la suite de interfaz ya pasó por un susto real con `EXP-027` (17 escenarios en rojo por un cambio de formato, ya corregidos), y cuanto más tarde `MEJ-001` más Page Objects habrá escritos contra rótulos |
-| **MEJ-003 · Suite de pruebas del servidor y CI mínima** | `accepted`, sin ejecutar | **Evidencia nueva, sin cambio de estado — ver 1.1.** Nace `automation/api/` con informe publicado (`DOC-27` 1.0.0): 10 comprobaciones en verde sobre 2 de los 7 routers, repetible sin residuo. Queda parcialmente satisfecha, no sustituida: 0 ficheros de prueba dentro de `server/`, 0 CI, `nomines`/`personal` sin ninguna comprobación de servicio |
+| **MEJ-003 · Suite de pruebas del servidor y CI mínima** | `accepted`, sin ejecutar | **Evidencia matizada en 3.2.0, sin cambio de estado — ver 1.1.** `DOC-27` 1.1.0: la colección pasa de 10 a 22 `TCS` y de 28 a 53 peticiones, pero **todo el crecimiento es profundidad sobre los mismos 2 de 7 routers** (`albarans`, `factures`); siguen 0 ficheros dentro de `server/`, 0 CI y `clients`/`vehicles`/`peces`/`personal`/`nomines` sin ninguna comprobación de servicio. Queda parcialmente satisfecha, no sustituida — y la ampliación **refuerza** que dejar crecer la colección sola no converge hacia lo que `MEJ-003` compra |
 | **MEJ-005 · Estado de base reproducible entre escenarios** | `accepted`, sin ejecutar | Sin cambios en su propia evidencia. `DOC-23` 2.2.0 confirma `TC-048` y los 17 de `EXP-027` corregidos y reverificados (89 escenarios no re-ejecutados en esta versión). El patrón `_setup`/`_teardown` de `automation/api/` es una demostración funcionando de la técnica que pide, sin que eso cambie su prioridad (1.5) |
 
 **Las dependencias siguen sin resolverse.** `MEJ-003` y `MEJ-005` dependen de `MEJ-006`,
@@ -572,16 +647,16 @@ que sigue sin decidir siete días después.
 
 ### 3.4 Esperando decisión
 
-**Ninguna de estas tres está descartada: están sin decidir.** Tres ganan o matizan
-evidencia esta ronda (`MEJ-002`, `MEJ-004`, `MEJ-006`); ninguna cambia de tamaño,
-dificultad ni dependencia — eso es análisis de impacto y le corresponde a `A-07` cuando
-entren en ciclo.
+**Ninguna de estas tres está descartada: están sin decidir.** En la delta 3.2.0 `MEJ-002`
+crece y `MEJ-006` se matiza (`MEJ-004` no se mueve); ninguna cambia de tamaño, dificultad
+ni dependencia — eso es análisis de impacto y le corresponde a `A-07` cuando entren en
+ciclo.
 
 #### MEJ-002 · Catálogo único de los literales de error del servidor
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, **evidencia crecida esta ronda** |
+| **Estado** | `proposed` — sin decidir, **evidencia crecida de nuevo en 3.2.0** |
 | **Origen** | `evidence` |
 | **Tamaño** | `medium` · confianza `medium` |
 | **Impacto / dificultad / urgencia** | `medium` / `low` / `medium` |
@@ -594,15 +669,18 @@ castellano, recuento por fichero: albarans 20, nomines 13, vehicles 12, clients 
 7, peces 6, personal 6 = 71); `DOC-05/4.11` («Literal del aviso», 25 casos);
 `client/src/services/api.ts` propaga `body.error` tal cual; `specs/implemented/SPE-01-…:102`
 fija la convención de claves de traducción que las 71 incumplen. **Recontado en `HEAD`
-(`40bbd43`): `server/routes/` no ha cambiado, los 71 siguen siendo 71.**
+(`cf7f4c0`): SPE-06 no tocó `server/routes/` (893 líneas, 86 `res.status`, 71 literales),
+los 71 siguen siendo 71.**
 
-**Nuevo esta ronda — un segundo consumidor, con igualdad exacta (1.4).**
-`automation/api/tallerMecaniccollection.json` afirma cuatro literales con `to.eql(...)`,
-no con `include`: `'Tots els albarans han d\'estar pendents de facturar'`
-(`factures.js:69`), `'Tots els albarans han de ser del mateix client'` (`factures.js:76`),
-`'El camp tipus ha de ser "peca" o "ma_obra"'` (`albarans.js:146`) y `'La peça indicada no
-existeix'` (`albarans.js:161`). Los cuatro verificados contra el código en `HEAD`. Dos
-suites, dos dueños (`s10-auto-tcs` y `S-17`), el mismo texto sin catálogo.
+**Segundo consumidor, con igualdad exacta — crecido en 3.2.0 (1.4).**
+`automation/api/tallerMecaniccollection.json` afirma **ocho** literales con `to.eql(...)`,
+no con `include` (cuatro desde la 3.1.0, cuatro más con `DOC-27` 1.1.0): los de
+`factures.js:69` y `:76`, `albarans.js:146` y `:161`, y los cuatro de la ruta
+`PUT /albarans/:id` que llegaron con la automatización de SPE-06 —`albarans.js:82` («ja
+està facturat»), `:87` («vehicle_id obligatori»), `:92` («vehicle no existeix») y `:101`
+(«canviar el vehicle a un d'un altre client»)—. Los ocho verificados contra el código en
+`HEAD` (`cf7f4c0`); tres con aserción negativa añadida. Dos suites, dos dueños
+(`s10-auto-tcs` y `S-17`), el mismo texto sin catálogo.
 
 **Componentes afectados:** los siete routers y, si se decide devolver un código,
 `api-client`.
@@ -619,7 +697,7 @@ de una — `EXP-027` ya mostró lo que cuesta ese escenario cuando ocurre sin ca
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, **evidencia crecida esta ronda** |
+| **Estado** | `proposed` — sin decidir, **evidencia crecida en la 3.1.0; sin cambios en la delta 3.2.0** |
 | **Origen** | `evidence` |
 | **Tamaño** | `large` · confianza `medium` |
 | **Impacto / dificultad / urgencia** | `high` / `high` / `high` |
@@ -632,7 +710,7 @@ módulo por dominio. No añade ni cambia ninguna regla: mueve las que ya existen
 86 `res.status` en `server/routes/`, recontados en `HEAD` y sin cambios porque
 `server/routes/` no se ha tocado.
 
-**Nuevo esta ronda — un noveno candidato, de una forma distinta a los ocho anteriores
+**Nuevo en la 3.1.0 — un noveno candidato, de una forma distinta a los ocho anteriores
 (1.2, 1.3).** `DOC-07/A-05-15`: `server/routes/albarans.js:197-224` devuelve el stock al
 retirar una línea de pieza; `:116-132` no lo hace al borrar el albarán entero, aunque
 retire las mismas líneas. No es una comprobación ausente, sino la misma regla escrita en
@@ -659,7 +737,7 @@ red— sigue aceptada y parada, y la suite de servicio que ha nacido no cubre `n
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, **evidencia matizada esta ronda (1.5)** |
+| **Estado** | `proposed` — sin decidir, **matiz reforzado en la delta 3.2.0 (1.5)** |
 | **Origen** | **`opinion`** |
 | **Tamaño** | `small` · confianza `high` |
 | **Impacto / dificultad / urgencia** | `low` / `low` / `medium` |
@@ -667,17 +745,17 @@ red— sigue aceptada y parada, y la suite de servicio que ha nacido no cubre `n
 **En qué consiste.** Declarar `engines` y `.nvmrc`, y leer la ruta de la base de una
 variable de entorno con el valor actual como valor por defecto.
 
-**Por qué sigue marcada `opinion`.** Verificado de nuevo en `DOC-02` 1.1.0: ningún
-`package.json` declara `engines`, no hay `.nvmrc`, `Q-01` y `Q-02` siguen abiertas. Sigue
-sin haber un solo dato que mida que esto haya causado un incidente.
+**Por qué sigue marcada `opinion`.** Verificado de nuevo: ningún `package.json` declara
+`engines`, no hay `.nvmrc`, `Q-01` y `Q-02` (`DOC-02`) siguen abiertas. Sigue sin haber un
+solo dato que mida que esto haya causado un incidente.
 
-**Matiz de esta ronda, en contra del argumento de urgencia.** `DOC-27` §5 demuestra que
-`automation/api/` se ejecuta de forma repetible **sin** nada de lo que esta mejora
-propone —la base no se resembró y quedó idéntica antes y después—, lo que ablanda, no
-refuerza, el argumento de «bloquea a dos aceptadas». Sigue siendo la parte de
-`data/taller.db` configurable la que queda pendiente: el mismo `DOC-27` §5 anota que «un
-informe de entrega sí debería partir de `npm run seed`», que hoy reescribe la base en el
-sitio.
+**Matiz reforzado en 3.2.0, en contra del argumento de urgencia.** `DOC-27` 1.1.0 confirma
+por los dos lados que `automation/api/` se ejecuta de forma repetible **sin** nada de lo
+que esta mejora propone: dos pasadas seguidas sin resembrar dan el mismo recuento
+(53 / 74 / 0) y el estado medido queda idéntico antes y después. Eso ablanda, no refuerza,
+el argumento de «bloquea a dos aceptadas». Sigue pendiente solo la parte de
+`data/taller.db` configurable: la corrida de entrega de la 1.1.0 partió de `npm run seed`,
+que reescribe la base en el sitio (`DOC-27` §6).
 
 **Componentes afectados:** `db-connection` y `server-app`.
 
@@ -688,13 +766,14 @@ otra base no se pueden hacer sin esto, y las dos siguen aceptadas.
 
 ## 4. Vivas de rondas anteriores
 
-Las cuatro `proposed` —tres con evidencia que se mueve esta ronda, una sin evidencia nueva—.
+Las cuatro `proposed` —una con evidencia que crece en la delta 3.2.0, una que se matiza,
+dos sin evidencia nueva—.
 
 | Mejora | Evidencia | Qué ha pasado |
 |---|---|---|
-| **MEJ-002** | **Crece** | Segundo consumidor de los 71 literales: `automation/api/` los afirma con igualdad exacta en 4 casos (1.4) |
-| **MEJ-004** | **Crece** | Noveno candidato de la misma familia, de forma nueva: `DOC-07/A-05-15` (1.2, 1.3). Sigue dependiendo de `MEJ-003` |
-| **MEJ-006** | **Se matiza** | Sigue `opinion`, sigue sin incidente medido; el argumento de «bloquea a dos aceptadas» se ablanda, no se refuerza (1.5) |
+| **MEJ-002** | **Crece (más en 3.2.0)** | Segundo consumidor de los 71 literales: `automation/api/` los afirma con igualdad exacta en **8 casos** (eran 4 en la 3.1.0), tras la ampliación de servicio de SPE-06 (1.4) |
+| **MEJ-004** | Sin cambios desde 3.1.0 | Noveno candidato de la misma familia, de forma nueva: `DOC-07/A-05-15` (1.2, 1.3). Sigue dependiendo de `MEJ-003` |
+| **MEJ-006** | **Se matiza (3.2.0)** | Sigue `opinion`, sigue sin incidente medido; el argumento de «bloquea a dos aceptadas» se ablanda un poco más con la segunda corrida de `DOC-27` 1.1.0 (1.5) |
 | **MEJ-009** | Sin cambios | Nació en la 3.0.0 de `DOC-14/EXP-028`, coste trivial. Sigue `proposed` |
 
 **MEJ-007 y MEJ-008 salen de esta lista porque están `implemented`**, no porque se hayan
@@ -732,13 +811,15 @@ propone su corrección —depende de una decisión de producto que no me corresp
 
 No existe en el grafo de `DOC-02` y no es código de `app-taller`. Va al apartado 6.
 
-### 5.5 Los huecos de cobertura · sin cambios en la cifra, con una entrada nueva
+### 5.5 Los huecos de cobertura · cobertura al 100 %, sube la evidencia de ejecución
 
-`DOC-07` 1.10.0: **100,00 % (79/79)**, 0 `GAP PLAN`, 0 anomalías bloqueantes — igual que
-en toda la historia de este documento. Lo que cambia es que la evidencia de ejecución
-publicada sube de 102 a 106 de 110 casos, al incorporarse `DOC-27` para los 4 casos
-`verification_path: service`. Los avisos vivos siguen siendo correcciones de otros agentes
-o funcionalidad para `A-15`; ver 6.5 y 6.9 para lo que nace en esta versión.
+`DOC-07` 1.12.0: **100,00 %**, 0 `GAP PLAN`, 0 anomalías bloqueantes — igual que en toda la
+historia de este documento (**79/79** hasta SPE-06, **81/81** con `REQ-080`/`REQ-081` ya
+cubiertos). Lo que cambia en la delta 3.2.0 es que la evidencia de ejecución publicada sube
+de **106 a 111\* de 119 casos**, al ampliar `DOC-27` 1.1.0 la cobertura de servicio a los
+casos de SPE-06 sacados de la interfaz (TC-111/113/115/116 y la mitad de servicio de
+TC-119). Los avisos vivos siguen siendo correcciones de otros agentes o funcionalidad para
+`A-15`; ver 6.5 y 6.9 para lo que nació en la 3.1.0.
 
 ### 5.6 EXP-017, EXP-019 y EXP-026 (`deriva_a: A-12`, no revisados esta sesión) · sin cambios
 
@@ -861,33 +942,36 @@ con la precondición del caso (`s10-auto-tcs`); A-12 no repite ese detalle, ya e
 version: 1
 project: app-taller
 run:
-  date: 2026-08-24
-  kind: resync_with_evidence
+  date: 2026-08-29
+  round: 3.2.0
+  kind: bounded_delta
   first_run: false
-  previous_doc_version: 3.0.1
-  last_analysis_round: 3.0.0
-  commit_sha: 40bbd43a7cf722dbd5a12259c994f1a415317479
-  new_inputs_this_run: [DOC-27-INFORME-API.md]
-  inputs_changed_this_run: [DOC-07-TRAZABILIDAD.md]
-  inputs_hash_corrected_this_run: [DOC-02-TECNICA.md, DOC-05-PLAN-PRUEBAS.md, DOC-25-PROPUESTAS-FUNCIONALES.md, registro-ids.json]
+  previous_doc_version: 3.1.0
+  last_analysis_round: 3.1.0
+  commit_sha: cf7f4c084dbf2a6cd392a06e8e485db5ad476280
+  new_inputs_this_run: []
+  inputs_changed_this_run: [DOC-27-INFORME-API.md, DOC-07-TRAZABILIDAD.md]
   inputs_absent: [DOC-17-DEUDA-TECNICA.md, DOC-20-RALLY-STATE.json, DOC-19-RALLY-TESTCASES.csv]
-  frozen_this_run: [DOC-09-ARQUITECTURA.md]
-  frozen_reason: >-
-    DOC-09 pasó a 2.1.0 y está en revisión dentro de una onada mayor con seis documentos
-    obsoletos; se despacha a A-12 solo porque es el único invalidado exclusivamente por
-    DOC-07 y sin depender de una decisión de negocio pendiente. No se declara como entrada
-    ni se cita en esta ronda; se hará cuando la onada se cierre.
+  obsolescence_ack_this_run: [DOC-02-TECNICA.md, DOC-05-PLAN-PRUEBAS.md, registro-ids.json, DOC-14-EXPLORATORIO.md, DOC-25-PROPUESTAS-FUNCIONALES.md]
+  obsolescence_ack_reason: >-
+    DOC-02 1.2.0, DOC-05 1.8.0 y registro-ids.json 1.6.0 son SPE-06, ya reconocidos, sin
+    impacto en ningun MEJ-nnn (server/routes/ no cambio: 893 lineas, 86 res.status, 71
+    literales en cf7f4c0; anclas MEJ siguen en MEJ-001..MEJ-008). DOC-14 2.1.1 y DOC-25
+    1.2.2 son resyncs circulares de la propia 3.1.0. Fuera del alcance de esta delta
+    acotada; se consumiran en la proxima ronda de analisis.
   ids_granted_by: S-12
   ids_requested_this_run: 0
   ids_granted: []
   no_new_mej_this_round: true
   no_status_change_this_round: true
   provenance_note: >-
-    Se ha verificado version declarada vs real y hash declarado vs calculado en las 10
-    entradas (salvo DOC-09, congelado). Cuatro llevaban hash desactualizado sin cambio de
-    version (DOC-02, DOC-05, registro-ids.json en su propia version "1", y DOC-25 con
-    version tambien desactualizada 1.2.0 -> 1.2.1). Corregidas las cuatro; ninguna cambio
-    de contenido sustantivo verificado por diff.
+    Delta acotada 3.1.0 -> 3.2.0. Solo se reconsumen las dos entradas movidas por evidencia
+    de ejecucion nueva: DOC-27 1.0.0 -> 1.1.0 (S-17 amplia automation/api/: 10 -> 22 TCS,
+    28 -> 53 peticiones, 74 aserciones, 0 rojos, base resembrada) y DOC-07 1.10.0 -> 1.12.0
+    (A-05: 1.11.0 incorpora SPE-06 con 79/79 -> 81/81; 1.12.0 incorpora DOC-27 1.1.0 con
+    evidencia de ejecucion 106 -> 111* de 119). Hashes recalculados en HEAD (cf7f4c0). No
+    se ha barrido cada cita "79/79"/"110 casos" del cuerpo heredado, solo las de secciones
+    tocadas por la delta (S1, S1.7, S5.5).
 decision_of_record:
   date: 2026-08-17
   by: propietario del proyecto
@@ -929,13 +1013,19 @@ improvements:
     evidence_refs:
       - DOC-14/EXP-006
       - DOC-05/4.11/familia-literal-del-aviso-25-casos
-      - codigo/71-literales-en-server-routes-recontados-en-40bbd43-sin-cambios
+      - codigo/71-literales-en-server-routes-recontados-en-cf7f4c0-sin-cambios-por-SPE-06
       - specs/implemented/SPE-01-esquelet-app-taller.md:102
-      - automation/api/tallerMecaniccollection.json/4-literales-en-igualdad-exacta-to.eql
+      - automation/api/tallerMecaniccollection.json/8-literales-en-igualdad-exacta-to.eql
     evidence_change_since_3_0_0: >-
-      Crece. Segundo consumidor de los mismos literales: la coleccion de servicio afirma
-      4 de los 71 con igualdad exacta (to.eql), verificados contra factures.js:69,76 y
-      albarans.js:146,161. Dos suites, dos dueños (s10-auto-tcs, S-17), mismo texto.
+      Crece, y mas en la delta 3.2.0. Segundo consumidor de los mismos literales: la
+      coleccion de servicio (DOC-27 1.1.0) afirma 8 de los 71 con igualdad exacta (to.eql)
+      -eran 4 en la 3.1.0-. Los 4 nuevos son de la ruta PUT /albarans/:id automatizada con
+      SPE-06: albarans.js:82 (ja facturat), :87 (vehicle_id obligatori), :92 (vehicle no
+      existeix) y :101 (canvi de client); tres con asercion negativa anadida. Verificados
+      contra el codigo en HEAD (cf7f4c0). Dos suites, dos duenos (s10-auto-tcs, S-17).
+    evidence_change_3_2_0: >-
+      Crece: de 4 a 8 literales afirmados con to.eql. No cambia tamano, dificultad,
+      impacto, urgencia ni estado; sigue proposed, sigue #2 en la recomendacion.
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, api-client]
     impact: medium
     difficulty: low
@@ -956,14 +1046,22 @@ improvements:
     implemented: false
     evidence_change_since_3_0_0: >-
       Parcialmente satisfecha, sin cambio de estado. Nace automation/api/ con informe
-      publicado (DOC-27 1.0.0): 10 TCS-nnn en verde sobre 2 de los 7 routers (albarans,
-      factures), 0 residuo en base medido. Sigue faltando: 0 ficheros de prueba dentro de
-      server/, 0 CI, nomines y personal sin ninguna comprobacion de servicio. La decision
-      de si esto sustituye o solo complementa a MEJ-003 es de quien la lleve a A-07.
+      publicado (DOC-27), 0 residuo en base medido. Sigue faltando: 0 ficheros de prueba
+      dentro de server/, 0 CI, y 5 de 7 routers (clients, vehicles, peces, personal,
+      nomines) sin ninguna comprobacion de servicio. La decision de si esto sustituye o
+      solo complementa a MEJ-003 es de quien la lleve a A-07.
+    evidence_change_3_2_0: >-
+      Se matiza en contra de "menos urgente". DOC-27 1.1.0: la coleccion pasa de 10 a 22
+      TCS y de 28 a 53 peticiones, pero TODO el crecimiento es profundidad sobre los 2
+      routers ya cubiertos (albarans PUT /:id, factures); 0 avance en CI, en ficheros
+      dentro de server/ y en los otros 5 routers. Refuerza que dejar crecer la coleccion
+      externa organicamente no converge hacia lo que MEJ-003 compra. Sin cambio de estado,
+      tamano ni prioridad; sigue accepted, sin ejecutar.
     evidence_refs:
-      - DOC-27-INFORME-API.md/1.0.0
-      - codigo/0-ficheros-test-en-server-en-40bbd43
-      - codigo/sin-CI-sin-script-test-en-40bbd43
+      - DOC-27-INFORME-API.md/1.1.0
+      - codigo/0-ficheros-test-en-server-en-cf7f4c0
+      - codigo/sin-CI-sin-script-test-en-cf7f4c0
+      - codigo/automation-api-cubre-2-de-7-routers-tras-doblar-a-22-TCS
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, db-connection, db-migrate, db-numbering]
     impact: low
     difficulty: medium
@@ -1041,13 +1139,18 @@ improvements:
       - DOC-02/Q-01
       - DOC-02/Q-02
       - codigo/ningun-package.json-declara-engines-y-no-hay-.nvmrc
-      - DOC-27-INFORME-API.md/§5
+      - DOC-27-INFORME-API.md/1.1.0/§1-§6
     evidence_change_since_3_0_0: >-
-      Se matiza, en contra de la urgencia. DOC-27 §5 demuestra que automation/api/ se
-      ejecuta de forma repetible SIN nada de lo que esta mejora propone (base no
-      resembrada, idéntica antes y después); el argumento "bloquea a dos aceptadas" pesa
-      menos. Queda en pie la mitad de ruta de base configurable: DOC-27 §5 anota que un
-      informe de entrega sí debería partir de npm run seed, que hoy reescribe en el sitio.
+      Se matiza, en contra de la urgencia. DOC-27 demuestra que automation/api/ se ejecuta
+      de forma repetible SIN nada de lo que esta mejora propone; el argumento "bloquea a
+      dos aceptadas" pesa menos. Queda en pie la mitad de ruta de base configurable: un
+      informe de entrega parte de npm run seed, que reescribe data/taller.db en el sitio.
+    evidence_change_3_2_0: >-
+      Matiz reforzado. DOC-27 1.1.0 lo confirma por los dos lados: dos pasadas seguidas sin
+      resembrar dan el mismo recuento (53/74/0) y, con resembrado, el estado medido queda
+      identico antes y despues (facturas 1->1, albaranes 4->4, lineas 7->7, stock
+      167->167). La corrida de entrega de la 1.1.0 partio de npm run seed. Sin cambio de
+      estado, tamano, prioridad ni source (sigue opinion, urgency medium, #3 en el podio).
     components: [db-connection, server-app]
     impact: low
     difficulty: low
@@ -1155,7 +1258,7 @@ considered_not_proposed:
   - what: Fragilidad del extractor de S-12 (DOC-07/A-05-06)
     why: No es código de app-taller, no existe en el grafo de DOC-02.
   - what: Huecos de cobertura
-    why: "DOC-07 1.10.0, sin cambios: 100%, 0 GAP PLAN, 0 bloqueantes."
+    why: "DOC-07 1.12.0: 100% (81/81), 0 GAP PLAN, 0 bloqueantes. Evidencia de ejecucion 106 -> 111* de 119 con DOC-27 1.1.0."
   - what: EXP-017, EXP-019 y EXP-026 (deriva_a A-12, no revisados en DOC-14 2.1.0)
     why: >-
       Cambian lo que el usuario ve o puede hacer; es funcionalidad y la decide negocio. Ya
@@ -1166,18 +1269,23 @@ considered_not_proposed:
       dan por hecho que la capacidad existe, así que es discrepancia DOC-04/DOC-07, no
       funcionalidad ausente que A-12 deba reenviar de nuevo.
 corrections_to_previous_version:
-  - what: cuatro entradas de `inputs` llevaban hash desactualizado sin cambio de versión declarada
+  - what: inputs DOC-27 y DOC-07 al dia
     detail: >-
-      DOC-02-TECNICA.md (1.1.0, hash 32639b3f -> 5a4fce68, diff verificado: solo dos rutas
-      de spec reescritas, graph sin cambios), DOC-05-PLAN-PRUEBAS.md (1.6.0, hash a88ca2aa
-      -> 43051f32, diff verificado: solo front-matter), registro-ids.json (hash 9f5b3679 ->
-      bc54df9a, recontado: sigue con 8 anclas MEJ) y DOC-25-PROPUESTAS-FUNCIONALES.md, que
-      además llevaba la versión mal (1.2.0 declarada, 1.2.1 real). Ninguna cambió conclusión
-      alguna de este documento.
+      DOC-27-INFORME-API.md 1.0.0 -> 1.1.0 (hash 178d4b14 -> 2ae7596b) y
+      DOC-07-TRAZABILIDAD.md 1.10.0 -> 1.12.0 (hash f3eb60be -> 4b3e99db). commit_sha de
+      source 40bbd43 -> cf7f4c0.
+  - what: citas de cifras actualizadas solo en las secciones tocadas por la delta
+    detail: >-
+      S1 (tabla de cambios, parrafo de cobertura), S1.1 (10->22 TCS, 28->53 peticiones,
+      2 de 7 routers), S1.4 (4->8 literales to.eql), S1.5 (repetibilidad con y sin
+      resembrado), S1.7 (nueva), S2 (podio), S3.3/S3.4 (fichas MEJ-002/003/006), S4, S5.5.
+      Las citas "79/79" y "110 casos" de otras secciones reflejan el censo pre-SPE-06 y se
+      barren en la proxima ronda de analisis (ver obsolescence_ack).
   - what: ninguna cifra de server/routes/ requirió corrección de contenido
     detail: >-
-      893 líneas, 86 res.status y 71 literales de error, recontados en HEAD (40bbd43),
-      siguen siendo correctos.
+      893 líneas, 86 res.status y 71 literales de error, recontados en HEAD (cf7f4c0):
+      SPE-06 (merge c771e35) toco solo AlbaraForm.tsx y seed.js, no server/routes/. La
+      ruta PUT /albarans/:id ya existia desde el fix de bugs ed61c24.
 findings_for_others:
   - target: A-15
     status: cerrado por el destinatario
@@ -1257,6 +1365,8 @@ registry_check:
     No se pide número esta ronda: no nace ningún MEJ-nnn. MEJ-009 sigue sin censar en
     registro-ids.json (findings_for_others, target S-12).
 summary:
+  round: 3.2.0
+  kind: bounded_delta
   total: 9
   new_this_round: 0
   status_changed_this_round: 0
@@ -1266,20 +1376,20 @@ summary:
   proposed_new_pending: 1
   rejected_respected: 0
   rejected_total: 0
-  evidence_grown_this_round: [MEJ-002, MEJ-004]
+  evidence_grown_this_round: [MEJ-002]
   evidence_matured_this_round: [MEJ-003, MEJ-006]
+  evidence_unchanged_this_round: [MEJ-004]
   evidence_shrunk: []
   by_source: { evidence: 8, opinion: 1 }
   considered_not_proposed: 8
   findings_for_others: 14
-  findings_closed_by_recipient_this_round: 3
+  findings_closed_by_recipient_this_round: 0
   recommended_top3_among_undecided: [MEJ-009, MEJ-002, MEJ-006]
-  recommended_order_changed_since_3_0_0: true
-  recommended_order_change_reason: >-
-    MEJ-006 baja del primer al tercer puesto: DOC-27 demostró que la suite de servicio se
-    ejecuta de forma repetible sin lo que MEJ-006 propone, lo que ablanda su argumento
-    principal (bloquea a dos aceptadas). MEJ-002 sube al segundo puesto por evidencia nueva
-    (segundo consumidor de los 71 literales, con igualdad exacta).
+  recommended_order_changed_this_round: false
+  recommended_order_note: >-
+    Mismo orden que la 3.1.0 (MEJ-009, MEJ-002, MEJ-006). DOC-27 1.1.0 solo refuerza los
+    movimientos que ya hizo la 3.1.0: MEJ-002 en el #2 (ahora 8 literales to.eql, eran 4)
+    y MEJ-006 en el #3 (repetibilidad de la suite confirmada con y sin resembrado).
   never_propose_again: [MEJ-001, MEJ-003, MEJ-005, MEJ-007, MEJ-008]
   a05_15_decision: >-
     No nace MEJ-010. A-05-15 (borrar albarán no devuelve stock) se incorpora como
