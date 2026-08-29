@@ -1,15 +1,15 @@
 ---
 doc_id: DOC-07
 doc_name: DOC-07-TRAZABILIDAD
-version: 1.11.0
+version: 1.12.0
 status: draft
 generator: A-05 coherencia y trazabilidad
-generated_at: 2026-08-29T12:00:00+02:00
+generated_at: 2026-08-29T18:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: spec-SPE-06-albara-canvi-client
-  commit_sha: 6d52c5eaa4c630879dfdd772869c56c2285d553f
+  branch: master
+  commit_sha: 35ff50ba4abe608ccda05e40171ef4ce5da8a52c
   working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt. El resto del árbol versionado está limpio; este documento y su -HIST en edición.
 inputs:
   - id: DOC-04-FUNCIONAL.md
@@ -46,8 +46,8 @@ inputs:
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
   - id: DOC-27-INFORME-API.md
     from: S-17
-    version: 1.0.0
-    hash: sha256:178d4b14e0202ec9f8846b661f1dda465e552cb6d3aa5f563e19d9b9c5b82573
+    version: 1.1.0
+    hash: sha256:2ae7596bf44f875ce2a675715344b739f0a1520301cf224746b8aafd8d192e20
   - id: DOC-19-RALLY-TESTCASES.csv
     from: S-07
     version: n/d
@@ -107,6 +107,32 @@ casos, repartos por vía, cinco alcances de §7.1) hay que leerlos con los total
 dicen con una línea «Sin cambios desde 1.10.0». DOC-06 sube a 1.4.0 y DOC-09 a 2.1.0: se
 han releído, ninguno alimenta el JOIN y su efecto se anota en §2 y §3.8.
 
+### Qué cambia en 1.12.0
+
+**MINOR: la matriz no se toca; sube la evidencia de ejecución citable.** El disparo es
+`DOC-27-INFORME-API.md`, que pasa de **1.0.0 a 1.1.0** (`35ff50b`): S-17 amplió la colección
+de servicio con **12 `TCS` nuevos (TCS011…TCS022)** que cubren por servicio los casos de
+SPE-06 que el selector filtrado sacó de la interfaz —TC-111 y TC-113 (REQ-080), TC-115
+(REQ-042), TC-116 (REQ-027) y la mitad de servicio de TC-119 (REQ-080)—. Newman: 53
+peticiones, 74 assertions, 0 fallos, base resembrada y sin residuo.
+
+- **No es entrada del JOIN.** DOC-04 (1.3.1) y DOC-05 (1.8.0) no se han movido; el bloque
+  `yaml requirements` y los `yaml testcases` son idénticos byte a byte a los de 1.11.0.
+  `DOC-07-MATRIZ.csv` **no se regenera** y sigue con 81 filas, `test_case_count` = 119, 3
+  columnas de Rally en `n/d`, 0 `GAP EXPORT`, 0 `GAP PLAN`.
+- **Casos del plan con evidencia de ejecución publicada: sube de 106 a 111 \*** de 119 —102
+  por interfaz (`DOC-23` 2.2.0) + 8 por servicio (`DOC-27` 1.1.0: los 4 de 1.0.0 más
+  TC-111/113/115/116) + TC-119 en su mitad de servicio—. Los 4 casos `ui` nuevos de SPE-06
+  —TC-112, TC-114, TC-117, TC-118— **no cuentan todavía**: están en `albarans.feature`
+  (`1ba6196`) pero `DOC-23` no se ha regenerado, así que la suite de navegador no tiene
+  informe nuevo. El `\*` marca lo pendiente del recálculo fino (§5.5, §5.6).
+- **La pregunta 19 de §7.3 pasa a parcialmente respondida** (§7.3).
+- Ninguna anomalía `A-05-nn` se abre ni se cierra: `DOC-27` 1.1.0 no toca `A-05-14` (TC-041
+  sigue igual) ni el resto. El resto del análisis de §3 es el de 1.11.0.
+- Las marcas `*` de «pendiente de regeneración completa» que 1.11.0 arrastraba (§7.1,
+  `ui-only`, `A-05-11`, `A-05-12`) **siguen pendientes**: esta pasada es solo el delta de
+  `DOC-27`.
+
 ---
 
 **A partir de aquí, y hasta la tabla de magnitudes, este apartado se conserva de 1.10.0**:
@@ -157,8 +183,8 @@ verde, sobre esos 4 casos. Tres consecuencias, ninguna sobre el porcentaje:
 | Avisos | 32 | = (ninguna se abre ni se cierra por SPE-06) |
 | Casos `verification_path: ui` / `service` / `mixed` | **110 / 8 / 1** | **+4 / +4 / +1** (los 9 nuevos) |
 | Casos automatizados y ejecutados por interfaz (DOC-23 2.2.0) | **102 de 119** | denominador +9; los 9 nuevos sin ejecución publicada |
-| **Casos ejecutados por servicio (DOC-27 1.0.0)** | **4 de 8** | los 4 `service` nuevos (TC-111/113/115/116) sin fuente todavía |
-| **Casos del plan con evidencia de ejecución publicada** | **106 de 119** | denominador +9 |
+| **Casos ejecutados por servicio (DOC-27 1.1.0)** | **8 de 8** (+ TC-119 mitad servicio) | **+4** en 1.12.0: TC-111/113/115/116 pasan a verde por servicio (TCS011…020); TC-119 solo en su mitad de servicio (TCS021/022) |
+| **Casos del plan con evidencia de ejecución publicada** | **111 de 119 \*** | **+5** en 1.12.0; los 4 `ui` de SPE-06 (TC-112/114/117/118) aún sin informe de DOC-23 |
 | Censo de `Q-nnn` con ancla | 30 | **+1**: `Q-30` (DOC-04, desde 1.3.1) |
 | `Q-nnn` homónimos sin ancla que colisionan | `Q-30` de DOC-06 | ver **A-05-09**, §3.8 |
 | Requisitos con defecto confirmado en el sistema real | **4** | = |
@@ -220,21 +246,23 @@ vale.
 
 ## 2. Qué pasada se ha ejecutado y por qué
 
-**Se ha ejecutado únicamente la pasada `pre`.** El disparo esta vez es
-`SPE-06 · Albarà canvi de client`, ya `Implemented`: DOC-04 y DOC-05 cambian de contenido
-—dos requisitos y nueve casos nuevos— y S-16 marcó DOC-07 obsoleto por ambas entradas.
+**Se ha ejecutado únicamente la pasada `pre`.** El disparo de 1.11.0 fue
+`SPE-06 · Albarà canvi de client` (DOC-04 y DOC-05 cambiaron de contenido); **el de 1.12.0
+es `DOC-27` pasando de 1.0.0 a 1.1.0** (`35ff50b`), que no alimenta el JOIN. La matriz no se
+regenera: DOC-04 1.3.1 y DOC-05 1.8.0 no se han movido. La tabla de entradas de abajo
+conserva de 1.11.0 todo salvo la fila de `DOC-27`.
 
 | Entrada | Estado | Consecuencia |
 |---|---|---|
 | `docs/DOC-04-FUNCIONAL.md` | presente, **v1.3.1** (era 1.2.0; 1.3.0 añadió REQ-080/REQ-081 por SPE-06, 1.3.1 renumeró `Q-16`→`Q-30`) | **alimenta el JOIN**: +2 filas en la matriz |
 | `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.8.0** (era 1.6.0; añade TC-111…TC-119, todos `albarans`) | **alimenta el JOIN**: +9 casos |
 | `registro-ids.json` | presente, hash nuevo — ahora **81 REQ, 119 TC, 30 Q** (`Q-30` de DOC-04 concedida por S-12 en el ciclo de DOC-04 1.3.1); `FUN`/`MEJ`/`EVO` sin cambios | verificación de anclas: los 81 REQ y los 119 TC están en el registro (0 fuera) |
-| `docs/DOC-23-INFORME.md` | presente, v2.2.0 (sin cambios desde 1.10.0) | **no toca la matriz**; alimenta §5.5; los 9 casos nuevos aún no tienen ejecución publicada |
+| `docs/DOC-23-INFORME.md` | presente, v2.2.0 (sin cambios desde 1.10.0) | **no toca la matriz**; alimenta §5.5; **no se ha regenerado**, así que los 4 `ui` de SPE-06 y la mitad de pantalla de TC-119 siguen sin informe de navegador |
 | `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (sin cambios desde 1.10.0) | **no toca la matriz** |
 | `docs/DOC-09-IMPACTO-…md` | presente, **v2.1.0** (era 2.0.4; MINOR de resincronización de A-07 contra DOC-07 1.10.0) | **no toca la matriz**; releída, sus citas a la matriz siguen siendo ciertas |
 | `docs/DOC-06-MANUAL-USUARIO.md` | presente, **v1.4.0** (era 1.3.0; documenta REQ-080/REQ-081, añade su pregunta propia `Q-31`) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10; su `Q-30` homónima colisiona ahora con la de DOC-04 (§3.8) |
 | `docs/DOC-24-BUGS.json` | presente, v1.0.0 (sin cambios) | **no toca la matriz**; alimenta A-05-03 |
-| `docs/DOC-27-INFORME-API.md` | presente, v1.0.0 (sin cambios desde 1.10.0) | **no toca la matriz**; fuente de ejecución de los 4 casos `service` de 1.6.0; no cubre los 4 `service` nuevos |
+| `docs/DOC-27-INFORME-API.md` | presente, **v1.1.0** (era 1.0.0; S-17 amplió la colección con TCS011…TCS022) | **no toca la matriz**; fuente de ejecución por servicio de 8 casos (los 4 `service` de 1.6.0 + TC-111/113/115/116) y de la mitad de servicio de TC-119; alimenta §5.5, §5.6 y §7.3-19 |
 | `docs/DOC-19-RALLY-TESTCASES.csv` | **ausente** | no hay exportación a Rally que comprobar |
 | `docs/DOC-20-RALLY-STATE.json` | **ausente** | no hay estado de ejecución que leer |
 
@@ -391,21 +419,22 @@ preguntan.
 El bloque `inputs` declara el dato; aquí van los matices, que es donde se pueden leer como
 prosa y no inflan lo que todos los parsers leen primero.
 
-**`DOC-27-INFORME-API.md` 1.0.0 es la entrada nueva de esta versión y la que la dispara.**
-Se declara con `version: 1.0.0` y su hash porque es un documento versionado con historial
-propio (`DOC-27-INFORME-API-HIST.md`, leído también: registra su 1.0.0 como MAJOR por ser
-la primera y fija el esquema para las siguientes). Qué aporta que no aportara nadie: **la
-única fuente de evidencia de ejecución de los 4 casos `verification_path: service`**. Cómo
-se ha usado: como se usa `DOC-23` —evidencia citada en la prosa de §3 y §5, nunca dato de
-una columna del CSV—. Qué **no** se ha hecho con él: no se ha usado para derivar ninguna
-fila, ningún `test_case_count` ni ningún diagnóstico, porque no es una entrada del JOIN.
+**`DOC-27-INFORME-API.md` sube de 1.0.0 a 1.1.0 y es lo que dispara 1.12.0.** Se declara con
+`version: 1.1.0` y su hash nuevo; su `-HIST.md` registra 1.1.0 como MINOR (amplía cobertura,
+no cambia el esquema). Qué aporta de nuevo: evidencia de ejecución por servicio de TC-111,
+TC-113, TC-115, TC-116 y la mitad de servicio de TC-119 —los casos de SPE-06 que el selector
+filtrado sacó de la interfaz—, 12 `TCS` nuevos (TCS011…TCS022) todos en verde. Cómo se ha
+usado: como se usa `DOC-23` —evidencia citada en la prosa de §3, §5 y §7, nunca dato de una
+columna del CSV—. Qué **no** se ha hecho con él: no se ha usado para derivar ninguna fila,
+ningún `test_case_count` ni ningún diagnóstico, porque no es una entrada del JOIN.
 
-**Y una nota de procedencia sobre el propio DOC-27 que conviene dejar escrita.** Su bloque
-`inputs` declara `DOC-05-PLAN-PRUEBAS.md` 1.6.0 con hash `sha256:43051f32…` — **el mismo
-que A-05 verifica hoy en el árbol**, y el que este documento corrige respecto de 1.9.1.
-Dicho de otro modo: `DOC-27` y `DOC-07` 1.10.0 leen exactamente los mismos bytes del plan
-de pruebas, y por eso sus recuentos de casos `service` coinciden sin necesidad de
-conciliarlos (§3.12).
+**Nota de procedencia sobre el propio DOC-27.** Su bloque `inputs` declara
+`DOC-05-PLAN-PRUEBAS.md` **1.8.0** con hash `sha256:fef49cbc…` — **el mismo que A-05
+verifica hoy en el árbol** y el mismo que este documento declara. `DOC-27` 1.1.0 y `DOC-07`
+1.12.0 leen exactamente los mismos bytes del plan de pruebas, y por eso sus recuentos de
+casos `service` (8) coinciden sin necesidad de conciliarlos. `DOC-27` lleva además
+`lifecycle: snapshot`: `cascada.js` lo excluye del cálculo de obsolescencia (sección
+CONGELADOS), coherente con que sea la foto de una corrida concreta de newman.
 
 **DOC-05 1.6.0 y DOC-14 2.0.0 fueron las entradas que dispararon 1.7.0 y 1.8.0
 respectivamente.** Sus saltos están descritos en esas versiones y en el `-HIST.md`. Sigue
@@ -1434,9 +1463,11 @@ colección y se respeta la regla de no reutilizarlos, pero **no hay nada que lo 
 mecánicamente**, a diferencia de `REQ`, `TC`, `UC` y `BR`.»
 
 **El hecho, verificado:** `registro-ids.json` tiene 317 anclas y **ninguna** contiene la
-cadena `TCS`. Los diez identificadores viven en el `name` de cada petición de
-`automation/api/tallerMecaniccollection.json`, con el formato
-`TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado`.
+cadena `TCS`. Los identificadores —**22 desde `DOC-27` 1.1.0**, eran 10— viven en el `name`
+de cada petición de `automation/api/tallerMecaniccollection.json`, con el formato
+`TCS005 · TC-063 · Rechazar la emisión con un albarán ya facturado`. Que la familia haya
+crecido de 10 a 22 en una sola ampliación de la colección, sin que ningún control lo
+registre, ilustra el aviso en vez de cambiarlo.
 
 **Por qué esto es de A-05 y no de nadie más.** Este documento existe para vigilar que la
 cadena `REQ-nnn → TC-nnn` no derive, y una de sus seis reglas bloqueantes es precisamente
@@ -1662,11 +1693,15 @@ parche de esa sesión no cubre a los otros dos.
 
 ### 5.5 Grados de automatización y ejecución real — contexto, no cobertura, y por primera vez con dos fuentes
 
-**Análisis sin cambios desde 1.10.0** salvo por los denominadores. Los 9 casos nuevos de
-SPE-06 (4 `service`, 4 `ui`, 1 `mixed`) **aún no tienen ejecución publicada** en ninguna de
-las dos suites: ni `DOC-23` 2.2.0 ni `DOC-27` 1.0.0 los cubren. La evidencia de ejecución
-publicada sigue siendo de **106 casos, ahora sobre 119** (era sobre 110); la brecha pasa de
-4 a 13. Las cifras de grado de automatización de abajo son las de 1.10.0.
+**Análisis sin cambios desde 1.10.0** salvo por los denominadores y por lo que aporta
+`DOC-27` 1.1.0. De los 9 casos nuevos de SPE-06 (4 `service`, 4 `ui`, 1 `mixed`), **`DOC-27`
+1.1.0 cubre ya 4 —TC-111, TC-113, TC-115, TC-116, todos en verde por servicio (TCS011…020)—
+más la mitad de servicio de TC-119 (TCS021/022)**. Los 4 `ui` —TC-112, TC-114, TC-117,
+TC-118— y la mitad de pantalla de TC-119 están en `albarans.feature`/`factures.feature`
+(`1ba6196`) pero **`DOC-23` no se ha regenerado**, así que la suite de navegador no tiene
+informe nuevo y esos casos siguen sin evidencia publicada. La evidencia de ejecución
+publicada pasa de **106 a 111 \* casos** sobre 119; la brecha baja de 13 a 8. Las cifras de
+grado de automatización de abajo son las de 1.10.0.
 
 | Grado | Casos | Qué significa |
 |---|---:|---|
@@ -1730,7 +1765,7 @@ sería perder el hallazgo de §3.11. Esta es la tabla que más cambia en 1.10.0:
 
 | Excluidos de la suite de navegador | Casos | Qué son | vs 1.9.1 |
 |---|---|---|---|
-| Ejecutados por la suite de servicio | TC-041, TC-045, TC-063, TC-064 | **correcto, y ya no es una promesa**: `DOC-27` 1.0.0 los ejecuta, 10 `TCS-nnn` en verde | **eran «los ejecutará S-17»** |
+| Ejecutados por la suite de servicio | TC-041, TC-045, TC-063, TC-064 (+ TC-111, TC-113, TC-115, TC-116 y la mitad de servicio de TC-119, desde `DOC-27` 1.1.0) | **correcto, y ya no es una promesa**: `DOC-27` los ejecuta, 22 `TCS-nnn` en verde | **eran «los ejecutará S-17»** |
 | Marcados `not-recommended` por el propio plan | TC-109 | **correcto**: se ejecuta a mano; **sigue sin constar ejecutado por nadie** | = |
 | **Declaran `ui` y no tienen vector en la interfaz** | **TC-032, TC-033, TC-047** | **A-05-11c**, §3.11 | = |
 
@@ -1747,18 +1782,19 @@ ninguna forma de saber si esa cola se vaciaba alguna vez. Ahora la hay.
 | | Casos | Fuente | Estado |
 |---|---:|---|---|
 | Ejecutados por interfaz | **102** | `DOC-23` 2.2.0 (S-10, Selenium + Cucumber) | 107 de 107 escenarios en verde |
-| Ejecutados por servicio | **4** | `DOC-27` 1.0.0 (S-17, colección Postman) | 10 de 10 `TCS-nnn` en verde |
-| **Con evidencia publicada** | **106 de 110** | — | — |
-| Sin evidencia de ejecución | **4** | — | TC-032, TC-033, TC-047 (`A-05-11c`) y TC-109 (`not-recommended`) |
+| Ejecutados por servicio | **8** (+ TC-119 mitad servicio) | `DOC-27` 1.1.0 (S-17, colección Postman) | 22 de 22 `TCS-nnn` en verde |
+| **Con evidencia publicada** | **111 de 119 \*** | — | TC-119 solo en su mitad de servicio |
+| Sin evidencia de ejecución | **8** | — | TC-032, TC-033, TC-047 (`A-05-11c`), TC-109 (`not-recommended`) y TC-112, TC-114, TC-117, TC-118 (`ui` de SPE-06, `DOC-23` sin regenerar) |
 
-**Y hay que leer ese 106 con el mismo cuidado con el que se lee el 100 % de cobertura.** No
-son 106 casos «que pasan»: son 106 casos **de los que alguien ha publicado un resultado**.
-Los cuatro que faltan no son un descuido de nadie —tres esperan una decisión de producto y
-el cuarto se ejecuta a mano por decisión del plan—, pero siguen siendo cuatro casos de los
-que, si mañana se pregunta en el Go/No-Go «¿esto se ha probado?», la respuesta honesta es
-que no consta.
+**Y hay que leer ese 111 con el mismo cuidado con el que se lee el 100 % de cobertura.** No
+son 111 casos «que pasan»: son 111 casos **de los que alguien ha publicado un resultado**
+—y uno, TC-119, solo en su mitad de servicio—. De los ocho que faltan, tres esperan una
+decisión de producto (`A-05-11c`), uno se ejecuta a mano por decisión del plan (TC-109) y
+cuatro —TC-112, TC-114, TC-117, TC-118— **ya tienen escenario escrito** en `albarans.feature`
+pero esperan a que se regenere `DOC-23`. Si mañana se pregunta en el Go/No-Go «¿esto se ha
+probado?», para esos ocho la respuesta honesta es que no consta.
 
-**Nada de esto entra en el CSV ni cambia un diagnóstico.** 106 de 119 con evidencia de
+**Nada de esto entra en el CSV ni cambia un diagnóstico.** 111 \* de 119 con evidencia de
 ejecución es una cifra de madurez de las suites, no de cobertura de requisitos: la cobertura
 sigue siendo 100 % porque los 119 casos existen y los 81 requisitos tienen el suyo. Un caso
 sin escenario automatizado sigue cubriendo su requisito; lo que no hace es producir
@@ -1814,13 +1850,15 @@ conocido.** `verification_path` dice **por qué vía se declara** que se ejerce 
 dice si el vector existe en esa vía**. Es un campo declarativo, no verificado, y nada en el
 contrato, ni en S-14, ni en este documento puede comprobarlo automáticamente.
 
-**La excepción: para los 4 casos `service`, desde hoy sí está verificado, y no por este
-documento.** `DOC-27` compuso los cuatro intentos contra el servicio y los cuatro fueron
-rechazados con el mensaje esperado (§3.11). Es exactamente lo que el campo declaraba, y es
-la primera vez que la declaración se contrasta con un hecho en vez de con una lectura de
-código. Conviene medir bien el alcance de esa buena noticia: **4 de 110**. Para los otros
-106 el campo sigue siendo una promesa, y de esos, cinco requisitos tienen una promesa que
-ya sabemos que no se cumple (`A-05-11b` y `A-05-11c`). La forma de reducir esa cifra es la
+**La excepción: para 8 casos `service`, desde hoy sí está verificado, y no por este
+documento.** `DOC-27` 1.0.0 compuso contra el servicio los intentos de TC-041, TC-045,
+TC-063 y TC-064; `DOC-27` 1.1.0 añade TC-111, TC-113, TC-115, TC-116 y la mitad de servicio
+de TC-119, y todos fueron rechazados con el mensaje esperado (§3.11). Es exactamente lo que
+el campo declaraba, y es la única vez que la declaración se contrasta con un hecho en vez
+de con una lectura de código. Conviene medir bien el alcance de esa buena noticia: **8 de
+119** (el reparto por requisito de la tabla de arriba es el de 1.10.0 y se re-derivará en la
+regeneración completa). Para el resto el campo sigue siendo una promesa, y de esos, cinco
+requisitos tienen una promesa que ya sabemos que no se cumple (`A-05-11b` y `A-05-11c`). La forma de reducir esa cifra es la
 de siempre y no ha cambiado: intentar ejecutarlos. Lo que 1.6.0 añadía a
 continuación —que el espacio donde esconderse eran los 40 `Negative` y `Boundary`, porque
 los `Functional` fallarían ruidosamente el primer día— **era falso, y esta versión lo
@@ -1843,11 +1881,11 @@ En consecuencia, y ahora con la corrección hecha:
 
 ## 6. Narrativa de riesgos
 
-**Sin cambios de fondo desde 1.10.0.** SPE-06 no cambia ningún riesgo de este apartado;
-solo añade que los **9 casos nuevos** de albaranes se exportarán sin evidencia de ejecución
-—ninguna de las dos suites los cubre todavía (§5.5)— y que **4 de ellos son `service`**, así
-que su vía dependerá de que S-17 amplíe la colección. El resto de la narrativa es la de
-1.10.0.
+**Sin cambios de fondo desde 1.10.0.** SPE-06 no cambia ningún riesgo de este apartado. De
+los **9 casos nuevos** de albaranes, `DOC-27` 1.1.0 ya ejecuta por servicio 4 —TC-111,
+TC-113, TC-115, TC-116— más la mitad de servicio de TC-119, todos en verde (§5.5); los 4
+`ui` restantes tienen escenario en `albarans.feature` pero se exportarían sin evidencia
+porque `DOC-23` no se ha regenerado. El resto de la narrativa es la de 1.10.0.
 
 **Aún no hay datos de ejecución en Rally.** Esta sección es propia de la pasada `post` y
 no puede escribirse ahora: no existen `DOC-19-RALLY-TESTCASES.csv` ni
@@ -1856,8 +1894,8 @@ ejecutados en Rally y no tienen resultado registrado allí. Cualquier afirmació
 diría esa ejecución sería especulación, no trazabilidad.
 
 **Y la tentación crece otra vez, ahora por partida doble.** `DOC-23` 2.2.0 trae 102 casos
-del plan ejecutados y **107 de 107 escenarios en verde**; `DOC-27` 1.0.0 trae los **4 que
-faltaban, con 10 comprobaciones en verde**. Entre las dos, 106 de los 110 casos del plan
+del plan ejecutados y **107 de 107 escenarios en verde**; `DOC-27` 1.1.0 trae **8 casos por
+servicio, con 74 assertions en verde**. Entre las dos, 111 \* de los 119 casos del plan
 tienen hoy un resultado publicado y **ninguno de los dos informes tiene un solo rojo**. Es
 lo más cerca que este proyecto ha estado nunca de tener resultados, y aun así no llena este
 hueco: **una suite local no es Rally**, `exists_in_rally` sigue sin haber sido mirado por
@@ -1877,11 +1915,11 @@ Lo que sí puede afirmarse hoy, y sólo esto:
   TC-064 —y con él TC-063 y TC-045— ya no declara una vía por la que su vector no se puede
   componer, y esta vez no es una inferencia sobre el código: los tres intentos se
   formularon contra el servicio y los tres fueron rechazados (§3.11);
-- **cuatro casos del plan han dejado de ser un punto ciego de la evidencia.** Hasta ayer,
-  `TC-041`, `TC-045`, `TC-063` y `TC-064` estaban correctamente asignados a S-17 y **no
-  constaban ejecutados por nadie**; hoy constan, en un informe versionado y con historial
-  (§5.5). Quedan cuatro casos sin evidencia —TC-032, TC-033, TC-047 y TC-109—, y de esos,
-  tres esperan una decisión de producto;
+- **ocho casos del plan tienen evidencia de ejecución por servicio.** `TC-041`, `TC-045`,
+  `TC-063` y `TC-064` la ganaron con `DOC-27` 1.0.0; `TC-111`, `TC-113`, `TC-115`, `TC-116`
+  y la mitad de servicio de `TC-119`, con `DOC-27` 1.1.0 (§5.5). Quedan ocho casos sin
+  evidencia publicada —TC-032, TC-033, TC-047, TC-109 y los cuatro `ui` de SPE-06 (TC-112,
+  TC-114, TC-117, TC-118), pendientes de que se regenere `DOC-23`—;
 - **hay un camino por el que la aplicación pierde stock y ningún requisito dice si eso está
   bien**: borrar un albarán no devuelve al catálogo las piezas de sus líneas (verificado en
   el servidor, `A-05-15`, §3.15). El único caso de REQ-041 está en verde y no mira el stock,
@@ -2069,6 +2107,9 @@ tercera de A-03. La lista pasa de 15 a **18**.
 **1.11.0 añade una —19—, de SPE-06.** Ver al final de la lista. La pregunta 12 (`Q-30`)
 cambia de contenido: ya no es «¿se concede?», sino la colisión de §3.8.
 
+**1.12.0 no añade preguntas.** La 19 pasa a **parcialmente respondida**: `DOC-27` 1.1.0
+cubre por servicio TC-111, TC-113, TC-115 y TC-116; queda abierto lo que no depende de S-17.
+
 1. **¿Describen REQ-025 y REQ-034 lo que se quiere que haga la aplicación?** Nacida en
    1.7.0, sigue sin respuesta y **no es de QA**. REQ-025 promete un listado de
    albaranes filtrable por vehículo, por cliente y por situación; la interfaz solo ofrece
@@ -2181,9 +2222,13 @@ cambia de contenido: ya no es «¿se concede?», sino la colisión de §3.8.
     reescribe el caso para que no prometa lo que nadie hará, o el paso sale a un caso
     hermano `ui`. **Es de A-03**, y cuesta menos que cualquiera de las otras diecisiete
     preguntas de esta lista.
-19. **¿Se exportan a Rally los 4 casos `service` nuevos de SPE-06 sin evidencia de
-    ejecución?** TC-111, TC-113, TC-115 y TC-116 nacen `verification_path: service` y hoy
-    **ninguna suite los cubre**: `automation/api/` (DOC-26/DOC-27) no los tiene. Igual que
-    los 4 `service` de 1.6.0 antes de `DOC-27`, quedan correctamente asignados a **S-17**
-    pero sin fuente que diga si se han ejecutado. Decisión de **A-11** sobre si el Go/No-Go
-    exige esa evidencia; trabajo de **S-17** para producirla.
+19. **¿Se exportan a Rally los casos de SPE-06 sin evidencia de ejecución? — parcialmente
+    respondida.** `DOC-27` 1.1.0 (`35ff50b`) cubre por servicio **TC-111, TC-113, TC-115 y
+    TC-116** —TCS011…TCS020, todos en verde— más la mitad de servicio de TC-119
+    (TCS021/022): la parte que dependía de que S-17 ampliara la colección **ya está hecha**.
+    Queda abierto: (a) la exportación a Rally en sí —sigue sin existir `DOC-19`/`DOC-20`, así
+    que es la pasada `pre` y las tres columnas van en `n/d`— y (b) los **4 casos `ui` de
+    SPE-06 —TC-112, TC-114, TC-117, TC-118—**, que tienen escenario en `albarans.feature`
+    (`1ba6196`) pero **siguen sin informe** porque `DOC-23` no se ha regenerado. Decisión de
+    **A-11** sobre si el Go/No-Go exige esa evidencia; trabajo de **S-10** (regenerar
+    `DOC-23`) para cerrar (b).

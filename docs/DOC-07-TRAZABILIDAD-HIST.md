@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.11.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.12.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-29T12:00:00+02:00
+generated_at: 2026-08-29T18:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,23 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.12.0 — 2026-08-29 · MINOR
+
+**Fidelidad:** primaria.
+
+Consume `DOC-27-INFORME-API.md` **1.1.0** (`35ff50b`): S-17 amplió la colección de servicio
+con 12 `TCS` (TCS011…TCS022) que cubren por servicio TC-111, TC-113, TC-115, TC-116 y la
+mitad de servicio de TC-119 —los casos de SPE-06 sacados de la interfaz—. No es entrada del
+JOIN: **la matriz no se toca** (DOC-04 1.3.1 y DOC-05 1.8.0 sin mover; `DOC-07-MATRIZ.csv`
+no se regenera). Los casos del plan con evidencia de ejecución publicada suben de **106 a
+111 \*** de 119 (102 interfaz + 8 servicio + TC-119 en su mitad de servicio); los 4 `ui` de
+SPE-06 —TC-112/114/117/118— no cuentan hasta que se regenere DOC-23. La pregunta 19 de §7.3
+pasa a **parcialmente respondida**. Tocado: front-matter, §1, §2, §3.16, §5.5, §5.6, §6,
+§7.3. Ninguna anomalía `A-05-nn` se abre ni se cierra (32 avisos, 0 bloqueantes); las marcas
+`*` de regeneración completa pendiente de 1.11.0 siguen abiertas.
 
 ---
 
