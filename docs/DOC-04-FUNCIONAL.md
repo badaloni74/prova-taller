@@ -1,17 +1,17 @@
 ---
 doc_id: DOC-04
 doc_name: DOC-04-FUNCIONAL
-version: 1.3.1
+version: 1.3.2
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-29T09:10:00+02:00
+generated_at: 2026-08-30T10:30:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: spec-SPE-06-albara-canvi-client
-  commit_sha: 621ea3bb07e316abd203593a4c3be1aaf3c2c138
-  working_tree_clean: false   # renumeración Q-16 -> Q-30 sin commitear todavía y ficheros ajenos sin versionar (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el resto del árbol versionado está limpio
+  branch: master
+  commit_sha: bdfb987b3e5b5a3dd46f54e0a41fe37bdcf92516
+  working_tree_clean: true
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
@@ -52,6 +52,30 @@ inputs:
 Este apartado explica de dónde sale el documento y cómo se ha usado cada entrada.
 El dato en crudo —versión y hash de cada fuente— está en el bloque `inputs` del
 front-matter, que es lo que lee `S-16 · Cascada de obsolescencia`.
+
+**Motivo de la versión 1.3.2 (PATCH).** Corrección puntual de metadatos de
+seguimiento en tres entradas del bloque `open_questions` — `Q-02`, `Q-06` y
+`Q-12` —, sin tocar ningún `REQ-nnn` ni el sentido de ninguna pregunta. Dos
+defectos:
+
+1. **Atribución de bug equivocada en `Q-02`.** Su `evolutivo.note` citaba
+   `BUG-003` de `docs/DOC-24-BUGS.json`; el bug que corresponde a `Q-02` (stock
+   que queda negativo al añadir una línea de pieza) es **`BUG-001`**, no
+   `BUG-003` (que es el de `Q-12`, importes negativos). Además `BUG-001` ya
+   consta `status: fixed` en `DOC-24` 1.1.0 (commit `ed61c24`, 2026-08-21); la
+   nota seguía diciendo «abierto».
+2. **Referencias muertas a `A-06`/`DOC-08`.** El bloque `evolutivo` de `Q-02`,
+   `Q-06` y `Q-12` apuntaba a un agente retirado (`A-06`) y a un documento que
+   ya no existe como mecanismo de evolutivos (`DOC-08`). El mecanismo vigente es
+   `/spec` → `specs/*.md`, con `Origin: BUG-nnn` cuando el spec resuelve un bug
+   catalogado. Se sustituyen `owner`/`target_doc` por `mechanism`/`spec_ref` en
+   las tres entradas, sin fabricar ningún slug o número de spec que no exista
+   todavía en `specs/`.
+
+Detalle en el apartado 6.2 y en `DOC-04-FUNCIONAL-HIST.md`. `DOC-05`, `DOC-06` y
+`DOC-07` no quedan obsoletos por este cambio: no hay ningún `REQ-nnn` añadido,
+eliminado ni con semántica modificada. El resto de este apartado describe el
+ciclo 1.3.1 y anteriores, que siguen vigentes.
 
 **Motivo de la versión 1.3.1 (PATCH).** Renumeración de la pregunta abierta
 `Q-16` a `Q-30` por colisión de identificador con la `Q-16` de `DOC-05`, que es
@@ -517,10 +541,10 @@ hoy.
 
 | ID | Requisitos que describen el hueco | Decisión de negocio (2026-08-16) | Estado del evolutivo |
 |---|---|---|---|
-| Q-02 | REQ-035, REQ-019 | **Bloquear.** No se puede añadir una línea de pieza si no hay existencias suficientes. El stock deja de poder quedar negativo. | Pendiente (medio). Censado como `BUG-003` en `DOC-24`. |
-| Q-06 | REQ-042, REQ-047 | **Factura rectificativa.** Para corregir una factura emitida por error se emite una factura nueva que anula la anterior; ambas quedan en el histórico. La inmutabilidad de la factura original no se toca. | Pendiente (grande). Entidad nueva, numeración propia, afecta al cálculo de totales. |
-| Q-10 | REQ-040, REQ-046 | **Impedir el cambio de cliente.** Se puede corregir el vehículo de un albarán no facturado dentro del mismo cliente, pero no mover el albarán a otro cliente. | **Implementado.** Entregado como SPEC 06 (`status: Implemented`), realizado en `BR-ALB-10`, `REQ-080` y `REQ-081`. No pasó por DOC-08. |
-| Q-12 | REQ-019, REQ-022, REQ-034, REQ-036 | **Bloquear los importes negativos.** Precio, coste y stock de una pieza, precio de una línea de albarán y precio por hora de la mano de obra deben ser siempre positivos. | Pendiente (medio). |
+| Q-02 | REQ-035, REQ-019 | **Bloquear.** No se puede añadir una línea de pieza si no hay existencias suficientes. El stock deja de poder quedar negativo. | Censado como `BUG-001` en `DOC-24` (no `BUG-003`, que es el de `Q-12`) — **ya `status: fixed`** desde `DOC-24` 1.1.0 (commit `ed61c24`, 2026-08-21). El cierre no pasó por `/spec` ni queda reflejado en `REQ-035`; ver nota en el bloque estructurado. |
+| Q-06 | REQ-042, REQ-047 | **Factura rectificativa.** Para corregir una factura emitida por error se emite una factura nueva que anula la anterior; ambas quedan en el histórico. La inmutabilidad de la factura original no se toca. | Pendiente (grande). Entidad nueva, numeración propia, afecta al cálculo de totales. `BUG-004` sigue abierto en `DOC-24`; sin spec propio todavía. |
+| Q-10 | REQ-040, REQ-046 | **Impedir el cambio de cliente.** Se puede corregir el vehículo de un albarán no facturado dentro del mismo cliente, pero no mover el albarán a otro cliente. | **Implementado.** Entregado como SPEC 06 (`status: Implemented`), realizado en `BR-ALB-10`, `REQ-080` y `REQ-081`. No pasó por DOC-08 (mecanismo ya retirado). |
+| Q-12 | REQ-019, REQ-022, REQ-034, REQ-036 | **Bloquear los importes negativos.** Precio, coste y stock de una pieza, precio de una línea de albarán y precio por hora de la mano de obra deben ser siempre positivos. | Pendiente (medio). `BUG-003` sigue abierto en `DOC-24`; spec en redacción (`SPE-07`, Draft) al cierre de esta corrección. |
 | Q-14 | REQ-052, REQ-055 | **Recuento y filtro de facturas pendientes de cobro.** | Pendiente (medio). |
 | Q-15 | REQ-063, REQ-073 | **Igual que Q-14 en nóminas:** recuento y filtro de nóminas pendientes de pago. | Pendiente (medio). |
 
@@ -547,8 +571,14 @@ pendientes no dice nada sobre si una nómina pagada debe poder modificarse o
 borrarse.
 
 **Quién recoge las decisiones pendientes.** Las cinco que siguen pendientes
-generan una petición de evolutivo de Fase 2: A-06 las convierte en requisitos
-TO-BE en **DOC-08**. A-02 no escribe DOC-08 ni inventa aquí el requisito futuro.
+generan una petición de evolutivo de Fase 2. El mecanismo vigente es `/spec` →
+`specs/*.md` (`Origin: BUG-nnn` cuando el spec resuelve un bug catalogado de
+`DOC-24`); el agente `A-06` y el documento `DOC-08` a los que remitía esta
+frase están retirados. A-02 no escribe ningún spec ni inventa aquí el
+requisito futuro. **Nota de alcance (2026-08-30):** esta corrección solo
+actualiza el `evolutivo` de `Q-02`, `Q-06` y `Q-12`; `Q-14` y `Q-15` conservan
+todavía `owner: A-06` / `target_doc: DOC-08` en el bloque estructurado,
+pendiente de una pasada posterior.
 
 ### 6.3 Cómo leer este apartado en las fases siguientes
 
@@ -564,8 +594,8 @@ diferencia es el tipo de aviso:
   cualquier dirección, o no cambiar, cuando el negocio conteste.
 - Los señalados por preguntas **respondidas pero pendientes de evolutivo** van a
   cambiar en un sentido ya conocido, pero no todavía: hoy siguen siendo verdad.
-  Cuando A-06 publique DOC-08, las pruebas que cuelgan de ellos habrá que
-  revisarlas.
+  Cuando el spec correspondiente (`/spec` → `specs/*.md`) se implante, las
+  pruebas que cuelgan de ellos habrá que revisarlas.
 - Los señalados por `Q-10`, **respondida e implementada**, ya reflejan la
   decisión de negocio: `REQ-080` y `REQ-081` son el estado deseado y el estado
   actual a la vez.
@@ -1235,8 +1265,18 @@ requirements:
 #                                          siendo uno solo, por compatibilidad)
 #   gap_open_until_implemented          -> true mientras el evolutivo no esté construido;
 #                                          false cuando ya está en el sistema
-#   evolutivo                           -> alcance y destino de la petición derivada;
+#   evolutivo                           -> alcance y mecanismo de la petición derivada;
 #                                          status: pending | implemented
+#                                          mechanism: ruta real vigente de formalización
+#                                            (/spec -> specs/*.md, con Origin: BUG-nnn si
+#                                            resuelve un bug de DOC-24); sustituye a los
+#                                            campos owner/target_doc (A-06/DOC-08), ambos
+#                                            retirados -- corregido el 2026-08-30 en Q-02,
+#                                            Q-06 y Q-12. Q-14/Q-15 aún los llevan, pendiente
+#                                            de una pasada posterior
+#                                          spec_ref: identificador del spec si ya existe o
+#                                            está en redacción; null si no hay ninguno todavía
+#                                            (no se fabrica ningún slug ni número de spec)
 #   realised_in                         -> anclas/requisitos que materializan la decisión (si implemented)
 open_questions:
   - id: Q-01
@@ -1260,9 +1300,9 @@ open_questions:
     evolutivo:
       scope: medium
       status: pending
-      owner: A-06
-      target_doc: DOC-08
-      note: "Censado como BUG-003 en docs/DOC-24-BUGS.json, abierto."
+      mechanism: "/spec -> specs/*.md (Origin: BUG-001)"
+      spec_ref: null
+      note: "Censado como BUG-001 en docs/DOC-24-BUGS.json (corregido el 2026-08-30: esta nota citaba antes BUG-003 por error, que es el bug de Q-12). BUG-001 figura status: fixed desde DOC-24 1.1.0 (commit ed61c24, 2026-08-21): server/routes/albarans.js ya rechaza la línea si supera el estoc disponible. El cierre no pasó por /spec, que es el mecanismo vigente; A-06 y DOC-08, a los que apuntaba antes este campo, están retirados. REQ-035 de este documento no se ha reformulado para reflejarlo, porque esta corrección no rederiva requisitos. gap_open_until_implemented se mantiene en true a propósito: cerrarlo del todo exige el mismo criterio aplicado a Q-10 (spec trazable + REQ-nnn actualizado), que aquí no se cumple todavía; es una decisión de A-02, no un hecho automático del código ya corregido."
   - id: Q-03
     question: "La unidad de medida de la pieza no interviene en ningún cálculo ni validación. ¿Qué uso se le quiere dar?"
     blocks: REQ-021
@@ -1296,9 +1336,9 @@ open_questions:
     evolutivo:
       scope: large
       status: pending
-      owner: A-06
-      target_doc: DOC-08
-      note: "Entidad nueva con numeración propia; afecta al cálculo de totales."
+      mechanism: "/spec -> specs/*.md (Origin: BUG-004)"
+      spec_ref: "SPE-08, previsto a continuación de SPE-07; no redactado todavía, no existe ningún fichero SPE-08 en specs/ a fecha de esta corrección (2026-08-30)"
+      note: "Entidad nueva con numeración propia; afecta al cálculo de totales. BUG-004 (docs/DOC-24-BUGS.json) sigue abierto. Los campos owner: A-06 / target_doc: DOC-08 que llevaba antes este bloque se sustituyen porque ese agente y ese documento están retirados; el mecanismo vigente para formalizar el evolutivo es /spec -> specs/*.md."
   - id: Q-07
     question: "Los albaranes no tienen ninguna situación intermedia entre pendiente y facturado. ¿El taller trabaja así o falta reflejar un paso real del trabajo?"
     blocks: REQ-028
@@ -1352,8 +1392,9 @@ open_questions:
     evolutivo:
       scope: medium
       status: pending
-      owner: A-06
-      target_doc: DOC-08
+      mechanism: "/spec -> specs/*.md (Origin: BUG-003)"
+      spec_ref: "SPE-07, en redacción (Draft) a fecha de esta corrección (2026-08-30); no existe todavía ningún fichero SPE-07 en specs/"
+      note: "BUG-003 (docs/DOC-24-BUGS.json) sigue abierto. Los campos owner: A-06 / target_doc: DOC-08 que llevaba antes este bloque se sustituyen porque ese agente y ese documento están retirados; el mecanismo vigente es /spec -> specs/*.md."
   - id: Q-13
     question: "El término estado designa a la vez la situación del albarán (pendiente o facturado) y la situación de cobro de facturas y nóminas (pendiente o pagada). El glosario lo marca como ambiguo. ¿Con qué nombres deben aparecer ambos conceptos en la interfaz y en los filtros?"
     blocks: REQ-025

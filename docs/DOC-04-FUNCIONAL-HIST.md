@@ -2,11 +2,11 @@
 doc_id: DOC-04-HIST
 doc_name: DOC-04-FUNCIONAL-HIST
 of_document: DOC-04-FUNCIONAL.md
-version: 1.3.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.3.2        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-29T09:10:00+02:00
+generated_at: 2026-08-30T10:30:00+02:00
 ---
 
 # DOC-04-FUNCIONAL · Historial de versiones
@@ -23,6 +23,79 @@ esta regeneración, y son fieles a lo que allí constaba. Se señalan como
 reconstruidas. Las fechas de 1.0.0 y 1.1.0 son aproximadas, tomadas de
 `registro-ids.json` (anclas `REQ-*` creadas el 2026-08-15, preguntas `Q-*`
 creadas el 2026-08-16).
+
+---
+
+## 1.3.2 — 2026-08-30 — PATCH — corrección de metadatos de seguimiento en `Q-02`, `Q-06` y `Q-12`
+
+Corrección puntual del bloque `open_questions`, a petición del propietario del
+proyecto. **Sin ningún cambio de contenido funcional**: el bloque `requirements`
+es idéntico byte a byte al de 1.3.1; ningún `REQ-nnn` se rederiva. No se ha
+regenerado el documento desde `DOC-01`, solo se ha editado el fichero.
+
+**Defecto 1 — atribución de bug equivocada en `Q-02`.** La nota del `evolutivo`
+de `Q-02` (stock que queda negativo al añadir una línea de pieza) citaba
+`BUG-003` de `docs/DOC-24-BUGS.json`. Contrastado contra `DOC-24`: `Q-02`
+corresponde a **`BUG-001`** (mismo tema); `BUG-003` es el bug de `Q-12`
+(importes negativos). Se corrige la cita. Además, `BUG-001` ya consta
+`status: fixed` en `DOC-24` desde su versión 1.1.0 (commit `ed61c24`,
+2026-08-21) — la nota decía «abierto» y ya no es así.
+
+- `gap_open_until_implemented` de `Q-02` **se mantiene en `true`**: cerrarlo
+  del todo exigiría el mismo criterio aplicado a `Q-10` (spec trazable +
+  `REQ-035` actualizado para reflejar el bloqueo), que aquí no se cumple — el
+  fix llegó por un commit directo, sin pasar por `/spec`, y `REQ-035` sigue
+  describiendo el sistema sin ese bloqueo. Es una decisión de A-02, no un
+  hecho automático derivado de que el código ya esté corregido.
+- El `status` propio de `Q-02` (`answered`) tampoco cambia.
+
+**Defecto 2 — referencias muertas a un mecanismo retirado.** El bloque
+`evolutivo` de `Q-02`, `Q-06` y `Q-12` llevaba `owner: A-06` y (`Q-02`/`Q-06`)
+`target_doc: DOC-08`. `A-06` está retirado y los evolutivos ya no se
+formalizan en `DOC-08`: el mecanismo vigente es `/spec` → `specs/*.md`, con
+`Origin: BUG-nnn` cuando el spec resuelve un bug catalogado. Se sustituyen
+`owner`/`target_doc` por dos campos nuevos, `mechanism` y `spec_ref`, en las
+tres entradas:
+
+- **`Q-02` (`BUG-001`, ya corregido en código, sin spec):** `spec_ref: null`.
+  No hay spec que citar; el cierre fue un commit directo anterior al mecanismo
+  `/spec`.
+- **`Q-12` (`BUG-003`, abierto):** `spec_ref` apunta a `SPE-07`, en redacción
+  (`Draft`) en el momento de esta corrección. Comprobado contra `specs/`: no
+  existe todavía ningún fichero `SPE-07-*`; se declara así, como observación,
+  sin fabricar su slug.
+- **`Q-06` (`BUG-004`, abierto):** `spec_ref` apunta a `SPE-08`, previsto a
+  continuación de `SPE-07` y sin redactar todavía. Mismo criterio: no se
+  fabrica ruta ni slug.
+
+**Alcance deliberadamente limitado.** `Q-14` y `Q-15` presentan el mismo
+`owner: A-06` / `target_doc: DOC-08` y **no se han tocado** en esta pasada: el
+encargo se limitaba a las tres entradas con defecto confirmado. Queda anotado
+en el cuerpo del documento (apartado 6.2, «Quién recoge las decisiones
+pendientes») como pendiente de una corrección posterior.
+
+**Prosa tocada.** Apartado «Procedencia» (nueva nota de versión 1.3.2), tabla
+del apartado 6.2 (fila `Q-02` corregida; `Q-06` y `Q-12` amplían su celda con
+el estado del bug y del spec), párrafo «Quién recoge las decisiones
+pendientes» (sustituye la mención a A-06/DOC-08 por `/spec` → `specs/*.md` y
+añade la nota de alcance sobre `Q-14`/`Q-15`) y apartado 6.3 (misma
+sustitución). También se amplía el comentario de esquema que precede a
+`open_questions:` para documentar `mechanism`/`spec_ref`.
+
+**Por qué PATCH.** No hay ningún requisito añadido, eliminado ni con
+semántica modificada — el bloque `requirements` no cambia. Los campos
+tocados son de procedencia y seguimiento del `evolutivo`, no de contenido
+funcional. `DOC-05`, `DOC-06` y `DOC-07` no quedan obsoletos.
+
+**`registro-ids.json`.** No se toca. `Q-02`, `Q-06` y `Q-12` conservan su
+`status`/`resolution`/`blocks` en el registro (el esquema `questions` de
+`s12-registro-ids` no persiste `owner`, `target_doc`, `mechanism` ni
+`spec_ref`: son propios del bloque `evolutivo` en el cuerpo de DOC-04).
+Verificado con `sync --block requirements` y `sync --block questions`
+(0 añadidos, 16 y 81 ya presentes, sin colisiones ni derivas) y
+`validate --doc docs/DOC-04-FUNCIONAL.md --block requirements` (0
+bloqueantes). `cascada.js lint docs/DOC-04-FUNCIONAL.md` también sin
+problemas.
 
 ---
 
