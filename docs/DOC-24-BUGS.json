@@ -1,11 +1,17 @@
 {
   "doc_id": "DOC-24",
   "doc_name": "DOC-24-BUGS",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "draft",
   "generator": "A-14 explorador ejecutor",
   "generator_version": "1.0",
   "generated_at": "2026-08-16T08:05:00+02:00",
+  "last_status_update": {
+    "date": "2026-08-30",
+    "by": "Actualización manual (Claude Code, a petición del propietario del proyecto) — no hay agente A-14 en este instrumental que gobierne este fichero",
+    "what": "Añadido el campo `status` a cada bug, ausente desde la creación del documento. BUG-001 y BUG-002 se marcan `fixed`: su cierre solo constaba hasta ahora en la prosa de CLAUDE.md, no en este fichero. Verificado contra el código actual (server/routes/albarans.js), no solo contra el mensaje del commit.",
+    "version_bump": "MINOR (1.0.0 -> 1.1.0): añade un campo a cada entrada del array `bugs`, cambio de esquema con efecto real — antes no se podía saber el estado de un bug leyendo solo este fichero."
+  },
   "source": {
     "repo_path": "C:\\Claude\\appdani",
     "vcs": "git",
@@ -36,6 +42,8 @@
     "critical": 2,
     "high": 2,
     "medium": 0,
+    "open": 2,
+    "fixed": 2,
     "validated_ok": 3,
     "documentation_discrepancies": 1,
     "false_leads_discarded": 1
@@ -45,6 +53,10 @@
     {
       "id": "BUG-001",
       "severity": "critical",
+      "status": "fixed",
+      "fixed_on": "2026-08-21",
+      "fixed_commit": "ed61c24",
+      "fix_verified": "server/routes/albarans.js:163 rechaza la línea con 'Estoc insuficient' cuando la cantidad supera el estoc de la pieza. Verificado leyendo el código actual, no solo el mensaje del commit.",
       "title": "El stock se descuenta sin comprobar existencias y queda negativo, sin límite",
       "requirement": "REQ-035",
       "business_rule": "BR-ALB-08",
@@ -64,6 +76,10 @@
     {
       "id": "BUG-002",
       "severity": "critical",
+      "status": "fixed",
+      "fixed_on": "2026-08-21",
+      "fixed_commit": "ed61c24",
+      "fix_verified": "server/routes/albarans.js:99 compara el client_id del vehículo nuevo con el actual y bloquea el cambio si difieren. Verificado leyendo el código actual, no solo el mensaje del commit.",
       "title": "Cambiar el vehículo de un albarán no facturado cambia el cliente al que se factura, sin aviso",
       "requirement": "REQ-040",
       "open_question": "Q-10",
@@ -82,6 +98,7 @@
     {
       "id": "BUG-003",
       "severity": "high",
+      "status": "open",
       "title": "Se aceptan precios, costes y stocks negativos, también desde la interfaz",
       "requirement": "REQ-019",
       "open_question": "Q-12",
@@ -100,6 +117,7 @@
     {
       "id": "BUG-004",
       "severity": "high",
+      "status": "open",
       "title": "Una factura emitida no se puede anular ni corregir por ningún medio",
       "requirement": "REQ-043",
       "business_rule": "BR-ALB-03",
