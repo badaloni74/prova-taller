@@ -1,10 +1,10 @@
 ---
 doc_id: DOC-27
-doc_name: DOC-27-INFORME-API
+doc_name: DOC-27-INFORME-EJECUCION-TCS-API
 version: 1.1.0
 status: draft
-lifecycle: snapshot   # informe de una corrida concreta de newman (2026-08-29). No se re-ejecuta solo, así que su contenido no "caduca" cuando cambia DOC-05: es un hecho histórico fiel. S-16/cascada.js lo excluye del cálculo de obsolescencia (sale en la sección CONGELADOS). Se descongela solo si S-17 vuelve a ejecutar la suite y publica una versión nueva. Ver DOC-27-INFORME-API-HIST.md.
-history: DOC-27-INFORME-API-HIST.md
+lifecycle: snapshot   # informe de una corrida concreta de newman (2026-08-29). No se re-ejecuta solo, así que su contenido no "caduca" cuando cambia DOC-05: es un hecho histórico fiel. S-16/cascada.js lo excluye del cálculo de obsolescencia (sale en la sección CONGELADOS). Se descongela solo si S-17 vuelve a ejecutar la suite y publica una versión nueva. Ver DOC-27-INFORME-EJECUCION-TCS-API-HIST.md.
+history: DOC-27-INFORME-EJECUCION-TCS-API-HIST.md
 generator: S-17 s17-api-qa (ejecución newman, sesión Claude Code)
 generator_version: "1.1"
 generated_at: 2026-08-29T12:20:00+02:00

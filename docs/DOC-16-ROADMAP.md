@@ -33,17 +33,17 @@ inputs:
     version: 1.12.0
     hash: sha256:4b3e99db4a6275027e9830ee17a5731bf1e5b14dada0aad22c57eaf76efa6ffe
     present: true
-  - id: DOC-14-EXPLORATORIO.md
+  - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
     version: 2.1.0
     hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
     present: true
-  - id: DOC-23-INFORME.md
+  - id: DOC-23-INFORME-EJECUCION-TCS-UI.md
     from: S-10
     version: 2.2.0
     hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
     present: true
-  - id: DOC-27-INFORME-API.md
+  - id: DOC-27-INFORME-EJECUCION-TCS-API.md
     from: S-17
     version: 1.1.0
     hash: sha256:2ae7596bf44f875ce2a675715344b739f0a1520301cf224746b8aafd8d192e20

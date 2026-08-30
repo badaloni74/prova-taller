@@ -108,7 +108,7 @@ inputs:
     usage: >-
       se lee unicamente por sus hallazgos §6.1, §6.2, §6.3 y §6.9, y por el estado de las mejoras
       que atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
-  - id: DOC-14-EXPLORATORIO.md
+  - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
     version: 2.1.0
     hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee

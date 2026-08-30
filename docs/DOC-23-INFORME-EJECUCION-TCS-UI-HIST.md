@@ -1,7 +1,7 @@
 ---
 doc_id: DOC-23-HIST
-doc_name: DOC-23-INFORME-HIST
-of_document: DOC-23-INFORME.md
+doc_name: DOC-23-INFORME-EJECUCION-TCS-UI-HIST
+of_document: DOC-23-INFORME-EJECUCION-TCS-UI.md
 version: 2.2.0        # no se versiona por separado: refleja la versión del documento que historia
 status: draft
 generator: S-10 skill-auto-tcs (ejecución + diagnóstico, sesión Claude Code)
@@ -22,9 +22,9 @@ reconstruction_note: >-
   que documentan 2.0.0 en adelante.
 ---
 
-# DOC-23-INFORME · Historial de versiones
+# DOC-23-INFORME-EJECUCION-TCS-UI · Historial de versiones
 
-Historial del documento `docs/DOC-23-INFORME.md`. Una entrada por versión, de la más
+Historial del documento `docs/DOC-23-INFORME-EJECUCION-TCS-UI.md`. Una entrada por versión, de la más
 nueva a la más antigua. **El documento principal no reproduce nada de esto**: refleja
 solo el estado de la última ejecución, con su `version` en el front-matter.
 

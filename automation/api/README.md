@@ -46,7 +46,7 @@ igual antes y después**: 1 factura, 4 albaranes, 7 líneas y stock total del
 catálogo 167 en las dos medidas. Dos ejecuciones seguidas sin resembrar dan el
 mismo recuento, así que la colección se puede repetir indefinidamente sobre la
 misma base sin resembrarla. Resultado TCS a TCS en
-[`docs/DOC-27-INFORME-API.md`](../../docs/DOC-27-INFORME-API.md) `1.1.0`.
+[`docs/DOC-27-INFORME-EJECUCION-TCS-API.md`](../../docs/DOC-27-INFORME-EJECUCION-TCS-API.md) `1.1.0`.
 
 ## Estructura y orden de ejecución
 
@@ -161,7 +161,7 @@ seguirían apuntando a él. Misma regla que `registro-ids.json` aplica a
 de alta ahí.
 
 Los resultados de cada ejecución, TCS a TCS, van a
-[`docs/DOC-27-INFORME-API.md`](../../docs/DOC-27-INFORME-API.md).
+[`docs/DOC-27-INFORME-EJECUCION-TCS-API.md`](../../docs/DOC-27-INFORME-EJECUCION-TCS-API.md).
 
 ## Los tres niveles de validación
 

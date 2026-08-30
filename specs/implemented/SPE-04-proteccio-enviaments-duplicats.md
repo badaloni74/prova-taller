@@ -10,7 +10,7 @@
 
 ## Per què existeix aquest spec
 
-Ve del triatge de `docs/DOC-14-EXPLORATORIO.md` (`TRIATGE-DOC-14.md`, grup «04»),
+Ve del triatge de `docs/DOC-14-INFORME-EXPLORADOR-QA.md` (`TRIATGE-DOC-14.md`, grup «04»),
 que agrupa **EXP-002** (`critical`: doble clic a «Afegir línia» duplica la línia
 i descompta l'estoc dues vegades) i **EXP-001** (`high`: doble clic a «Guardar»
 dona d'alta el mateix client dues vegades). `docs/DOC-16-ROADMAP.md` ja ho havia

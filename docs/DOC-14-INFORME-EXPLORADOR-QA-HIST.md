@@ -1,7 +1,7 @@
 ---
 doc_id: DOC-14-HIST
-doc_name: DOC-14-EXPLORATORIO-HIST
-of_document: DOC-14-EXPLORATORIO.md
+doc_name: DOC-14-INFORME-EXPLORADOR-QA-HIST
+of_document: DOC-14-INFORME-EXPLORADOR-QA.md
 version: 2.1.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-10 explorador QA
@@ -9,9 +9,9 @@ generator_version: "1.0"
 generated_at: 2026-08-28T10:59:47+02:00
 ---
 
-# DOC-14-EXPLORATORIO · Historial de versiones
+# DOC-14-INFORME-EXPLORADOR-QA · Historial de versiones
 
-Historial del documento `docs/DOC-14-EXPLORATORIO.md`. Una entrada por
+Historial del documento `docs/DOC-14-INFORME-EXPLORADOR-QA.md`. Una entrada por
 versión, de la más nueva a la más antigua. **El documento principal no
 reproduce nada de esto**: refleja solo el estado actual, con su `version`
 en el front-matter.
@@ -24,7 +24,7 @@ en el front-matter.
 nueva.** La cascada de obsolescencia marcó `DOC-14` 2.1.0 como caducado
 porque su entrada `inputs` para `DOC-16` seguía citando `3.0.0`, mientras
 que la vigente ya es `3.1.0`. Según `DOC-16-ROADMAP-HIST.md`, el salto lo
-disparó `DOC-07` 1.10.0 al incorporar `docs/DOC-27-INFORME-API.md` (primer
+disparó `DOC-07` 1.10.0 al incorporar `docs/DOC-27-INFORME-EJECUCION-TCS-API.md` (primer
 informe de la suite de servicio): `A-12` revisó las nueve `MEJ-nnn` contra
 esa evidencia, ninguna cambió de estado, y cuatro (`MEJ-002`, `MEJ-003`,
 `MEJ-004`, `MEJ-006`) ganaron o matizaron evidencia, con cambio de orden en
@@ -51,7 +51,7 @@ tocado la aplicación ni creado ni destruido ningún dato.
   `DOC-05-PLAN-PRUEBAS.md` y `DOC-06-MANUAL-USUARIO.md` tenían la versión
   correcta pero un `hash` que ya no correspondía al contenido real —un
   desajuste heredado de una sesión anterior, no producido en esta—; se
-  recalculan y corrigen ambos. `DOC-23-INFORME.md`, `DOC-04-FUNCIONAL.md` y
+  recalculan y corrigen ambos. `DOC-23-INFORME-EJECUCION-TCS-UI.md`, `DOC-04-FUNCIONAL.md` y
   `DOC-24-BUGS.json` estaban correctos. Ningún `EXP-nnn` dependía de esos
   hashes como evidencia, así que la corrección no reabre ni modifica ningún
   hallazgo.
@@ -60,7 +60,7 @@ tocado la aplicación ni creado ni destruido ningún dato.
 
 ## 2.1.0 — 2026-08-24 — MINOR
 
-**Resincronización dirigida contra `DOC-23-INFORME.md` 2.2.0, sin
+**Resincronización dirigida contra `DOC-23-INFORME-EJECUCION-TCS-UI.md` 2.2.0, sin
 exploración nueva del navegador.** La cascada de obsolescencia marcó
 `DOC-14` 2.0.1 como caducado porque su entrada `inputs` para `DOC-23`
 seguía citando `2.0.0`, mientras que la vigente ya es `2.2.0` (dos saltos:
@@ -86,7 +86,7 @@ forma.
   `A-03` a `null` (ya no pendiente).
 - Resumen ejecutivo actualizado: de 4 a 5 hallazgos corregidos, de 24 a 23
   abiertos, de 3 a 2 `high` abiertos.
-- Front-matter: entrada `inputs` de `DOC-23-INFORME.md` de `version: 2.0.0`
+- Front-matter: entrada `inputs` de `DOC-23-INFORME-EJECUCION-TCS-UI.md` de `version: 2.0.0`
   a `version: 2.2.0` con hash recalculado; `commit_sha` de `source`
   actualizado al `HEAD` tras la cascada (`f3b91fb908ce5d118dd8ff47e07eb21b1a2b7d7e`).
 - Se anota, sin corregirlo (no es competencia de A-10), que `CLAUDE.md`

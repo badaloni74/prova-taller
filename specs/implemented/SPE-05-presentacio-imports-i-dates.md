@@ -10,7 +10,7 @@
 
 ## Per què existeix aquest spec
 
-Ve del triatge de `docs/DOC-14-EXPLORATORIO.md` (`TRIATGE-DOC-14.md`, grup «05»),
+Ve del triatge de `docs/DOC-14-INFORME-EXPLORADOR-QA.md` (`TRIATGE-DOC-14.md`, grup «05»),
 que agrupa **EXP-007** (`high`: la fitxa de la factura no mostra l'import de
 l'IVA, malgrat que dos casos de prova diuen cobrir-ho), **EXP-009** (`medium`:
 la data de l'albarà es mostra com una marca de temps ISO en cru) i **EXP-014**

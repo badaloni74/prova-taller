@@ -1,6 +1,6 @@
 ---
 doc_id: DOC-23
-doc_name: DOC-23-INFORME
+doc_name: DOC-23-INFORME-EJECUCION-TCS-UI
 version: 2.2.0
 status: draft
 generator: S-10 skill-auto-tcs (ejecución + diagnóstico, sesión Claude Code)

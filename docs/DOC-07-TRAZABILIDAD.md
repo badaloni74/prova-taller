@@ -32,11 +32,11 @@ inputs:
     from: A-07
     version: 2.1.0
     hash: sha256:894b67deddc0eb3e9c687dc16aba472c9c771abe09bd3effffa114dcb0e85a8d
-  - id: DOC-14-EXPLORATORIO.md
+  - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
     version: 2.1.0
     hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
-  - id: DOC-23-INFORME.md
+  - id: DOC-23-INFORME-EJECUCION-TCS-UI.md
     from: S-10
     version: 2.2.0
     hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
@@ -44,7 +44,7 @@ inputs:
     from: A-14
     version: 1.0.0
     hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
-  - id: DOC-27-INFORME-API.md
+  - id: DOC-27-INFORME-EJECUCION-TCS-API.md
     from: S-17
     version: 1.1.0
     hash: sha256:2ae7596bf44f875ce2a675715344b739f0a1520301cf224746b8aafd8d192e20
@@ -257,12 +257,12 @@ conserva de 1.11.0 todo salvo la fila de `DOC-27`.
 | `docs/DOC-04-FUNCIONAL.md` | presente, **v1.3.1** (era 1.2.0; 1.3.0 añadió REQ-080/REQ-081 por SPE-06, 1.3.1 renumeró `Q-16`→`Q-30`) | **alimenta el JOIN**: +2 filas en la matriz |
 | `docs/DOC-05-PLAN-PRUEBAS.md` | presente, **v1.8.0** (era 1.6.0; añade TC-111…TC-119, todos `albarans`) | **alimenta el JOIN**: +9 casos |
 | `registro-ids.json` | presente, hash nuevo — ahora **81 REQ, 119 TC, 30 Q** (`Q-30` de DOC-04 concedida por S-12 en el ciclo de DOC-04 1.3.1); `FUN`/`MEJ`/`EVO` sin cambios | verificación de anclas: los 81 REQ y los 119 TC están en el registro (0 fuera) |
-| `docs/DOC-23-INFORME.md` | presente, v2.2.0 (sin cambios desde 1.10.0) | **no toca la matriz**; alimenta §5.5; **no se ha regenerado**, así que los 4 `ui` de SPE-06 y la mitad de pantalla de TC-119 siguen sin informe de navegador |
-| `docs/DOC-14-EXPLORATORIO.md` | presente, v2.1.0 (sin cambios desde 1.10.0) | **no toca la matriz** |
+| `docs/DOC-23-INFORME-EJECUCION-TCS-UI.md` | presente, v2.2.0 (sin cambios desde 1.10.0) | **no toca la matriz**; alimenta §5.5; **no se ha regenerado**, así que los 4 `ui` de SPE-06 y la mitad de pantalla de TC-119 siguen sin informe de navegador |
+| `docs/DOC-14-INFORME-EXPLORADOR-QA.md` | presente, v2.1.0 (sin cambios desde 1.10.0) | **no toca la matriz** |
 | `docs/DOC-09-IMPACTO-…md` | presente, **v2.1.0** (era 2.0.4; MINOR de resincronización de A-07 contra DOC-07 1.10.0) | **no toca la matriz**; releída, sus citas a la matriz siguen siendo ciertas |
 | `docs/DOC-06-MANUAL-USUARIO.md` | presente, **v1.4.0** (era 1.3.0; documenta REQ-080/REQ-081, añade su pregunta propia `Q-31`) | **no toca la matriz**; alimenta ⑤, A-05-09 y A-05-10; su `Q-30` homónima colisiona ahora con la de DOC-04 (§3.8) |
 | `docs/DOC-24-BUGS.json` | presente, v1.0.0 (sin cambios) | **no toca la matriz**; alimenta A-05-03 |
-| `docs/DOC-27-INFORME-API.md` | presente, **v1.1.0** (era 1.0.0; S-17 amplió la colección con TCS011…TCS022) | **no toca la matriz**; fuente de ejecución por servicio de 8 casos (los 4 `service` de 1.6.0 + TC-111/113/115/116) y de la mitad de servicio de TC-119; alimenta §5.5, §5.6 y §7.3-19 |
+| `docs/DOC-27-INFORME-EJECUCION-TCS-API.md` | presente, **v1.1.0** (era 1.0.0; S-17 amplió la colección con TCS011…TCS022) | **no toca la matriz**; fuente de ejecución por servicio de 8 casos (los 4 `service` de 1.6.0 + TC-111/113/115/116) y de la mitad de servicio de TC-119; alimenta §5.5, §5.6 y §7.3-19 |
 | `docs/DOC-19-RALLY-TESTCASES.csv` | **ausente** | no hay exportación a Rally que comprobar |
 | `docs/DOC-20-RALLY-STATE.json` | **ausente** | no hay estado de ejecución que leer |
 

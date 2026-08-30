@@ -1,6 +1,6 @@
 # Triatge dels 26 hallazgos de DOC-14 en specs
 
-Agrupació proposada dels hallazgos de `docs/DOC-14-EXPLORATORIO.md` per
+Agrupació proposada dels hallazgos de `docs/DOC-14-INFORME-EXPLORADOR-QA.md` per
 lliurar-los a `/spec` → `/spec-impl`. **És una proposta, no una imposició**: qui
 decideix en quants trossos es parteix ets tu.
 

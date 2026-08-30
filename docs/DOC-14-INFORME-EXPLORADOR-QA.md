@@ -1,6 +1,6 @@
 ---
 doc_id: DOC-14
-doc_name: DOC-14-EXPLORATORIO
+doc_name: DOC-14-INFORME-EXPLORADOR-QA
 version: 2.1.1
 status: draft
 generator: A-10 explorador QA
@@ -20,7 +20,7 @@ inputs:
   - id: automation/ui/**/*.feature
     from: S-10
     version: null
-  - id: DOC-23-INFORME.md
+  - id: DOC-23-INFORME-EJECUCION-TCS-UI.md
     from: S-10
     version: 2.2.0
     hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
@@ -40,7 +40,7 @@ inputs:
     from: A-12
     version: 3.1.0
     hash: sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81
-  - id: DOC-14-EXPLORATORIO.md
+  - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
     version: 1.0.0
     present: true
@@ -77,7 +77,7 @@ obsolescence_ack:
 La cascada de obsolescencia marcó esta versión como caducada porque su
 entrada `inputs` para `DOC-16-ROADMAP.md` seguía citando la versión `3.0.0`,
 mientras que la vigente ya es `3.1.0`. El motivo del salto, según
-`DOC-16-ROADMAP-HIST.md`: nació `docs/DOC-27-INFORME-API.md` (primer
+`DOC-16-ROADMAP-HIST.md`: nació `docs/DOC-27-INFORME-EJECUCION-TCS-API.md` (primer
 informe de ejecución de la suite de servicio de `S-17`), incorporado a
 `DOC-07` 1.10.0, y `A-12` revisó las nueve `MEJ-nnn` contra esa evidencia
 nueva. Ninguna `MEJ-nnn` cambió de estado (`implemented`/`accepted`/
@@ -96,13 +96,13 @@ encajaría, no como prueba de un hallazgo. Como ninguna `MEJ-nnn` cambió de
 estado en `DOC-16` 3.1.0, esa cita sigue siendo válida tal cual. No ha hecho
 falta abrir el navegador ni repetir ninguna carta: este cambio se limita a
 actualizar `version` y `hash` de la entrada `DOC-16-ROADMAP.md` en el
-front-matter y a dejar constancia en `DOC-14-EXPLORATORIO-HIST.md`.
+front-matter y a dejar constancia en `DOC-14-INFORME-EXPLORADOR-QA-HIST.md`.
 
 **Aprovechando esta revisión, se ha comprobado también la coherencia del
 resto del bloque `inputs`** — versión declarada contra versión real del
 fichero, hash declarado contra hash recalculado — porque hoy se ha detectado
 el mismo fallo silencioso (hash desfasado sin cambio de versión) en varios
-documentos del proyecto. Resultado: `DOC-23-INFORME.md`, `DOC-04-FUNCIONAL.md`
+documentos del proyecto. Resultado: `DOC-23-INFORME-EJECUCION-TCS-UI.md`, `DOC-04-FUNCIONAL.md`
 y `DOC-24-BUGS.json` estaban correctos (versión y hash coinciden con el
 fichero real). **`DOC-05-PLAN-PRUEBAS.md` y `DOC-06-MANUAL-USUARIO.md`
 tenían la versión correcta (`1.6.0` y `1.3.0` respectivamente, sin cambios
@@ -120,7 +120,7 @@ entradas `automation/ui/**/*.feature` (sin versión, a propósito — ver
 
 **Nota de la versión 2.1.0 (resincronización dirigida, sin exploración nueva del
 navegador).** La cascada de obsolescencia marcó esta versión como caducada
-porque su entrada `inputs` para `DOC-23-INFORME.md` seguía citando la
+porque su entrada `inputs` para `DOC-23-INFORME-EJECUCION-TCS-UI.md` seguía citando la
 versión `2.0.0`, mientras que la vigente ya es `2.2.0` — dos saltos:
 `2.0.0 → 2.1.0` cerró `TC-048` y confirmó los 18 casos en rojo de
 `EXP-027`/`TC-103`; `2.1.0 → 2.2.0` corrigió los 17 `.feature` de
@@ -154,7 +154,7 @@ que genero esta version. No se ha vuelto a explorar la aplicacion ni se ha
 abierto el navegador: la aplicacion no ha cambiado desde la sesion de
 2.0.0. Este cambio se limita a actualizar `version` y `hash` de la entrada
 `DOC-16-ROADMAP.md` en el front-matter y a dejar constancia en
-`DOC-14-EXPLORATORIO-HIST.md`. El resto del cuerpo de este documento --
+`DOC-14-INFORME-EXPLORADOR-QA-HIST.md`. El resto del cuerpo de este documento --
 hallazgos, cartas, preguntas abiertas -- es identico al de la version
 2.0.0.
 
@@ -734,7 +734,7 @@ cuatro casos. `SPEC 04` no toca `ConfirmDialog.tsx`. Ver `DOC-14` 1.0.0,
 ### EXP-027 · `high` · `defecto` · **CORREGIDO en v2.1.0** — Los `.feature` de facturas y nóminas validaban literales de importe con punto decimal que ya no coincidían con lo que la pantalla mostraba
 
 > **Verificación de cierre — 2026-08-24 (resincronización, sin exploración
-> en vivo).** `DOC-23-INFORME.md` versión `2.2.0` (S-10, generado
+> en vivo).** `DOC-23-INFORME-EJECUCION-TCS-UI.md` versión `2.2.0` (S-10, generado
 > 2026-08-23T23:30) documenta en su §4.2 la corrección de 17 `.feature` de
 > esta misma familia —incluye `factures.feature` y `nomines.feature`, los
 > dos verificados a mano abajo, más `pieces.feature` y `albarans.feature`,
@@ -1397,7 +1397,7 @@ hallazgos:
     estado: corregido
     corregido_en: 2026-08-24
     corregido_en_version: 2.1.0
-    evidencia: 'Cierre confirmado por DOC-23-INFORME.md 2.2.0 (S-10), no por exploracion en vivo: parrafo 4.2 documenta los 17 .feature corregidos a coma decimal (incluye factures.feature y nomines.feature, verificados a mano en la sesion original) y parrafo 4.3 confirma TC-103 transitorio; 18 de 18 casos rojos re-ejecutados en verde, contrastado contra testng-results.xml. Evidencia original de la sesion 2.0.0: factures.feature:44 fijaba totalEsperado 121.00 en TC-060, la pantalla mostraba TOTAL 121,00 €; nomines.feature:178 fijaba netoEsperado 1299.50 en TC-100'
+    evidencia: 'Cierre confirmado por DOC-23-INFORME-EJECUCION-TCS-UI.md 2.2.0 (S-10), no por exploracion en vivo: parrafo 4.2 documenta los 17 .feature corregidos a coma decimal (incluye factures.feature y nomines.feature, verificados a mano en la sesion original) y parrafo 4.3 confirma TC-103 transitorio; 18 de 18 casos rojos re-ejecutados en verde, contrastado contra testng-results.xml. Evidencia original de la sesion 2.0.0: factures.feature:44 fijaba totalEsperado 121.00 en TC-060, la pantalla mostraba TOTAL 121,00 €; nomines.feature:178 fijaba netoEsperado 1299.50 en TC-100'
     hipotesis_causa: null
     sugerencia: null
     deriva_a: null

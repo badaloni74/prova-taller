@@ -87,10 +87,11 @@ inputs:
       el proyecto Selenium + Cucumber pasa de `docs/DOC-23-AUTOMATION/` a `automation/ui/`, y nace
       `automation/api/` para la colección Postman de S-17 (DOC-26). El documento sigue siendo DOC-23;
       lo que cambia es dónde vive
-  - id: DOC-23-INFORME.md
-    path: docs/DOC-23-INFORME.md
-    previous_path: automation/ui/DOC-23-INFORME.md
-    path_changed_on: 2026-08-21
+  - id: DOC-23-INFORME-EJECUCION-TCS-UI.md
+    path: docs/DOC-23-INFORME-EJECUCION-TCS-UI.md
+    previous_path: docs/DOC-23-INFORME.md
+    path_changed_on: 2026-08-30
+    earlier_path: automation/ui/DOC-23-INFORME.md (retirado, hasta 2026-08-21)
     from: S-10
     present: true
     version: 2.2.0

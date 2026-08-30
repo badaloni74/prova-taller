@@ -121,7 +121,7 @@ DOC-05 (plan de pruebas) + la aplicación real
       (Java 21, Selenium, Cucumber, TestNG — patrón BasePO/StepDef genérico)
 
 Ejecución completa (reseed antes, build de producción, nunca dev server):
-   → DOC-23-INFORME.md (verdes/rojos por módulo, causa raíz de cada rojo)
+   → DOC-23-INFORME-EJECUCION-TCS-UI.md (verdes/rojos por módulo, causa raíz de cada rojo)
 
 Un caso en rojo NUNCA se corrige solo:
    "Doctor QA TC" (persona) decide:

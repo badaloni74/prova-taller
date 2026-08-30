@@ -1,7 +1,7 @@
 ---
 doc_id: DOC-27-HIST
-doc_name: DOC-27-INFORME-API-HIST
-of_document: DOC-27-INFORME-API.md
+doc_name: DOC-27-INFORME-EJECUCION-TCS-API-HIST
+of_document: DOC-27-INFORME-EJECUCION-TCS-API.md
 version: 1.0.0        # no se versiona por separado: refleja la versión del documento que historia
 status: draft
 generator: S-17 s17-api-qa (ejecución newman, sesión Claude Code)
