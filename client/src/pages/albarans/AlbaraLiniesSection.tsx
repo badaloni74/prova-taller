@@ -67,8 +67,13 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
       setError(t('common.required'));
       return;
     }
-    if (tipus === 'ma_obra' && (!descripcio.trim() || !preu)) {
+    if (tipus === 'ma_obra' && !descripcio.trim()) {
       setError(t('common.required'));
+      return;
+    }
+    if (tipus === 'ma_obra' && !(Number(preu) > 0)) {
+      // Mensaje fijo en castellano, no traducido: misma decisión que en PecaForm (SPE-07).
+      setError('El precio debe ser mayor que cero');
       return;
     }
 
@@ -151,6 +156,7 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
       {editable && (
         <form
           onSubmit={handleAdd}
+          noValidate
           className="mt-4 flex flex-wrap items-end gap-3 rounded-md border border-slate-200 p-3 dark:border-slate-700"
         >
           <div>
@@ -220,7 +226,7 @@ function AlbaraLiniesSection({ albara, onUpdate, editable }: AlbaraLiniesSection
               </label>
               <input
                 type="number"
-                min="0"
+                min="0.01"
                 step="0.01"
                 value={preu}
                 onChange={(e) => setPreu(e.target.value)}
