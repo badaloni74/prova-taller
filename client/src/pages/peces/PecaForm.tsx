@@ -48,11 +48,11 @@ function PecaForm() {
   const fields: FormField[] = [
     { name: 'nom', label: t('peces.form.nom'), required: true },
     { name: 'referencia', label: t('peces.detail.referencia') },
-    { name: 'preu', label: t('peces.detail.preu'), type: 'number' },
-    { name: 'cost', label: t('peces.detail.cost'), type: 'number' },
+    { name: 'preu', label: t('peces.detail.preu'), type: 'number', min: 0.01 },
+    { name: 'cost', label: t('peces.detail.cost'), type: 'number', min: 0.01 },
     { name: 'unitat', label: t('peces.detail.unitat') },
     { name: 'proveidor', label: t('peces.detail.proveidor') },
-    { name: 'estoc', label: t('peces.detail.estoc'), type: 'number' },
+    { name: 'estoc', label: t('peces.detail.estoc'), type: 'number', min: 0 },
   ];
 
   const handleChange = (name: string, value: string) => {
@@ -88,6 +88,20 @@ function PecaForm() {
 
     if (!values.nom.trim()) {
       setErrors({ nom: t('common.required') });
+      return;
+    }
+    if (!(Number(values.preu) > 0)) {
+      // Mensaje fijo en castellano, no traducido: decisión explícita del propietario
+      // del proyecto para SPE-07, aunque el resto del formulario use i18n (t()).
+      setErrors({ preu: 'El precio debe ser mayor que cero' });
+      return;
+    }
+    if (values.cost && !(Number(values.cost) > 0)) {
+      setErrors({ cost: 'El coste debe ser mayor que cero' });
+      return;
+    }
+    if (Number(values.estoc) < 0) {
+      setErrors({ estoc: 'El estoc no puede ser negativo' });
       return;
     }
     setErrors({});
