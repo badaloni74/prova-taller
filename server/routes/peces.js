@@ -22,6 +22,18 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: 'El camp nom és obligatori' });
   }
 
+  const finalPreu = Number(preu) || 0;
+  const finalEstoc = Number(estoc) || 0;
+  if (finalPreu <= 0) {
+    return res.status(400).json({ error: 'El precio debe ser mayor que cero' });
+  }
+  if (cost !== undefined && cost !== null && Number(cost) <= 0) {
+    return res.status(400).json({ error: 'El coste debe ser mayor que cero' });
+  }
+  if (finalEstoc < 0) {
+    return res.status(400).json({ error: 'El estoc no puede ser negativo' });
+  }
+
   const result = db
     .prepare(
       `INSERT INTO peces (nom, referencia, preu, cost, unitat, proveidor, estoc)
@@ -30,11 +42,11 @@ router.post('/', (req, res) => {
     .run(
       nom,
       referencia || null,
-      preu || 0,
+      finalPreu,
       cost ?? null,
       unitat || 'unitat',
       proveidor || null,
-      estoc || 0,
+      finalEstoc,
     );
 
   const peca = db.prepare('SELECT * FROM peces WHERE id = ?').get(result.lastInsertRowid);
@@ -52,6 +64,18 @@ router.put('/:id', (req, res) => {
     return res.status(400).json({ error: 'El camp nom és obligatori' });
   }
 
+  const finalPreu = Number(preu) || 0;
+  const finalEstoc = Number(estoc) || 0;
+  if (finalPreu <= 0) {
+    return res.status(400).json({ error: 'El precio debe ser mayor que cero' });
+  }
+  if (cost !== undefined && cost !== null && Number(cost) <= 0) {
+    return res.status(400).json({ error: 'El coste debe ser mayor que cero' });
+  }
+  if (finalEstoc < 0) {
+    return res.status(400).json({ error: 'El estoc no puede ser negativo' });
+  }
+
   db.prepare(
     `UPDATE peces
      SET nom = ?, referencia = ?, preu = ?, cost = ?, unitat = ?, proveidor = ?, estoc = ?,
@@ -60,11 +84,11 @@ router.put('/:id', (req, res) => {
   ).run(
     nom,
     referencia || null,
-    preu || 0,
+    finalPreu,
     cost ?? null,
     unitat || 'unitat',
     proveidor || null,
-    estoc || 0,
+    finalEstoc,
     req.params.id,
   );
 
