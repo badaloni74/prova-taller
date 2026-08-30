@@ -1,7 +1,7 @@
 {
   "doc_id": "DOC-24",
   "doc_name": "DOC-24-BUGS",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "status": "draft",
   "generator": "A-14 explorador ejecutor",
   "generator_version": "1.0",
@@ -9,8 +9,8 @@
   "last_status_update": {
     "date": "2026-08-30",
     "by": "Actualización manual (Claude Code, a petición del propietario del proyecto) — no hay agente A-14 en este instrumental que gobierne este fichero",
-    "what": "Añadido el campo `status` a cada bug, ausente desde la creación del documento. BUG-001 y BUG-002 se marcan `fixed`: su cierre solo constaba hasta ahora en la prosa de CLAUDE.md, no en este fichero. Verificado contra el código actual (server/routes/albarans.js), no solo contra el mensaje del commit.",
-    "version_bump": "MINOR (1.0.0 -> 1.1.0): añade un campo a cada entrada del array `bugs`, cambio de esquema con efecto real — antes no se podía saber el estado de un bug leyendo solo este fichero."
+    "what": "BUG-003 se marca `fixed`: implementado y verificado en vivo (navegador + API) mediante SPE-07-importes-negativos (Q-12, resuelta el 2026-08-16). BUG-001 y BUG-002 ya constaban `fixed` desde la actualización anterior.",
+    "version_bump": "PATCH (1.1.0 -> 1.1.1): cambia el valor de campos ya existentes (status de BUG-003 y el resumen), no añade ningún campo nuevo al esquema."
   },
   "source": {
     "repo_path": "C:\\Claude\\appdani",
@@ -42,8 +42,8 @@
     "critical": 2,
     "high": 2,
     "medium": 0,
-    "open": 2,
-    "fixed": 2,
+    "open": 1,
+    "fixed": 3,
     "validated_ok": 3,
     "documentation_discrepancies": 1,
     "false_leads_discarded": 1
@@ -98,7 +98,10 @@
     {
       "id": "BUG-003",
       "severity": "high",
-      "status": "open",
+      "status": "fixed",
+      "fixed_on": "2026-08-30",
+      "fixed_commit": "969edf9..29371fd (4 commits, SPE-07-importes-negativos)",
+      "fix_verified": "server/routes/peces.js rechaza preu/cost <= 0 y estoc < 0; server/routes/albarans.js rechaza preu <= 0 en líneas de peça y de mà d'obra; PecaForm.tsx y AlbaraLiniesSection.tsx llevan min y validación propia. Verificado en vivo (navegador + API), no solo leyendo el código.",
       "title": "Se aceptan precios, costes y stocks negativos, también desde la interfaz",
       "requirement": "REQ-019",
       "open_question": "Q-12",
