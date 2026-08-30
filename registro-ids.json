@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-29T07:52:40.817Z",
+  "updated_at": "2026-08-30T20:15:00.000Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3021,6 +3021,76 @@
       "external_id": "TALLER-FAC-TC-119",
       "created": "2026-08-28",
       "status": "active"
+    },
+    "TC-120": {
+      "text": "Rechazar el alta de una pieza con precio, coste o stock no válidos",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-019",
+      "external_id": "TALLER-PEC-TC-120",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-001, AC-002, AC-003)"
+    },
+    "TC-121": {
+      "text": "Rechazar la modificación de una pieza que la deja con precio, coste o stock no válidos",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-022",
+      "external_id": "TALLER-PEC-TC-121",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-004)"
+    },
+    "TC-122": {
+      "text": "Rechazar una línea de mano de obra con precio no positivo",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-036",
+      "external_id": "TALLER-ALB-TC-122",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-005)"
+    },
+    "TC-123": {
+      "text": "Rechazar el precio informado a mano cuando es negativo en una línea de pieza",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-034",
+      "external_id": "TALLER-ALB-TC-123",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-007)"
+    },
+    "TC-124": {
+      "text": "El formulario de pieza rechaza un precio, coste o stock inválido antes de llamar al servidor",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-019",
+      "external_id": "TALLER-PEC-TC-124",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-008)"
+    },
+    "TC-125": {
+      "text": "El formulario de línea de mano de obra rechaza un precio no positivo antes de llamar al servidor",
+      "type": "test_case",
+      "module": "albarans",
+      "requirement": "REQ-036",
+      "external_id": "TALLER-ALB-TC-125",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-009)"
+    },
+    "TC-126": {
+      "text": "BUG-003 cerrado: precios, costes y stock negativos ya no se aceptan ni por servicio ni por interfaz",
+      "type": "test_case",
+      "module": "peces",
+      "requirement": "REQ-019",
+      "external_id": "TALLER-PEC-TC-126",
+      "created": "2026-08-30",
+      "status": "active",
+      "origin": "SPE-07-importes-negativos (AC-010, cierra BUG-003 de DOC-24)"
     },
     "BR-ALB-10": {
       "text": "Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera, y el selector del formulario solo ofrece los vehículos del cliente actual",

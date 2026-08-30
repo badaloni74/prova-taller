@@ -2,11 +2,11 @@
 doc_id: DOC-05-HIST
 doc_name: DOC-05-PLAN-PRUEBAS-HIST
 of_document: DOC-05-PLAN-PRUEBAS.md
-version: 1.8.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.9.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-28T18:30:00+02:00
+generated_at: 2026-08-30T20:15:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -32,13 +32,82 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 **`DOC-05-PLAN-PRUEBAS.md`**; este fichero no lo duplica.
 
 El plan tenía **110 casos de prueba desde 1.0.0 hasta 1.6.0**, y suma **9 más en
-1.7.0** (TC-111 a TC-119); **1.8.0 no añade ninguno** y se queda en 119.
+1.7.0** (TC-111 a TC-119); **1.8.0 no añade ninguno** y se queda en 119; **1.9.0
+suma 7 más** (TC-120 a TC-126) y se queda en **126**.
 **Nunca se ha renumerado, ni retirado, ni reutilizado un `TC-nnn`**. Conviene
 tenerlo delante al leer lo que sigue: casi todas las subidas de versión de este
 documento han sido aditivas; las dos que tocaron el contenido de un caso
 existente sin añadir ninguno —1.3.0 sobre `TC-041`, y **1.8.0** sobre el campo
 `requirement` de cinco casos— se hicieron con edición nominal del registro,
 porque `sync` no sobrescribe.
+
+---
+
+## 1.9.0 — 2026-08-30 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `/spec-impl` cerró
+`specs/implemented/SPE-07-importes-negativos/SPE-07-importes-negativos.md`
+(`Origen: BUG-003`, `Implemented` el 2026-08-30, commits `969edf9` a
+`6499474`) y despachó a A-03 en modo «Revisión post-implementación». El spec
+resuelve `DOC-04/Q-12`: precio, coste y stock de una pieza, precio de línea de
+albarán y precio por hora de mano de obra deben ser siempre positivos (el
+stock puede ser cero), cerrando también `BUG-003` de `DOC-24-BUGS.json`.
+
+**Qué cambia.** Siete casos nuevos, `TC-120` a `TC-126`; ninguno de los 119
+anteriores cambia de `steps`, `priority`, `requirement` ni ningún campo de
+aislamiento o automatización — ni siquiera `TC-046`, revisado por cubrir
+`AC-006` y confirmado sin cambios.
+
+| Caso | Requirement | `verification_path` | Qué verifica |
+|---|---|---|---|
+| TC-120 | REQ-019 | service | Alta de pieza: precio, coste o stock inválidos se rechazan (400); estoc 0 se acepta |
+| TC-121 | REQ-022 | service | Modificación de pieza: precio, coste o stock inválidos se rechazan; valores previos intactos |
+| TC-122 | REQ-036 | service | Línea de mano de obra con precio no positivo (negativo, cero u omitido) se rechaza |
+| TC-123 | REQ-034 | service | Override de precio negativo en línea de pieza se rechaza |
+| TC-124 | REQ-019 | ui | Formulario de pieza avisa de precio/coste/estoc inválido sin llamar al servidor |
+| TC-125 | REQ-036 | ui | Formulario de línea de mano de obra avisa de precio inválido sin llamar al servidor |
+| TC-126 | REQ-019 | mixed | Reproduce y cierra `BUG-003` (API y UI), primer caso `type: Regression` del plan |
+
+| Qué | 1.8.0 | 1.9.0 |
+|---|---|---|
+| Casos / pasos | 119 / 263 | **126 / 284** |
+| Requisitos | 81 | **81** (sin cambio: los cuatro que usan estos casos ya existían) |
+| Cobertura | 81/81, 0 GAP PLAN | **81/81, 0 GAP PLAN** |
+| Prioridades · tipos · vía · grado | 55C/32H/30M/2L · 68F/34N/10B/7I · 110ui/8service/1mixed · 27/87/4/1 | **60C/32H/32M/2L · 68F/40N/10B/7I/1Regression · 112ui/12service/2mixed · 31/90/4/1** |
+| Requisito con más casos | REQ-042 (4) | sin cambio (`REQ-019` sube de 1 a 4, no alcanza) |
+| `registro-ids.json` | 119 anclas TC-* | **126**, TC-120–TC-126 nuevas con `origin` |
+
+**¿Por qué cuatro casos van por servicio pese a que el vector existe también
+en pantalla?** `TC-120` a `TC-123` verifican la garantía del **servidor**
+—el vector exacto de `BUG-003`, que demostró que en algún momento ni el
+servidor ni el formulario validaban nada—; `TC-124`/`TC-125` verifican la
+garantía del **formulario**. Son dos criterios de aceptación distintos del
+propio spec, no la misma regla comprobada dos veces. Detalle en el apartado
+4.12 del documento principal (punto 3 de las consecuencias de la política).
+
+**`TC-046` se revisa, no se reescribe.** Cubre `AC-006` (línea de pieza sin
+`preu` hereda el catálogo) y su comportamiento no cambió con `SPE-07`.
+
+**Registro.** Siete altas nuevas (`TC-120` a `TC-126`), cero ediciones
+nominales — lo contrario de 1.8.0. Cada ancla lleva `module`, `requirement`,
+`external_id`, `created: 2026-08-30` y `origin` apuntando a su `AC-nnn`.
+
+**Por qué MINOR.** No es PATCH: siete `id` nuevos y un `type` (`Regression`)
+que no existía en el vocabulario usado hasta ahora cambian lo que Rally, S-10,
+S-14 y S-17 consumen. No es MAJOR: nada se retira, nada se renumera, ningún
+caso previo cambia de contenido.
+
+**Qué queda obsoleto:** DOC-07, DOC-08 y DOC-16 (declaran DOC-05 1.8.0 como
+entrada). DOC-13 no: ningún `DS-nnn` cambia (los siete casos reutilizan
+DS-003, DS-005 o crean su propio dato). DOC-19, no. Rally/S-07: siete altas
+nuevas, cero *upserts* con efecto sobre casos previos.
+
+**Compañeros del spec.** `SPE-07-importes-negativos-QA.md` (parte de trabajo
+para `s10-auto-tcs`, pendiente de confirmación) y
+`SPE-07-importes-negativos-TS.md` (manifiesto de aceptación y regresión), en
+`specs/implemented/SPE-07-importes-negativos/`.
 
 ---
 
