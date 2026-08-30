@@ -165,11 +165,19 @@ router.post('/:id/linies', (req, res) => {
         error: `Estoc insuficient: hi ha ${peca.estoc} unitats de "${peca.nom}"`,
       });
     }
+    if (preu && Number(preu) < 0) {
+      return res.status(400).json({ error: 'El precio debe ser mayor que cero' });
+    }
     if (!preu) {
       finalPreu = peca.preu;
     }
-  } else if (!descripcio || !descripcio.trim()) {
-    return res.status(400).json({ error: 'El camp descripcio és obligatori per a línies de mà d\'obra' });
+  } else {
+    if (!descripcio || !descripcio.trim()) {
+      return res.status(400).json({ error: 'El camp descripcio és obligatori per a línies de mà d\'obra' });
+    }
+    if (!(Number(preu) > 0)) {
+      return res.status(400).json({ error: 'El precio debe ser mayor que cero' });
+    }
   }
 
   const addLinia = db.transaction(() => {
