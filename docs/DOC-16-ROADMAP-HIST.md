@@ -2,11 +2,11 @@
 doc_id: DOC-16-HIST
 doc_name: DOC-16-ROADMAP-HIST
 of_document: DOC-16-ROADMAP.md
-version: 3.2.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 3.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-29T20:00:00+02:00
+generated_at: 2026-08-31T22:30:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >-
@@ -38,6 +38,89 @@ señalan como reconstruidas para que nadie las tome por notas escritas en su mom
 histórica ya señalada por `S-16` (`sin_procedencia`, `DOC-16-ROADMAP-HIST.md`)—; se
 añade en 3.0.0 siguiendo el mismo patrón que adoptaron `DOC-05-HIST`, `DOC-07-HIST`,
 `DOC-08-HIST` y `DOC-25-HIST`.
+
+---
+
+## 3.3.0 — 2026-08-31 — MINOR
+
+**Delta acotada sobre la 3.2.0, disparada por `DOC-05` (1.6.0 → 1.10.0), cuyo `ack` solo
+cubría hasta 1.8.0.** Siguiendo el protocolo de resello (contrato documental §4) se leyó el
+diff real de `DOC-05` para decidir si bastaba extender el `ack` — y no bastaba: el
+crecimiento de `DOC-05` en sí (13 casos nuevos, `TC-120`…`TC-132`, de `SPE-07`/`SPE-08`)
+sigue sin alimentar este roadmap, pero investigarlo llevó a `DOC-24` y a encontrar
+contenido de este documento que ya no era cierto.
+
+```
+DOC-24: declara 1.0.0, actual 1.1.2  [PATCH x2]
+DOC-07: declara 1.12.0, actual 1.13.0  [MINOR]  (528dfcd)
+DOC-14: declara 2.1.0, actual 2.1.2  [PATCH x2]  (28bf7f6)
+DOC-02: declara 1.1.0, actual 1.3.0  [MINOR]  (4495e01) — ack extendido, sin impacto
+```
+
+**Qué trajeron.**
+
+- **`DOC-24` 1.1.2.** `BUG-003` (precio/coste/estoc negativos) se corrigió el 2026-08-30 con
+  `SPE-07-importes-negativos`, verificado en vivo por navegador y API. `BUG-004` (una
+  factura no se podía anular ni corregir) se corrigió el 2026-08-31 con
+  `SPE-08-factura-rectificativa`, igualmente verificado en vivo. **Los cuatro bugs censados
+  constan `fixed`; `open` pasa a 0** — primera vez en la historia de este documento.
+- **`DOC-07` 1.13.0, §3.4/`A-05-03`.** Confirma lo mismo desde la trazabilidad: la familia
+  «cobertura verde sobre defecto confirmado» que motivó parte de la evidencia de `MEJ-004`
+  **queda vacía por primera vez**. No se reconsume el resto de `DOC-07` 1.13.0 (cobertura,
+  `A-05-17`): fuera del alcance, igual que en la 3.2.0 con las cifras heredadas.
+- **`DOC-14` 2.1.2.** Corrige el mismo hallazgo por su lado y reformula `P-01`
+  (si la decisión de `Q-12`, ya implementada para piezas/albaranes, debe extenderse a
+  nóminas). `EXP-004`/`EXP-005`/`EXP-015` siguen bloqueadas sin cambio de fondo.
+- **`DOC-02` 1.3.0.** Migración 004, campo calculado `anulada_per`, un endpoint nuevo (39 en
+  total), sexta transacción — todo de `SPE-08`. Verificado sobre el bloque `graph`: sin
+  componentes ni aristas nuevas. `ack` extendido hasta 1.3.0, sin impacto.
+- **Código, recontado en `HEAD` (`28bf7f6`).** `server/routes/`: **974 líneas** (eran 893),
+  **98 `res.status`** (eran 86) — la primera vez que estas cifras cambian desde que existen
+  en este documento, porque `SPE-07`/`SPE-08` sí tocaron `server/routes/` (a diferencia de
+  SPE-06). Releído `server/routes/peces.js` línea a línea: el bloque de validación de
+  `preu`/`cost`/`estoc` que arregla `BUG-003` está escrito **dos veces, palabra por
+  palabra**, en `POST /` (líneas 27-35) y `PUT /:id` (líneas 69-77).
+- **`DOC-23` — corrección de hash sin cambio de versión.** El commit `5ae6ee7` (renombrado
+  de `DOC-14`/`23`/`27`) cambió el `doc_name` interno de `DOC-23` sin subir su `version`
+  (sigue en 2.2.0); el hash declarado ya no correspondía al fichero. Verificado el diff:
+  solo autorreferencias de nombre. Corregido en `inputs`, mismo patrón que la tabla de la
+  3.1.0 para `DOC-02`/`DOC-05`/`DOC-25`/`registro-ids.json`.
+
+**Ninguna mejora nace, se retira ni cambia de estado. Una crece:**
+
+- **`MEJ-004` crece, por tercera vez, y con un ejemplo más concreto que en la 3.1.0.** Los
+  cuatro `BUG-nnn` que motivaron esta ficha en la 1.0.0 están todos corregidos, y
+  **ninguno se corrigió vía un módulo de dominio compartido**: dos por commit directo, dos
+  por `/spec`, cada uno con un parche en su propio router. El fix de `BUG-003` deja además
+  una duplicación verbatim verificada en código (`peces.js`, arriba). No cambia
+  `impact`/`difficulty`/`size`/`depends_on` —análisis de impacto, corresponde a `A-07`— ni
+  su posición fuera del podio: sigue fuera por dificultad, no por evidencia. El riesgo de
+  `BUG-004` (que la inmutabilidad de la factura, hasta ahora solo *ausencia de camino*,
+  quedara desprotegida el día que existiera la operación) **no se materializó sin
+  control**: `SPE-08` construyó `POST /api/factures/:id/rectificar` con reglas propias y
+  nombradas (`BR-FAC-10`, `BR-FAC-11`), verificadas, que no tocan la factura original. Es
+  una corrección responsable y no aporta ni resta a la decisión pendiente sobre `MEJ-004`.
+
+**El hallazgo para `A-14` sobre el censo desactualizado de `DOC-24` se cierra**, tras cuatro
+rondas señalándolo (3.0.1 a 3.2.0): `DOC-24` 1.1.2 ya refleja el estado real, no hace falta
+cruzar dos documentos.
+
+**La recomendación no cambia de orden** (`MEJ-009`, `MEJ-002`, `MEJ-006`).
+
+**Front-matter.** `inputs`: `DOC-24` 1.0.0 → 1.1.2, `DOC-07` 1.12.0 → 1.13.0, `DOC-14`
+2.1.0 → 2.1.2, `DOC-02` 1.1.0 → 1.3.0, `DOC-25` 1.2.1 → 1.2.2, `registro-ids.json` (hash),
+`DOC-23` (hash, sin cambio de versión); `source.commit_sha` `cf7f4c0` → `28bf7f6`.
+`obsolescence_ack`: se retiran `DOC-05` y `DOC-14` (pasan a consumidos); se extiende
+`DOC-02` hasta 1.3.0 y `registro-ids.json`. Nueva sección `§1.8` en el cuerpo.
+
+**Por qué MINOR y no PATCH.** No es solo corregir el estado de dos bugs sin más
+consecuencia: la corrección alimenta evidencia nueva y verificable de `MEJ-004` (el patrón
+se cierra sin módulo común, duplicación verbatim en `peces.js`), aunque no cambie su
+tamaño, dificultad ni posición. Mismo criterio que la 2.1.0, la 3.1.0 y la 3.2.0. No es
+MAJOR porque no se renumera, retira ni cambia de estado ningún `MEJ-nnn`.
+
+**`registro-ids.json` no se toca por A-12.** Ningún `MEJ-nnn` nuevo, retirado ni
+reformulado; `MEJ-009` sigue sin censar.
 
 ---
 

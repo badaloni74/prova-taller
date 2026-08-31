@@ -1,67 +1,67 @@
 ---
 doc_id: DOC-16
 doc_name: DOC-16-ROADMAP
-version: 3.2.0
+version: 3.3.0
 status: draft
 generator: A-12 mejoras/roadmap
 generator_version: "1.1"
-generated_at: 2026-08-29T20:00:00+02:00
+generated_at: 2026-08-31T22:30:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: cf7f4c084dbf2a6cd392a06e8e485db5ad476280
-  working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
+  branch: spec-07-importes-negativos
+  commit_sha: 28bf7f627e9bbc033e607a35eebfb6dbbe9b91d5
+  working_tree_clean: false   # sin versionar y ajeno a este documento: ApuntsAgentsISkills.txt, dashboard/ (modificados/borrados/sin versionar), docs/DOC-09-IMPACTO-factura-rectificativa.md
 inputs:
   - id: DOC-16-ROADMAP.md
     from: A-12
-    version: 3.1.0
-    hash: sha256:3baf09b197aef0fe758569befb44b0066fe92e0ccbdfd46bb497cb7f6440287a
+    version: 3.2.0
+    hash: sha256:028c84e17ef0ba8700f082f612cdb672f0b464dc46ac1701cc5f0adfc329e6e4
     present: true
   - id: DOC-02-TECNICA.md
     from: S-01
-    version: 1.1.0
-    hash: sha256:5a4fce68251cc84977b15f363c63e850f85caa737b89fea8cf2e4f3ef83b8304
+    version: 1.3.0
+    hash: sha256:b25eef32a2d6843bb5d6f50ca2c61bcb86b48faa482ba12c561414952064990d
     present: true
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
-    version: 1.6.0
-    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
+    version: 1.10.0
+    hash: sha256:a050cca8974802655ff15515c99cde729d7c976d866a9622f30f689398745f32
     present: true
   - id: DOC-07-TRAZABILIDAD.md
     from: A-05
-    version: 1.12.0
-    hash: sha256:4b3e99db4a6275027e9830ee17a5731bf1e5b14dada0aad22c57eaf76efa6ffe
+    version: 1.13.0
+    hash: sha256:198bf02d5b0a964a158d3f639cd4fb2391a3481fb168da154794b8c5bc324bdf
     present: true
   - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
-    version: 2.1.0
-    hash: sha256:f1449e133c2eacf224467c55c01d9bcc4fb6bee9443d239fd27867ae1cd5b7ee
+    version: 2.1.2
+    hash: sha256:4e70cb0214d0f96840c7b6d2c96f48b8dc8cd884688f745417689368fdce4adf
     present: true
   - id: DOC-23-INFORME-EJECUCION-TCS-UI.md
     from: S-10
     version: 2.2.0
-    hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
+    hash: sha256:75e80c36d754eaeb771b2adccc039c93f0824699a7def8301445b3be7adbfd04
     present: true
   - id: DOC-27-INFORME-EJECUCION-TCS-API.md
     from: S-17
     version: 1.1.0
-    hash: sha256:2ae7596bf44f875ce2a675715344b739f0a1520301cf224746b8aafd8d192e20
+    hash: sha256:66cb2e295b98c46e242d24ed7837df46f8a4ad130e4275f2cbee9439d0dc8d72
     present: true
   - id: DOC-24-BUGS.json
     from: A-14
-    version: 1.0.0
-    hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
+    version: 1.1.2
+    hash: sha256:d62b236309a76e6e01b7f4fcf7962e8553ef70bbd569ac499da7c069f340f84b
     present: true
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.2.1
-    hash: sha256:256d1507f2bb5aa5fdf3193622ff688de3f069182413a3ef29c98d9e9e4f5c02
+    version: 1.2.2
+    hash: sha256:d8990ff4a81f5c0a89e941021cde087977cd49bf14ef41134ad126b8c367ccfa
     present: true
   - id: registro-ids.json
     from: S-12
     version: "1"
-    hash: sha256:bc54df9a531287e953975a311cea55a25297ecba3ce50d403f91dc6106528b97
+    hash: sha256:529dd2de5fdb0ef45f7853b7500043592828fc468d67db5ad19100b5cece6715
     present: true
   - id: DOC-17-DEUDA-TECNICA.md
     from: S-05
@@ -74,25 +74,17 @@ inputs:
     present: false
 obsolescence_ack:
   - input: DOC-02
-    upto: 1.2.0
-    date: 2026-08-29
-    note: "SPE-06: AlbaraForm filtra el selector de vehículo + guarda en el router de albaranes. Ningún MEJ-nnn del roadmap se apoya en esa zona del código. server/routes/ no cambió (893 líneas, 86 res.status, 71 literales, recontado en cf7f4c0). Fuera del alcance de la delta 3.2.0; se consumirá en la próxima ronda de análisis."
-  - input: DOC-05
-    upto: 1.8.0
-    date: 2026-08-29
-    note: "SPE-06: +9 casos TC-111..TC-119. El roadmap técnico no depende del censo de casos del plan. Fuera del alcance de la delta 3.2.0."
-  - input: DOC-14
-    upto: 2.1.1
-    date: 2026-08-29
-    note: "Resync circular de A-10 tras DOC-16 3.1.0. Sin cambio de contenido; ningún EXP-nnn nace ni cierra. Fuera del alcance de la delta 3.2.0."
+    upto: 1.3.0
+    date: 2026-08-31
+    note: "1.2.0 -> 1.3.0: migración 004 (ALTER TABLE), campo calculado anulada_per, endpoint nuevo (39 endpoints), sexta transacción — todo de SPE-08. Verificado sobre el bloque graph: sin componentes ni aristas nuevas. Ningún impact/components de ningún MEJ-nnn depende de esto. Fuera del alcance de la delta 3.3.0."
   - input: DOC-25
     upto: 1.2.2
     date: 2026-08-29
-    note: "Resync de A-15 tras DOC-14. No alimenta el análisis de deuda/cobertura/defectos. Fuera del alcance de la delta 3.2.0."
+    note: "Resync de A-15 tras DOC-14. No alimenta el análisis de deuda/cobertura/defectos. Sin cambios desde la 3.2.0."
   - input: registro-ids.json
-    upto: 1.6.0
-    date: 2026-08-29
-    note: "SPE-06 añadió REQ-080/081, TC-111..119 y Q-30. Anclas MEJ sin cambios: siguen MEJ-001..MEJ-008 (MEJ-009 aún sin censar, findings_for_others target S-12). Fuera del alcance de la delta 3.2.0."
+    upto: 1.9.0
+    date: 2026-08-31
+    note: "SPE-07/SPE-08 añadieron BR-PEC-03/04, BR-ALB-11, BR-FAC-10/11 y UC-FAC-05 (6 anclas nuevas). Anclas MEJ sin cambios: siguen MEJ-001..MEJ-008 (MEJ-009 aún sin censar, findings_for_others target S-12). Fuera del alcance de la delta 3.3.0."
 ---
 
 # DOC-16 · Mejoras y roadmap técnico — app-taller
@@ -107,16 +99,78 @@ obsolescence_ack:
 >
 > `status: draft`. Nueve mejoras: dos `implemented`, tres `accepted` que siguen sin entrar
 > en `A-07` y cuatro esperando decisión. La 3.1.0 fue la última ronda de análisis; **la
-> 3.2.0 es una delta acotada sobre ella**: `S-17` amplió la suite de servicio (`DOC-27`
-> 1.0.0 → 1.1.0) y `A-05` regeneró la trazabilidad (`DOC-07` 1.10.0 → 1.12.0). **No nace
-> ninguna mejora nueva y ninguna cambia de estado**; lo que se mueve es la evidencia de
-> tres de ellas —`MEJ-002` crece (de 4 a 8 literales afirmados con igualdad exacta),
-> `MEJ-003` y `MEJ-006` se matizan (ver §1.7)—. **Las decide una persona, no A-12.**
+> 3.2.0 y la 3.3.0 son deltas acotadas sobre ella**. La 3.2.0: `S-17` amplió la suite de
+> servicio (`DOC-27` 1.0.0 → 1.1.0) y `A-05` regeneró la trazabilidad (`DOC-07` 1.10.0 →
+> 1.12.0). La 3.3.0: `BUG-003` y `BUG-004` de `DOC-24` —los dos últimos defectos abiertos
+> del censo— se cierran (`SPE-07-importes-negativos`, `SPE-08-factura-rectificativa`,
+> ambos verificados en vivo); `DOC-24` sube a **1.1.2 con los cuatro bugs censados
+> `fixed`**, sin ninguno abierto por primera vez en la historia de este documento (ver
+> §1.8). **No nace ninguna mejora nueva y ninguna cambia de estado**; lo que se mueve es
+> la evidencia de `MEJ-004`, que **crece** —el patrón que la sostiene se cierra en sus
+> cuatro defectos originales sin que ninguno pasara por un módulo común, y aparece
+> duplicación verbatim nueva en `peces.js`—. **Las decide una persona, no A-12.**
 
 ## Procedencia
 
 Cómo se han usado las entradas, por qué la versión es la que es y qué se ha decidido en
 esta ronda sobre la forma del propio documento.
+
+### Ronda 3.3.0 (2026-08-31) — delta acotada: `BUG-003`/`BUG-004` se cierran
+
+`S-16` volvió a marcar `DOC-16` como obsoleto porque `DOC-05` subió de 1.6.0 a 1.10.0 y el
+`obsolescence_ack` de la 3.2.0 solo cubría hasta 1.8.0. Siguiendo el procedimiento de
+resello (contrato documental §4) se ha leído el diff real de `DOC-05` para decidir si
+bastaba extender el `ack` — y no bastaba: **el crecimiento de `DOC-05` en sí (13 casos
+nuevos, `TC-120`…`TC-132`, de `SPE-07`/`SPE-08`) sigue sin alimentar este roadmap, igual
+que en la 3.2.0**, pero investigarlo llevó a leer `DOC-24` y a encontrar contenido de este
+documento que ya no era cierto: **`BUG-003` y `BUG-004` seguían citados como abiertos en
+seis sitios de este documento, y ya no lo están.**
+
+- **`docs/DOC-24-BUGS.json` 1.0.0 → **1.1.2****. `BUG-003` (precio/coste/estoc negativos)
+  se corrigió el 2026-08-30 con `specs/implemented/SPE-07-importes-negativos`
+  (`Implemented`), verificado en vivo por navegador y API. `BUG-004` (una factura emitida
+  no se puede anular ni corregir) se corrigió el 2026-08-31 con
+  `specs/implemented/SPE-08-factura-rectificativa` (`Implemented`), igualmente verificado
+  en vivo. **Los cuatro bugs censados constan `fixed`; `open` pasa a 0.** Es la primera vez
+  en la historia de este documento que el censo de `DOC-24` está vacío.
+- **`DOC-07` 1.12.0 → 1.13.0** (`528dfcd`, tras `DOC-05` 1.10.0). Confirma lo anterior desde
+  un segundo ángulo: §3.4/`A-05-03` recalcula la familia «cobertura verde sobre defecto
+  confirmado» bug por bug y la encuentra **vacía por primera vez**, con matices que sí
+  importan a `MEJ-004` — ver §1.8. No se reconsume el resto de `DOC-07` 1.13.0 (cobertura,
+  `A-05-17`, etc.): fuera del alcance de esta delta, igual que en la 3.2.0 con el resto de
+  cifras heredadas.
+- **`DOC-14` 2.1.1 → 2.1.2** (`28bf7f6`). Corrige exactamente el mismo hallazgo por su
+  lado —«`BUG-003` y `BUG-004` ya no están abiertos»— y reformula `P-01` para preguntar
+  explícitamente si la decisión de `Q-12` (ya implementada para piezas y líneas de
+  albarán) debe extenderse a nóminas. `EXP-004`, `EXP-005` y `EXP-015` **siguen bloqueadas
+  sin cambio de fondo**, `server/routes/nomines.js` no se ha tocado. Se trata como
+  entrada consumida, no `ack`, porque este documento cita `DOC-14` directamente como
+  fuente de verificación en vivo de `BUG-001`/`BUG-002` (§1.6, §6.4).
+- **`DOC-02` 1.2.0 → 1.3.0** (`4495e01`, S-01 tras SPE-07/SPE-08). Migración 004, campo
+  calculado `anulada_per`, un endpoint nuevo (39 en total), sexta transacción. **Verificado
+  sobre el bloque `graph`: sin componentes ni aristas nuevas.** Se extiende el `ack` hasta
+  1.3.0: ningún `impact`/`components` de ningún `MEJ-nnn` depende de esto.
+- **Código, recontado en `HEAD` (`28bf7f6`).** `SPE-07` y `SPE-08` sí tocaron
+  `server/routes/`, a diferencia de SPE-06: **974 líneas** (eran 893), **98 `res.status`**
+  (eran 86). Verificado además, línea a línea, que `server/routes/peces.js` valida
+  `preu`/`cost`/`estoc` **con el mismo bloque de código repetido palabra por palabra en
+  `POST /` (líneas 27-35) y en `PUT /:id` (líneas 69-77)** — evidencia nueva y directa para
+  `MEJ-004`, ver §1.8. No se ha recontado el total de literales de error (71 en la 3.2.0):
+  el recuento fino de esa cifra alimenta `MEJ-002`, que no es parte del alcance de esta
+  delta, dirigida solo a lo que `BUG-003`/`BUG-004` tocan.
+- **`docs/DOC-23-…` — corrección de hash sin cambio de versión, del mismo tipo que la tabla
+  de la 3.1.0.** El commit `5ae6ee7` (renombrado de `DOC-14`/`23`/`27` a nombres
+  autodescriptivos) actualizó el `doc_name` interno de `DOC-23` sin subir su `version`
+  (sigue en 2.2.0). El hash declarado en la 3.2.0 (`33ac58bc…`) ya no correspondía al
+  fichero; el real es `75e80c36…`. **Verificado el diff de ese commit: solo el nombre
+  propio del documento en cabeceras y citas internas**, ninguna cifra de ejecución.
+  Corregido en `inputs`.
+
+**Lo que esta delta NO ha hecho, a propósito.** No ha reconsumido el resto de `DOC-05`
+1.10.0 (los 13 casos nuevos no alimentan el roadmap, igual que los 9 de SPE-06 en la
+3.2.0), ni el resto de `DOC-07` 1.13.0 (cobertura, `A-05-17`), ni ha recontado los 71
+literales de `MEJ-002`. Solo trata lo que `BUG-003`/`BUG-004` tocan: el patrón de `MEJ-004`
+(§1.8) y las seis citas de estado que quedaban desfasadas.
 
 ### Ronda 3.2.0 (2026-08-29) — delta acotada, no ronda de análisis
 
@@ -211,10 +265,10 @@ que ninguna entrada nueva ha desmentido:
 ## 1. Qué ha cambiado desde el roadmap anterior
 
 **No es la primera ejecución.** La última ronda de análisis fue la **3.1.0** (2026-08-24);
-esta **3.2.0** es una delta acotada sobre ella (§1.7). Los apartados 1.1 a 1.6 de abajo son
-el análisis de la 3.1.0, actualizado en cifras donde la delta lo toca; el resumen de qué se
-movió en la delta está en **§1.7**. La 3.0.0 llevó `MEJ-007` y `MEJ-008` a `implemented`
-(apartado 3.1).
+las **3.2.0** y **3.3.0** son deltas acotadas sobre ella (§1.7 y §1.8). Los apartados 1.1 a
+1.6 de abajo son el análisis de la 3.1.0, actualizado en cifras donde alguna delta lo toca;
+qué se movió en cada delta está en **§1.7** (3.2.0) y **§1.8** (3.3.0: cierre de `BUG-003`
+y `BUG-004`). La 3.0.0 llevó `MEJ-007` y `MEJ-008` a `implemented` (apartado 3.1).
 
 | Entrada | Qué cambió | Qué aporta a este documento |
 |---|---|---|
@@ -415,10 +469,13 @@ en `DOC-14` 2.1.0 y `DOC-23` 2.2.0), «`DOC-25` 1.1.1» (por **1.2.1**) y «cuar
 ahora está en el apartado correspondiente (3.0, 3.3, 5.1, 5.5, 5.6, 6.5, 6.7) y no se
 repite aquí.
 
-**Los defectos de `DOC-24`, sin novedad, cuarta ronda que se señala.** `DOC-24` sigue en
-1.0.0 con sus cuatro defectos «abiertos» en su propio texto, mientras `DOC-14` verificó en
-vivo que `BUG-001` y `BUG-002` funcionan. `BUG-003` (con decisión de negocio desde el
-2026-08-16, pendiente de implantar) y `BUG-004` siguen abiertos.
+**Los defectos de `DOC-24`, tal como se señalaban en la 3.1.0 (histórico, ya superado en
+3.3.0 — ver §1.8).** En la 3.1.0, `DOC-24` seguía en 1.0.0 con sus cuatro defectos
+«abiertos» en su propio texto, mientras `DOC-14` había verificado en vivo que `BUG-001` y
+`BUG-002` funcionaban; `BUG-003` (con decisión de negocio desde el 2026-08-16, pendiente de
+implantar) y `BUG-004` seguían abiertos. **Ya no es así**: `DOC-24` 1.1.2 marca los cuatro
+`fixed` — `BUG-003` vía `SPE-07` (2026-08-30) y `BUG-004` vía `SPE-08` (2026-08-31), ambos
+verificados en vivo. El detalle de qué significa esto para `MEJ-004` está en §1.8.
 
 **Las tres aceptadas el 2026-08-17 siguen sin pasar por `A-07`, siete días después.**
 `MEJ-001`, `MEJ-003` y `MEJ-005`. Ninguna ha entrado en el ciclo. Para `MEJ-003` esta ronda
@@ -440,13 +497,95 @@ Los routers cubiertos por servicio **siguen siendo dos** —`albarans` y `factur
 `server/routes/` no cambió con SPE-06 (893 líneas, 86 `res.status`, 71 literales, recontado
 en `cf7f4c0`).
 
+### 1.8 Delta 3.3.0 (2026-08-31) — `BUG-003` y `BUG-004` se cierran: qué le pasa a `MEJ-004`
+
+Es la pregunta que dispara esta ronda, y la respuesta corta es: **`MEJ-004` no se resuelve
+ni se descarta — su evidencia crece, y de una forma que la refuerza, no que la debilita.**
+
+**El hecho, verificado en `DOC-24` 1.1.2 y en el código.** Los cuatro `BUG-nnn` que
+alimentaban la tabla del apartado 3.0 desde la versión 1.0.0 de este documento constan hoy
+`fixed`:
+
+| Bug | Vía del fix | ¿Pasó por un módulo de dominio compartido? |
+|---|---|---|
+| `BUG-001` (stock sin comprobar existencias) | commit directo (`ed61c24`), sin `/spec` | No — parche en `albarans.js` |
+| `BUG-002` (cambio de vehículo cambia el cliente) | commit directo (`ed61c24`), sin `/spec` | No — parche en `albarans.js` |
+| `BUG-003` (precio/coste/estoc negativos) | `/spec` (`SPE-07-importes-negativos`) | No — parches en `peces.js`, `albarans.js`, `PecaForm.tsx`, `AlbaraLiniesSection.tsx` |
+| `BUG-004` (factura sin camino de anulación) | `/spec` (`SPE-08-factura-rectificativa`) | No — endpoint nuevo embebido en `factures.js`, con sus reglas propias (`BR-FAC-10`/`BR-FAC-11`) |
+
+**Los cuatro se arreglaron bien** —los cuatro están verificados en vivo, no solo leídos en
+código— **y los cuatro se arreglaron por separado, cada uno en su router**, exactamente el
+patrón que `MEJ-004` señala como coste estructural: no hay un sitio único donde aterrice
+una regla de escritura, así que cada corrección es un parche nuevo en el fichero de turno.
+`DOC-07` 1.13.0 §3.4 (`A-05-03`) llega a la misma conclusión desde la trazabilidad: la
+familia «cobertura verde sobre defecto confirmado» que sostenía este hallazgo **queda vacía
+por primera vez**, pero dos residuos sobreviven (`REQ-035` sigue sin enunciar el bloqueo que
+ya existe en código; `DOC-24` sigue atribuyendo `BUG-002`/`BUG-004` a los requisitos donde
+se reportaron, no a los que hoy los detectan) — ninguno cambia la lectura de `MEJ-004`.
+
+**Y aparece evidencia nueva, más directa que la de rondas anteriores.** Al recontar
+`server/routes/` tras `SPE-07`/`SPE-08` (974 líneas, eran 893; 98 `res.status`, eran 86) se
+ha releído `peces.js` línea a línea, y **la regla que arregla `BUG-003` está escrita dos
+veces, palabra por palabra, en el mismo fichero**:
+
+```
+// POST /  (líneas 27-35)                  // PUT /:id  (líneas 69-77)
+if (finalPreu <= 0) { ... }                if (finalPreu <= 0) { ... }
+if (cost !== undefined && ... <= 0) {...}  if (cost !== undefined && ... <= 0) {...}
+if (finalEstoc < 0) { ... }                if (finalEstoc < 0) { ... }
+```
+
+No es una regla ausente en una ruta y presente en otra (eso ya lo aportaba `A-05-15` en la
+3.1.0, sigue en pie, sin cambios). Es la **misma regla, copiada literalmente**, porque no
+tiene un sitio propio del que las dos rutas puedan colgar. Es, palabra por palabra, el
+síntoma que `MEJ-004` propone eliminar por construcción — y ha nacido del mismo fix que
+cierra uno de los cuatro defectos que sostenían el patrón original.
+
+**Lo que esto no cambia.** No se toca `impact`, `difficulty`, `size` ni `depends_on` de
+`MEJ-004`: seguir dependiendo de `MEJ-003` y seguir siendo `large`/`high` es análisis de
+impacto, y le corresponde a quien la lleve a `A-07`, no a esta ronda. Tampoco cambia su
+posición fuera del podio (§2): la evidencia crece, no la dificultad.
+
+**Lo que sí cambia es la lectura del `risk_if_not_done`.** La ficha decía «el noveno
+defecto de la misma familia» como riesgo futuro. Con `BUG-003`/`BUG-004` cerrados y la
+duplicación de `peces.js` encontrada, el riesgo ya no es solo hipotético ni depende de que
+aparezca un noveno defecto: **la forma barata de arreglar un defecto de escritura en este
+código sigue siendo copiar la regla al segundo sitio que la necesita**, y las dos últimas
+correcciones lo acaban de confirmar en la práctica, con éxito funcional pero sin resolver
+el coste estructural.
+
+**Un apunte sobre `BUG-004` en particular, porque su forma era distinta a las otras tres.**
+No era una comprobación ausente sino una operación entera ausente («no hay camino para
+anular una factura»), y el riesgo que llevaba implícito —que el día que existiera esa
+operación, la inmutabilidad de la factura (que hasta ahora era solo *ausencia de
+endpoints*, no una regla escrita en ningún sitio) podía quedar desprotegida sin que nadie
+lo decidiera— **no se ha materializado sin control**. `SPE-08` construyó
+`POST /api/factures/:id/rectificar` con dos reglas explícitas y nombradas
+(`BR-FAC-10`: la rectificación libera los albaranes de la original; `BR-FAC-11`: no se
+puede rectificar dos veces), verificadas en `server/routes/factures.js` y en `DOC-07`
+1.13.0 §3.4: rechaza sin `motiu` (400), factura inexistente (404), factura ya rectificada
+(409), y **no toca ningún campo propio de la factura original** — la inmutabilidad se
+mantiene, ahora como regla escrita, no como mera ausencia de camino. Es una corrección
+responsable, y no aporta ni resta a `MEJ-004`: la regla vive donde ya vivían todas —dentro
+del router, no en un módulo de dominio—, así que ni prueba que haga falta el módulo ni
+prueba que se pueda seguir sin él indefinidamente. Se deja constancia porque el propio
+`DOC-24` (`BUG-004`, campo `note`) señalaba la distinción entre «regla implementada» y
+«ausencia de camino» como relevante para el evolutivo, y con `SPE-08` implementado esa
+distinción ya está resuelta, no pendiente.
+
+**`MEJ-004` sigue `proposed`, sin decidir. A-12 no cambia su tamaño ni su dificultad, solo
+registra que su evidencia ha crecido, otra vez, y con un ejemplo más concreto que en la
+ronda anterior.**
+
 ## 2. Recomendación
 
 Las tres primeras por relación valor/dificultad **entre las cuatro que esperan decisión**.
 Las tres aceptadas y las dos implementadas quedan fuera: recomendar lo ya decidido o lo ya
 hecho no ayuda a nadie. **El orden no cambia respecto a la 3.1.0** (`MEJ-009`, `MEJ-002`,
 `MEJ-006`); la 3.1.0 ya bajó `MEJ-006` al tercer puesto y `DOC-27` 1.1.0 solo refuerza ese
-movimiento (1.5).
+movimiento (1.5). El cierre de `BUG-003`/`BUG-004` en la 3.3.0 hace crecer la evidencia de
+`MEJ-004` (1.8), pero no la sube al podio: sigue fuera por dificultad, no por falta de
+evidencia.
 
 | # | Mejora | Por qué ésta |
 |---|---|---|
@@ -457,18 +596,20 @@ movimiento (1.5).
 **MEJ-004 sigue siendo la de más valor absoluto del documento y no está en el podio**, por
 el mismo motivo que en la ronda anterior: dificultad `high`, toca los ocho componentes por
 los que pasa toda escritura, y depende de `MEJ-003`, que sigue aceptada sin haber entrado
-en `A-07`. La 3.1.0 le hizo crecer evidencia (1.3, `A-05-15`); la delta 3.2.0 **no la
-mueve** —la ampliación de servicio es profundidad sobre `albarans`/`factures`, no sobre los
-routers de sus defectos abiertos—, y sigue sin cambiarle dificultad ni dependencia, así que
-no cambia su posición fuera del podio.
+en `A-07`. La 3.1.0 le hizo crecer evidencia (1.3, `A-05-15`); la delta 3.2.0 no la movió.
+**La delta 3.3.0 le hace crecer evidencia por tercera vez** (1.8: los cuatro `BUG-nnn`
+originales se cierran sin pasar por un módulo común, y `peces.js` duplica la misma regla
+verbatim entre `POST` y `PUT`), y **tampoco cambia su posición**: sigue sin cambiarle
+dificultad ni dependencia, que es lo que decide el podio.
 
 ## 3. Mejoras
 
 Nueve en total: seis heredadas, dos `implemented` desde la 3.0.0 y una `proposed` nacida
 entonces. **Ninguna nace ni cambia de estado esta ronda**; en la delta 3.2.0 tres ganan o
-matizan evidencia (`MEJ-002` crece, `MEJ-003` y `MEJ-006` se matizan — ver §1.7). Ocho de
-nueve salen de evidencia con fuente citable; una (`MEJ-006`) es de criterio, marcada como
-`opinion` para poder filtrarse de un vistazo. Ninguna añade funcionalidad.
+matizan evidencia (`MEJ-002` crece, `MEJ-003` y `MEJ-006` se matizan — ver §1.7) y en la
+delta 3.3.0 `MEJ-004` crece de nuevo (§1.8). Ocho de nueve salen de evidencia con fuente
+citable; una (`MEJ-006`) es de criterio, marcada como `opinion` para poder filtrarse de un
+vistazo. Ninguna añade funcionalidad.
 
 ### 3.0 El patrón, recontado: la mitad del cliente se cierra, la del servidor sigue igual
 
@@ -478,22 +619,27 @@ encontrado ocho casos de esa clase, todos en el servidor:
 
 | Origen | Qué falta | Dónde | Estado |
 |---|---|---|---|
-| `DOC-24/BUG-001` | comprobar existencias antes de descontar stock | `albarans-router` | `critical` · corregido, verificado en vivo |
-| `DOC-24/BUG-002` | comprobar que el vehículo nuevo es del mismo cliente | `albarans-router` | `critical` · corregido, verificado en vivo |
-| `DOC-24/BUG-003` | precio, coste y stock no negativos | `peces-router` | `high` · abierto |
-| `DOC-24/BUG-004` | no hay camino para anular o rectificar una factura | `factures-router` | `high` · abierto |
+| `DOC-24/BUG-001` | comprobar existencias antes de descontar stock | `albarans-router` | `critical` · **corregido, verificado en vivo** (`ed61c24`) |
+| `DOC-24/BUG-002` | comprobar que el vehículo nuevo es del mismo cliente | `albarans-router` | `critical` · **corregido, verificado en vivo** (`ed61c24`) |
+| `DOC-24/BUG-003` | precio, coste y stock no negativos | `peces-router` + `albarans-router` | `high` · **corregido, verificado en vivo** (`SPE-07`, 2026-08-30) |
+| `DOC-24/BUG-004` | no hay camino para anular o rectificar una factura | `factures-router` | `high` · **corregido, verificado en vivo** (`SPE-08`, 2026-08-31) |
 | `DOC-14/EXP-004` | deducciones mayores que el bruto: neto negativo aceptado | `nomines-router` | `high` · abierto, bloqueado por P-01 |
 | `DOC-14/EXP-005` | mes con decimales y año sin límite | `nomines-router` | `medium` · abierto, bloqueado por P-02 |
 | `DOC-14/EXP-015` | año de matriculación 2099 y kilometraje negativo | `vehicles-router` | `medium` · abierto, bloqueado por P-02 |
 | `DOC-14/EXP-016` | validación de navegador desactivada: correo sin arroba, nombre de 281 caracteres | `clients-router` + `shared-components` | `medium` · abierto |
 | `DOC-07/A-05-15` | borrar el albarán entero no devuelve el stock de sus líneas de pieza, a diferencia de retirar una línea suelta | `albarans-router` | aviso · **candidato**, no defecto — pendiente de que producto diga si `REQ-039` alcanza a este camino (1.2) |
 
-**Los ocho de siempre no se mueven: seis abiertos, dos corregidos.** `albarans` (18
+**Los ocho de siempre se mueven, por fin: los cuatro `BUG-nnn` quedan cerrados en la 3.3.0,
+los cuatro `EXP-nnn` de nómina/vehículos/clientes siguen abiertos.** `albarans` (18
 requisitos, 28 casos) y `factures` (13 requisitos, 19 casos) siguen siendo, según `DOC-07`
-§5, el 39 % de los requisitos y el 43 % de los casos, y ahí caen tres de los cuatro
-defectos de `DOC-24`. **Lo que sí se añade esta ronda es un noveno candidato**, distinto de
-forma a los ocho anteriores: no es una comprobación ausente, es una regla que existe en un
-sitio y no en el otro — ver 1.2 y 1.3.
+§5, el 39 % de los requisitos y el 43 % de los casos, y ahí cayeron tres de los cuatro
+defectos de `DOC-24`, ya corregidos. **Ninguno de los cuatro se corrigió a través de un
+módulo de dominio compartido** —dos por commit directo, dos por `/spec` con parches en su
+propio router— y uno de ellos (`BUG-003`) dejó, de propina, una duplicación verbatim de la
+misma regla dentro de `peces.js` (§1.8): el patrón que motivó esta tabla en la versión 1.0.0
+no se ha resuelto por sí solo al corregir los defectos, solo ha cambiado de forma. El
+noveno candidato, distinto de forma a los ocho anteriores —no es una comprobación ausente,
+es una regla que existe en un sitio y no en el otro—, sigue sin decidirse (1.2, 1.3, 1.8).
 
 **La segunda mitad, la del cliente, sí se ha movido, y es la novedad de esta ronda.** Los
 dos defectos de doble envío que `DOC-14` había encontrado fuera de los routers —`EXP-002`
@@ -648,9 +794,9 @@ que sigue sin decidir siete días después.
 ### 3.4 Esperando decisión
 
 **Ninguna de estas tres está descartada: están sin decidir.** En la delta 3.2.0 `MEJ-002`
-crece y `MEJ-006` se matiza (`MEJ-004` no se mueve); ninguna cambia de tamaño, dificultad
-ni dependencia — eso es análisis de impacto y le corresponde a `A-07` cuando entren en
-ciclo.
+crece y `MEJ-006` se matiza; en la delta 3.3.0 `MEJ-004` crece (1.8); ninguna cambia de
+tamaño, dificultad ni dependencia — eso es análisis de impacto y le corresponde a `A-07`
+cuando entren en ciclo.
 
 #### MEJ-002 · Catálogo único de los literales de error del servidor
 
@@ -697,7 +843,7 @@ de una — `EXP-027` ya mostró lo que cuesta ese escenario cuando ocurre sin ca
 
 | | |
 |---|---|
-| **Estado** | `proposed` — sin decidir, **evidencia crecida en la 3.1.0; sin cambios en la delta 3.2.0** |
+| **Estado** | `proposed` — sin decidir, **evidencia crecida en la 3.1.0 y de nuevo en la 3.3.0** |
 | **Origen** | `evidence` |
 | **Tamaño** | `large` · confianza `medium` |
 | **Impacto / dificultad / urgencia** | `high` / `high` / `high` |
@@ -706,9 +852,9 @@ de una — `EXP-027` ya mostró lo que cuesta ese escenario cuando ocurre sin ca
 módulo por dominio. No añade ni cambia ninguna regla: mueve las que ya existen.
 
 **Evidencia.** Los ocho defectos de escritura del apartado 3.0 (`DOC-24/BUG-001` a
-`BUG-004`, `DOC-14/EXP-004`, `EXP-005`, `EXP-015`, `EXP-016`); `DOC-02/Q-06`; 893 líneas y
-86 `res.status` en `server/routes/`, recontados en `HEAD` y sin cambios porque
-`server/routes/` no se ha tocado.
+`BUG-004`, `DOC-14/EXP-004`, `EXP-005`, `EXP-015`, `EXP-016`); `DOC-02/Q-06`; 974 líneas y
+98 `res.status` en `server/routes/` (eran 893 y 86; recontados en `HEAD` tras `SPE-07` y
+`SPE-08` — la primera vez que `server/routes/` cambia desde que existe esta cifra).
 
 **Nuevo en la 3.1.0 — un noveno candidato, de una forma distinta a los ocho anteriores
 (1.2, 1.3).** `DOC-07/A-05-15`: `server/routes/albarans.js:197-224` devuelve el stock al
@@ -719,10 +865,24 @@ elimina por construcción. **No se resuelve aquí si el comportamiento actual es
 —eso es de producto, ver 1.2 y apartado 6—; lo que aporta a esta ficha es evidencia de que
 el patrón de duplicación que `MEJ-004` ataca ya se ha materializado una vez más.
 
+**Nuevo en la 3.3.0 — los cuatro `BUG-nnn` originales se cierran, ninguno vía módulo
+común, y aparece una segunda forma del mismo patrón (1.8).** `DOC-24` 1.1.2 marca `fixed`
+los cuatro defectos que abrieron esta ficha en la 1.0.0: dos por commit directo
+(`BUG-001`, `BUG-002`), dos por `/spec` (`BUG-003` vía `SPE-07`, `BUG-004` vía `SPE-08`).
+**Ninguno pasó por un lugar común** — cada uno se resolvió con un parche en su propio
+router. Y el fix de `BUG-003` deja, verificado línea a línea, una duplicación verbatim: el
+mismo bloque de validación de `preu`/`cost`/`estoc` está escrito dos veces, palabra por
+palabra, en `server/routes/peces.js` (líneas 27-35 en `POST /` y 69-77 en `PUT /:id`). No
+es la misma forma que `A-05-15` (regla presente en una ruta y ausente en la otra): aquí la
+regla está en las dos rutas, pero **copiada**, no compartida — la otra cara exacta del
+mismo problema de fondo.
+
 **Componentes afectados:** los siete routers más `db-connection`.
 
 **Riesgo de no hacerla.** El noveno defecto de la misma familia — ya no es una proyección
-abstracta, tiene candidato y cita.
+abstracta, tiene candidato y cita. Y, tras la 3.3.0, tampoco lo es el coste de mantenimiento
+mientras tanto: los cuatro defectos que ya se corrigieron se corrigieron sin él, uno de
+ellos dejando una duplicación nueva de propina.
 
 **Sigue recomendándose la tercera vía**, no antes: hacerla con el primer evolutivo,
 acotada al dominio que ese evolutivo toque, porque `MEJ-003` —de la que depende para tener
@@ -766,13 +926,13 @@ otra base no se pueden hacer sin esto, y las dos siguen aceptadas.
 
 ## 4. Vivas de rondas anteriores
 
-Las cuatro `proposed` —una con evidencia que crece en la delta 3.2.0, una que se matiza,
-dos sin evidencia nueva—.
+Las cuatro `proposed` —dos con evidencia que crece (una en la 3.2.0, otra en la 3.3.0), una
+que se matiza, una sin evidencia nueva—.
 
 | Mejora | Evidencia | Qué ha pasado |
 |---|---|---|
 | **MEJ-002** | **Crece (más en 3.2.0)** | Segundo consumidor de los 71 literales: `automation/api/` los afirma con igualdad exacta en **8 casos** (eran 4 en la 3.1.0), tras la ampliación de servicio de SPE-06 (1.4) |
-| **MEJ-004** | Sin cambios desde 3.1.0 | Noveno candidato de la misma familia, de forma nueva: `DOC-07/A-05-15` (1.2, 1.3). Sigue dependiendo de `MEJ-003` |
+| **MEJ-004** | **Crece de nuevo (3.3.0)** | Los cuatro `BUG-nnn` originales se cierran (`DOC-24` 1.1.2), ninguno vía módulo común; `peces.js` duplica la misma regla verbatim entre `POST` y `PUT` (1.8). Sigue dependiendo de `MEJ-003` |
 | **MEJ-006** | **Se matiza (3.2.0)** | Sigue `opinion`, sigue sin incidente medido; el argumento de «bloquea a dos aceptadas» se ablanda un poco más con la segunda corrida de `DOC-27` 1.1.0 (1.5) |
 | **MEJ-009** | Sin cambios | Nació en la 3.0.0 de `DOC-14/EXP-028`, coste trivial. Sigue `proposed` |
 
@@ -799,13 +959,17 @@ ocurre con un solo usuario y dos pestañas, que el spec no excluye). Va al apart
 Sigue sin proponerse. `better-sqlite3` es síncrono; `DOC-24` y `DOC-14` verificaron la
 numeración como correcta.
 
-### 5.3 Las correcciones de los defectos, los ocho (y el candidato a noveno) · matizado
+### 5.3 Las correcciones de los defectos, los ocho (y el candidato a noveno) · cuatro ya cerrados
 
-No son mías: `BUG-003`/`BUG-004` son evolutivos decididos por negocio; los defectos de
-`DOC-14` van a `A-14`. Lo que hago con ellos es leerlos como patrón (3.0) y proponer dónde
-aterrizan: `MEJ-004` en el servidor. **`A-05-15` se suma al mismo tratamiento**: no se
-propone su corrección —depende de una decisión de producto que no me corresponde tomar
-(1.2)— y se incorpora como evidencia de `MEJ-004`.
+No son mías: `BUG-001` a `BUG-004` eran evolutivos decididos por negocio el 2026-08-16 y
+**los cuatro están ya corregidos e implementados** (`BUG-003` vía `SPE-07`, `BUG-004` vía
+`SPE-08`, ambos verificados en vivo — 1.8); los defectos de `DOC-14` (`EXP-004`, `EXP-005`,
+`EXP-015`, `EXP-016`) siguen abiertos y van a `A-14`. Lo que hago con ellos es leerlos como
+patrón (3.0) y proponer dónde aterrizan: `MEJ-004` en el servidor. Que los cuatro `BUG-nnn`
+ya estén corregidos no cierra esa propuesta — la refuerza, porque ninguno se corrigió por
+esa vía (1.8). **`A-05-15` se suma al mismo tratamiento**: no se propone su corrección
+—depende de una decisión de producto que no me corresponde tomar (1.2)— y se incorpora
+como evidencia de `MEJ-004`.
 
 ### 5.4 La fragilidad del extractor de S-12 (`DOC-07/A-05-06`) · sin cambios
 
@@ -860,13 +1024,14 @@ entre lo que `DOC-04` declara y lo que la interfaz ofrece. **Eso es un hallazgo 
 `DOC-04`/`DOC-07`, no de este roadmap ni de `A-15`**; se deja constancia aquí solo para que
 quede claro que ya se evaluó y no quedó huérfano.
 
-### 6.4 → `A-14` · El censo de defectos sigue sin reflejar lo verificado, cuarta ronda que lo señala
+### 6.4 → `A-14` · El censo de defectos, cerrado: se retira el hallazgo
 
-`DOC-24` sigue en 1.0.0 con los cuatro defectos «abiertos», mientras `DOC-14` verificó en
-vivo —ya en su versión 1.0.0— que `BUG-001` y `BUG-002` funcionan. `BUG-003` tiene decisión
-de negocio desde el 2026-08-16 (Q-12), pendiente de implantar; `BUG-004` sigue abierto sin
-decisión. Es la cuarta versión de este roadmap que tiene que cruzar dos documentos para
-saber el estado real de los cuatro.
+**Cerrado en la 3.3.0, cuarta ronda que lo señalaba.** Las tres rondas anteriores (3.0.1 a
+3.2.0) repitieron que `DOC-24` seguía en 1.0.0 con los cuatro defectos «abiertos» en su
+propio texto pese a que `DOC-14` ya había verificado en vivo que `BUG-001` y `BUG-002`
+funcionaban. **Ya no hace falta cruzar dos documentos**: `DOC-24` 1.1.2 marca los cuatro
+`fixed` —`BUG-003` el 2026-08-30 vía `SPE-07`, `BUG-004` el 2026-08-31 vía `SPE-08`, ambos
+verificados en vivo— y coincide con lo que `DOC-14` 2.1.2 dice por su lado. No se repropone.
 
 ### 6.5 → `A-03` · El paso 2 de `TC-041` no lo ejerce ninguna suite
 
@@ -942,36 +1107,44 @@ con la precondición del caso (`s10-auto-tcs`); A-12 no repite ese detalle, ya e
 version: 1
 project: app-taller
 run:
-  date: 2026-08-29
-  round: 3.2.0
+  date: 2026-08-31
+  round: 3.3.0
   kind: bounded_delta
   first_run: false
-  previous_doc_version: 3.1.0
+  previous_doc_version: 3.2.0
   last_analysis_round: 3.1.0
-  commit_sha: cf7f4c084dbf2a6cd392a06e8e485db5ad476280
+  commit_sha: 28bf7f627e9bbc033e607a35eebfb6dbbe9b91d5
   new_inputs_this_run: []
-  inputs_changed_this_run: [DOC-27-INFORME-API.md, DOC-07-TRAZABILIDAD.md]
+  inputs_changed_this_run: [DOC-24-BUGS.json, DOC-07-TRAZABILIDAD.md, DOC-14-INFORME-EXPLORADOR-QA.md, DOC-05-PLAN-PRUEBAS.md, DOC-02-TECNICA.md, DOC-23-INFORME-EJECUCION-TCS-UI.md, registro-ids.json]
   inputs_absent: [DOC-17-DEUDA-TECNICA.md, DOC-20-RALLY-STATE.json, DOC-19-RALLY-TESTCASES.csv]
-  obsolescence_ack_this_run: [DOC-02-TECNICA.md, DOC-05-PLAN-PRUEBAS.md, registro-ids.json, DOC-14-EXPLORATORIO.md, DOC-25-PROPUESTAS-FUNCIONALES.md]
+  obsolescence_ack_this_run: [DOC-02-TECNICA.md, registro-ids.json]
   obsolescence_ack_reason: >-
-    DOC-02 1.2.0, DOC-05 1.8.0 y registro-ids.json 1.6.0 son SPE-06, ya reconocidos, sin
-    impacto en ningun MEJ-nnn (server/routes/ no cambio: 893 lineas, 86 res.status, 71
-    literales en cf7f4c0; anclas MEJ siguen en MEJ-001..MEJ-008). DOC-14 2.1.1 y DOC-25
-    1.2.2 son resyncs circulares de la propia 3.1.0. Fuera del alcance de esta delta
-    acotada; se consumiran en la proxima ronda de analisis.
+    DOC-02 1.2.0 -> 1.3.0: migracion 004, campo calculado anulada_per, endpoint nuevo,
+    sexta transaccion (SPE-08); verificado sobre el bloque graph, sin componentes ni
+    aristas nuevas. registro-ids.json: +6 anclas (BR-PEC-03/04, BR-ALB-11, BR-FAC-10/11,
+    UC-FAC-05), ninguna MEJ. Sin impacto en ningun MEJ-nnn. DOC-25 1.2.2 ya estaba
+    acotado en la 3.2.0, sin cambios. Fuera del alcance de esta delta acotada.
   ids_granted_by: S-12
   ids_requested_this_run: 0
   ids_granted: []
   no_new_mej_this_round: true
   no_status_change_this_round: true
   provenance_note: >-
-    Delta acotada 3.1.0 -> 3.2.0. Solo se reconsumen las dos entradas movidas por evidencia
-    de ejecucion nueva: DOC-27 1.0.0 -> 1.1.0 (S-17 amplia automation/api/: 10 -> 22 TCS,
-    28 -> 53 peticiones, 74 aserciones, 0 rojos, base resembrada) y DOC-07 1.10.0 -> 1.12.0
-    (A-05: 1.11.0 incorpora SPE-06 con 79/79 -> 81/81; 1.12.0 incorpora DOC-27 1.1.0 con
-    evidencia de ejecucion 106 -> 111* de 119). Hashes recalculados en HEAD (cf7f4c0). No
-    se ha barrido cada cita "79/79"/"110 casos" del cuerpo heredado, solo las de secciones
-    tocadas por la delta (S1, S1.7, S5.5).
+    Delta acotada 3.2.0 -> 3.3.0, disparada porque DOC-05 subio de 1.6.0 a 1.10.0 y el ack
+    de la 3.2.0 solo cubria hasta 1.8.0. Leido el diff real de DOC-05 (protocolo de
+    resello): su crecimiento en si (13 casos TC-120..TC-132 de SPE-07/SPE-08) no alimenta
+    el roadmap, igual que en la 3.2.0, pero la investigacion encontro que DOC-24 subio a
+    1.1.2 y BUG-003/BUG-004 -citados como abiertos en seis sitios de este documento- ya
+    estan fixed (BUG-003 via SPE-07, 2026-08-30; BUG-004 via SPE-08, 2026-08-31, ambos
+    verificados en vivo). Se trata como actualizacion real de contenido, no como ack. DOC-07
+    1.12.0 -> 1.13.0 confirma lo mismo desde la trazabilidad (A-05-03, familia vacia por
+    primera vez) y aporta evidencia nueva para MEJ-004 (ver S1.8): ninguno de los cuatro
+    BUG-nnn se corrigio via modulo comun, y el fix de BUG-003 duplica verbatim la misma
+    regla en server/routes/peces.js (POST y PUT). DOC-14 2.1.1 -> 2.1.2 corrige el mismo
+    hallazgo por su lado y reformula P-01. No se ha reevaluado ningun otro MEJ-nnn no
+    relacionado con estos dos bugs, ni recontado los 71 literales de MEJ-002. Corregido
+    ademas un hash de DOC-23 que habia cambiado de bytes sin cambiar de version (rename
+    5ae6ee7), del mismo tipo que la tabla de la 3.1.0.
 decision_of_record:
   date: 2026-08-17
   by: propietario del proyecto
@@ -1091,20 +1264,36 @@ improvements:
       - DOC-14/EXP-015
       - DOC-14/EXP-016
       - DOC-02/Q-06
-      - codigo/893-lineas-y-86-res.status-en-server-routes-sin-cambios-desde-b2a8d77
+      - codigo/974-lineas-y-98-res.status-en-server-routes-tras-SPE-07-y-SPE-08-en-28bf7f6
+      - codigo/peces.js-27-35-y-69-77-mismo-bloque-de-validacion-duplicado-verbatim
       - DOC-07/A-05-15
+      - DOC-07/A-05-03
     evidence_change_since_3_0_0: >-
       Crece. Noveno candidato de la misma familia, de forma nueva: la regla de devolver
       stock existe en albarans.js:197-224 (retirar linea) y no en :116-132 (borrar
       albaran), verificado en HEAD. No se decide si es defecto -- pregunta de producto,
       ver DOC-16 apartado 6.9 -- se incorpora solo como evidencia de duplicacion-por-omision.
+    evidence_change_3_3_0: >-
+      Crece de nuevo. DOC-24 1.1.2: los cuatro BUG-nnn originales (BUG-001..004) constan
+      fixed; ninguno se corrigio via modulo de dominio comun (dos por commit directo, dos
+      por /spec, cada uno con parche en su propio router). El fix de BUG-003 (SPE-07) deja
+      ademas una duplicacion verbatim verificada en codigo: el mismo bloque de validacion
+      de preu/cost/estoc esta escrito dos veces, palabra por palabra, en
+      server/routes/peces.js (POST / lineas 27-35, PUT /:id lineas 69-77) -- forma nueva
+      del mismo patron, distinta de la de A-05-15 (regla presente en una ruta y ausente en
+      la otra: aqui esta en las dos, pero copiada). No cambia impact/difficulty/size/
+      depends_on -- es analisis de impacto y corresponde a A-07 -- ni su posicion fuera del
+      podio (S2). Ver DOC-16 S1.8.
     components: [clients-router, vehicles-router, peces-router, albarans-router, factures-router, personal-router, nomines-router, db-connection]
     impact: high
     difficulty: high
     urgency: high
     size: large
     confidence: medium
-    risk_if_not_done: El noveno defecto de la misma familia.
+    risk_if_not_done: >-
+      El noveno defecto de la misma familia -- ya con candidato y cita -- y el coste de
+      mantenimiento mientras tanto: los cuatro BUG-nnn que ya se corrigieron se corrigieron
+      sin este modulo, uno de ellos (BUG-003) dejando una duplicacion verbatim nueva.
     depends_on: [MEJ-003]
     note: >-
       Recomendación de A-12: hacerla con el primer evolutivo, acotada a su dominio, después
@@ -1250,7 +1439,10 @@ considered_not_proposed:
     why: >-
       Son de A-14 (BUG-nnn, EXP-nnn) o de una decisión de producto pendiente (DOC-07/A-05-15,
       ver findings_for_others target A-02). A-12 los lee como patrón y propone dónde
-      aterrizan: MEJ-004.
+      aterrizan: MEJ-004. Actualizado en la 3.3.0: los cuatro BUG-nnn (DOC-24/BUG-001..004)
+      ya constan fixed en DOC-24 1.1.2; se sigue sin proponer su corrección -ya está hecha-
+      pero se incorporan como evidencia de que MEJ-004 no queda satisfecha por corregirlos
+      uno a uno (S1.8).
   - what: Si borrar un albarán debe devolver el stock de sus líneas de pieza (DOC-07/A-05-15)
     why: >-
       Pregunta de producto, no técnica; el propio DOC-07 lo dice explícitamente. Incorporado
@@ -1269,23 +1461,35 @@ considered_not_proposed:
       dan por hecho que la capacidad existe, así que es discrepancia DOC-04/DOC-07, no
       funcionalidad ausente que A-12 deba reenviar de nuevo.
 corrections_to_previous_version:
-  - what: inputs DOC-27 y DOC-07 al dia
+  - what: inputs DOC-24, DOC-07, DOC-14, DOC-02, DOC-25 y registro-ids.json al dia
     detail: >-
-      DOC-27-INFORME-API.md 1.0.0 -> 1.1.0 (hash 178d4b14 -> 2ae7596b) y
-      DOC-07-TRAZABILIDAD.md 1.10.0 -> 1.12.0 (hash f3eb60be -> 4b3e99db). commit_sha de
-      source 40bbd43 -> cf7f4c0.
-  - what: citas de cifras actualizadas solo en las secciones tocadas por la delta
+      DOC-24-BUGS.json 1.0.0 -> 1.1.2 (hash c4144b06 -> d62b2363), DOC-07-TRAZABILIDAD.md
+      1.12.0 -> 1.13.0 (hash 4b3e99db -> 198bf02d), DOC-14-INFORME-EXPLORADOR-QA.md
+      2.1.0 -> 2.1.2 (hash f1449e13 -> 4e70cb02), DOC-02-TECNICA.md 1.1.0 -> 1.3.0 (hash
+      5a4fce68 -> b25eef32), DOC-25-PROPUESTAS-FUNCIONALES.md 1.2.1 -> 1.2.2 (hash
+      256d1507 -> d8990ff4), registro-ids.json (hash bc54df9a -> 529dd2de). commit_sha de
+      source cf7f4c0 -> 28bf7f6.
+  - what: BUG-003 y BUG-004, corregidos en seis sitios del cuerpo (S1, S1.6, S1.8, S3.0,
+      S3.4/MEJ-004, S5.3, S6.4) y en el bloque estructurado
     detail: >-
-      S1 (tabla de cambios, parrafo de cobertura), S1.1 (10->22 TCS, 28->53 peticiones,
-      2 de 7 routers), S1.4 (4->8 literales to.eql), S1.5 (repetibilidad con y sin
-      resembrado), S1.7 (nueva), S2 (podio), S3.3/S3.4 (fichas MEJ-002/003/006), S4, S5.5.
-      Las citas "79/79" y "110 casos" de otras secciones reflejan el censo pre-SPE-06 y se
-      barren en la proxima ronda de analisis (ver obsolescence_ack).
-  - what: ninguna cifra de server/routes/ requirió corrección de contenido
+      DOC-24 1.1.2 marca los cuatro bugs censados fixed (eran 2 fixed + 2 open). BUG-003
+      via SPE-07 (2026-08-30), BUG-004 via SPE-08 (2026-08-31), ambos verificados en vivo.
+      Se anadio S1.8 con el analisis de que significa esto para MEJ-004: crece evidencia
+      (ninguno de los cuatro se corrigio via modulo comun; BUG-003 dejo una duplicacion
+      verbatim en peces.js), no cambia impact/difficulty/size/depends_on ni su posicion
+      fuera del podio.
+  - what: cifras de server/routes/ recontadas tras SPE-07/SPE-08
     detail: >-
-      893 líneas, 86 res.status y 71 literales de error, recontados en HEAD (cf7f4c0):
-      SPE-06 (merge c771e35) toco solo AlbaraForm.tsx y seed.js, no server/routes/. La
-      ruta PUT /albarans/:id ya existia desde el fix de bugs ed61c24.
+      893 -> 974 lineas, 86 -> 98 res.status (recontados en HEAD 28bf7f6): la primera vez
+      que estas cifras cambian desde que existen en este documento, porque SPE-06 no habia
+      tocado server/routes/ y SPE-07/SPE-08 si. Actualizado en S1.8 y en la ficha MEJ-004.
+      No se ha recontado el total de literales de error (71): fuera del alcance de esta
+      delta, que no toca MEJ-002.
+  - what: hash de DOC-23 corregido sin cambio de version, mismo patron que la tabla de la 3.1.0
+    detail: >-
+      33ac58bc -> 75e80c36. El commit 5ae6ee7 (renombrado DOC-14/23/27) cambio el doc_name
+      interno de DOC-23 sin subir su version (sigue en 2.2.0). Verificado el diff: solo
+      autorreferencias de nombre, ninguna cifra de ejecucion.
 findings_for_others:
   - target: A-15
     status: cerrado por el destinatario
@@ -1311,10 +1515,11 @@ findings_for_others:
       el otro. A-12 no lo resuelve ni lo propone como MEJ; lo usa solo como evidence_ref de
       MEJ-004. Si la respuesta es sí, es BUG-nnn para A-14; si no, falta requisito en DOC-04.
   - target: A-14
-    status: sin cambios
+    status: cerrado — resuelto por el destinatario
     note: >-
-      DOC-24 sigue en 1.0.0 con BUG-001/BUG-002 "abiertos" pese a que DOC-14 verificó en
-      vivo que funcionan. Cuarta ronda que lo señala.
+      DOC-24 subió a 1.1.2: los cuatro bugs censados (BUG-001..004) constan `fixed`, ya no
+      hace falta cruzar dos documentos para saber su estado real. Se retira de esta lista
+      tras cuatro rondas señalándolo (3.0.1 a 3.2.0).
   - target: A-03
     status: nuevo
     note: >-
@@ -1365,7 +1570,7 @@ registry_check:
     No se pide número esta ronda: no nace ningún MEJ-nnn. MEJ-009 sigue sin censar en
     registro-ids.json (findings_for_others, target S-12).
 summary:
-  round: 3.2.0
+  round: 3.3.0
   kind: bounded_delta
   total: 9
   new_this_round: 0
@@ -1376,21 +1581,33 @@ summary:
   proposed_new_pending: 1
   rejected_respected: 0
   rejected_total: 0
-  evidence_grown_this_round: [MEJ-002]
-  evidence_matured_this_round: [MEJ-003, MEJ-006]
-  evidence_unchanged_this_round: [MEJ-004]
+  evidence_grown_this_round: [MEJ-004]
+  evidence_matured_this_round: []
+  evidence_unchanged_this_round: [MEJ-002, MEJ-006, MEJ-009]
   evidence_shrunk: []
   by_source: { evidence: 8, opinion: 1 }
   considered_not_proposed: 8
   findings_for_others: 14
-  findings_closed_by_recipient_this_round: 0
+  findings_closed_by_recipient_this_round: 1
   recommended_top3_among_undecided: [MEJ-009, MEJ-002, MEJ-006]
   recommended_order_changed_this_round: false
   recommended_order_note: >-
-    Mismo orden que la 3.1.0 (MEJ-009, MEJ-002, MEJ-006). DOC-27 1.1.0 solo refuerza los
-    movimientos que ya hizo la 3.1.0: MEJ-002 en el #2 (ahora 8 literales to.eql, eran 4)
-    y MEJ-006 en el #3 (repetibilidad de la suite confirmada con y sin resembrado).
+    Mismo orden que en la 3.1.0/3.2.0 (MEJ-009, MEJ-002, MEJ-006). El cierre de
+    BUG-003/BUG-004 hace crecer la evidencia de MEJ-004 (S1.8) pero no la sube al podio:
+    sigue fuera por dificultad (high, depende de MEJ-003), no por falta de evidencia.
   never_propose_again: [MEJ-001, MEJ-003, MEJ-005, MEJ-007, MEJ-008]
+  bug_003_004_closure_decision: >-
+    DOC-24 1.1.2: los cuatro bugs censados (BUG-001..004) constan fixed, ninguno abierto
+    por primera vez en la historia de este documento. Ninguno se corrigio via un modulo de
+    dominio comun; el fix de BUG-003 (SPE-07) duplica verbatim la misma regla de validacion
+    en server/routes/peces.js (POST y PUT). Se incorpora como evidencia de que MEJ-004 no
+    queda satisfecha por corregir los defectos uno a uno (S1.8); no cambia impact/
+    difficulty/size/depends_on ni su posicion fuera del podio. El riesgo de BUG-004
+    ("la inmutabilidad de la factura era ausencia de camino, no regla") se resolvio de
+    forma controlada via SPE-08, con reglas propias (BR-FAC-10/BR-FAC-11), no via el modulo
+    de dominio que MEJ-004 propone -- no aporta ni resta a la decision pendiente sobre ella.
+    El hallazgo para A-14 sobre el censo desactualizado de DOC-24 se retira, cerrado por el
+    destinatario (findings_for_others).
   a05_15_decision: >-
     No nace MEJ-010. A-05-15 (borrar albarán no devuelve stock) se incorpora como
     evidence_ref de MEJ-004 y como candidato a noveno defecto en el apartado 3.0; la
