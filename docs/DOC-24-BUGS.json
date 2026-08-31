@@ -1,16 +1,16 @@
 {
   "doc_id": "DOC-24",
   "doc_name": "DOC-24-BUGS",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "status": "draft",
   "generator": "A-14 explorador ejecutor",
   "generator_version": "1.0",
   "generated_at": "2026-08-16T08:05:00+02:00",
   "last_status_update": {
-    "date": "2026-08-30",
+    "date": "2026-08-31",
     "by": "Actualización manual (Claude Code, a petición del propietario del proyecto) — no hay agente A-14 en este instrumental que gobierne este fichero",
-    "what": "BUG-003 se marca `fixed`: implementado y verificado en vivo (navegador + API) mediante SPE-07-importes-negativos (Q-12, resuelta el 2026-08-16). BUG-001 y BUG-002 ya constaban `fixed` desde la actualización anterior.",
-    "version_bump": "PATCH (1.1.0 -> 1.1.1): cambia el valor de campos ya existentes (status de BUG-003 y el resumen), no añade ningún campo nuevo al esquema."
+    "what": "BUG-004 se marca `fixed`: implementado y verificado en vivo (navegador + API) mediante SPE-08-factura-rectificativa (Q-06, resuelta el 2026-08-16). BUG-001, BUG-002 y BUG-003 ya constaban `fixed` desde actualizaciones anteriores — los 4 bugs censados están ahora cerrados.",
+    "version_bump": "PATCH (1.1.1 -> 1.1.2): cambia el valor de campos ya existentes (status de BUG-004 y el resumen), no añade ningún campo nuevo al esquema."
   },
   "source": {
     "repo_path": "C:\\Claude\\appdani",
@@ -42,8 +42,8 @@
     "critical": 2,
     "high": 2,
     "medium": 0,
-    "open": 1,
-    "fixed": 3,
+    "open": 0,
+    "fixed": 4,
     "validated_ok": 3,
     "documentation_discrepancies": 1,
     "false_leads_discarded": 1
@@ -120,7 +120,10 @@
     {
       "id": "BUG-004",
       "severity": "high",
-      "status": "open",
+      "status": "fixed",
+      "fixed_on": "2026-08-31",
+      "fixed_commit": "e788063..df1ab05 (4 commits, SPE-08-factura-rectificativa)",
+      "fix_verified": "POST /api/factures/:id/rectificar existe: rechaza sin motiu (400), factura inexistente (404) o ya rectificada (409); libera los albaranes de la original a pendent/factura_id NULL; la original no cambia ningún campo propio. Verificado en vivo (API e interfaz), no solo leyendo el código.",
       "title": "Una factura emitida no se puede anular ni corregir por ningún medio",
       "requirement": "REQ-043",
       "business_rule": "BR-ALB-03",

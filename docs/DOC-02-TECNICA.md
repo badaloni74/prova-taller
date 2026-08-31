@@ -1,18 +1,18 @@
 ---
 doc_id: DOC-02
 doc_name: DOC-02-TECNICA
-version: 1.2.0
+version: 1.3.0
 status: draft
 history: DOC-02-TECNICA-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-28T13:55:00+02:00
+generated_at: 2026-08-31T17:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: spec-SPE-06-albara-canvi-client
-  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
-  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el arbol versionado esta limpio
+  branch: spec-08-factura-rectificativa
+  commit_sha: ecbf7e4415cba737b9e700d45066d3673d8a594a
+  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt) mas docs/DOC-09-IMPACTO-factura-rectificativa.md (pendiente de commit, preliminar de SPE-08); el arbol versionado esta limpio
 inputs:
   - id: registro-ids.json
     present: true
@@ -140,7 +140,7 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 | `vehicles-router` | api | vehicles | `server/routes/vehicles.js` | CRUD de vehículos, unicidad de matrícula, filtro `?client_id=` |
 | `peces-router` | api | peces | `server/routes/peces.js` | CRUD del catálogo de piezas |
 | `albarans-router` | api | albarans | `server/routes/albarans.js` | CRUD de albaranes, gestión de líneas y movimiento de stock, rechazo del cambio de vehículo a otro cliente |
-| `factures-router` | api | factures | `server/routes/factures.js` | Emisión de facturas, cálculo de base/IVA/total, estado de pago |
+| `factures-router` | api | factures | `server/routes/factures.js` | Emisión de facturas, cálculo de base/IVA/total, estado de pago, y emisión de rectificativas liberando los albaranes de la original |
 | `personal-router` | api | personal | `server/routes/personal.js` | CRUD de empleados |
 | `nomines-router` | api | nomines | `server/routes/nomines.js` | CRUD de nóminas, unicidad empleado+mes+año, salario neto |
 | `db-connection` | data | shell | `server/db/index.js` | Singleton de better-sqlite3, WAL y claves foráneas activas |
@@ -167,7 +167,7 @@ uno dentro de la misma transacción que lo aplica. Se ejecuta en cada arranque.
 | `vehicles-pages` | ui | vehicles | `client/src/pages/vehicles/` | Listado, ficha y formulario de vehículos |
 | `peces-pages` | ui | peces | `client/src/pages/peces/` | Listado, ficha y formulario de piezas |
 | `albarans-pages` | ui | albarans | `client/src/pages/albarans/` | Listado, ficha, formulario y sección de líneas. El formulario de edición filtra el selector de vehículo por el cliente del albarán |
-| `factures-pages` | ui | factures | `client/src/pages/factures/` | Listado, ficha y formulario de emisión |
+| `factures-pages` | ui | factures | `client/src/pages/factures/` | Listado, ficha y formulario de emisión; ficha y listados marcan visualmente la factura anulada y enlazan a su rectificativa |
 | `personal-pages` | ui | personal | `client/src/pages/personal/` | Listado, ficha y formulario de empleados |
 | `nomines-pages` | ui | nomines | `client/src/pages/nomines/` | Listado, ficha y formulario de nóminas |
 
@@ -262,7 +262,7 @@ propio módulo para aplicar reglas de integridad:
 | `vehicles-router` | tabla `clients`, `albarans` | Validación de existencia y bloqueo de borrado | `vehicles.js:37,121` |
 | `peces-router` | tabla `albara_linies` | Bloqueo de borrado | `peces.js:82` |
 | `albarans-router` | tabla `vehicles`, `peces` | Validación del vehículo, impedir que la cabecera cambie a un vehículo de otro cliente, y movimiento de stock | `albarans.js:58,90,96,159,184,216` |
-| `factures-router` | tabla `albarans`, `vehicles`, `albara_linies` | Agrupación, resolución del cliente y cálculo de totales | `factures.js:18,22,62,73` |
+| `factures-router` | tabla `albarans`, `vehicles`, `albara_linies` | Agrupación, resolución del cliente y cálculo de totales; y, desde SPEC 08, liberar a `pendent` los albaranes de una factura rectificada, escrito directamente sobre la tabla `albarans` sin pasar por `albarans-router` | `factures.js:18,22,62,73,152-158` |
 | `personal-router` | tabla `nomines` | Bloqueo de borrado | `personal.js:82` |
 | `nomines-router` | tabla `personal` | Validación de existencia | `nomines.js:42` |
 
@@ -280,7 +280,7 @@ Todas las tablas de negocio usan `id INTEGER PRIMARY KEY AUTOINCREMENT` y, salvo
 | Client | `clients` | clients | Sí | Referenciada por `vehicles.client_id` y `factures.client_id` |
 | Peca | `peces` | peces | Sí | Referenciada por `albara_linies.peca_id` |
 | Vehicle | `vehicles` | vehicles | Sí | → `clients.id`. `matricula` **UNIQUE** |
-| Factura | `factures` | factures | Sí | → `clients.id`. `numero` **UNIQUE** |
+| Factura | `factures` | factures | Sí | → `clients.id`. `numero` **UNIQUE**. `factura_rectificada_id` → `factures.id` (nullable, auto-referenciado): solo lo informa una rectificativa |
 | Albara | `albarans` | albarans | Sí | → `vehicles.id`, → `factures.id` (nullable). `numero` **UNIQUE** |
 | AlbaraLinia | `albara_linies` | albarans | Sí | → `albarans.id`, → `peces.id` (nullable). `CHECK (tipus IN ('peca','ma_obra'))` |
 | Personal | `personal` | personal | Sí | Referenciada por `nomines.personal_id` |
@@ -294,6 +294,7 @@ Todas las tablas de negocio usan `id INTEGER PRIMARY KEY AUTOINCREMENT` y, salvo
 | `001_init.sql` | `clients` |
 | `002_vehicles_peces_albarans_factures.sql` | `peces`, `vehicles`, `factures`, `albarans`, `albara_linies` |
 | `003_personal_i_nomines.sql` | `personal`, `nomines` |
+| `004_factura_rectificativa.sql` | Añade `factura_rectificada_id` (FK auto-referenciado, nullable) y `motiu_rectificacio` (`TEXT`, nullable) a `factures`. Primera migración de este proyecto que hace `ALTER TABLE` en vez de `CREATE TABLE` |
 
 SPEC 06 no añade ninguna migración: la relación albarán→vehículo→cliente que
 sostiene `BR-ALB-10` ya existía en el esquema `002`.
@@ -302,7 +303,8 @@ sostiene `BR-ALB-10` ya existía en el esquema `002`.
 
 | Campo | Dónde se calcula | Fórmula |
 |---|---|---|
-| `base`, `iva_import`, `total` de una factura | `server/routes/factures.js:25-27` | `Σ(quantitat × preu)` de las líneas de sus albaranes; IVA sobre la base |
+| `base`, `iva_import`, `total` de una factura | `server/routes/factures.js:25-27` | `Σ(quantitat × preu)` de las líneas de sus albaranes; IVA sobre la base. Una rectificativa no agrupa ningún albarán propio, así que este cálculo le da `0` por el mismo camino, sin ninguna rama especial |
+| `anulada_per` de una factura | `server/routes/factures.js:15-19` | `id` de la fila de `factures` cuyo `factura_rectificada_id` la referencia, o `null`. No almacenado; resuelto con una subconsulta `EXISTS` en cada lectura |
 | `salari_net` de una nómina | `server/routes/nomines.js:10` | `salari_brut − deduccions` |
 
 **Sin índices adicionales** más allá de las claves primarias y las restricciones
@@ -310,29 +312,32 @@ sostiene `BR-ALB-10` ya existía en el esquema `002`.
 líneas de un albarán se hace en código, dentro de una transacción
 (`albarans.js:125-129`).
 
-**Transacciones.** Se usan en cinco puntos, todos con `db.transaction(...)` de
+**Transacciones.** Se usan en seis puntos, todos con `db.transaction(...)` de
 better-sqlite3: aplicación de una migración, borrado de albarán con sus líneas,
-alta de línea con descuento de stock, baja de línea con devolución de stock, y
-emisión de factura con el marcado de sus albaranes. El rechazo de cambio de
-cliente en `PUT /api/albarans/:id` **no** usa transacción: es una comprobación
-previa a un `UPDATE` de una sola sentencia.
+alta de línea con descuento de stock, baja de línea con devolución de stock,
+emisión de factura con el marcado de sus albaranes, y emisión de una
+rectificativa con la liberación de los albaranes de la original
+(`server/routes/factures.js:151-168`). El rechazo de cambio de cliente en `PUT
+/api/albarans/:id` **no** usa transacción: es una comprobación previa a un
+`UPDATE` de una sola sentencia.
 
 ## 6. Superficie de API
 
-- **Endpoints detectados:** 38
+- **Endpoints detectados:** 39
 - **Estilo:** REST sobre JSON, bajo el prefijo `/api`
 - **Especificación publicada:** ninguna. El proyecto **no expone OpenAPI** ni
   equivalente
 - **Propietario del contrato:** DOC-03
 
 Reparto por router (`server/routes/`): albaranes 7, nóminas 6, clientes 5,
-piezas 5, personal 5, vehículos 5, facturas 4, más `GET /api/health` en
+piezas 5, personal 5, vehículos 5, facturas 5, más `GET /api/health` en
 `server/index.js:20`. La ruta `GET ^(?!\/api).*` es el fallback de SPA y no
 cuenta como endpoint de API.
 
 SPEC 06 no cambia el recuento: el filtro `GET /api/vehicles?client_id=` ya
 existía (`vehicles.js:6-13`) y `PUT /api/albarans/:id` solo gana una rama de
-validación dentro del mismo handler.
+validación dentro del mismo handler. SPEC 08 sí lo cambia: `POST
+/api/factures/:id/rectificar` es el endpoint nuevo (`server/routes/factures.js:134`).
 
 **Nota para S-03:** al no haber springdoc ni ningún generador de OpenAPI, DOC-03
 no se puede obtener con un `curl` a `/v3/api-docs`. Habrá que derivarlo del
@@ -821,7 +826,7 @@ integrations:
     protocol: file
 
 api_surface:
-  endpoints_detected: 38
+  endpoints_detected: 39
   style: rest
   spec_path: null
   contract_owner: DOC-03

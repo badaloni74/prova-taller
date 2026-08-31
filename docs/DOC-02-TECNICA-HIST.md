@@ -2,11 +2,11 @@
 doc_id: DOC-02-HIST
 doc_name: DOC-02-TECNICA-HIST
 of_document: DOC-02-TECNICA.md
-version: 1.2.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-28T13:55:00+02:00
+generated_at: 2026-08-31T17:10:00+02:00
 ---
 
 # DOC-02-TECNICA · Historial de versiones
@@ -14,6 +14,39 @@ generated_at: 2026-08-28T13:55:00+02:00
 Historial del documento `docs/DOC-02-TECNICA.md`. Una entrada por versión, de la más nueva
 a la más antigua. **El documento principal no reproduce nada de esto**: refleja solo el
 estado actual, con su `version` en el front-matter.
+
+---
+
+## 1.3.0 — 2026-08-31 — MINOR
+
+**Misma causa que `DOC-01` 1.3.0:** el `commit_sha` declarado (`345a3ae`) ya no es `HEAD`
+(`ecbf7e4`), con 8 commits de **SPEC 07** y **SPEC 08** sobre `client/`/`server/` de por
+medio.
+
+**Qué cambia:**
+
+- **Nueva migración** `004_factura_rectificativa.sql` (§5): añade `factura_rectificada_id`
+  (FK auto-referenciado, nullable) y `motiu_rectificacio` a `factures`. Primera migración
+  de este proyecto que hace `ALTER TABLE` en vez de `CREATE TABLE`.
+- **Nuevo campo calculado** `anulada_per` (§5): resuelto con una subconsulta `EXISTS`,
+  igual de estilo que `base`/`iva_import`/`total`, no almacenado.
+- **Nuevo endpoint** `POST /api/factures/:id/rectificar` (§6): `endpoints_detected`
+  38 → 39, `facturas` 4 → 5 en el reparto por router.
+- **Sexta transacción** (§5): emisión de rectificativa + liberación de albaranes, en
+  `server/routes/factures.js:151-168`.
+- **`factures-router → albarans-router` (`writes`)** ya existía en el bloque `graph` desde
+  la emisión normal de facturas; SPEC 08 añade un segundo motivo para esa misma arista
+  (liberar en vez de marcar como facturado) — no hace falta una arista nueva, solo se
+  amplía el motivo en la prosa de §4.
+- Sin cambios en `components`ni en el resto de `edges`: no nace ningún componente nuevo,
+  `factures-router` ya estaba en el grafo.
+
+**Qué NO cambia.** Stack, arquitectura de capas, testing (sigue en 0% dentro de
+`client/`/`server/`), integraciones externas y configuración: ninguno de los dos specs
+los toca.
+
+**Documentos derivados que quedan obsoletos por este salto:** `DOC-09`, `DOC-17` (directos).
+`S-08` debe recalcular el grafo.
 
 ---
 

@@ -1,18 +1,18 @@
 ---
 doc_id: DOC-01
 doc_name: DOC-01-BASE-ASIS
-version: 1.2.0
+version: 1.3.0
 status: draft
 history: DOC-01-BASE-ASIS-HIST.md
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-28T13:55:00+02:00
+generated_at: 2026-08-31T17:10:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: spec-SPE-06-albara-canvi-client
-  commit_sha: 345a3ae762624f2208a520a628b6ab1f7dec51e3
-  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt, bash.exe.stackdump); el arbol versionado esta limpio
+  branch: spec-08-factura-rectificativa
+  commit_sha: ecbf7e4415cba737b9e700d45066d3673d8a594a
+  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt) mas docs/DOC-09-IMPACTO-factura-rectificativa.md (pendiente de commit, preliminar de SPE-08); el arbol versionado esta limpio
 inputs:
   - id: registro-ids.json
     present: true
@@ -151,6 +151,7 @@ usará para crear los `REQ-nnn`: no cambian entre ejecuciones.
 | UC-FAC-02 | Consultar el listado de facturas | El usuario entra en *Facturas* | Ve la lista con número, estado de pago y total |
 | UC-FAC-03 | Consultar el detalle de una factura | El usuario abre una factura | Ve los albaranes agrupados, la base, el IVA y el total |
 | UC-FAC-04 | Marcar una factura como pagada o pendiente | El usuario acciona el conmutador de pago | El estado de pago queda actualizado |
+| UC-FAC-05 | Rectificar una factura emitida | El usuario pulsa *Rectificar factura* e indica un motivo | Se emite una factura rectificativa numerada aparte; la original queda marcada como anulada y sus albaranes vuelven a *pendiente* |
 
 **Flujo detallado — UC-FAC-01 · Emitir una factura agrupando albaranes**
 
@@ -163,9 +164,26 @@ usará para crear los `REQ-nnn`: no cambian entre ejecuciones.
    *facturado*, enlazándolos a ella.
 6. A partir de ese momento esos albaranes ya no se pueden modificar ni borrar.
 
-**Nota sobre la vida de la factura:** el sistema permite emitir una factura y
-cambiar su estado de pago, pero **no permite modificarla ni anularla**. Una vez
-emitida, sus albaranes quedan bloqueados de forma permanente. Ver Q-06.
+**Flujo detallado — UC-FAC-05 · Rectificar una factura emitida**
+
+1. El usuario abre una factura que **no** tenga ya una rectificativa.
+2. Pulsa *Rectificar factura* e indica un motivo. Es obligatorio.
+3. El sistema emite una factura rectificativa nueva, numerada aparte
+   (`año/R-nnnn`), que referencia a la original.
+4. En la misma operación, todos los albaranes que agrupaba la factura original
+   vuelven a estado *pendiente*, quedando disponibles para agruparse en una
+   factura nueva y correcta.
+5. La factura original **no cambia ningún campo propio**: su inmutabilidad se
+   mantiene íntegra. Queda marcada como *anulada* solo por la existencia de la
+   rectificativa que la referencia — no por un campo de estado propio.
+6. Una factura ya rectificada no se puede volver a rectificar.
+
+**Nota sobre la vida de la factura:** el sistema permite emitir una factura,
+cambiar su estado de pago y —desde SPEC 08— corregir una emitida por error
+mediante una rectificativa (`UC-FAC-05`). Lo que sigue sin existir es
+**modificar o borrar directamente** una factura ya emitida: la única vía de
+corrección es rectificarla. Antigua Q-06, resuelta — ver el cierre al final de
+§8.
 
 ### 3.6 Personal
 
@@ -227,6 +245,15 @@ la base de datos. Ninguna es una suposición.
 | BR-VEH-03 | La matrícula es única en todo el sistema | `server/routes/vehicles.js:42` + `002_*.sql:19` |
 | BR-VEH-04 | No se puede borrar un vehículo que tenga albaranes asociados | `server/routes/vehicles.js:124` |
 
+### Piezas
+
+| Ancla | Regla | Fuente |
+|---|---|---|
+| BR-PEC-01 | El nombre de la pieza es obligatorio | `server/routes/peces.js:22` |
+| BR-PEC-02 | No se puede borrar una pieza usada en algún albarán | `server/routes/peces.js:85` |
+| BR-PEC-03 | El precio y, si se informa, el coste de una pieza deben ser mayores que cero | `server/routes/peces.js:27`, `:30` |
+| BR-PEC-04 | El estoc de una pieza no puede ser negativo; cero es válido | `server/routes/peces.js:33` |
+
 ### Albaranes
 
 | Ancla | Regla | Fuente |
@@ -241,6 +268,7 @@ la base de datos. Ninguna es una suposición.
 | BR-ALB-08 | Añadir una línea de pieza descuenta el stock; retirarla lo devuelve | `server/routes/albarans.js:184`, `:216` |
 | BR-ALB-09 | El número de albarán se genera solo, con formato `año/A-nnnn` | `server/db/numbering.js:16` |
 | BR-ALB-10 | Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro que pertenezca a un cliente distinto del actual; el intento se rechaza sin guardar ningún cambio de la cabecera. El selector del formulario, además, solo ofrece los vehículos del cliente actual | `server/routes/albarans.js:95-104` (rechazo) + `client/src/pages/albarans/AlbaraForm.tsx:40-60` (filtro del selector) |
+| BR-ALB-11 | El precio de una línea debe ser mayor que cero: en una línea de pieza, solo si se informa explícitamente (si no, se toma el de catálogo, ya validado al darlo de alta); en una línea de mano de obra, siempre | `server/routes/albarans.js:168`, `:178` |
 
 ### Facturas
 
@@ -255,6 +283,8 @@ la base de datos. Ninguna es una suposición.
 | BR-FAC-07 | Base, IVA y total se presentan redondeados a dos decimales | `server/routes/factures.js:32-34` |
 | BR-FAC-08 | El estado de pago solo puede ser *pendiente* o *pagada* | `server/routes/factures.js:114` |
 | BR-FAC-09 | El número de factura se genera solo, con formato `año/F-nnnn` | `server/db/numbering.js:16` |
+| BR-FAC-10 | Al emitir una factura rectificativa —que exige un motivo obligatorio y se numera con prefijo `R` (`año/R-nnnn`)— los albaranes de la factura original vuelven a estado *pendiente* y quedan libres de ella, sin que la factura original cambie ningún campo propio | `server/routes/factures.js:134`, `:140`, `:149`, `:152` |
+| BR-FAC-11 | Una factura ya rectificada no se puede volver a rectificar | `server/routes/factures.js:145` |
 
 ### Personal
 
@@ -296,6 +326,7 @@ que aparece en la interfaz, en la base de datos y en el código.
 | Ma d'obra | Trabajo humano facturado por horas, con descripción libre y precio por hora | No |
 | Estoc | Unidades disponibles de una pieza. Baja al consumirla en un albarán y sube al retirar la línea | No |
 | Factura | Documento de cobro que agrupa uno o más albaranes de un mismo cliente y aplica el IVA | No |
+| Factura rectificativa | Factura nueva que anula una factura emitida por error, referenciándola; libera sus albaranes a *pendiente* para poder refacturarlos. La original no se modifica y queda marcada como anulada solo por la existencia de la rectificativa que la referencia | No |
 | Base | Suma de cantidad × precio de todas las líneas de los albaranes de una factura, antes de IVA | No |
 | Personal / Empleat | Trabajador del taller | No |
 | Nòmina | Retribución de un empleado para un mes y año concretos | No |
@@ -359,13 +390,14 @@ pantallas y tiene casos de uso y reglas propias, así que se cuenta como módulo
 | Q-03 | El campo `unitat` de la pieza no se usa en ningún cálculo ni validación. ¿Qué uso se le quiere dar? | Glosario | Negocio |
 | Q-04 | *Configuración* aparece en el menú pero no está implementado y ningún spec describe su contenido. ¿Qué debe contener? | UC-SHL-03 | Negocio |
 | Q-05 | El empleado guarda `data_alta` y `salari_base`, pero la nómina no los usa: el bruto se teclea a mano cada mes. ¿Se espera que el salario base proponga el bruto? | UC-NOM-02, BR-NOM-05 | Negocio |
-| Q-06 | Una factura no se puede modificar ni anular, y sus albaranes quedan bloqueados para siempre. ¿Cómo se corrige en el taller una factura emitida por error? | UC-FAC-01, BR-ALB-03 | Negocio |
 | Q-07 | Los albaranes no tienen ningún estado intermedio entre *pendiente* y *facturado* (por ejemplo, «en curso» o «cerrado»). ¿El taller trabaja así, o falta reflejar un paso real? | UC-ALB-02, BR-ALB-02 | Negocio |
 | Q-08 | `BR-ALB-10` cierra el cambio de cliente por la puerta del albarán, pero cambiar el propietario de un vehículo (`UC-VEH-04`) sigue arrastrando sus albaranes pendientes al cliente nuevo. ¿Debe impedirse, avisarse, o permitirse dejar el trabajo con el dueño anterior? | UC-VEH-04, BR-ALB-10 | Negocio (recogida como PD-002 en `specs/implemented/SPE-06-albara-canvi-client.md`) |
 
 **La antigua Q-02** («¿stock negativo es decisión consciente o falta una regla?») **ya no es una pregunta abierta**: negocio la resolvió el 2026-08-16 (recogida como `Q-12` en `DOC-04`, alcance «precio, coste y stock de pieza, precio de línea de albarán y precio por hora de mano de obra deben ser siempre positivos»). La decisión existe; su implementación todavía no —está censada como `BUG-003`, abierto, en `docs/DOC-24-BUGS.json`—. No se repite aquí porque repetir una pregunta ya contestada es el error que esta regeneración existe para evitar.
 
 **La antigua Q-10 de `DOC-04`** («¿se puede cambiar el vehículo de un albarán a otro cliente?») **está contestada**: negocio decidió el 2026-08-16 que debe impedirse. La decisión está implementada y recogida como `BR-ALB-10` (SPEC 06, `status: Implemented`). Lo que queda abierto de ese mismo asunto es solo la puerta del vehículo, ahora `Q-08`.
+
+**La antigua Q-06** («¿cómo se corrige en el taller una factura emitida por error?») **ya no es una pregunta abierta**: negocio decidió el 2026-08-16 introducir la factura rectificativa (recogida como `BUG-004` en `docs/DOC-24-BUGS.json`, `status: fixed`). La decisión está implementada y recogida como `BR-FAC-10`/`BR-FAC-11` y `UC-FAC-05` (SPEC 08, `status: Implemented`).
 
 ## 9. Bloque estructurado
 
@@ -547,6 +579,11 @@ use_cases:
     module: factures
     actors: [ACT-01]
     confidence: high
+  - anchor: UC-FAC-05
+    name: Rectificar una factura emitida
+    module: factures
+    actors: [ACT-01]
+    confidence: high
   - anchor: UC-PER-01
     name: Consultar el listado de empleados
     module: personal
@@ -665,6 +702,16 @@ business_rules:
     module: peces
     source: server/routes/peces.js:85
     confidence: high
+  - anchor: BR-PEC-03
+    statement: El precio y, si se informa, el coste de una pieza deben ser mayores que cero
+    module: peces
+    source: server/routes/peces.js:27
+    confidence: high
+  - anchor: BR-PEC-04
+    statement: El estoc de una pieza no puede ser negativo; cero es válido
+    module: peces
+    source: server/routes/peces.js:33
+    confidence: high
   - anchor: BR-ALB-01
     statement: Un albarán pertenece siempre a un vehículo existente
     module: albarans
@@ -715,6 +762,11 @@ business_rules:
     module: albarans
     source: server/routes/albarans.js:95
     confidence: high
+  - anchor: BR-ALB-11
+    statement: El precio de una línea debe ser mayor que cero, en pieza solo si se informa explícitamente y en mano de obra siempre
+    module: albarans
+    source: server/routes/albarans.js:168
+    confidence: high
   - anchor: BR-FAC-01
     statement: Una factura agrupa al menos un albarán
     module: factures
@@ -759,6 +811,16 @@ business_rules:
     statement: El número de factura se genera solo, con formato año/F-nnnn
     module: factures
     source: server/db/numbering.js:16
+    confidence: high
+  - anchor: BR-FAC-10
+    statement: Al emitir una factura rectificativa, los albaranes de la factura original vuelven a estado pendiente y quedan libres de ella, sin que la factura original cambie ningún campo propio
+    module: factures
+    source: server/routes/factures.js:134
+    confidence: high
+  - anchor: BR-FAC-11
+    statement: Una factura ya rectificada no se puede volver a rectificar
+    module: factures
+    source: server/routes/factures.js:145
     confidence: high
   - anchor: BR-PER-01
     statement: El nombre del empleado es obligatorio
@@ -836,6 +898,9 @@ glossary:
   - term: Factura
     definition: Documento de cobro que agrupa uno o más albaranes de un mismo cliente y aplica el IVA
     ambiguous: false
+  - term: Factura rectificativa
+    definition: Factura nueva que anula una factura emitida por error, referenciándola, y libera sus albaranes a pendiente para poder refacturarlos
+    ambiguous: false
   - term: Base
     definition: Suma de cantidad por precio de todas las líneas de los albaranes de una factura, antes de IVA
     ambiguous: false
@@ -893,9 +958,6 @@ open_questions:
   - id: Q-05
     question: El empleado guarda data_alta y salari_base, pero la nómina no los usa. ¿Se espera que el salario base proponga el bruto?
     blocks: UC-NOM-02
-  - id: Q-06
-    question: Una factura no se puede modificar ni anular y sus albaranes quedan bloqueados para siempre. ¿Cómo se corrige una factura emitida por error?
-    blocks: UC-FAC-01
   - id: Q-07
     question: Los albaranes no tienen estado intermedio entre pendiente y facturado. ¿El taller trabaja así o falta reflejar un paso real?
     blocks: UC-ALB-02

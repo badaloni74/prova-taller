@@ -2,11 +2,11 @@
 doc_id: DOC-01-HIST
 doc_name: DOC-01-BASE-ASIS-HIST
 of_document: DOC-01-BASE-ASIS.md
-version: 1.2.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.3.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: S-01 skill-doc-base
 generator_version: "2.0"
-generated_at: 2026-08-28T13:55:00+02:00
+generated_at: 2026-08-31T17:10:00+02:00
 ---
 
 # DOC-01-BASE-ASIS · Historial de versiones
@@ -14,6 +14,42 @@ generated_at: 2026-08-28T13:55:00+02:00
 Historial del documento `docs/DOC-01-BASE-ASIS.md`. Una entrada por versión, de la más nueva
 a la más antigua. **El documento principal no reproduce nada de esto**: refleja solo el
 estado actual, con su `version` en el front-matter.
+
+---
+
+## 1.3.0 — 2026-08-31 — MINOR
+
+**Regeneración disparada por deriva de código.** El `commit_sha` declarado en la v1.2.0
+(`345a3ae`) ya no es `HEAD` (`ecbf7e4`), con 8 commits sobre `client/`/`server/` de por
+medio: **SPEC 07 — «Bloquear precios, costes y estoc negativos»** (`status: Implemented`,
+origen `BUG-003`) y **SPEC 08 — «Factura rectificativa»** (`status: Implemented`, origen
+`BUG-004`).
+
+**Qué cambia.**
+
+- **Nuevo caso de uso `UC-FAC-05`** — Rectificar una factura emitida.
+- **Cinco reglas de negocio nuevas:** `BR-PEC-03`/`BR-PEC-04` (precio, coste y estoc de
+  pieza siempre positivos, salvo estoc en cero), `BR-ALB-11` (precio de línea siempre
+  positivo), `BR-FAC-10`/`BR-FAC-11` (rectificación libera albaranes; no se puede
+  rectificar dos veces).
+- **Se añade la subsección `### Piezas` que faltaba en §4** (Reglas de negocio):
+  `BR-PEC-01`/`BR-PEC-02` ya existían en el bloque `inventory` desde la v1.0.0 pero nunca
+  tuvieron tabla de prosa propia — omisión de una regeneración anterior, corregida de
+  paso al añadir `BR-PEC-03`/`BR-PEC-04`.
+- **Se cierra `Q-06`** («¿cómo se corrige una factura emitida por error?»). Negocio ya la
+  había resuelto el 2026-08-16 (misma fecha que `Q-02`/`Q-10`): censada como `BUG-004` en
+  `DOC-24`, implementada ahora como `BR-FAC-10`/`BR-FAC-11` y `UC-FAC-05`.
+- **Nuevo término de glosario:** «Factura rectificativa».
+- Reescrita la nota «sobre la vida de la factura» en §3.5: ya no es cierto que una factura
+  no se pueda corregir — la única vía sigue siendo indirecta (rectificar, no modificar ni
+  borrar directamente).
+
+**Qué NO cambia.** Actores, y el resto de módulos (clientes, vehículos, personal,
+nóminas, marco de la aplicación): ninguno de los dos specs los toca.
+
+**Documentos derivados que quedan obsoletos por este salto:** `DOC-04`, `DOC-06`
+(directos) y, por transitividad vía `DOC-04`, `DOC-05`. `S-16` debe recalcularlo en la
+próxima ejecución de `cascada.js`.
 
 ---
 

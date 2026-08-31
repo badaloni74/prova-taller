@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T15:28:46.127Z",
+  "updated_at": "2026-08-31T15:49:59.917Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3198,6 +3198,53 @@
       "external_id": "TALLER-FAC-TC-132",
       "priority": "Medium",
       "origin": "SPE-08-factura-rectificativa (AC-010, AC-011 verificado también por TC-127)"
+    },
+    "BR-PEC-03": {
+      "text": "El precio y, si se informa, el coste de una pieza deben ser mayores que cero",
+      "type": "business_rule",
+      "module": "peces",
+      "source": "server/routes/peces.js:27",
+      "created": "2026-08-31",
+      "status": "active"
+    },
+    "BR-PEC-04": {
+      "text": "El estoc de una pieza no puede ser negativo; cero es válido",
+      "type": "business_rule",
+      "module": "peces",
+      "source": "server/routes/peces.js:33",
+      "created": "2026-08-31",
+      "status": "active"
+    },
+    "BR-ALB-11": {
+      "text": "El precio de una línea debe ser mayor que cero: en una línea de pieza, solo si se informa explícitamente (si no, se toma el de catálogo, ya validado); en una línea de mano de obra, siempre",
+      "type": "business_rule",
+      "module": "albarans",
+      "source": "server/routes/albarans.js:168,178",
+      "created": "2026-08-31",
+      "status": "active"
+    },
+    "BR-FAC-10": {
+      "text": "Al emitir una factura rectificativa —que exige un motivo obligatorio y se numera con prefijo R (año/R-nnnn)— los albaranes de la factura original vuelven a estado pendiente y quedan libres de ella, sin que la factura original cambie ningún campo propio",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:134,140,149,152",
+      "created": "2026-08-31",
+      "status": "active"
+    },
+    "BR-FAC-11": {
+      "text": "Una factura ya rectificada no se puede volver a rectificar",
+      "type": "business_rule",
+      "module": "factures",
+      "source": "server/routes/factures.js:145",
+      "created": "2026-08-31",
+      "status": "active"
+    },
+    "UC-FAC-05": {
+      "text": "Rectificar una factura emitida",
+      "type": "use_case",
+      "module": "factures",
+      "created": "2026-08-31",
+      "status": "active"
     }
   }
 }
