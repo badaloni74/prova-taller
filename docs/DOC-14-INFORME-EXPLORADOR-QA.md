@@ -1,22 +1,22 @@
 ---
 doc_id: DOC-14
 doc_name: DOC-14-INFORME-EXPLORADOR-QA
-version: 2.1.1
+version: 2.1.2
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-28T10:57:52+02:00
+generated_at: 2026-08-31T16:00:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: 511796975891e4ef74e644b0cc6e926d20ee4e8b
-  working_tree_clean: false   # sin versionar: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt — fuera del alcance de esta sesión
+  branch: spec-08-factura-rectificativa
+  commit_sha: 528dfcd71f16d68ddd8da61f55c4205e9d6400a7
+  working_tree_clean: false   # cambios locales ajenos a esta actualización: ApuntsAgentsISkills.txt y dashboard/ (modificados, borrados o sin versionar) y docs/DOC-09-IMPACTO-factura-rectificativa.md (sin versionar); ninguno toca client/, server/ ni este informe
 inputs:
   - id: DOC-05-PLAN-PRUEBAS.md
     from: A-03
-    version: 1.6.0
-    hash: sha256:43051f32f13c32da7350e79d3fb92503c695618375cbae82b4950abb734b2688
+    version: 1.10.0
+    hash: sha256:a050cca8974802655ff15515c99cde729d7c976d866a9622f30f689398745f32
   - id: automation/ui/**/*.feature
     from: S-10
     version: null
@@ -26,16 +26,16 @@ inputs:
     hash: sha256:33ac58bcf4188dddccce71aa88bd2f4174af74c1c291032f302ec68fddd84c47
   - id: DOC-04-FUNCIONAL.md
     from: A-02
-    version: 1.2.0
-    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
+    version: 1.3.2
+    hash: sha256:72e167ee9943d429669e32c8c2f5abe5e2c27a7756756617411f9dab3eae053c
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
     version: 1.3.0
     hash: sha256:c081aea157c978d8ffcfffaed9fa9b33fc10106fa47498277f07c9720ef26067
   - id: DOC-24-BUGS.json
     from: A-14
-    version: 1.0.0
-    hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
+    version: 1.1.2
+    hash: sha256:d62b236309a76e6e01b7f4fcf7962e8553ef70bbd569ac499da7c069f340f84b
   - id: DOC-16-ROADMAP.md
     from: A-12
     version: 3.1.0
@@ -50,15 +50,13 @@ inputs:
   - id: specs/implemented/SPE-05-presentacio-imports-i-dates.md
     from: implantación de la app (Estado: Implemented)
     present: true
+  - id: specs/implemented/SPE-07-importes-negativos/SPE-07-importes-negativos.md
+    from: implantación de la app (Estado: Implemented)
+    present: true
+  - id: specs/implemented/SPE-08-factura-rectificativa/SPE-08-factura-rectificativa.md
+    from: implantación de la app (Estado: Implemented)
+    present: true
 obsolescence_ack:
-  - input: DOC-04
-    upto: 1.3.1
-    date: 2026-08-29
-    note: "SPE-06: +REQ-080/081 (rechazo del cambio de albarán a otro cliente) y renumeración Q-16→Q-30. Ninguna troballa EXP-nnn de este informe explora esa superficie."
-  - input: DOC-05
-    upto: 1.8.0
-    date: 2026-08-29
-    note: "SPE-06: +9 casos TC-111..TC-119. Un informe exploratorio no depende del censo de casos del plan de pruebas."
   - input: DOC-06
     upto: 1.4.1
     date: 2026-08-29
@@ -72,6 +70,74 @@ obsolescence_ack:
 # DOC-14 · Informe de exploración QA · app-taller
 
 ## Procedencia
+
+**Nota de la versión 2.1.2 (actualización dirigida de contenido desactualizado,
+sin exploración nueva del navegador).** La cascada de obsolescencia marcó esta
+versión como caducada por dos entradas que rebasaron el `--upto` de su propio
+`obsolescence_ack`: `DOC-05-PLAN-PRUEBAS.md` subió de `1.6.0` a `1.10.0` (el
+`ack` de la versión 2.1.1 solo cubría hasta `1.8.0`) y `DOC-04-FUNCIONAL.md`
+de `1.2.0` a `1.3.2` (el `ack` cubría hasta `1.3.1`). Siguiendo el
+procedimiento de resello (§4 del contrato documental), se ha leído el diff
+real de ambas entradas para decidir si bastaba con extender el `ack` — y se
+ha encontrado contenido de este informe que ya no es cierto, así que esto es
+una actualización real de contenido, no un resello:
+
+1. **La nota «Qué se ha dejado fuera a propósito», más abajo, decía que
+   `BUG-003` y `BUG-004` de `DOC-24` seguían abiertos.** Ya no es así:
+   `docs/DOC-24-BUGS.json` versión `1.1.2` marca ambos `status: fixed`.
+   `BUG-003` (importes negativos en piezas y líneas de albarán, `Q-12`) se
+   corrigió con `specs/implemented/SPE-07-importes-negativos` (`Implemented`,
+   2026-08-30), verificado en vivo —navegador y API— según su propia ficha de
+   cierre en `DOC-24`. `BUG-004` (una factura emitida no se podía anular ni
+   corregir) se corrigió con `specs/implemented/SPE-08-factura-rectificativa`
+   (`Implemented`, 2026-08-31), verificado en vivo por el mismo medio.
+   Ninguna de las dos correcciones nace de un `EXP-nnn` de este informe —son
+   bugs que `A-14` censó directamente en `DOC-24`, ajenos a esta línea de
+   exploración— así que se corrige la nota sin abrir ni cerrar ningún
+   `EXP-nnn`. Ver la nota intercalada en el apartado «Procedencia» original,
+   más abajo.
+2. **`P-01` se reformula, no se cierra.** `DOC-04` 1.3.2 confirma que la
+   respuesta de negocio a `Q-12` (2026-08-16) y su implementación en `SPE-07`
+   alcanzan solo «el precio, el coste y el stock de una pieza, el precio de
+   una línea de albarán y el precio por hora de la mano de obra»
+   (`docs/DOC-04-FUNCIONAL.md:1389`); el propio `SPE-07` lo deja escrito en
+   su apartado «Fuera de alcance»: «Acotar cualquier otro importe del sistema
+   no citado por Q-12 (salario de nómina, importes de factura calculados,
+   etc.)» (`specs/implemented/SPE-07-importes-negativos/SPE-07-importes-negativos.md:35`).
+   El salario de nómina —que es exactamente lo que pregunta `P-01`— queda
+   fuera de esa respuesta por escrito. La pregunta original no estaba mal
+   planteada, pero dejarla en los mismos términos genéricos, ahora que la
+   mitad de su alcance ya existe implementada, podía leerse como si ya
+   hubiera sido contestada de pasada. Se reformula, en el apartado 6 y en el
+   bloque estructurado, para preguntar explícitamente por *extender* una
+   decisión ya tomada e implementada en otro ámbito, no por tomarla desde
+   cero.
+3. **`EXP-004`, `EXP-005` y `EXP-015` siguen bloqueadas, sin cambios de
+   fondo.** Se ha comprobado —por lectura de código, no por reproducción en
+   vivo, porque no hay motivo para reabrir lo que nadie ha tocado— que
+   `server/routes/nomines.js` no ha cambiado: sigue sin ninguna comprobación
+   de signo sobre `salari_brut`, `deduccions` ni `salari_net` (líneas 33 a
+   98). Es coherente con que `SPE-07` excluye la nómina de su alcance de
+   forma explícita. No ha llegado respuesta de negocio a `P-01` ni a `P-02`.
+   Las tres fichas —reproducción, evidencia y sugerencia— se mantienen
+   exactamente como en la versión 2.0.0.
+
+**Qué no se ha hecho, a propósito.** No se ha vuelto a abrir el navegador, no
+se ha reproducido ninguna carta nueva, y no se ha revisado el bloque
+`TC-120` a `TC-132` que `DOC-05` 1.9.0/1.10.0 añadió para `SPE-07` y
+`SPE-08` —cubren exactamente el terreno que ya verificaron en vivo los
+ficheros `-QA`/`-TS` de ambos specs, y repetirlo no es trabajo de
+exploración, es trabajo ya hecho por `A-03`—. Este cambio se limita a: (a)
+corregir la nota sobre `BUG-003`/`BUG-004`; (b) reformular `P-01`; (c)
+confirmar por lectura de código, sin reproducir, que `EXP-004`/`EXP-005`/
+`EXP-015` siguen igual; y (d) actualizar `version` y `hash` de las entradas
+`DOC-04-FUNCIONAL.md`, `DOC-05-PLAN-PRUEBAS.md` y `DOC-24-BUGS.json` en el
+front-matter, añadiendo además `SPE-07` y `SPE-08` a `inputs` porque esta
+nota los cita directamente, y retirando los `obsolescence_ack` de `DOC-04` y
+`DOC-05` porque ya no hacen falta: la entrada se ha revisado de verdad, no
+solo aceptado sin mirar. Los `ack` de `DOC-06` (vigente hasta `1.4.1`, sin
+cambios) y `DOC-16` (vigente hasta `3.2.0`, sin cambios) se mantienen
+intactos.
 
 **Nota de la versión 2.1.1 (resello de procedencia, sin exploración nueva).**
 La cascada de obsolescencia marcó esta versión como caducada porque su
@@ -212,14 +278,23 @@ suite automatizada.** La comparación se ha hecho leyendo el texto de los
 `.feature` y observando en vivo lo que la pantalla renderiza hoy, sin
 lanzar `mvn test` en ningún momento — ver `EXP-027`.
 
-**Qué se ha dejado fuera a propósito.** `BUG-003` y `BUG-004` de `DOC-24`
-siguen abiertos y no se vuelven a levantar. `EXP-004`, `EXP-005` y
-`EXP-015` son las tres troballas marcadas «no tocar hasta que negocio
-conteste P-01/P-02»: se han reverificado en vivo, sin más, para constatar
-que siguen igual — ver más abajo. No se ha repetido ninguna de las cartas
-de límites, concurrencia con dos pestañas, idioma de errores, tema oscuro o
-anchura móvil que ya cubrió `DOC-14` 1.0.0: nada en SPEC 04 ni en SPEC 05
-las toca, y repetirlas no habría descubierto nada nuevo.
+**Qué se ha dejado fuera a propósito.** En el momento de escribir este
+párrafo (sesión 2.0.0, 2026-08-23), `BUG-003` y `BUG-004` de `DOC-24`
+seguían abiertos y se dejaban fuera a propósito porque ninguna sesión de
+A-10 los había originado — son bugs que censó `A-14` directamente.
+**Corrección de la versión 2.1.2: ya no es así.** `docs/DOC-24-BUGS.json`
+1.1.2 marca ambos `status: fixed` — `BUG-003` mediante
+`specs/implemented/SPE-07-importes-negativos` (2026-08-30) y `BUG-004`
+mediante `specs/implemented/SPE-08-factura-rectificativa` (2026-08-31),
+ambos verificados en vivo; ver la nota de «Procedencia» de la versión 2.1.2,
+arriba, para el detalle completo. `EXP-004`, `EXP-005` y `EXP-015` siguen
+siendo las tres troballas —estas sí, propias de este informe— marcadas «no
+tocar hasta que negocio conteste P-01/P-02»: se reverificaron en vivo en su
+momento y se ha vuelto a confirmar, por lectura de código en la versión
+2.1.2, que siguen igual — ver más abajo. No se ha repetido ninguna de las
+cartas de límites, concurrencia con dos pestañas, idioma de errores, tema
+oscuro o anchura móvil que ya cubrió `DOC-14` 1.0.0: nada en SPEC 04 ni en
+SPEC 05 las toca, y repetirlas no habría descubierto nada nuevo.
 
 **Qué se ha hecho en esta sesión, en orden.**
 
@@ -953,11 +1028,21 @@ confirmado**: ver `EXP-027`.
 Quedan **dos preguntas abiertas**, sin cambios desde `DOC-14` 1.0.0 porque
 ninguna decisión de negocio ha llegado sobre ellas:
 
-**P-01 · ¿La decisión de bloquear importes negativos (Q-12) debe alcanzar
-también al salario bruto, a las deducciones y al salario neto de una
-nómina?** Contexto sin cambios; ver `DOC-14` 1.0.0. Reverificado en vivo
-el 2026-08-23: el sistema sigue aceptando un bruto de 1.000 € con
-deducciones de 1.500 € y un neto de −500,00 € (`EXP-004`).
+**P-01 · La decisión de bloquear importes negativos (`Q-12`) ya está
+implementada para piezas y líneas de albarán — ¿debe extenderse también al
+salario bruto, a las deducciones y al salario neto de una nómina?**
+Reformulada en la versión 2.1.2: `SPE-07-importes-negativos`
+(`Implemented`, 2026-08-30) resuelve `Q-12` para piezas y albaranes, y
+excluye la nómina de forma explícita en su apartado «Fuera de alcance» —
+«Acotar cualquier otro importe del sistema no citado por Q-12 (salario de
+nómina, importes de factura calculados, etc.)». El contexto de fondo no
+cambia; ver `DOC-14` 1.0.0. Última reproducción en vivo, sin cambios desde
+entonces: 2026-08-23, el sistema aceptaba un bruto de 1.000 € con
+deducciones de 1.500 € y un neto de −500,00 € (`EXP-004`). Confirmado de
+nuevo en la versión 2.1.2, por lectura de código y sin reproducir en vivo
+—no hay motivo para reabrir lo que nadie ha tocado—: `server/routes/nomines.js`
+sigue sin comprobar el signo de `salari_brut`, `deduccions` ni
+`salari_net`.
 
 **P-02 · ¿Debe el sistema acotar los valores de calendario y de medida que
 hoy no tienen límite: el año de una nómina, el año de matriculación y el
@@ -1455,9 +1540,10 @@ hallazgos:
     deriva_a: A-14
 preguntas_negocio:
   - id: P-01
-    pregunta: ¿La decisión de bloquear importes negativos (Q-12) debe alcanzar también al salario bruto, las deducciones y el neto de una nómina?
+    pregunta: 'La decisión de bloquear importes negativos (Q-12) ya está implementada para piezas y líneas de albarán (SPE-07, Implemented 2026-08-30, que excluye la nómina de forma explícita) — ¿debe extenderse también al salario bruto, las deducciones y el neto de una nómina?'
     relacionada_con: EXP-004
     estado: abierta
+    reformulada_en: 2.1.2
   - id: P-02
     pregunta: ¿Debe el sistema acotar el año de una nómina, y el año de matriculación y el kilometraje de un vehículo?
     relacionada_con: EXP-005, EXP-015
@@ -1496,4 +1582,9 @@ con `A-03`— y en esta versión 2.1.0 queda saldada: `DOC-23` 2.2.0 confirma
 que `A-03`/`S-10` corrigieron los `.feature` afectados y que la suite pasa
 18 de 18 en los casos que estaban en rojo. Sigue pendiente, y ajeno a este
 informe, que `CLAUDE.md` refleje ese cierre en vez del estado intermedio
-que todavía describe.
+que todavía describe. **Añadido en la versión 2.1.2:** `BUG-003` y
+`BUG-004` de `DOC-24` —que este informe nunca originó, solo mencionaba de
+paso— están también cerrados (`SPE-07` y `SPE-08`, ambos `Implemented` y
+verificados en vivo); `P-01` se reformula para preguntar por la extensión a
+nóminas de una decisión que, para piezas y albaranes, ya está tomada y
+construida.

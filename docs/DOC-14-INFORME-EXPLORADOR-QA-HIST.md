@@ -2,11 +2,11 @@
 doc_id: DOC-14-HIST
 doc_name: DOC-14-INFORME-EXPLORADOR-QA-HIST
 of_document: DOC-14-INFORME-EXPLORADOR-QA.md
-version: 2.1.1        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 2.1.2        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-10 explorador QA
 generator_version: "1.0"
-generated_at: 2026-08-28T10:59:47+02:00
+generated_at: 2026-08-31T16:00:00+02:00
 ---
 
 # DOC-14-INFORME-EXPLORADOR-QA · Historial de versiones
@@ -15,6 +15,54 @@ Historial del documento `docs/DOC-14-INFORME-EXPLORADOR-QA.md`. Una entrada por
 versión, de la más nueva a la más antigua. **El documento principal no
 reproduce nada de esto**: refleja solo el estado actual, con su `version`
 en el front-matter.
+
+---
+
+## 2.1.2 — 2026-08-31 — PATCH
+
+**Actualización dirigida de contenido desactualizado, disparada por cascada.js:
+`DOC-05` subió de `1.6.0` a `1.10.0` (el `ack` de 2.1.1 solo cubría hasta
+`1.8.0`) y `DOC-04` de `1.2.0` a `1.3.2` (el `ack` solo cubría hasta
+`1.3.1`).** Al leer el diff real para decidir si bastaba un `ack`, se
+encontró contenido que ya no era cierto, así que se trató como actualización
+real, no como resello.
+
+**Qué cambia.**
+
+- **La nota «Qué se ha dejado fuera a propósito»** decía que `BUG-003` y
+  `BUG-004` de `DOC-24` seguían abiertos. Se corrige: `DOC-24-BUGS.json`
+  `1.1.2` marca ambos `status: fixed` — `BUG-003` por
+  `specs/implemented/SPE-07-importes-negativos` (`Implemented`,
+  2026-08-30) y `BUG-004` por
+  `specs/implemented/SPE-08-factura-rectificativa` (`Implemented`,
+  2026-08-31), ambos verificados en vivo. Ninguno de los dos es un
+  `EXP-nnn` de este informe (los censó `A-14` directamente en `DOC-24`), así
+  que no se abre ni se cierra ningún hallazgo propio por este motivo.
+- **`P-01` se reformula**, sin cerrarse: pasa de preguntar en abstracto si
+  `Q-12` debe alcanzar a la nómina, a preguntar explícitamente por
+  *extender* una decisión que, para piezas y líneas de albarán, ya está
+  tomada e implementada (`SPE-07`, que excluye la nómina de su alcance por
+  escrito). Actualizada en el apartado 6 y en el bloque estructurado
+  (`preguntas_negocio.P-01`, campo `reformulada_en: 2.1.2`).
+- **`EXP-004`, `EXP-005` y `EXP-015`** se confirman sin cambios de fondo, por
+  lectura de código (`server/routes/nomines.js`, sin reproducción en vivo):
+  coherente con que `SPE-07` excluye la nómina de su alcance. Ningún campo
+  de sus fichas cambia.
+- Front-matter: `DOC-04-FUNCIONAL.md` a `version: 1.3.2`, `DOC-05-PLAN-PRUEBAS.md`
+  a `version: 1.10.0` y `DOC-24-BUGS.json` a `version: 1.1.2`, los tres con
+  hash recalculado. Se añaden `specs/implemented/SPE-07-importes-negativos` y
+  `specs/implemented/SPE-08-factura-rectificativa` a `inputs` (citados
+  directamente en la nueva nota de «Procedencia»). Se retiran los
+  `obsolescence_ack` de `DOC-04` y `DOC-05` (ya no hacen falta: la entrada
+  se ha revisado de verdad). `source.branch` y `source.commit_sha`
+  actualizados al `HEAD` real de esta revisión
+  (`spec-08-factura-rectificativa`, `528dfcd71f16d68ddd8da61f55c4205e9d6400a7`).
+
+**Por qué PATCH y no MINOR.** Ningún `EXP-nnn` cambia de estado, severidad,
+tipo ni contenido; no se crea ningún `EXP-nnn` nuevo; no se ha abierto el
+navegador ni reproducido ninguna carta; no se ha tocado la aplicación ni
+creado ni destruido ningún dato. El cambio se limita a corregir el estado de
+dos bugs ajenos a este informe y a reformular una pregunta ya abierta.
 
 ---
 
