@@ -39,7 +39,7 @@ function withDetails(factura) {
     base: Math.round(base * 100) / 100,
     iva_import: Math.round(ivaImport * 100) / 100,
     total: Math.round(total * 100) / 100,
-    anuladaPer: anuladaPerId(factura.id),
+    anulada_per: anuladaPerId(factura.id),
   };
 }
 

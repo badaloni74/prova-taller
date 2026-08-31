@@ -12,6 +12,9 @@ export interface Factura {
   total: number;
   creatEl: string;
   actualitzatEl: string;
+  facturaRectificadaId: number | null;
+  motiuRectificacio: string | null;
+  anuladaPer: number | null;
 }
 
 export interface FacturaInput {

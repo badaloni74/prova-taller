@@ -8,4 +8,6 @@ export const facturesService = {
   create: (data: FacturaInput) => api.post<Factura>('/factures', data),
   updatePaymentStatus: (id: number, estatPagament: 'pendent' | 'pagada') =>
     api.patch<Factura>(`/factures/${id}`, { estatPagament }),
+  rectify: (id: number, motiu: string) =>
+    api.post<Factura>(`/factures/${id}/rectificar`, { motiu }),
 };
