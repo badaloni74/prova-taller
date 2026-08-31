@@ -3,11 +3,11 @@ doc_id: DOC-25-HIST
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES-HIST
 of_document: DOC-25-PROPUESTAS-FUNCIONALES.md
 main_document: docs/DOC-25-PROPUESTAS-FUNCIONALES.md
-version: 1.2.2        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
+version: 1.3.0        # no se versiona por separado: refleja la version del documento que historia, para que S-16 no lo lea como artefacto sin version
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-28T10:30:00+02:00
+generated_at: 2026-08-31T21:00:00+02:00
 language: es
 purpose: >-
   historial de versiones de DOC-25. El documento principal refleja solo el estado actual y no
@@ -26,6 +26,84 @@ Una entrada por versión, de la más nueva a la más antigua.
 | **MAJOR** | Una propuesta cambia de estado por decisión de negocio, se retira o se sustituye por otra. Cambia lo que el lector puede dar por decidido |
 | **MINOR** | Nacen propuestas nuevas, o cambia la evidencia, el alcance o una señal (`confidence`, `size`, `impact`) de alguna viva. Nada de lo ya leído deja de ser cierto |
 | **PATCH** | Correcciones que no tocan el fondo de ninguna propuesta: citas rotas, erratas, procedencia |
+
+---
+
+## 1.3.0 — 2026-08-31 · MINOR
+
+**Dos bugs que este documento seguía tratando como problema abierto ya están
+resueltos: se corrige la lectura, no se inventa nada. `FUN-002` cambia de
+evidencia; ninguna propuesta cambia de estado, se retira o nace.**
+
+### Por qué se regenera
+
+Lo detectó **`S-16 · Cascada de obsolescencia`**: `DOC-25` 1.2.2 declaraba
+`DOC-04-FUNCIONAL.md` en `1.2.0`, con un `obsolescence_ack` que solo cubría
+hasta `1.3.1`, y `DOC-04` había subido a `1.3.2`. Al leer el diff real para
+decidir si bastaba con extender el `ack`, apareció el motivo de fondo: `DOC-04`
+1.3.2 corrige la atribución de bug de tres preguntas respondidas (`Q-02`,
+`Q-06`, `Q-12`) y, de paso, su propio texto seguía describiendo `BUG-004` y
+`BUG-003` como abiertos en `DOC-24` — cierto cuando A-02 escribió esa
+corrección (2026-08-30), ya no cierto el 2026-08-31.
+
+Eso llevó a abrir `DOC-24-BUGS.json` directamente — entrada opcional que
+ninguna ronda de este documento había vuelto a leer desde la 1.0.0 original
+(2026-08-16) — y ahí está el hallazgo real: declaraba `1.0.0`, la versión real
+es **`1.1.2`**. Los cuatro bugs censados constan `fixed`: `BUG-001` y `BUG-002`
+desde el 2026-08-21 (commit directo `ed61c24`, sin `/spec`), `BUG-003` desde el
+2026-08-30 (`SPE-07-importes-negativos`) y `BUG-004` desde el 2026-08-31
+(`SPE-08-factura-rectificativa`), los cuatro verificados en vivo.
+
+De paso se encontraron dos `obsolescence_ack` más superados por lectura real:
+`DOC-01` (declarado `1.1.0`, `ack` hasta `1.2.0`, real `1.3.0`) y `DOC-16`
+(declarado `3.1.0`, `ack` hasta `3.2.0`, real `3.3.0`). Los tres `ack` se
+retiran del front-matter (quedan registrados en `obsolescence_response`); el de
+`DOC-06` (hasta `1.4.1`) sigue vigente porque `DOC-06` real sigue en `1.4.1`.
+
+### Por qué MINOR y no PATCH ni MAJOR
+
+**No es PATCH** porque cambia la evidencia y la nota de una propuesta viva
+(`FUN-002`): se retira `DOC-24/BUG-004` de su `evidence_refs` porque el caso
+que citaba —una factura emitida por error no se podía eliminar por ningún
+medio— ya tiene solución propia (`SPE-08`), ajena a esta propuesta. **No es
+MAJOR** porque ninguna `FUN-nnn` cambia de `status`, se retira ni se sustituye,
+y el orden de la recomendación del apartado 2 no cambia.
+
+### Qué ha cambiado
+
+**1 · La tabla del apartado 5.1.** Marcaba las decisiones de `Q-02`, `Q-06`,
+`Q-10` y `Q-12` como «Decidido», sin más. Las cuatro pasan a **Implementado**,
+con su vía de corrección y su fecha: `Q-02`/`Q-10` por corrección directa
+(`Q-10` además formalizada como `SPEC 06`), `Q-06` por `SPE-08`, `Q-12` por
+`SPE-07`. Solo `Q-14` y `Q-15` siguen pendientes. La viñeta sobre «los
+albaranes de una factura quedan bloqueados para siempre» deja de ser una
+decisión pendiente: ya está resuelta por `SPE-08`.
+
+**2 · `FUN-002`.** Se retira `DOC-24/BUG-004` de `evidence_refs` y se explica
+por qué no pierde nada: su valor nunca dependió de ese caso en particular, sino
+de que todos los datos del taller viven en un único ordenador sin ninguna forma
+de respaldo, que sigue siendo exactamente igual de cierto. Se anota, sin
+proponer nada por falta de evidencia, que `SPE-08` deja explícito fuera de su
+alcance el abono parcial de una factura (nueva fila en `considered_and_not_proposed`,
+apartado 5.3).
+
+**3 · Los hallazgos hacia `A-12`** sobre la falta de una comprobación común de
+escritura (apartado 6). Los tres bugs que sostenían el hallazgo ya están
+corregidos, cada uno en su propio router, sin módulo compartido; `DOC-16`
+3.3.0 §1.8 documenta que `SPE-07` dejó además la misma regla duplicada
+verbatim en `peces.js` (`POST` y `PUT`). Se actualiza la nota de cada fila con
+este ejemplo. No se propone nada nuevo: la decisión sobre `MEJ-004` sigue
+siendo de A-12.
+
+**4 · El bloque `inputs`.** `DOC-04` (`1.2.0` → `1.3.2`), `DOC-24`
+(`1.0.0` → `1.1.2`), `DOC-16` (`3.1.0` → `3.3.0`) y `DOC-01` (`1.1.0` → `1.3.0`)
+pasan a su versión y hash reales, con `change_note` explicando qué se leyó y
+por qué no mueve ninguna `FUN-nnn`. Los tres `obsolescence_ack` que estas tres
+últimas superaban se retiran del front-matter.
+
+**Lo que NO cambia.** Las doce `FUN-nnn` conservan número, texto y `status`.
+Ninguna cambia `impact`, `difficulty`, `size` ni `business_value`. El orden de
+la recomendación del apartado 2 es el mismo que en `1.2.2`.
 
 ---
 

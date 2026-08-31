@@ -1,11 +1,11 @@
 ---
 doc_id: DOC-25
 doc_name: DOC-25-PROPUESTAS-FUNCIONALES
-version: 1.2.2
+version: 1.3.0
 status: draft
 generator: A-15 propuestas de funcionalidad
 generator_version: "1.1"
-generated_at: 2026-08-28T10:30:00+02:00
+generated_at: 2026-08-31T21:00:00+02:00
 language: es
 history_document: docs/DOC-25-PROPUESTAS-FUNCIONALES-HIST.md
 history_note: >-
@@ -15,48 +15,53 @@ source:
   repo_path: C:\Claude\AppDani
   vcs: git
   branch: master
-  commit_sha: 511796975891e4ef74e644b0cc6e926d20ee4e8b
-  working_tree_clean: false   # sin versionar y ajenos a este documento: ApuntsAgentsISkills.txt, bash.exe.stackdump, dashboard/, promptDashboard.txt
+  commit_sha: 6c8a8701a6db694fb21ee951646a4023f32308f3
+  working_tree_clean: false   # sin versionar y ajenos a este documento: ApuntsAgentsISkills.txt, dashboard/, docs/DOC-09-IMPACTO-factura-rectificativa.md
 inputs:
   - id: DOC-25-PROPUESTAS-FUNCIONALES.md
     from: A-15
-    version: 1.2.1
-    hash: sha256:256d1507f2bb5aa5fdf3193622ff688de3f069182413a3ef29c98d9e9e4f5c02
+    version: 1.2.2
+    hash: sha256:d8990ff4a81f5c0a89e941021cde087977cd49bf14ef41134ad126b8c367ccfa
     present: true
     usage: >-
       documento anterior. Manda sobre esta ronda: las doce propuestas FUN-001 a FUN-012 se
       conservan con su numero y su texto, y solo se toca lo que la nueva evidencia obliga a tocar
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.1.0
-    hash: sha256:828f05beb589c0897c441e18ae5ec9ec543989f53dfda4cfdd847dbc05028764
+    version: 1.3.0
+    hash: sha256:aff457ef04ccfee18f7bb2c72cfd62b71dd4e9d7d498bbabdf921ab0ef0bd2b4
     present: true
-    changed_since_previous_run: false
-    hash_changed_note: >-
-      el hash cambia respecto al declarado en 1.2.1 (mismo commit c71c580 que tambien tocó
-      DOC-06 y registro-ids.json): dos rutas `specs/01-...md` pasan a `specs/implemented/SPE-01-...md`
-      en BR-SHL-01 y BR-SHL-02. Verificado el diff completo: son las dos únicas líneas tocadas,
-      ningún actor, caso de uso, regla de negocio ni entrada de glosario cambia. `version` se
-      mantiene en 1.1.0 porque S-01 no lo trata como cambio de contenido. Sin efecto sobre
-      ninguna FUN-nnn
+    changed_since_previous_run: true
+    previous_version_declared: 1.1.0
     change_note: >-
-      MINOR (1.0.0 -> 1.1.0, ronda 1.1.0/1.1.1 de este documento) sin cambio de contenido de
-      negocio: mismos actores, casos de uso, reglas de negocio y glosario (verificado contra
-      `DOC-01-BASE-ASIS-HIST.md` 1.1.0). Cerró Q-02 (ya resuelta el 2026-08-16, censada como
-      Q-12 en DOC-04 y como BUG-003 candidato en DOC-24) y corrigió un comentario del árbol de
-      carpetas. Sin efecto sobre ninguna FUN-nnn
+      motivo de esta ronda (1.3.0). El `obsolescence_ack` de la 1.2.2 solo cubría hasta 1.2.0
+      (SPE-06); DOC-01 subió después a 1.3.0 (`DOC-01-BASE-ASIS-HIST.md`, 2026-08-31) por SPE-07
+      y SPE-08, ya `Implemented`: nace `UC-FAC-05` (rectificar una factura), cinco reglas de
+      negocio nuevas (`BR-PEC-03`/`BR-PEC-04` precio-coste-estoc de pieza siempre positivos,
+      `BR-ALB-11` precio de línea siempre positivo, `BR-FAC-10`/`BR-FAC-11` la rectificación
+      libera albaranes y no puede repetirse), se cierra `Q-06` y se reescribe la nota de §3.5
+      sobre la vida de la factura. **Ninguna `FUN-nnn` depende de esta superficie**: las cinco
+      reglas nuevas formalizan comportamiento que este documento ya trataba a través de
+      `DOC-24/BUG-003` y `BUG-004` (ver apartado 1 y la entrada de `DOC-24` más abajo), no
+      abren ni cierran ninguna propuesta por sí mismas. Verificado leyendo el `-HIST.md`
+      completo de la 1.3.0, no solo el número de versión
   - id: DOC-04-FUNCIONAL.md
     from: A-02
-    version: 1.2.0
-    hash: sha256:626fdb84957ca198001aa3cba40572bf2632d0e9ea1e75136e61c217f2f042e3
+    version: 1.3.2
+    hash: sha256:72e167ee9943d429669e32c8c2f5abe5e2c27a7756756617411f9dab3eae053c
     present: true
-    changed_since_previous_run: false
-    hash_changed_note: >-
-      el hash cambia respecto al declarado en 1.1.1 porque el front-matter de DOC-04 se
-      reescribio al resincronizar contra DOC-01 1.1.0 (commit 7bf2947), pero su `version` se
-      mantuvo en 1.2.0 porque A-02 verifico ancla a ancla que ningun REQ, UC ni BR cambio de
-      enunciado. Se trata como sin cambios de contenido
-    usage: requisitos REQ-001 a REQ-079, nueve preguntas abiertas y seis respondidas el 2026-08-16
+    changed_since_previous_run: true
+    previous_version_declared: 1.2.0
+    change_note: >-
+      motivo original de esta ronda (1.3.0): el `obsolescence_ack` de la 1.2.2 solo cubría
+      hasta 1.3.1 (SPE-06: REQ-080/081, renumeración Q-16→Q-30, sin efecto ya reconocido).
+      DOC-04 subió después a 1.3.2 (PATCH): corrige la atribución de bug de `Q-02` —citaba
+      `BUG-003`, que es el de `Q-12`; el suyo es `BUG-001`, ya `fixed`— y sustituye en `Q-02`,
+      `Q-06` y `Q-12` las referencias muertas a `A-06`/`DOC-08` por el mecanismo vigente
+      (`/spec` → `specs/*.md`). **Ningún `REQ-nnn` cambia de enunciado ni de número; ninguna
+      `FUN-nnn` nace ni se descarta por ello.** Sí obliga a corregir, en este mismo documento,
+      la lectura de qué bugs siguen abiertos: ver apartado 1 y la entrada de `DOC-24` más abajo
+    usage: requisitos REQ-001 a REQ-081, diez preguntas abiertas y seis respondidas el 2026-08-16
   - id: DOC-06-MANUAL-USUARIO.md
     from: A-04
     version: 1.3.0
@@ -79,35 +84,50 @@ inputs:
       hueco de documentacion, no de producto. Ninguna carencia de §6.1 se ha movido de dueño
   - id: DOC-24-BUGS.json
     from: A-14
-    version: 1.0.0
-    hash: sha256:c4144b06740523db398ba86d851cc6d87fd5f5348eb763f10d17b47243873dd1
-    present: true
-    changed_since_previous_run: false
-    note: sigue con BUG-001 a BUG-004; el candidato BUG-005 todavia no esta censado
-  - id: DOC-16-ROADMAP.md
-    from: A-12
-    version: 3.1.0
-    hash: sha256:9e68df18dd10f62a1698e5be478a1d5c0c46aa58b389ecf17394467989a85c81
+    version: 1.1.2
+    hash: sha256:d62b236309a76e6e01b7f4fcf7962e8553ef70bbd569ac499da7c069f340f84b
     present: true
     changed_since_previous_run: true
-    previous_version_declared: 3.0.0
-    scope: solo el apartado 6, que contiene los hallazgos dirigidos a A-15
+    previous_version_declared: 1.0.0
     change_note: >-
-      motivo de esta ronda (1.2.2). 3.1.0 nace de DOC-27 (primer informe de la suite de servicio,
-      S-17) y de la resincronización de DOC-07 a 1.10.0: A-12 revisa las nueve MEJ-nnn contra esa
-      evidencia, pero **ninguna cambia de estado y no nace ninguna nueva** — crece la evidencia de
-      MEJ-002, MEJ-003, MEJ-004 y se matiza la de MEJ-006, sin tocar tamaño, dificultad ni
-      dependencias. §6.1 y §6.2 ya no reenvían EXP-017/EXP-026/EXP-019/EXP-003: confirman
-      explícitamente que están "ya recogidos" como FUN-009 a FUN-012 en esta misma DOC-25 (citando
-      su versión 1.2.0/1.2.1) y que no hace falta seguir reenviándolos. §6.3 confirma del mismo
-      modo que A-15 ya evaluó REQ-025/REQ-034 y decidió no proponer FUN-nnn, redirigiendo a A-14 —
-      sin matiz nuevo para A-15. Nace §6.9, hallazgo sobre si borrar un albarán debe devolver el
-      stock de sus líneas de pieza: dirigido a **A-02**, no a A-15. **Ninguna FUN-nnn de este
-      documento depende de una MEJ-nnn que haya cambiado de estado ni de una cifra de DOC-16 que
-      este documento reproduzca**: resello de procedencia, ver apartado 1
+      motivo real de esta ronda. Ninguna ronda de A-15 había vuelto a leer DOC-24 desde la
+      1.0.0: en ese intervalo pasó a 1.1.2 y los cuatro bugs censados —BUG-001 y BUG-002 el
+      2026-08-21 (commit directo ed61c24, sin /spec), BUG-003 el 2026-08-30 (/spec SPE-07) y
+      BUG-004 el 2026-08-31 (/spec SPE-08)— quedaron `status: fixed`, los cuatro verificados en
+      vivo. Este documento seguía citando BUG-003 y BUG-004 como problema abierto en varios
+      sitios (tabla del apartado 5.1, FUN-002, hallazgos hacia A-12): corregido esta ronda, ver
+      apartado 1. El candidato a BUG-005 (avisos de error en catalán) sigue sin censar
+    note: los cuatro bugs censados (BUG-001 a BUG-004) están fixed; el candidato BUG-005 sigue sin censar
+  - id: DOC-16-ROADMAP.md
+    from: A-12
+    version: 3.3.0
+    hash: sha256:15de983990c869bfee4e1b4e5659438b516baa2ab5a3eed2e09d0d9642bafe9d
+    present: true
+    changed_since_previous_run: true
+    previous_version_declared: 3.1.0
+    scope: >-
+      el apartado 6 (hallazgos dirigidos a A-15) y, nuevo esta ronda, §1.8 (delta 3.3.0), la
+      evidencia técnica que explica el cierre de BUG-003/BUG-004
+    change_note: >-
+      motivo original de la ronda 1.2.2 quedó resuelto (ver -HIST.md, entrada 1.2.2); su
+      obsolescence_ack solo cubría hasta 3.2.0 (delta acotada de S-17/A-05, sin efecto ya
+      reconocido). Esta ronda (1.3.0) consume la 3.3.0 real: §1.8 registra que BUG-003 y
+      BUG-004 —los dos últimos de los cuatro defectos que sostenían MEJ-004— se cierran,
+      verificados en vivo (SPE-07, SPE-08), y que ninguno pasó por un módulo de dominio
+      compartido: SPE-07 deja además una duplicación verbatim de la misma regla en peces.js
+      (POST y PUT). MEJ-004 no cambia de tamaño, dificultad ni estado —sigue proposed—, solo
+      crece su evidencia. §6.1, §6.2 y §6.3 siguen sin matiz nuevo para A-15 (FUN-009 a
+      FUN-012 y la redirección de REQ-025/REQ-034 a A-14, ya recogidas). §6.4 cierra
+      formalmente hacia A-14 el hallazgo del censo de defectos desactualizado — no es mío,
+      pero confirma independientemente lo que esta ronda de DOC-25 encontró leyendo DOC-24
+      directamente (ver esa entrada, más abajo). §6.9 sigue dirigido a A-02, no se recoge aquí.
+      Ninguna FUN-nnn nace ni cambia de estado por este delta; sí cambia, en este documento, el
+      hallazgo hacia A-12 sobre el patrón de validación común (apartado 6), que gana el mismo
+      ejemplo que §1.8 documenta
     usage: >-
-      se lee unicamente por sus hallazgos §6.1, §6.2, §6.3 y §6.9, y por el estado de las mejoras
-      que atienden hallazgos que A-15 dirigio a A-12. El resto del roadmap no es materia de A-15
+      se lee por sus hallazgos §6.1 a §6.4 y §6.9, por el estado de las mejoras que atienden
+      hallazgos que A-15 dirigió a A-12, y por §1.8 como evidencia técnica del cierre de
+      BUG-003/BUG-004. El resto del roadmap no es materia de A-15
   - id: DOC-14-INFORME-EXPLORADOR-QA.md
     from: A-10
     version: 2.1.0
@@ -162,27 +182,62 @@ not_read_by_contract:
       completo ni se trata como fuente de carencias propia
 obsolescence_response:
   raised_by: S-16
-  round: 1.2.2
+  round: 1.3.0
   findings:
-    - finding: "DOC-25 1.2.1 declaraba DOC-16 en 3.0.0, y DOC-16 habia subido a 3.1.0"
+    - finding: "DOC-25 1.2.2 declaraba DOC-04 en 1.2.0 (ack solo hasta 1.3.1), y DOC-04 habia subido a 1.3.2"
       resolved: true
       how: >-
-        releido DOC-16 3.1.0 (apartado 6 entero, motivo del salto: nace DOC-27 -primer informe
-        de la suite de servicio, S-17- y A-12 revisa las nueve MEJ-nnn contra esa evidencia).
-        Verificado explicitamente: ninguna MEJ-nnn cambia de estado ni nace ninguna nueva esta
-        ronda -crece la evidencia de MEJ-002, MEJ-003 y MEJ-004, se matiza la de MEJ-006, sin
-        tocar tamaño, dificultad ni dependencias-. §6.1 y §6.2 confirman que EXP-017/EXP-026/
-        EXP-019/EXP-003 "ya recogidos" como FUN-009 a FUN-012 en esta misma DOC-25; §6.3
-        confirma que la decision de A-15 de no proponer FUN-nnn para REQ-025/REQ-034 ya quedo
-        registrada; §6.9 (nuevo) va dirigido a A-02, no a A-15. Ninguna de las doce FUN-nnn de
-        este documento depende de una MEJ-nnn que haya cambiado de estado ni de una cifra de
-        DOC-16 que este documento reproduzca: resello puro. Aprovechada la ronda para verificar
-        version declarada vs real y hash declarado vs calculado en el resto de `inputs`:
-        DOC-01 y DOC-06 (mismo commit c71c580, dos rutas de spec renombradas, sin cambio de
-        version ni de contenido sustantivo) y registro-ids.json (commits 3f10869 y c71c580)
-        llevaban hash desactualizado sin cambio de version. Los tres corregidos; ninguno
-        cambia el fondo de ninguna FUN-nnn
+        releido DOC-04 1.3.2: corrige metadatos de tres open_questions (Q-02, Q-06, Q-12) sin
+        tocar ningun REQ-nnn. Al leer el diff real se encontro que el propio texto de Q-06 y
+        Q-12 seguia describiendo BUG-004 y BUG-003 como abiertos -cierto cuando A-02 escribio
+        esa version (2026-08-30), ya no cierto el 2026-08-31-. Eso llevo a leer DOC-24
+        directamente en vez de conformarse con un resello, y ahi esta el hallazgo real de esta
+        ronda: ver el siguiente finding
+    - finding: "DOC-24-BUGS.json (entrada opcional) llevaba desde la ronda 1.0.0 de este documento sin releerse: declarada 1.0.0, real 1.1.2"
+      resolved: true
+      how: >-
+        los cuatro bugs censados constan `fixed` -BUG-001/BUG-002 desde el 2026-08-21 (commit
+        directo), BUG-003 desde el 2026-08-30 (SPE-07) y BUG-004 desde el 2026-08-31 (SPE-08)-,
+        los cuatro verificados en vivo. Este documento seguia citando BUG-003 y BUG-004 como
+        problema sin resolver en la tabla del apartado 5.1, en FUN-002 y en los hallazgos hacia
+        A-12: corregido. Detalle completo en el apartado 1 del cuerpo del documento
+    - finding: "DOC-25 1.2.2 declaraba DOC-01 en 1.1.0 (ack solo hasta 1.2.0), y DOC-01 habia subido a 1.3.0"
+      resolved: true
+      how: >-
+        releido DOC-01-BASE-ASIS-HIST.md 1.3.0: SPE-07 y SPE-08 (ya Implemented) añaden
+        UC-FAC-05 y cinco reglas de negocio (BR-PEC-03/04, BR-ALB-11, BR-FAC-10/11) que
+        formalizan exactamente el mismo cierre de BUG-003/BUG-004 ya tratado en el finding
+        anterior. Ninguna FUN-nnn nace ni cambia por esta superficie
+    - finding: "DOC-25 1.2.2 declaraba DOC-16 en 3.1.0 (ack solo hasta 3.2.0), y DOC-16 habia subido a 3.3.0"
+      resolved: true
+      how: >-
+        releido DOC-16 3.3.0 §1.8: BUG-003 y BUG-004 se cierran sin pasar por un modulo de
+        dominio compartido, y SPE-07 deja una duplicacion verbatim de la misma regla en
+        peces.js. MEJ-004 no cambia de tamaño, dificultad ni estado -sigue proposed-, solo
+        crece su evidencia. Actualizado el hallazgo hacia A-12 en el apartado 6 de este
+        documento con el mismo ejemplo
   history:
+    - round: 1.2.2
+      findings:
+        - finding: "DOC-25 1.2.1 declaraba DOC-16 en 3.0.0, y DOC-16 habia subido a 3.1.0"
+          resolved: true
+          how: >-
+            releido DOC-16 3.1.0 (apartado 6 entero, motivo del salto: nace DOC-27 -primer
+            informe de la suite de servicio, S-17- y A-12 revisa las nueve MEJ-nnn contra esa
+            evidencia). Verificado explicitamente: ninguna MEJ-nnn cambia de estado ni nace
+            ninguna nueva esta ronda -crece la evidencia de MEJ-002, MEJ-003 y MEJ-004, se
+            matiza la de MEJ-006, sin tocar tamaño, dificultad ni dependencias-. §6.1 y §6.2
+            confirman que EXP-017/EXP-026/EXP-019/EXP-003 "ya recogidos" como FUN-009 a
+            FUN-012 en esta misma DOC-25; §6.3 confirma que la decision de A-15 de no proponer
+            FUN-nnn para REQ-025/REQ-034 ya quedo registrada; §6.9 (nuevo) va dirigido a A-02,
+            no a A-15. Ninguna de las doce FUN-nnn de este documento depende de una MEJ-nnn que
+            haya cambiado de estado ni de una cifra de DOC-16 que este documento reproduzca:
+            resello puro. Aprovechada la ronda para verificar version declarada vs real y hash
+            declarado vs calculado en el resto de `inputs`: DOC-01 y DOC-06 (mismo commit
+            c71c580, dos rutas de spec renombradas, sin cambio de version ni de contenido
+            sustantivo) y registro-ids.json (commits 3f10869 y c71c580) llevaban hash
+            desactualizado sin cambio de version. Los tres corregidos; ninguno cambia el fondo
+            de ninguna FUN-nnn
     - round: 1.2.1
       findings:
         - finding: "DOC-25 1.2.0 declaraba DOC-14 en 2.0.0, y DOC-14 habia subido a 2.1.0 (via 2.0.1)"
@@ -214,22 +269,10 @@ obsolescence_response:
             cumplido es defecto, no funcionalidad ausente), se redirige a A-14. Ver apartados 5.4,
             5.6 y 6
 obsolescence_ack:
-  - input: DOC-01
-    upto: 1.2.0
-    date: 2026-08-29
-    note: "SPE-06: nueva regla BR-ALB-10 y Q-08 en la base AS-IS. Ninguna propuesta FUN-001..FUN-012 depende de esa superficie."
-  - input: DOC-04
-    upto: 1.3.1
-    date: 2026-08-29
-    note: "SPE-06: +REQ-080/081 y renumeración Q-16→Q-30. Ninguna FUN-nnn nace ni se descarta por ello; el censo FUN-001..FUN-012 no cambia."
   - input: DOC-06
     upto: 1.4.1
     date: 2026-08-29
-    note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las propuestas funcionales."
-  - input: DOC-16
-    upto: 3.2.0
-    date: 2026-08-29
-    note: "Delta 3.2.0: DOC-16 solo mueve evidencia de MEJ-nnn por DOC-27 1.1.0. Resync circular; ninguna FUN-nnn depende del roadmap técnico."
+    note: "SPE-06: propagación de BR-ALB-10 al manual y renumeración de Q. Sin efecto sobre las propuestas funcionales. Sigue vigente esta ronda: DOC-06 real sigue en 1.4.1, no ha subido más."
 ---
 
 # DOC-25 · Propuestas de funcionalidad — app-taller
@@ -247,7 +290,74 @@ obsolescence_ack:
 
 ## 1. Qué ha cambiado desde la ronda anterior
 
-**Nota de la versión 1.2.2 (resello de procedencia, sin cambio de fondo).**
+**Nota de la versión 1.3.0 — esta vez sí hay contenido desactualizado, no solo
+procedencia.** `S-16 · Cascada de obsolescencia` marcó este documento como
+caducado porque declaraba `DOC-04-FUNCIONAL.md` en `1.2.0` (el `obsolescence_ack`
+de la 1.2.2 solo cubría hasta `1.3.1`) y `DOC-04` había subido a `1.3.2`. Al leer
+el diff real para decidir si bastaba con extender el `ack`, apareció el motivo
+de fondo: `DOC-04` 1.3.2 corrige la atribución de bug de tres preguntas
+respondidas (`Q-02`, `Q-06`, `Q-12`) y de paso deja constancia de que su propio
+texto seguía describiendo `BUG-004` y `BUG-003` como abiertos en `DOC-24` — cierto
+cuando A-02 escribió esa corrección (2026-08-30), **ya no cierto el 2026-08-31**.
+Eso llevó a abrir `DOC-24-BUGS.json` directamente, entrada que ninguna ronda de
+este documento había vuelto a leer desde la 1.0.0 original (2026-08-16):
+declaraba `1.0.0` y la versión real es **`1.1.2`**.
+
+**El hallazgo real: los cuatro bugs censados están `fixed`, no abiertos.**
+`BUG-001` y `BUG-002` lo están desde el 2026-08-21 (commit directo `ed61c24`,
+sin pasar por `/spec`); `BUG-003` desde el 2026-08-30 (`SPE-07-importes-negativos`)
+y `BUG-004` desde el 2026-08-31 (`SPE-08-factura-rectificativa`), los cuatro
+verificados en vivo según `DOC-24` 1.1.2. Este documento seguía citando
+`BUG-003` y, sobre todo, `BUG-004` como problema sin resolver en tres sitios, y
+los tres se corrigen esta ronda:
+
+1. **La tabla del apartado 5.1** marcaba las decisiones de `Q-02`, `Q-06`, `Q-10`
+   y `Q-12` como «Decidido», sin más. Las cuatro están **implementadas**: `Q-02`
+   y `Q-10` por corrección directa (`Q-10` además formalizada como `SPEC 06`,
+   `BR-ALB-10`/`REQ-080`/`REQ-081`), `Q-06` por `SPE-08` y `Q-12` por `SPE-07`.
+   Solo `Q-14` y `Q-15` (recuento de pendientes de cobro y de pago) siguen
+   pendientes. La viñeta sobre «los albaranes de una factura quedan bloqueados
+   para siempre» deja de ser una decisión pendiente y pasa a ser un caso ya
+   resuelto por `SPE-08`.
+2. **`FUN-002`** citaba `DOC-24/BUG-004` como parte de lo que aportaría —«hace
+   reversible lo que hoy no lo es»—. Ese caso concreto ya tiene solución propia,
+   ajena a esta propuesta: se retira la cita y se explica por qué `FUN-002` no
+   pierde nada al hacerlo, porque su valor nunca dependió de ese caso en
+   particular. Queda anotado, y no propuesto por falta de evidencia, un matiz
+   que `SPE-08` deja explícito como fuera de su alcance: el abono parcial de una
+   factura (apartado 5.3).
+3. **Los hallazgos hacia `A-12`** sobre la falta de una comprobación común de
+   escritura (apartado 6) citaban `BUG-001`, `BUG-002` y `BUG-003` como el mismo
+   patrón repetido, con `MEJ-004` sin decidir. Los cuatro bugs ya están
+   corregidos, y **ninguno pasó por un módulo de dominio compartido** —dos por
+   commit directo, dos por `/spec`, cada uno parcheando su propio router—:
+   `DOC-16` 3.3.0 §1.8 documenta que `SPE-07` dejó además la misma regla
+   duplicada verbatim en `peces.js` (`POST` y `PUT`). El patrón que motivó el
+   hallazgo no se resolvió al corregir los defectos, cambió de forma; se
+   actualiza la nota con este ejemplo, sin proponer nada nuevo (la decisión
+   sobre `MEJ-004` sigue siendo de A-12).
+
+**Aprovechando el mismo repaso, dos entradas más del bloque `inputs` estaban
+fuera de su `ack`.** `DOC-01` declaraba `1.1.0` con un `ack` que cubría hasta
+`1.2.0`, y la versión real es `1.3.0`: `SPE-07` y `SPE-08`, ya `Implemented`,
+añaden `UC-FAC-05` y cinco reglas de negocio (`BR-PEC-03`/`BR-PEC-04`,
+`BR-ALB-11`, `BR-FAC-10`/`BR-FAC-11`) que formalizan exactamente el mismo
+cierre de `BUG-003`/`BUG-004` ya tratado arriba — ninguna `FUN-nnn` nace ni
+cambia por esa superficie. `DOC-16` declaraba `3.1.0` con un `ack` que cubría
+hasta `3.2.0`, y la real es `3.3.0` (el §1.8 ya citado en el punto 3). Los tres
+`obsolescence_ack` superados por una lectura real esta ronda se retiran del
+front-matter; el de `DOC-06` (hasta `1.4.1`) sigue vigente porque `DOC-06` real
+sigue en `1.4.1`.
+
+**Qué NO cambia.** Ninguna `FUN-nnn` nace, se retira ni cambia de `status`;
+ninguna cambia de `impact`, `difficulty`, `size` ni `business_value`; el orden
+de la recomendación del apartado 2 es el mismo que en 1.2.2. Lo único que se
+mueve es la lectura de qué está pendiente y qué ya está hecho, y la evidencia
+de una propuesta (`FUN-002`). Detalle completo en
+`DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, entrada `1.3.0`.
+
+### Ronda anterior (1.2.2) — resello de procedencia, sin cambio de fondo
+
 `S-16 · Cascada de obsolescencia` marcó este documento como caducado porque
 declaraba `DOC-16-ROADMAP.md` en `3.0.0` y el roadmap había subido a `3.1.0`.
 El motivo del salto es ajeno a `A-15`: nació `DOC-27` —primer informe de la
@@ -282,7 +392,7 @@ sigue con las doce anclas `FUN` que ya declaraba este documento, todas
 tocar ninguna `FUN-nnn` ni el cuerpo de este documento. Detalle en
 `DOC-25-PROPUESTAS-FUNCIONALES-HIST.md`, entrada `1.2.2`.
 
-### Ronda anterior (1.2.1)
+### Dos rondas antes (1.2.1)
 
 Resello de procedencia contra `DOC-14-EXPLORATORIO.md` 2.1.0: A-10 cerró
 formalmente `EXP-027` (de `abierto` a `corregido`), porque `DOC-23` 2.2.0
@@ -290,7 +400,7 @@ confirma que los `.feature` de `automation/ui` que citaban literales con punto
 decimal ya están corregidos. Ninguna de las doce `FUN-nnn` citaba `EXP-027` ni
 dependía de su estado. Sin efecto en ninguna propuesta.
 
-### Dos rondas antes (1.2.0)
+### Tres rondas antes (1.2.0)
 
 **Nacen cuatro propuestas: `FUN-009` a `FUN-012`.** Las ocho anteriores no
 cambian de estado ni de señal. Es la primera ronda con novedad desde 1.0.0, y
@@ -654,9 +764,9 @@ donde quiera —un disco externo, una carpeta— y volver a cargarla si hace fal
 sin depender de nadie técnico.
 
 **Qué aporta.** Protege la facturación del taller, que es su contabilidad de
-cobros. También hace reversible lo que hoy no lo es: `DOC-24/BUG-004` deja
-constancia de que una factura emitida por error **no se puede eliminar por
-ningún medio**, y sin copia de seguridad tampoco hay a dónde volver.
+cobros: es la única propuesta de este documento que da marcha atrás ante una
+pérdida total —el disco que falla, el borrado por error—, y ningún otro
+evolutivo del sistema cubre ese caso.
 
 **Qué pasa si no se hace.** El taller sigue con toda su facturación en un solo
 sitio y sin red. La probabilidad es baja cualquier día concreto, y el daño el día
@@ -677,9 +787,24 @@ datos inventados, no el trabajo real de una mañana, y no hay ninguna forma de
 pedirlo desde la aplicación. **Esta propuesta sigue entera y sigue siendo la
 primera recomendada.**
 
+**Nota de esta ronda: `DOC-24/BUG-004` deja de citarse como evidencia, y hay
+que decir por qué.** Hasta la ronda anterior esta propuesta citaba que «una
+factura emitida por error no se puede eliminar por ningún medio» como ejemplo
+de que el sistema no daba marcha atrás en absoluto. `BUG-004` consta `fixed`
+desde el 2026-08-31 (`DOC-24` 1.1.2): `SPE-08-factura-rectificativa` construyó
+`POST /api/factures/:id/rectificar`, verificado en vivo. Ese caso concreto ya
+tiene solución propia y no la necesita de una copia de seguridad. **La
+propuesta no pierde nada por ello**: su valor nunca dependió de ese caso en
+particular, sino de que todos los datos del taller viven en un único ordenador
+sin ninguna forma de respaldo, que sigue siendo exactamente igual de cierto.
+Queda un matiz que `SPE-08` deja escrito como fuera de alcance explícito —el
+**abono parcial** de una factura, rectificarla por un importe distinto al
+total—: no lo cubre esta propuesta ni ninguna otra de este documento, y no se
+propone nada sobre él por falta de evidencia (apartado 5.3).
+
 - **Evidencia:** `DOC-06/Q-22` («No consta ningún procedimiento de copia de
   seguridad. Un manual honesto debería decirle al taller cómo proteger su
-  facturación, y hoy no puede»), `DOC-06/§2`, `DOC-06/§6.1`, `DOC-24/BUG-004`.
+  facturación, y hoy no puede»), `DOC-06/§2`, `DOC-06/§6.1`.
 - **Requisitos que tocaría:** ninguno de los 79. **Y eso es justamente el
   hallazgo**: no existe ningún requisito que hable de conservar los datos, así
   que no hay nada que reformular, hay algo que añadir.
@@ -975,30 +1100,37 @@ que **A-15 ha decidido no proponer**, y el motivo importa tanto como la propuest
 
 Las seis decisiones de negocio del 2026-08-16 (`DOC-04/§6.2`) ya tienen evolutivo
 asignado. Se listan para que quede constancia de que se han visto y de por qué no
-están en el apartado 3 ni en el 4.
+están en el apartado 3 ni en el 4. **Nota de esta ronda: cuatro de las seis ya
+están implementadas**, no solo decididas —`DOC-24` 1.1.2 marca sus cuatro bugs
+`fixed`, los cuatro verificados en vivo—; las otras dos, `Q-14` y `Q-15`, siguen
+pendientes.
 
-| Origen | Carencia | Por qué no se propone |
+| Origen | Carencia | Estado del evolutivo |
 |---|---|---|
-| `DOC-04/Q-02` · `DOC-24/BUG-001` | El stock queda negativo al anotar más piezas de las que hay | Decidido: bloquear. Alcance medio |
-| `DOC-04/Q-06` · `DOC-24/BUG-004` | Una factura emitida no se puede anular ni corregir, y sus albaranes quedan bloqueados para siempre | Decidido: factura rectificativa. **Alcance grande** |
-| `DOC-04/Q-10` · `DOC-24/BUG-002` | Cambiar el vehículo de un albarán cambia a quién se factura | Decidido: impedirlo. Alcance pequeño |
-| `DOC-04/Q-12` · `DOC-24/BUG-003` | Se aceptan precios, costes y stocks negativos | Decidido: bloquear. Alcance medio |
+| `DOC-04/Q-02` · `DOC-24/BUG-001` | El stock queda negativo al anotar más piezas de las que hay | **Implementado** (commit `ed61c24`, 2026-08-21, sin pasar por `/spec`). `DOC-24` 1.1.2 marca `BUG-001` `fixed` |
+| `DOC-04/Q-06` · `DOC-24/BUG-004` | Una factura emitida no se puede anular ni corregir, y sus albaranes quedan bloqueados para siempre | **Implementado** (`SPE-08-factura-rectificativa`, 2026-08-31, verificado en vivo). `DOC-24` 1.1.2 marca `BUG-004` `fixed`. La rectificativa anula siempre el importe íntegro; el **abono parcial** queda fuera de su alcance (ver 5.3) |
+| `DOC-04/Q-10` · `DOC-24/BUG-002` | Cambiar el vehículo de un albarán cambia a quién se factura | **Implementado**, entregado como `SPEC 06` (`BR-ALB-10`, `REQ-080`, `REQ-081`; fix inicial por commit `ed61c24`). `DOC-24` 1.1.2 marca `BUG-002` `fixed` |
+| `DOC-04/Q-12` · `DOC-24/BUG-003` | Se aceptan precios, costes y stocks negativos | **Implementado** (`SPE-07-importes-negativos`, 2026-08-30, verificado en vivo en servidor e interfaz). `DOC-24` 1.1.2 marca `BUG-003` `fixed` |
 | `DOC-04/Q-14` | No se puede ver qué facturas están pendientes de cobro | Decidido: recuento y filtro. Alcance medio |
 | `DOC-04/Q-15` | No se puede ver qué nóminas están pendientes de pago | Decidido: recuento y filtro. Alcance medio |
 
 **Dónde está la frontera, y quién la dibuja.** DOC-06 1.2.0 dio a estas seis
 decisiones un apartado propio y visible para el usuario, el **6.2**, con la
-advertencia de que «nada de esto existe todavía». Eso la hace fácil de respetar:
-lo que remite a 6.2 no es mío. De las **catorce** viñetas del apartado 6.1,
-**cinco** remiten expresamente a 6.2.
+advertencia de que «nada de esto existe todavía» —advertencia que hoy ya no es
+exacta para cuatro de las seis, y que le corresponde actualizar a `A-04`, no a
+este documento—. Eso la hace fácil de respetar: lo que remite a 6.2 no es mío.
+De las **catorce** viñetas del apartado 6.1, **cinco** remiten expresamente a
+6.2.
 
 Una de esas viñetas merece mención aparte porque es nueva y podría confundirse
 con una propuesta: **«los albaranes de una factura quedan bloqueados para
-siempre, ni siquiera para corregir una errata»**. No se propone nada sobre ella.
-Corregir lo que va dentro de una factura emitida es exactamente el problema que
-resuelve la factura rectificativa ya decidida en `DOC-04/Q-06`, cuyo alcance
-DOC-04 marca como grande. Proponer aparte «poder corregir una errata de un
-albarán facturado» sería trocear con otro nombre algo ya encargado.
+siempre, ni siquiera para corregir una errata»**. Sigue sin proponerse nada
+sobre ella, y ahora por un motivo más fuerte que antes: dejó de ser solo una
+decisión pendiente. `SPE-08-factura-rectificativa` construyó exactamente esa
+solución —una factura rectificativa que libera los albaranes de la original—,
+está implementada y verificada en vivo (`DOC-24` 1.1.2, `BUG-004: fixed`).
+Proponer aparte «poder corregir una errata de un albarán facturado» sería
+trocear con otro nombre algo que ya está hecho, no solo encargado.
 
 ### 5.2 Preguntas abiertas que no son mías — falta decidir una regla, o falta documentar
 
@@ -1027,6 +1159,7 @@ una comprobación pendiente, y se trata en 5.3 y en el apartado 6.
 | **Búsqueda, ordenación y paginación en el resto de listados** | `DOC-06/Q-20` sigue abierta y sigue avisando de que **no se sabe si no existen o solo no se documentaron**. El apartado 3 del manual solo se las atribuye a *Clientes* y *Vehículos*, y lo hace citando REQ-001 y REQ-009, no habiéndolo verificado. Proponer construir algo que quizá ya está construido es fabricar producto. Va a `A-03` como comprobación (apartado 6); si se confirma que no existen, entra en la próxima ronda con evidencia de verdad. |
 | **Un aviso de nóminas del mes sin registrar** | Sale de la misma viñeta que FUN-004 —«no te avisa de facturas vencidas, de stock bajo ni de nóminas sin registrar»—. Se ha valorado separarlo y no se hace: nadie ha declarado que al taller se le olviden las nóminas, y trocear una viñeta en tres propuestas para engordar el documento es precisamente lo que lo haría inútil. Si `A-06` ve que el taller lo echa en falta al refinar FUN-004, que salga de ahí. |
 | **Pedidos a proveedores y contabilidad** | `DOC-06/§1` dice que la aplicación no lo hace y no pretende hacerlo. Nada en la documentación indica que el taller lo espere. Sería inventar producto. |
+| **Poder rectificar solo una parte de una factura (abono parcial)** *(nueva esta ronda)* | `SPE-08-factura-rectificativa` excluye esto explícitamente de su alcance: «la rectificativa anula siempre el importe íntegro de la original — es una sustitución completa, no un abono parcial». Es un hueco real y queda anotado, pero ningún documento de `DOC-04`, `DOC-06` ni `DOC-24` dice que el taller necesite hoy corregir solo una parte de una factura — sin esa evidencia, proponerlo sería fabricar producto sobre la base de una exclusión de alcance técnica, no de una carencia declarada por nadie que use la aplicación. Si esa necesidad aparece —en una pregunta abierta, en el manual o en un defecto—, entra con su propia evidencia. |
 
 ### 5.4 Dos hallazgos que `A-12` dejó dirigidos aquí en rondas anteriores — cerrados por ambas partes
 
@@ -1042,11 +1175,12 @@ existe un requisito vigente que dice cómo debe comportarse el sistema y el
 sistema se comporta de otra manera, eso no es algo que falte por construir —es
 algo que no cumple lo que ya se pidió—, y el documento que le corresponde es
 `DOC-24-BUGS`, no este. **A-15 no propone nada**; sigue siendo candidato a
-`BUG-005` y **sigue sin censar** en `DOC-24` 1.0.0, sin cambios desde la ronda
-anterior. `DOC-16` 3.0.0 ya no repite este hallazgo en su apartado 6 —A-12 lo da
-por completamente encaminado hacia `A-14`—, así que este documento es hoy el
-único lugar donde queda constancia de que sigue abierto; el apartado 6 lo
-recuerda.
+`BUG-005` y **sigue sin censar** en `DOC-24` 1.1.2 —a diferencia de los cuatro
+bugs que sí están censados, los cuatro `fixed` esta ronda (apartado 1), este
+candidato no tiene ni ficha—. `DOC-16` 3.3.0 ya no repite este hallazgo en su
+apartado 6 —A-12 lo da por completamente encaminado hacia `A-14`—, así que este
+documento es hoy el único lugar donde queda constancia de que sigue abierto; el
+apartado 6 lo recuerda.
 
 **El módulo de Configuración ya es FUN-003.** `A-12` lo derivó aquí en rondas
 anteriores con el argumento correcto —«un módulo sin desarrollar es
@@ -1146,11 +1280,12 @@ Esto **no son propuestas** y no debe tratarse como tal. Pertenece a otras piezas
    mientras REQ-076 dice que la interfaz se presenta en castellano por
    defecto. A-15 lo valoró como posible funcionalidad y **concluyó que no lo
    es**: hay un requisito vigente que el comportamiento no cumple. **`DOC-24`
-   1.0.0 sigue sin censarlo.** `DOC-16` 3.0.0 ya no repite este hallazgo en su
-   apartado 6 —A-12 lo da por completamente encaminado hacia A-14 desde su
-   ronda 2.0.0—, así que este documento pasa a ser la única traza activa de que
-   sigue pendiente. Origen del hecho: lectura de código en `44748fb`, sin
-   reproducir todavía por nadie.
+   1.1.2 sigue sin censarlo** —a diferencia de los cuatro bugs que sí lo están,
+   los cuatro `fixed` esta ronda (apartado 1)—. `DOC-16` 3.3.0 ya no repite este
+   hallazgo en su apartado 6 —A-12 lo da por completamente encaminado hacia
+   A-14 desde su ronda 2.0.0—, así que este documento pasa a ser la única traza
+   activa de que sigue pendiente. Origen del hecho: lectura de código en
+   `44748fb`, sin reproducir todavía por nadie.
 2. **Nuevo — `REQ-025` (filtro de albaranes por vehículo y cliente) y
    `REQ-034`/`BR-ALB-06` (precio informado a mano en línea de pieza) son
    requisitos vigentes, prioridad `high`, que la interfaz no cumple.**
@@ -1167,24 +1302,34 @@ Esto **no son propuestas** y no debe tratarse como tal. Pertenece a otras piezas
 
 ### Para `A-12 · Mejoras/Roadmap` — deuda técnica y fragilidad
 
-Los cuatro de rondas anteriores se han contrastado contra `DOC-16` **3.0.0**,
+Los cuatro de rondas anteriores se han contrastado contra `DOC-16` **3.3.0**,
 que es lo que corresponde hacer con un hallazgo enviado: comprobar si ha
 aterrizado. **Los cuatro tienen ya dueño técnico**, así que aquí quedan solo
 para no perder el rastro, no para pedir nada nuevo. Dos de las tres mejoras
 aceptadas que se citaban aquí —`MEJ-007` y `MEJ-008`— ya pasaron a
 `implemented` (5.5); ninguna de las dos cerraba una `FUN-nnn`.
 
+**Nota de esta ronda: los cuatro `BUG-nnn` que sostenían los hallazgos 1 y 4 ya
+están `fixed` (`DOC-24` 1.1.2), y eso no cierra el hallazgo — lo confirma.**
+Cada uno se corrigió por separado, en su propio router, sin pasar por ningún
+módulo común: dos por commit directo (`BUG-001`, `BUG-002`) y dos por `/spec`
+(`BUG-003` vía `SPE-07`, `BUG-004` vía `SPE-08`). `DOC-16` 3.3.0 §1.8 añade,
+además, que `SPE-07` dejó la misma regla de validación **duplicada verbatim**
+en `peces.js` (`POST` y `PUT`): el patrón que motivó esta tabla en la ronda
+1.0.0 no se resolvió al corregir los defectos, solo cambió de forma.
+
 | Hallazgo de A-15 | Dónde ha aterrizado | Estado |
 |---|---|---|
-| 1. **No hay una comprobación común de los datos que se guardan.** `DOC-24` documenta que BUG-001, BUG-002 y BUG-003 son el mismo patrón: cada operación comprueba lo suyo y varias no comprueban nada. Los evolutivos de Q-02 y Q-12 van a añadir más sobre esa misma base | `DOC-16/§3.0` lo eleva a patrón medido y `MEJ-004` es la respuesta | **Recogido**, pero `MEJ-004` sigue **sin decidir** |
-| 2. **Hay reglas que solo se cumplen porque la operación no existe.** `DOC-24/DISC-001` y la nota de `BUG-004`: la inmutabilidad de la factura no está implementada como regla; sencillamente no hay forma de modificarla, y la factura rectificativa de Q-06 va a construir esa forma | `DOC-16/§3.0` clasifica BUG-004 en la misma familia; la protección la daría `MEJ-004` | **Recogido en parte.** El matiz —que la protección se evapora el día que exista la operación— no consta escrito en DOC-16, y es lo que lo hace urgente |
+| 1. **No hay una comprobación común de los datos que se guardan.** `DOC-24` documentaba que BUG-001, BUG-002 y BUG-003 eran el mismo patrón: cada operación comprueba lo suyo y varias no comprueban nada. Los tres ya están corregidos, cada uno en su router, y `SPE-07` (el fix de BUG-003) dejó de propina una duplicación verbatim de la misma regla en `peces.js` | `DOC-16/§1.8` (antes `§3.0`) lo reconfirma con ese ejemplo nuevo; `MEJ-004` es la respuesta | **Recogido y reforzado**, pero `MEJ-004` sigue **sin decidir** |
+| 2. **Hay reglas que solo se cumplen porque la operación no existe.** `DOC-24/DISC-001` y la nota de `BUG-004`: la inmutabilidad de la factura no estaba implementada como regla; sencillamente no había forma de modificarla. La factura rectificativa de Q-06 ya construyó esa forma (`SPE-08`) | `DOC-16/§1.8` confirma que `SPE-08` escribió la regla dentro del router (`factures.js`), no en un módulo de dominio compartido | **Recogido y cerrado en su forma original.** El matiz que hacía esto urgente —que la protección se evaporara antes de que existiera la operación— ya no aplica: `SPE-08` construyó la operación con sus reglas escritas (`BR-FAC-10`/`BR-FAC-11`). Lo que queda es evidencia para `MEJ-004`, no un riesgo abierto |
 | 3. **El entorno de pruebas no se puede dejar limpio desde la aplicación.** `DOC-24/test_data_left_behind`: una factura de 114.835,05 € y su albarán imposibles de eliminar por ningún camino | `MEJ-005`, que cita esa misma factura | **Recogido y decidido**: `MEJ-005` está `accepted` desde el 2026-08-17 |
-| 4. **La comprobación de importes falta en las dos capas a la vez**, verificado deliberadamente en `DOC-24/BUG-003`. Relevante para dimensionar el evolutivo de Q-12 | Evidencia de `MEJ-004` | **Recogido**, `MEJ-004` sin decidir |
+| 4. **La comprobación de importes no negativos faltaba en las dos capas a la vez**, verificado deliberadamente en `DOC-24/BUG-003`. Ya está corregida en las dos (`SPE-07`) | `DOC-16/§1.8` documenta que el fix añadió, además, la misma validación duplicada verbatim en `peces.js`. Evidencia de `MEJ-004` | **Recogido y reforzado**, `MEJ-004` sigue sin decidir |
 
-**Nada nuevo para `A-12` en esta ronda.** Y conviene decir lo que A-15 no hace
-con la decisión del 2026-08-17: **no opina sobre ella**. Que `MEJ-004` siga sin
-decidirse es una lectura técnica y le corresponde a A-12 defenderla, no a este
-documento presionar desde el lado de negocio.
+**Nada nuevo para `A-12` en esta ronda: `DOC-16` ya documentó este mismo
+ejemplo en su §1.8 antes de que A-15 lo leyera.** Y conviene decir lo que A-15
+no hace con la decisión del 2026-08-17: **no opina sobre ella**. Que `MEJ-004`
+siga sin decidirse es una lectura técnica y le corresponde a A-12 defenderla,
+no a este documento presionar desde el lado de negocio.
 
 ### Para `A-03 · Plan de pruebas` — comprobaciones pendientes
 
@@ -1219,68 +1364,98 @@ reproche: es el dato que explica por qué `FUN-001` conserva confianza `medium`.
 version: 1
 project: app-taller
 run:
-  date: 2026-08-28
-  previous_doc_version: 1.2.1
-  version_bump: PATCH
+  date: 2026-08-31
+  previous_doc_version: 1.2.2
+  version_bump: MINOR
   version_bump_reason: >-
-    Resello de procedencia: DOC-16 subió de 3.0.0 a 3.1.0 (nace DOC-27, primer informe de la
-    suite de servicio de S-17; A-12 revisa las nueve MEJ-nnn contra esa evidencia). Ninguna
-    MEJ-nnn cambió de estado ni nació ninguna: crece la evidencia de MEJ-002/MEJ-003/MEJ-004
-    y se matiza la de MEJ-006, sin tocar tamaño ni dificultad. DOC-16/§6.1-§6.3 confirman sin
-    matiz nuevo lo que este documento ya recogió como FUN-009 a FUN-012 y como redirección a
-    A-14; el §6.9 nuevo va a A-02, no a A-15. Ninguna FUN-nnn depende de una MEJ-nnn que
-    cambiara de estado ni de una cifra de DOC-16 que este documento reproduzca. Se aprovecha
-    para corregir tres hashes desactualizados sin cambio de versión en `inputs` (DOC-01,
-    DOC-06, registro-ids.json), detectados al verificar version declarada vs real y hash
-    declarado vs calculado en todo el bloque. Ronda anterior (1.2.0 -> 1.2.1, PATCH,
-    2026-08-24): resello contra DOC-14 2.1.0, cierre de EXP-027, sin efecto en ninguna FUN-nnn.
+    No es PATCH: cambia la evidencia y la nota de FUN-002 (se retira DOC-24/BUG-004 como
+    evidencia viva, ya resuelto por otra vía). No es MAJOR: ninguna FUN-nnn cambia de status,
+    ninguna se retira ni se sustituye, y el orden de la recomendación no cambia. Disparado por
+    S-16: DOC-04 subió de 1.2.0 a 1.3.2 (el ack de la 1.2.2 solo cubría hasta 1.3.1). Al leer
+    el diff real se encontró que DOC-24-BUGS.json, entrada opcional sin releer desde la ronda
+    1.0.0, había subido de 1.0.0 a 1.1.2: los cuatro bugs censados (BUG-001 a BUG-004) constan
+    fixed, no abiertos. Esta ronda corrige: (1) la tabla del apartado 5.1, que marcaba Q-02,
+    Q-06, Q-10 y Q-12 como "decidido" en vez de "implementado"; (2) FUN-002, que citaba
+    BUG-004 como parte de su aporte y ya no puede, porque SPE-08 lo resolvió por su cuenta;
+    (3) los hallazgos hacia A-12 sobre el patrón de validación común, que ganan el ejemplo de
+    duplicación verbatim en peces.js que documenta DOC-16/§1.8. De paso se consumen dos ack
+    superados por lectura real: DOC-01 (1.1.0 declarado, ack hasta 1.2.0, real 1.3.0: SPE-07/
+    SPE-08 formalizan lo mismo) y DOC-16 (3.1.0 declarado, ack hasta 3.2.0, real 3.3.0: §1.8).
+    Ninguna FUN-nnn nace, se retira ni cambia de status, impact, difficulty, size ni
+    business_value.
   trigger: >-
-    S-16 · cascada de obsolescencia: DOC-25 1.2.1 declaraba DOC-16 en 3.0.0, y DOC-16 había
-    subido a 3.1.0
+    S-16 · cascada de obsolescencia: DOC-25 1.2.2 declaraba DOC-04 en 1.2.0 (ack solo hasta
+    1.3.1), y DOC-04 había subido a 1.3.2
   new_proposals_this_round: 0
   new_proposals_note: >-
-    Ninguna esta ronda. Las doce propuestas (FUN-001 a FUN-012) conservan su número, su texto,
-    su estado y todas sus señales.
+    Ninguna esta ronda. Las doce propuestas (FUN-001 a FUN-012) conservan su número y su texto.
+    Cambia la evidencia de una viva (FUN-002).
   upstream_changes:
-    - doc: DOC-16
-      from: 3.0.0
-      to: 3.1.0
+    - doc: DOC-24-BUGS.json
+      from: 1.0.0
+      to: 1.1.2
+      level: n/a (JSON sin campo version en el bloque inputs; declarado vs real)
+      what: >-
+        los cuatro bugs censados pasan a status fixed: BUG-001/BUG-002 el 2026-08-21 (commit
+        directo ed61c24), BUG-003 el 2026-08-30 (SPE-07-importes-negativos), BUG-004 el
+        2026-08-31 (SPE-08-factura-rectificativa). Los cuatro verificados en vivo
+      effect_on_this_doc: >-
+        tabla del apartado 5.1 (Q-02/Q-06/Q-10/Q-12 pasan de "decidido" a "implementado"),
+        FUN-002 (se retira BUG-004 de evidence_refs, se actualiza evidence_status), hallazgos
+        hacia A-12 sobre el patrón de validación común (apartado 6, actualizados con DOC-16/§1.8)
+    - doc: DOC-16-ROADMAP.md
+      from: 3.1.0
+      to: 3.3.0
       level: MINOR
       what: >-
-        nace DOC-27 (primer informe de la suite de servicio, S-17); DOC-07 sube a 1.10.0. A-12
-        revisa las nueve MEJ-nnn contra esa evidencia: ninguna cambia de estado ni nace ninguna;
-        crece la evidencia de MEJ-002/MEJ-003/MEJ-004 y se matiza la de MEJ-006. §6.1 y §6.2
-        confirman "ya recogidos" (FUN-009 a FUN-012, citando esta misma DOC-25); §6.3 confirma
-        sin matiz nuevo la redirección a A-14 de REQ-025/REQ-034; nace §6.9, dirigido a A-02
+        delta 3.3.0, §1.8: BUG-003 y BUG-004 se cierran sin pasar por un módulo de dominio
+        compartido; SPE-07 deja una duplicación verbatim de la misma regla en peces.js.
+        MEJ-004 no cambia de tamaño, dificultad ni estado; crece su evidencia
       effect_on_this_doc: >-
-        ninguno sobre ninguna FUN-nnn, su evidencia, su señal ni la recomendación. Resello puro
-        de la entrada DOC-16 en inputs
-  inputs_hash_corrected_this_round: [DOC-01-BASE-ASIS.md, DOC-06-MANUAL-USUARIO.md, registro-ids.json]
-  inputs_hash_correction_note: >-
-    Las tres llevaban hash desactualizado sin cambio de version, no detectado por S-16 porque
-    solo compara numeros de version. DOC-01 y DOC-06: mismo commit c71c580, dos rutas de spec
-    renombradas en sus anclas, sin tocar contenido sustantivo (verificado por diff completo).
-    registro-ids.json: registro real de FUN-009 a FUN-012 (commit 3f10869, ronda 1.2.0 de este
-    documento) mas el mismo c71c580; recontado, sigue con las doce anclas FUN ya declaradas.
+        actualiza el hallazgo hacia A-12 sobre el patrón de validación común (apartado 6) con
+        el ejemplo de peces.js. Ninguna FUN-nnn nace ni cambia
+    - doc: DOC-01-BASE-ASIS.md
+      from: 1.1.0
+      to: 1.3.0
+      level: MINOR
+      what: >-
+        SPE-07 y SPE-08 (Implemented) añaden UC-FAC-05 y cinco BR nuevas (BR-PEC-03/04,
+        BR-ALB-11, BR-FAC-10/11) que formalizan el mismo cierre de BUG-003/BUG-004
+      effect_on_this_doc: ninguno sobre ninguna FUN-nnn; resello de la entrada en inputs
+  inputs_obsolescence_ack_superseded_this_round: [DOC-01-BASE-ASIS.md, DOC-04-FUNCIONAL.md, DOC-16-ROADMAP.md]
+  inputs_obsolescence_ack_superseded_note: >-
+    Las tres entradas tenían un obsolescence_ack que cubría hasta una versión inferior a la
+    real (DOC-01 hasta 1.2.0, real 1.3.0; DOC-04 hasta 1.3.1, real 1.3.2; DOC-16 hasta 3.2.0,
+    real 3.3.0). Esta ronda hace la lectura real de las tres y el ack se retira del
+    front-matter (queda registrado en obsolescence_response). El ack de DOC-06 (hasta 1.4.1)
+    sigue vigente: DOC-06 real sigue en 1.4.1.
 citations_verified_unchanged:
   - ref: DOC-16/§6.1
-    note: "en 3.1.0 confirma explícitamente que EXP-017/EXP-026/EXP-019 están ya recogidos como FUN-009 a FUN-011 en DOC-25 y deja de reenviarlos"
+    note: "en 3.3.0 sigue confirmando que EXP-017/EXP-026/EXP-019 están ya recogidos como FUN-009 a FUN-011 en DOC-25"
   - ref: DOC-16/§6.2
-    note: "en 3.1.0 confirma que EXP-003 está ya recogido como FUN-012 en DOC-25 y deja de reenviarlo"
+    note: "en 3.3.0 sigue confirmando que EXP-003 está ya recogido como FUN-012 en DOC-25"
   - ref: DOC-16/§6.3
-    note: "en 3.1.0 confirma sin matiz nuevo la redirección a A-14 de REQ-025/REQ-034 que A-15 ya decidió en la ronda 1.2.0"
+    note: "en 3.3.0 sigue confirmando sin matiz nuevo la redirección a A-14 de REQ-025/REQ-034 que A-15 ya decidió en la ronda 1.2.0"
   - ref: DOC-16/§6.9
-    note: "nuevo en 3.1.0 (si borrar un albarán debe devolver el stock de sus líneas de pieza). Dirigido a A-02, no a A-15: no se recoge en este documento"
+    note: "sigue dirigido a A-02, no a A-15: no se recoge en este documento"
+citations_updated_this_round:
+  - ref: DOC-16/§1.8
+    note: "nuevo en 3.3.0: BUG-003/BUG-004 se cierran sin módulo de dominio compartido; duplicación verbatim en peces.js. Actualiza el hallazgo hacia A-12 (apartado 6), no crea ninguna FUN-nnn"
+  - ref: DOC-24 (bloque bugs)
+    note: "1.0.0 -> 1.1.2: los cuatro bugs censados pasan a fixed. Actualiza la tabla del apartado 5.1 y la evidencia de FUN-002"
 provenance_fixes:
+  - entry: DOC-04-FUNCIONAL.md
+    fix: version actualizada de 1.2.0 a 1.3.2, hash recalculado
+  - entry: DOC-24-BUGS.json
+    fix: version actualizada de 1.0.0 a 1.1.2, hash recalculado
+  - entry: DOC-16-ROADMAP.md
+    fix: version actualizada de 3.1.0 a 3.3.0, hash recalculado
   - entry: DOC-01-BASE-ASIS.md
-    fix: hash actualizado de 0f074e68... a 828f05be..., version sin cambio (1.1.0)
-  - entry: DOC-06-MANUAL-USUARIO.md
-    fix: hash actualizado de 90ea9dd6... a c081aea1..., version sin cambio (1.3.0)
-  - entry: registro-ids.json
-    fix: hash actualizado de 9f5b3679... a bc54df9a..., sin campo version
+    fix: version actualizada de 1.1.0 a 1.3.0, hash recalculado
 proposals_note: >-
-  Las doce conservan su número, su texto, su estado y todas sus señales. El orden de la
-  recomendación del apartado 2 no cambia respecto a 1.2.1.
+  Las doce conservan su número, su texto y su estado. FUN-002 cambia de evidencia (se retira
+  DOC-24/BUG-004, ya resuelto por SPE-08). El orden de la recomendación del apartado 2 no
+  cambia respecto a 1.2.2.
 proposals:
   - id: FUN-001
     title: "Llevarse la factura en papel o en un archivo para dárselo al cliente"
@@ -1321,9 +1496,17 @@ proposals:
     first_proposed_in: 1.0.0
     problem: "Clientes, albaranes, facturas, piezas y nóminas viven en un único ordenador y no hay ninguna forma de respaldarlos. Le pasa al dueño del taller el día que falle el disco, y para entonces ya es tarde."
     what: "Guardar una copia completa de los datos donde el taller quiera y volver a cargarla si hace falta, sin depender de nadie técnico."
-    value: "Protege toda la facturación del taller. Es lo único que da marcha atrás en un sistema donde una factura emitida no se puede deshacer."
+    value: "Protege toda la facturación del taller: es la única propuesta que da marcha atrás ante una pérdida total de datos, y ningún otro evolutivo del sistema la cubre."
     source: evidence
-    evidence_refs: [DOC-06/Q-22, DOC-06/§2, DOC-06/§6.1, DOC-24/BUG-004]
+    evidence_refs: [DOC-06/Q-22, DOC-06/§2, DOC-06/§6.1]
+    evidence_refs_removed_this_round: [DOC-24/BUG-004]
+    evidence_refs_removed_reason: >-
+      BUG-004 consta fixed desde el 2026-08-31 (DOC-24 1.1.2, SPE-08-factura-rectificativa,
+      verificado en vivo): el caso concreto que citaba —una factura emitida por error no se
+      podía eliminar por ningún medio— ya tiene solución propia, ajena a esta propuesta. El
+      valor de FUN-002 nunca dependió de ese caso: sigue entera por el resto de su evidencia.
+      SPE-08 deja explícito fuera de su alcance el abono parcial de una factura; no se propone
+      nada sobre eso por falta de evidencia (ver considered_and_not_proposed)
     evidence_status: >-
       reforzada. DOC-06 1.2.0 §6.1 cierra la viñeta de la ausencia de identificación con «si algo
       se borra, no hay forma de saber quién fue ni de recuperarlo». La parte de recuperar es esta
@@ -1571,7 +1754,8 @@ considered_and_not_proposed:
       REQ-076 ya exige que la interfaz se presente en castellano mientras el usuario no elija
       otro idioma. Cuando existe requisito vigente y el sistema no lo cumple, es defecto y no
       funcionalidad ausente. Va a A-14 como confirmación del candidato BUG-005, todavía sin
-      censar en DOC-24 1.0.0.
+      censar en DOC-24 1.1.2 (a diferencia de los cuatro bugs que sí lo están, los cuatro
+      fixed).
   - what: "REQ-025 (filtro de albaranes por vehículo/cliente) y REQ-034/BR-ALB-06 (precio a mano en línea de pieza) no están construidos en la interfaz"
     origin: "DOC-16/§6.3, citando DOC-07/A-05-11c"
     decision: no_proposal
@@ -1584,8 +1768,20 @@ considered_and_not_proposed:
     origin: DOC-06/§6.1
     decision: no_proposal
     why: >-
-      Es la cara operativa del evolutivo de factura rectificativa ya decidido en DOC-04/Q-06,
-      de alcance grande. Proponerlo aparte sería trocear con otro nombre algo ya encargado.
+      Es la cara operativa de la factura rectificativa, y desde el 2026-08-31 ya no es un
+      evolutivo pendiente: está implementada y verificada en vivo (SPE-08-factura-rectificativa,
+      DOC-24/BUG-004: fixed). Proponerlo aparte sería trocear con otro nombre algo que ya está
+      hecho, no solo encargado.
+  - what: "Poder rectificar solo una parte de una factura (abono parcial)"
+    origin: "SPE-08-factura-rectificativa, apartado Alcance/Fuera (implementado el 2026-08-31)"
+    decision: no_proposal
+    why: >-
+      SPE-08 excluye explícitamente el abono parcial: la rectificativa siempre anula el
+      importe íntegro de la original. Es un hueco real, pero ningún documento de DOC-04,
+      DOC-06 ni DOC-24 declara que el taller necesite hoy corregir solo una parte de una
+      factura; sin esa evidencia, proponerlo sería fabricar producto sobre una exclusión de
+      alcance técnica, no sobre una carencia declarada por quien usa la aplicación. Si esa
+      necesidad aparece, entra con su propia evidencia.
   - what: "Un aviso de nóminas del mes sin registrar"
     origin: DOC-06/§6.1
     decision: no_proposal
@@ -1606,8 +1802,9 @@ findings_for_others:
       Candidato a BUG-005 sin novedad: los avisos de error llegan siempre en catalán y REQ-076
       dice que la interfaz se presenta en castellano mientras el usuario no elija otro idioma.
       A-15 lo valoró como posible propuesta y concluyó que es defecto, no funcionalidad. DOC-24
-      1.0.0 sigue sin censarlo. DOC-16 3.0.0 ya no repite este hallazgo en su apartado 6 (lo da
-      por encaminado hacia A-14 desde 2.0.0); este documento es hoy la única traza activa de que
+      1.1.2 sigue sin censarlo, a diferencia de los cuatro bugs que sí lo están y que constan
+      fixed esta ronda. DOC-16 3.3.0 ya no repite este hallazgo en su apartado 6 (lo da por
+      encaminado hacia A-14 desde 2.0.0); este documento es hoy la única traza activa de que
       sigue pendiente.
   - target: A-14
     status: abierto
@@ -1617,27 +1814,27 @@ findings_for_others:
       informado a mano en una línea de pieza) son requisitos vigentes de prioridad high que la
       interfaz no cumple, verificado por A-05 leyendo AlbaransList.tsx y
       AlbaraLiniesSection.tsx (DOC-07/A-05-11c, citado por DOC-16/§6.3, confirmado sin matiz
-      nuevo en 3.1.0). DOC-06/§3 describe la misma capacidad como si existiera, sin matiz, lo
+      nuevo en 3.3.0). DOC-06/§3 describe la misma capacidad como si existiera, sin matiz, lo
       que añade una discrepancia documental a resolver. A-15 lo valora como candidato a
       defecto, no como funcionalidad ausente, por el
       mismo criterio que el candidato a BUG-005 (detalle en 5.6). Afecta a TC-032, TC-033 y
       TC-047, que hoy no tienen vector en la interfaz por este motivo.
   - target: A-12
     status: recogido_sin_decidir
-    landed_in: DOC-16/§3.0, MEJ-004
-    note: "No hay comprobación común de los datos que se guardan: DOC-24 documenta que BUG-001, BUG-002 y BUG-003 son el mismo patrón repetido. DOC-16 2.0.0 lo eleva a patrón medido en §3.0 y responde con MEJ-004, que sigue proposed. A-15 no opina sobre esa decisión: es técnica y es de A-12."
+    landed_in: DOC-16/§1.8 (antes §3.0), MEJ-004
+    note: "No hay comprobación común de los datos que se guardan: DOC-24 documentaba que BUG-001, BUG-002 y BUG-003 eran el mismo patrón repetido. Los tres ya están fixed (DOC-24 1.1.2), cada uno corregido en su propio router, sin módulo compartido; DOC-16/§1.8 añade que SPE-07 (el fix de BUG-003) dejó la misma regla duplicada verbatim en peces.js (POST y PUT). MEJ-004 no cambia de tamaño ni de estado; sigue proposed, con más evidencia. A-15 no opina sobre esa decisión: es técnica y es de A-12."
   - target: A-12
-    status: recogido_en_parte
-    landed_in: DOC-16/§3.0, MEJ-004
-    note: "Hay reglas que solo se cumplen porque la operación no existe. DOC-24/DISC-001 y la nota de BUG-004: la inmutabilidad de la factura no está implementada, simplemente no hay forma de modificarla, y el evolutivo de factura rectificativa (Q-06) va a construir esa forma. DOC-16 clasifica BUG-004 en la misma familia, pero el matiz —la protección se evapora el día que exista la operación— no consta escrito allí, y es lo que lo hace urgente."
+    status: recogido_y_cerrado_en_su_forma_original
+    landed_in: DOC-16/§1.8 (antes §3.0), MEJ-004
+    note: "Hay reglas que solo se cumplen porque la operación no existe. DOC-24/DISC-001 y la nota de BUG-004 señalaban que la inmutabilidad de la factura no estaba implementada, solo no había forma de modificarla. SPE-08-factura-rectificativa (2026-08-31) ya construyó esa operación con reglas escritas (BR-FAC-10/BR-FAC-11), dentro del router, no en un módulo de dominio compartido: DOC-16/§1.8 lo confirma. El riesgo que hacía esto urgente —que la protección se evaporara antes de que existiera la operación— ya no aplica; queda como evidencia de MEJ-004, no como riesgo abierto."
   - target: A-12
     status: recogido_y_decidido
     landed_in: MEJ-005
     note: "El entorno de pruebas no se puede dejar limpio desde la aplicación: DOC-24/test_data_left_behind documenta una factura de 114.835,05 € y su albarán imposibles de eliminar por ningún camino. MEJ-005 lo recoge citando esa misma factura y está accepted desde el 2026-08-17. Hallazgo cerrado por parte de A-15."
   - target: A-12
     status: recogido_sin_decidir
-    landed_in: MEJ-004
-    note: "La comprobación de importes no negativos falta a la vez en pantalla y en servidor, verificado deliberadamente en DOC-24/BUG-003. No es una validación de pantalla sorteable: no existe en ningún sitio. Es evidencia de MEJ-004, que sigue proposed."
+    landed_in: DOC-16/§1.8 (antes MEJ-004 a secas), MEJ-004
+    note: "La comprobación de importes no negativos, que faltaba a la vez en pantalla y en servidor (DOC-24/BUG-003), ya está corregida en las dos (SPE-07, 2026-08-30). DOC-16/§1.8 documenta que el fix añadió, de propina, la misma validación duplicada verbatim en peces.js entre POST y PUT: sigue siendo evidencia de MEJ-004, que sigue proposed, ahora con un ejemplo más concreto."
   - target: A-03
     status: abierto
     priority: alta
@@ -1654,27 +1851,29 @@ summary:
   rejected_respected: 0
   by_source: { evidence: 11, opinion: 1 }
   by_status: { proposed: 12, accepted: 0, rejected: 0, implemented: 0, superseded: 0 }
-  proposals_changed_this_round: 0          # las doce mantienen texto, estado y señales
-  evidence_changed_this_round: 0
-  citations_verified: 4                    # DOC-16/§6.1, §6.2, §6.3, §6.9 (nuevo, dirigido a A-02)
+  proposals_changed_this_round: 1          # FUN-002 cambia evidencia y nota; ninguna cambia de status ni de señal
+  evidence_changed_this_round: 1           # FUN-002: se retira DOC-24/BUG-004, ya resuelto por SPE-08
+  citations_verified: 4                    # DOC-16/§6.1, §6.2, §6.3, §6.9, todas en 3.3.0
+  citations_updated: 2                     # DOC-16/§1.8 (nuevo) y DOC-24 (bloque bugs, 1.0.0 -> 1.1.2)
   citations_fixed: 0
   ids_requested_from_S12: 0
   not_proposed_already_in_cycle: 6
   not_proposed_not_mine: 7                 # 6 anteriores + EXP-022/023/024 agrupadas como una entrada
-  not_proposed_by_judgement: 7             # incluye el redirect a A-14 de REQ-025/REQ-034
-  upstream_decisions_evaluated: 9          # las nueve MEJ-nnn de DOC-16 3.1.0; ninguna cambia de estado ni cierra/abre una FUN-nnn
-  provenance_fixes: 3                      # hash desactualizado sin cambio de version: DOC-01, DOC-06, registro-ids.json
-  rounds_without_new_proposals: 1
+  not_proposed_by_judgement: 8             # incluye el redirect a A-14 de REQ-025/REQ-034 y el abono parcial (nuevo)
+  upstream_decisions_evaluated: 9          # las nueve MEJ-nnn de DOC-16 3.3.0; ninguna cambia de estado ni cierra/abre una FUN-nnn
+  provenance_fixes: 4                      # version/hash desactualizados corregidos: DOC-04, DOC-24, DOC-16, DOC-01
+  obsolescence_ack_superseded_by_real_read: 3   # DOC-01, DOC-04, DOC-16: el ack cubría menos que la version real
+  rounds_without_new_proposals: 2
   recommendation_order_changed: false
 ```
 
 ---
 
 **Nota de vigencia.** Este documento se ha escrito sobre `DOC-01-BASE-ASIS`
-**1.1.0**, `DOC-04-FUNCIONAL` **1.2.0**, `DOC-06-MANUAL-USUARIO` **1.3.0** (solo
-§6 y §9, por contrato), `DOC-24-BUGS` **1.0.0**, el apartado 6 de
-`DOC-16-ROADMAP` **3.1.0** y las fichas que ese apartado cita de
-`DOC-14-EXPLORATORIO` **2.1.0**, en el commit `511796975891e4ef74e644b0cc6e926d20ee4e8b`.
+**1.3.0**, `DOC-04-FUNCIONAL` **1.3.2**, `DOC-06-MANUAL-USUARIO` **1.3.0** (solo
+§6 y §9, por contrato), `DOC-24-BUGS` **1.1.2**, el apartado 6 y el §1.8 de
+`DOC-16-ROADMAP` **3.3.0** y las fichas que ese apartado cita de
+`DOC-14-EXPLORATORIO` **2.1.0**, en el commit `6c8a8701a6db694fb21ee951646a4023f32308f3`.
 **No se ha leído `DOC-02-TECNICA`**, y no por descuido: el contrato de A-15 lo
 prohíbe. Las versiones y los hashes están en el front-matter para que `S-16`
 pueda comprobarlos sin leer esta línea.
