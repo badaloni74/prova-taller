@@ -85,7 +85,20 @@ function FacturesList() {
 
         <DataTable
           columns={[
-            { key: 'numero', header: t('factures.column.numero') },
+            {
+              key: 'numero',
+              header: t('factures.column.numero'),
+              render: (factura) => (
+                <span className="flex items-center gap-2">
+                  {factura.numero}
+                  {factura.anuladaPer !== null && (
+                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                      {t('factures.detail.anulada')}
+                    </span>
+                  )}
+                </span>
+              ),
+            },
             {
               key: 'estatPagament',
               header: t('factures.column.estatPagament'),

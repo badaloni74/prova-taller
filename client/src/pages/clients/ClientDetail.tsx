@@ -174,10 +174,15 @@ function ClientDetail() {
               <li key={factura.id}>
                 <Link
                   to={`/factures/${factura.id}`}
-                  className="text-sm text-primary-600 hover:underline"
+                  className="flex items-center gap-2 text-sm text-primary-600 hover:underline"
                 >
                   {factura.numero} — {t(`factures.estatPagament.${factura.estatPagament}`)} —{' '}
                   {formatMoney(factura.total)}
+                  {factura.anuladaPer !== null && (
+                    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-300">
+                      {t('factures.detail.anulada')}
+                    </span>
+                  )}
                 </Link>
               </li>
             ))}
