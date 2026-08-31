@@ -293,6 +293,122 @@ function extraeDocumentos() {
   });
 }
 
+// --------------------------------------------------- nuevas funcionalidades
+
+function extraeFuncionalidades() {
+  const blocks = readBlocks(path.join(DOCS, 'DOC-25-PROPUESTAS-FUNCIONALES.md'), 'propuestas');
+  const out = [];
+  for (const b of blocks) {
+    for (const e of entries(b, /^\s*-\s+id:\s*(FUN-\d+)/)) {
+      out.push({
+        id: e.id,
+        title: e.title || '',
+        status: e.status || 'proposed',
+        impact: e.impact || '—',
+        difficulty: e.difficulty || '—',
+        business_value: e.business_value || '—',
+        size: e.size || '—',
+        confidence: e.confidence || '—',
+      });
+    }
+  }
+  return out;
+}
+
+// ------------------------------------------------------------ especificaciones
+
+function extraeSpecs() {
+  const out = [];
+  const dir = path.join(ROOT, 'specs', 'implemented');
+  if (!fs.existsSync(dir)) return out;
+  const files = [];
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (ent.isDirectory()) {
+      const f = path.join(dir, ent.name, ent.name + '.md');
+      if (fs.existsSync(f)) files.push([ent.name, f]);
+    } else if (ent.isFile() && /^SPE-\d+-.+\.md$/.test(ent.name)) {
+      files.push([ent.name.replace(/\.md$/, ''), path.join(dir, ent.name)]);
+    }
+  }
+  for (const [slug, f] of files) {
+    const t = fs.readFileSync(f, 'utf8');
+    const grab = (re, dflt) => (t.match(re) || [, dflt])[1].trim();
+    out.push({
+      id: slug,
+      title: grab(/^#\s*SPEC\s*\d+\s*[—-]\s*(.+)$/m, slug),
+      status: grab(/>\s*\*\*(?:Estado|Estat):\*\*\s*(.+)/, '?'),
+      origin: grab(/>\s*\*\*Origen:\*\*\s*(.+)/, '—'),
+      date: grab(/>\s*\*\*(?:Fecha|Data):\*\*\s*(.+)/, '—'),
+      objective: grab(/>\s*\*\*(?:Objetivo|Objectiu):\*\*\s*(.+)/, ''),
+    });
+  }
+  out.sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+  return out;
+}
+
+// ------------------------------------------------------------------ test plans
+
+/** Planes = módulos de DOC-05 §4; el estado de cada caso sale de DOC-23 (UI) y DOC-27 (servicio). */
+function extraeTestPlans() {
+  const casos = extraeCasos().filter((c) => !c.deprecated);
+
+  const estadoUI = {};
+  const doc23 = fs.readFileSync(path.join(DOCS, 'DOC-23-INFORME-EJECUCION-TCS-UI.md'), 'utf8');
+  // Solo la sección §3 «Resultados por módulo» (tablas TC | Descripción | Resultat).
+  const doc23s3 = (doc23.split(/^##\s+3\.\s+Resultados por m[oó]dulo/m)[1] || '').split(/^##\s+4\./m)[0];
+  for (const m of doc23s3.matchAll(/^\|\s*(TC-\d+)\s*\|[^|]*\|\s*([^|]+?)\s*\|/gm)) {
+    if (/verde/i.test(m[2])) estadoUI[m[1]] = 'Verde';
+    else if (/rojo/i.test(m[2])) estadoUI[m[1]] = 'Rojo';
+  }
+
+  const estadoSvc = {};
+  const doc27 = fs.readFileSync(path.join(DOCS, 'DOC-27-INFORME-EJECUCION-TCS-API.md'), 'utf8');
+  for (const m of doc27.matchAll(/^\|\s*`?TCS\d+`?\s*\|\s*`?(TC-\d+)`?\s*\|[\s\S]*?(✅|❌)\s*\|/gm)) {
+    const s = m[2] === '✅' ? 'Verde' : 'Rojo';
+    if (estadoSvc[m[1]] !== 'Rojo') estadoSvc[m[1]] = s;
+  }
+
+  const PLAN_LABEL = {
+    clients: 'Clientes', vehicles: 'Vehículos', peces: 'Piezas', albarans: 'Albaranes',
+    factures: 'Facturas', personal: 'Personal', nomines: 'Nóminas', shell: 'Esqueleto', configuracio: 'Configuración',
+  };
+  const PLAN_ORDER = ['clients', 'vehicles', 'peces', 'albarans', 'factures', 'personal', 'nomines', 'shell', 'configuracio'];
+
+  const cases = casos.map((c) => ({
+    plan: PLAN_LABEL[c.module] || c.module,
+    module: c.module,
+    id: c.id,
+    objective: c.objective,
+    via: c.via,
+    automation: c.automation || '—',
+    status: estadoUI[c.id] || estadoSvc[c.id] || 'No ejecutado',
+  }));
+
+  const byPlan = {};
+  for (const c of cases) (byPlan[c.plan] || (byPlan[c.plan] = [])).push(c);
+  const plans = Object.keys(byPlan)
+    .sort((a, b) => {
+      const ia = PLAN_ORDER.indexOf(cases.find((c) => c.plan === a).module);
+      const ib = PLAN_ORDER.indexOf(cases.find((c) => c.plan === b).module);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    })
+    .map((name) => {
+      const cs = byPlan[name];
+      return {
+        id: name,
+        name,
+        module: cs[0].module,
+        cases: cs.length,
+        automated: cs.filter((c) => c.automation && c.automation !== 'not-recommended' && c.automation !== '—').length,
+        green: cs.filter((c) => c.status === 'Verde').length,
+        red: cs.filter((c) => c.status === 'Rojo').length,
+        source: 'DOC-05 §4 · DOC-23 · DOC-27',
+      };
+    });
+
+  return { plans, cases };
+}
+
 // ---------------------------------------------------------------- riesgos
 
 function sintetizaRiesgos({ preguntas, bugs, roadmap, evolutivos }) {
@@ -380,7 +496,7 @@ function construyeHTML(data, meta) {
 
   // --- roadmap donut (real) ---
   const roadmapStatusLabel = { accepted: 'Aceptadas', proposed: 'Propuestas', rejected: 'Rechazadas', implemented: 'Implementadas', superseded: 'Sustituidas' };
-  const roadmapColor = { accepted: '#44d17a', proposed: '#ff9f0a', rejected: '#ff453a', implemented: '#168bff', superseded: '#888' };
+  const roadmapColor = { accepted: '#44d17a', proposed: '#ff9f0a', rejected: '#ff453a', implemented: '#a7f0c9', superseded: '#888' };
   const roadmapCount = {};
   data.roadmap.forEach((r) => { roadmapCount[r.status] = (roadmapCount[r.status] || 0) + 1; });
   const roadmapDonut = donut(Object.entries(roadmapCount).map(([k, value]) => ({ label: roadmapStatusLabel[k] || k, value, color: roadmapColor[k] || '#888' })), data.roadmap.length, 'Total');
@@ -442,13 +558,33 @@ function construyeHTML(data, meta) {
 
   const paginaPruebas = paginaGenerica('pruebas', 'Casos de Prueba', `Los ${data.tests.length} TC individuales, con objetivo por escenario.`, 'tests', '', 'Visibles,UI,Servicio,Módulos');
   const paginaRequisitos = paginaGenerica('requisitos', 'Requisitos', `Los ${data.requirements.length} requisitos, no solo los problemáticos.`, 'requirements', '', 'Visibles,Críticos,Altos,Módulos');
-  const paginaCobertura = `<section class="page" id="cobertura"><h2>Cobertura</h2><div class="muted">Los ${data.coverage.length} requisitos con descripción y casos asociados.</div><div class="summary"><div class="card"><span class="muted">Requisitos visibles</span><b id="covVisible">${data.coverage.length}</b></div><div class="card"><span class="muted">Cubiertos</span><b class="green" id="covCovered">${m.summary.covered}</b></div><div class="card"><span class="muted">Cobertura</span><b class="purple" id="covPercent">${t.coveragePct}%</b></div><div class="card"><span class="muted">Verificación limitada</span><b class="amber" id="covLimited">${data.coverage.filter((r) => r.verification === 'Básica').length}</b></div></div><div class="card coverage-panel"><h3>Cobertura de los requisitos filtrados</h3><div id="coverageChart"></div><div class="coverage-note">Cobertura formal significa que existe al menos un caso de prueba asociado. No demuestra ejecución, ausencia de defectos ni que todos los vectores sean alcanzables.</div></div><Filters kind="coverage"></Filters><Table kind="coverage"></Table></section>`;
+  const paginaCobertura = `<section class="page" id="cobertura"><h2>Cobertura</h2><div class="muted">Los ${data.coverage.length} requisitos con descripción y casos asociados.</div><Filters kind="coverage"></Filters><div class="summary"><div class="card"><span class="muted">Requisitos visibles</span><b id="covVisible">${data.coverage.length}</b></div><div class="card"><span class="muted">Cubiertos</span><b class="green" id="covCovered">${m.summary.covered}</b></div><div class="card"><span class="muted">Cobertura</span><b class="purple" id="covPercent">${t.coveragePct}%</b></div><div class="card"><span class="muted">Verificación limitada</span><b class="amber" id="covLimited">${data.coverage.filter((r) => r.verification === 'Básica').length}</b></div></div><div class="card coverage-panel" id="coveragePanel"><h3>Cobertura de los requisitos filtrados<button type="button" class="panel-toggle" data-toggle="coveragePanelBody">Ocultar</button></h3><div id="coveragePanelBody"><div id="coverageChart"></div><div class="coverage-note">Cobertura formal significa que existe al menos un caso de prueba asociado. No demuestra ejecución, ausencia de defectos ni que todos los vectores sean alcanzables.</div></div></div><Table kind="coverage"></Table></section>`;
   const paginaPreguntas = paginaGenerica('preguntas', 'Preguntas', `${t.preguntasTotal} preguntas: ${t.preguntasAbiertas} abiertas y ${t.preguntasTotal - t.preguntasAbiertas} respondidas.`, 'questions', '', 'Visibles,Abiertas,Cerradas,Con respuesta');
   const paginaDefectos = paginaGenerica('defectos', 'Defectos', '', 'bugs');
-  const paginaRoadmap = `<section class="page" id="roadmap"><h2>Mejoras Roadmap</h2><div class="card"><b>Estado de mejoras</b>${Object.entries(roadmapCount).map(([k, v]) => `<div class="chart-row"><span>${roadmapStatusLabel[k] || k}</span><div class="track"><div class="fill" style="width:${(v / data.roadmap.length) * 100}%;background:${roadmapColor[k] || '#888'}"></div></div><b>${v}</b></div>`).join('')}</div><Filters kind="roadmap"></Filters><Table kind="roadmap"></Table></section>`;
-  const paginaRiesgos = `<section class="page" id="riesgos"><h2>Riesgos y Alertas</h2><div class="muted">Detalle de los factores que componen el riesgo global del proyecto.</div><div class="summary"><div class="card"><span class="muted">Riesgos visibles</span><b data-kpi="0">${data.risks.length}</b></div><div class="card"><span class="muted">Nivel alto</span><b class="red" data-kpi="1">${data.risks.filter((r) => r.level === 'Alto').length}</b></div><div class="card"><span class="muted">Nivel medio</span><b class="amber" data-kpi="2">${data.risks.filter((r) => r.level === 'Medio').length}</b></div><div class="card"><span class="muted">Riesgo global</span><b class="badge-estado ${estadoBadge[0]}">${estadoBadge[1]}</b></div></div><Filters kind="risks"></Filters><Table kind="risks"></Table></section>`;
-  const paginaEvolutivos = `<section class="page" id="evolutivos"><h2>Evolutivos</h2><div class="muted">Detalle de evolutivos: impacto, estado, gate y esfuerzo.</div><div class="summary"><div class="card"><span class="muted">Evolutivos visibles</span><b data-kpi="0">${data.evolutions.length}</b></div><div class="card"><span class="muted">Implementados</span><b class="green" data-kpi="1">${t.evoImplementados}</b></div><div class="card"><span class="muted">Pendientes</span><b class="amber" data-kpi="2">${t.evoPendientes}</b></div><div class="card"><span class="muted">Total</span><b data-kpi="3">${data.evolutions.length}</b></div></div><Filters kind="evolutions"></Filters><Table kind="evolutions"></Table></section>`;
+  const paginaRoadmap = `<section class="page" id="roadmap"><h2>Mejoras</h2><Filters kind="roadmap"></Filters><div class="card"><b>Estado de mejoras</b>${Object.entries(roadmapCount).map(([k, v]) => `<div class="chart-row"><span>${roadmapStatusLabel[k] || k}</span><div class="track"><div class="fill" style="width:${(v / data.roadmap.length) * 100}%;background:${roadmapColor[k] || '#888'}"></div></div><b>${v}</b></div>`).join('')}</div><Table kind="roadmap"></Table></section>`;
+  const paginaRiesgos = `<section class="page" id="riesgos"><h2>Riesgos y Alertas</h2><div class="muted">Detalle de los factores que componen el riesgo global del proyecto.</div><Filters kind="risks"></Filters><div class="summary"><div class="card"><span class="muted">Riesgos visibles</span><b data-kpi="0">${data.risks.length}</b></div><div class="card"><span class="muted">Nivel alto</span><b class="red" data-kpi="1">${data.risks.filter((r) => r.level === 'Alto').length}</b></div><div class="card"><span class="muted">Nivel medio</span><b class="amber" data-kpi="2">${data.risks.filter((r) => r.level === 'Medio').length}</b></div><div class="card"><span class="muted">Riesgo global</span><b class="badge-estado ${estadoBadge[0]}">${estadoBadge[1]}</b></div></div><Table kind="risks"></Table></section>`;
+  const paginaEvolutivos = `<section class="page" id="evolutivos"><h2>Evolutivos</h2><div class="muted">Detalle de evolutivos: impacto, estado, gate y esfuerzo.</div><Filters kind="evolutions"></Filters><div class="summary"><div class="card"><span class="muted">Evolutivos visibles</span><b data-kpi="0">${data.evolutions.length}</b></div><div class="card"><span class="muted">Implementados</span><b class="green" data-kpi="1">${t.evoImplementados}</b></div><div class="card"><span class="muted">Pendientes</span><b class="amber" data-kpi="2">${t.evoPendientes}</b></div><div class="card"><span class="muted">Total</span><b data-kpi="3">${data.evolutions.length}</b></div></div><Table kind="evolutions"></Table></section>`;
   const paginaDocumentos = `<section class="page documents-page" id="documentos"><h2>Documentos</h2><div class="muted">Fuentes utilizadas por el dashboard, filtrables por tipo y ámbito.</div><Filters kind="documents"></Filters><Summary labels="Documentos visibles,Markdown,Datos estructurados,Ámbitos visibles"></Summary><Table kind="documents"></Table></section>`;
+
+  // --- Especificaciones ---
+  const specStatusCount = {};
+  data.specs.forEach((s) => { const k = s.status || '?'; specStatusCount[k] = (specStatusCount[k] || 0) + 1; });
+  const specStatusColor = { Implemented: '#a7f0c9', Approved: '#44d17a', Draft: '#ff9f0a' };
+  const paginaEspecificaciones = `<section class="page" id="especificaciones"><h2>Especificaciones</h2><div class="muted">Las ${data.specs.length} especificaciones del proyecto (specs/implemented/) con su estado actual, origen y objetivo.</div><Filters kind="specs"></Filters><Summary labels="Especificaciones visibles,Implementadas,Orígenes distintos"></Summary><div class="card"><b>Estado de las especificaciones</b>${Object.entries(specStatusCount).map(([k, v]) => `<div class="chart-row"><span>${esc(k)}</span><div class="track"><div class="fill" style="width:${(v / data.specs.length) * 100}%;background:${specStatusColor[k] || '#888'}"></div></div><b>${v}</b></div>`).join('')}</div><Table kind="specs"></Table></section>`;
+
+  // --- Nuevas funcionalidades ---
+  const funStatusLabel = { proposed: 'Propuestas', accepted: 'Aceptadas', rejected: 'Rechazadas', implemented: 'Implementadas' };
+  const funStatusColor = { proposed: '#ff9f0a', accepted: '#44d17a', rejected: '#ff453a', implemented: '#a7f0c9' };
+  const funCount = {};
+  data.funcionalidades.forEach((f) => { funCount[f.status] = (funCount[f.status] || 0) + 1; });
+  const paginaFuncionalidades = `<section class="page" id="funcionalidades"><h2>Nuevas funcionalidades</h2><div class="muted">Las ${data.funcionalidades.length} propuestas de funcionalidad (FUN-nnn) de DOC-25, con impacto, dificultad, valor de negocio y confianza.</div><Filters kind="funcionalidades"></Filters><Summary labels="Propuestas visibles,Impacto alto,Valor de negocio alto"></Summary><div class="card"><b>Estado de las propuestas</b>${Object.entries(funCount).map(([k, v]) => `<div class="chart-row"><span>${funStatusLabel[k] || k}</span><div class="track"><div class="fill" style="width:${(v / data.funcionalidades.length) * 100}%;background:${funStatusColor[k] || '#888'}"></div></div><b>${v}</b></div>`).join('')}</div><Table kind="funcionalidades"></Table></section>`;
+
+  // --- Test Plans ---
+  const planCards = data.testplans.map((p) => {
+    const none = p.cases - p.green - p.red;
+    return `<div class="tp-plan" data-plan="${esc(p.name)}"><h4>${esc(p.name)}</h4><div class="tp-plan-meta"><span>${p.cases} casos</span><span>${p.automated} automatizados</span></div><div class="tp-plan-bar"><span class="tp-green" style="flex:${p.green}"></span><span class="tp-red" style="flex:${p.red}"></span><span class="tp-none" style="flex:${none}"></span></div><div class="tp-plan-legend"><b class="green">${p.green} verde</b> · <b class="red">${p.red} rojo</b> · <span class="muted">${none} sin ejecutar</span></div></div>`;
+  }).join('');
+  const paginaTestPlans = `<section class="page" id="testplans"><h2>Test Plans</h2><div class="muted">Planes de prueba por módulo (DOC-05 §4) con el estado real de cada caso (DOC-23 · UI, DOC-27 · servicio). Usa el filtro «plan» o pulsa un plan para ver sus casos.</div><Filters kind="testplancases"></Filters><h3 class="tp-h3">Planes de prueba (${data.testplans.length})</h3><div class="tp-plan-grid">${planCards}</div><h3 class="tp-h3">Casos del plan seleccionado</h3><Summary labels="Casos visibles,Verde,Rojo,Sin ejecutar"></Summary><Table kind="testplancases"></Table></section>`;
 
   const dataJson = JSON.stringify(data);
 
@@ -459,11 +595,14 @@ ${resumenHtml}
 ${paginaRequisitos}
 ${paginaPruebas}
 ${paginaCobertura}
+${paginaTestPlans}
 ${paginaPreguntas}
 ${paginaDefectos}
 ${paginaRoadmap}
 ${paginaRiesgos}
 ${paginaEvolutivos}
+${paginaEspecificaciones}
+${paginaFuncionalidades}
 ${paginaDocumentos}
 </main></div>
 <script>const data=${dataJson};
@@ -509,11 +648,17 @@ function main() {
   const roadmap = extraeRoadmap();
   const evolutions = extraeEvolutivos();
   const documents = extraeDocumentos();
+  const funcionalidades = extraeFuncionalidades();
+  const specs = extraeSpecs();
+  const testPlans = extraeTestPlans();
   const risks = sintetizaRiesgos({ preguntas: questions, bugs, roadmap, evolutivos: evolutions });
   const { sha, branch } = commitInfo();
   const actividad = ultimosCommits(6);
 
-  const data = { requirements, tests, coverage, questions, bugs, roadmap, risks, evolutions, documents };
+  const data = {
+    requirements, tests, coverage, questions, bugs, roadmap, risks, evolutions, documents,
+    funcionalidades, specs, testplans: testPlans.plans, testplancases: testPlans.cases,
+  };
 
   const bugsCriticos = bugs.filter((b) => b.level === 'Crítico' && b.status === 'Abierto').length;
   const bugsAltos = bugs.filter((b) => b.level === 'Alto' && b.status === 'Abierto').length;
@@ -556,6 +701,7 @@ function main() {
   console.log('  preguntas:', questions.length, '(' + meta.totals.preguntasAbiertas + ' abiertas) | bugs abiertos:', meta.totals.bugsAbiertos, '| estado global:', estadoGlobal);
   console.log('  roadmap:', roadmap.length, '| evolutivos:', evolutions.length, '(' + meta.totals.evoImplementados + ' implementados) | documentos:', documents.length);
   console.log('  riesgos sintetizados:', risks.length);
+  console.log('  funcionalidades (FUN):', funcionalidades.length, '| especificaciones:', specs.length, '| planes de prueba:', testPlans.plans.length, '(' + testPlans.cases.length + ' casos)');
 
   const html = construyeHTML(data, meta);
   fs.writeFileSync(OUT, html);
