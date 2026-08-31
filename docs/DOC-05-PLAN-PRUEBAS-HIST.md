@@ -2,11 +2,11 @@
 doc_id: DOC-05-HIST
 doc_name: DOC-05-PLAN-PRUEBAS-HIST
 of_document: DOC-05-PLAN-PRUEBAS.md
-version: 1.9.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.10.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-03 plan de pruebas
 generator_version: "1.2"
-generated_at: 2026-08-30T20:15:00+02:00
+generated_at: 2026-08-31T10:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -33,13 +33,97 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 
 El plan tenía **110 casos de prueba desde 1.0.0 hasta 1.6.0**, y suma **9 más en
 1.7.0** (TC-111 a TC-119); **1.8.0 no añade ninguno** y se queda en 119; **1.9.0
-suma 7 más** (TC-120 a TC-126) y se queda en **126**.
+suma 7 más** (TC-120 a TC-126) y se queda en 126; **1.10.0 suma 6 más**
+(TC-127 a TC-132) y se queda en **132**.
 **Nunca se ha renumerado, ni retirado, ni reutilizado un `TC-nnn`**. Conviene
 tenerlo delante al leer lo que sigue: casi todas las subidas de versión de este
 documento han sido aditivas; las dos que tocaron el contenido de un caso
 existente sin añadir ninguno —1.3.0 sobre `TC-041`, y **1.8.0** sobre el campo
 `requirement` de cinco casos— se hicieron con edición nominal del registro,
 porque `sync` no sobrescribe.
+
+---
+
+## 1.10.0 — 2026-08-31 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `/spec-impl` cerró
+`specs/implemented/SPE-08-factura-rectificativa/SPE-08-factura-rectificativa.md`
+(`Origen: BUG-004`, `Implemented` el 2026-08-31, commits `e788063` a
+`df1ab05`) y despachó a A-03 en modo «Revisión post-implementación». El spec
+resuelve `DOC-04/Q-06`: una factura emitida por error se corrige mediante una
+factura rectificativa que la anula y libera sus albaranes, sin alterar la
+inmutabilidad de la original, cerrando también `BUG-004` de `DOC-24-BUGS.json`.
+
+**Qué cambia.** Seis casos nuevos, `TC-127` a `TC-132`; ninguno de los 126
+anteriores cambia de `steps`, `priority`, `requirement` ni ningún campo de
+aislamiento o automatización — ni siquiera `TC-078`, revisado por cubrir
+`AC-008` y confirmado sin cambios.
+
+| Caso | Requirement | `verification_path` | Qué verifica |
+|---|---|---|---|
+| TC-127 | REQ-047 | ui | Camino feliz: numera la rectificativa, libera los albaranes a pendiente y muestra el enlace bidireccional (AC-001, AC-002, AC-003, AC-009; también AC-011 con datos de seed equivalentes) |
+| TC-128 | REQ-042 | ui | Inmutabilidad: ningún campo propio de la factura original cambia; su condición «anulada» es derivada |
+| TC-129 | REQ-047 | service | Rechaza una segunda rectificación sobre una factura ya rectificada (409) |
+| TC-130 | REQ-047 | ui | Se puede rectificar una factura pagada igual que una pendiente de cobro |
+| TC-131 | REQ-047 | service | Rechaza la rectificación sin motivo (400) |
+| TC-132 | REQ-052 | ui | Marca «Anulada» en `FacturesList.tsx` y en la ficha de cliente |
+
+| Qué | 1.9.0 | 1.10.0 |
+|---|---|---|
+| Casos / pasos | 126 / 284 | **132 / 298** |
+| Requisitos | 81 | **81** (sin cambio: los tres que usan estos casos ya existían) |
+| Cobertura | 81/81, 0 GAP PLAN | **81/81, 0 GAP PLAN** |
+| Prioridades · tipos · vía · grado | 60C/32H/32M/2L · 68F/40N/10B/7I/1Regression · 112ui/12service/2mixed · 31/90/4/1 | **64C/33H/33M/2L · 70F/42N/10B/9I/1Regression · 116ui/14service/2mixed · 33/94/4/1** |
+| Requisito con más casos | REQ-040 (8) | sin cambio (`REQ-047` sube de 2 a 6, segundo del plan, no alcanza) |
+| `registro-ids.json` | 126 anclas TC-* | **132**, TC-127–TC-132 nuevas con `origin` |
+
+**Por qué AC-001, AC-002, AC-003 y AC-009 comparten un solo caso.** Los cuatro
+son facetas de la misma acción de pantalla —abrir el detalle, pulsar
+«Rectificar factura», informar el motivo y guardar—: el endpoint acepta el
+motivo, libera los albaranes, numera con prefijo propio y muestra el enlace
+bidireccional, todo en la misma secuencia. Mismo criterio que ya fundió
+`AC-001`/`AC-002`/`AC-003` de `SPE-07` en `TC-120` (1.9.0). Detalle en el
+apartado 4.5 y en el Anexo · Versión 1.10.0 del documento principal.
+
+**Por qué AC-005 y AC-007 van por servicio sin discusión.** El botón
+«Rectificar factura» no se renderiza sobre una factura ya anulada
+(`FacturaDetail.tsx:123`) y el formulario valida el motivo en cliente antes de
+llamar al servicio (`FacturaDetail.tsx:83`): los dos vectores son
+literalmente inalcanzables por pantalla, sin la ambigüedad de `TC-120`-`123`
+de `SPE-07` (que van por servicio pese a que la pantalla también bloquea el
+valor, por verificar una garantía adicional). Detalle en el apartado 4.12.
+
+**`TC-078` se revisa, no se reescribe.** Cubre `AC-008` (`estat_pagament`
+sigue admitiendo solo `pendent`/`pagada`) y su comportamiento no cambió con
+`SPE-08`: el endpoint de rectificación no toca ese campo.
+
+**`AC-011` no trae caso propio.** El caso real de `BUG-004` (factura
+`2026/F-0002`) ya no existe en el seed; `TC-127` verifica el mismo mecanismo
+genérico contra datos de seed equivalentes (`DS-013`), tal como el propio
+`AC-011` del spec anota como salvedad.
+
+**Registro.** Seis altas nuevas (`TC-127` a `TC-132`), cero ediciones
+nominales — mismo patrón que 1.9.0. Cada ancla lleva `module`, `requirement`,
+`external_id`, `created: 2026-08-31` y `origin` apuntando a su `AC-nnn`.
+Corrección arrastrada: la nota de 1.9.0 sobre el recuento de anclas declaraba
+`Q=29`/336 totales cuando el registro ya tenía `Q=32` (anclas de A-02/A-06
+ajenas a este plan); corregido en el front-matter de esta versión a `Q=32`/345.
+
+**Por qué MINOR.** No es PATCH: seis `id` nuevos y un requisito (`REQ-047`)
+que pasa a ser el segundo con más casos del plan cambian lo que Rally, S-10,
+S-14 y S-17 consumen. No es MAJOR: nada se retira, nada se renumera, ningún
+caso previo cambia de contenido.
+
+**Qué queda obsoleto:** DOC-07 y DOC-16 (declaran DOC-05 1.9.0 como entrada).
+DOC-13 recibe un encargo nuevo: materializar `DS-013`. DOC-19, no. Rally/S-07:
+seis altas nuevas, cero *upserts* con efecto sobre casos previos.
+
+**Compañeros del spec.** `SPE-08-factura-rectificativa-QA.md` (parte de
+trabajo para `s10-auto-tcs`, pendiente de confirmación) y
+`SPE-08-factura-rectificativa-TS.md` (manifiesto de aceptación y regresión),
+en `specs/implemented/SPE-08-factura-rectificativa/`.
 
 ---
 

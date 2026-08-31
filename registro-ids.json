@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-30T20:15:00.000Z",
+  "updated_at": "2026-08-31T15:28:46.127Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3126,6 +3126,78 @@
       "status": "open",
       "blocks": "§4/A.13 — «El albarán no se puede pasar a otro cliente» y «Si algo va mal»: el manual describe el rechazo y sus consecuencias sin poder describir la escena",
       "source": "yaml"
+    },
+    "TC-127": {
+      "text": "Rectificar una factura numera la rectificativa y libera sus albaranes a pendiente",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-127",
+      "priority": "Critical",
+      "origin": "SPE-08-factura-rectificativa (AC-001, AC-002, AC-003, AC-009)"
+    },
+    "TC-128": {
+      "text": "La factura original no cambia ningún campo propio al rectificarse",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-042",
+      "external_id": "TALLER-FAC-TC-128",
+      "priority": "Critical",
+      "origin": "SPE-08-factura-rectificativa (AC-004)"
+    },
+    "TC-129": {
+      "text": "Rechazar una segunda rectificación sobre una factura ya rectificada",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-129",
+      "priority": "Critical",
+      "origin": "SPE-08-factura-rectificativa (AC-005)"
+    },
+    "TC-130": {
+      "text": "Se puede rectificar una factura pagada igual que una pendiente de cobro",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-130",
+      "priority": "High",
+      "origin": "SPE-08-factura-rectificativa (AC-006)"
+    },
+    "TC-131": {
+      "text": "Rechazar la rectificación de una factura sin informar el motivo",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-047",
+      "external_id": "TALLER-FAC-TC-131",
+      "priority": "Critical",
+      "origin": "SPE-08-factura-rectificativa (AC-007)"
+    },
+    "TC-132": {
+      "text": "Los listados de facturas y la ficha de cliente marcan como anulada la factura con rectificativa",
+      "type": "test_case",
+      "document": "DOC-05-PLAN-PRUEBAS.md",
+      "created": "2026-08-31",
+      "status": "active",
+      "module": "factures",
+      "requirement": "REQ-052",
+      "external_id": "TALLER-FAC-TC-132",
+      "priority": "Medium",
+      "origin": "SPE-08-factura-rectificativa (AC-010, AC-011 verificado también por TC-127)"
     }
   }
 }
