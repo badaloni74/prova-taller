@@ -12,6 +12,13 @@ function computeTotals(albarans) {
   return base;
 }
 
+function anuladaPerId(facturaId) {
+  const rectificativa = db
+    .prepare('SELECT id FROM factures WHERE factura_rectificada_id = ?')
+    .get(facturaId);
+  return rectificativa ? rectificativa.id : null;
+}
+
 function withDetails(factura) {
   if (!factura) return factura;
   const albarans = db
@@ -32,6 +39,7 @@ function withDetails(factura) {
     base: Math.round(base * 100) / 100,
     iva_import: Math.round(ivaImport * 100) / 100,
     total: Math.round(total * 100) / 100,
+    anuladaPer: anuladaPerId(factura.id),
   };
 }
 
@@ -121,6 +129,47 @@ router.patch('/:id', (req, res) => {
 
   const factura = db.prepare('SELECT * FROM factures WHERE id = ?').get(req.params.id);
   res.json(withDetails(factura));
+});
+
+router.post('/:id/rectificar', (req, res) => {
+  const original = db.prepare('SELECT * FROM factures WHERE id = ?').get(req.params.id);
+  if (!original) {
+    return res.status(404).json({ error: 'Factura no trobada' });
+  }
+
+  const { motiu } = req.body;
+  if (!motiu || !motiu.trim()) {
+    return res.status(400).json({ error: 'El motiu és obligatori' });
+  }
+
+  if (anuladaPerId(original.id)) {
+    return res.status(409).json({ error: 'La factura ja ha estat rectificada' });
+  }
+
+  const numero = generateNumero('factures', 'R');
+
+  const rectificar = db.transaction(() => {
+    const albarans = db.prepare('SELECT id FROM albarans WHERE factura_id = ?').all(original.id);
+    const releaseAlbara = db.prepare(
+      "UPDATE albarans SET estat = 'pendent', factura_id = NULL, actualitzat_el = datetime('now') WHERE id = ?",
+    );
+    for (const albara of albarans) {
+      releaseAlbara.run(albara.id);
+    }
+
+    const result = db
+      .prepare(
+        `INSERT INTO factures (numero, client_id, iva_percentatge, estat_pagament, factura_rectificada_id, motiu_rectificacio)
+         VALUES (?, ?, ?, 'pendent', ?, ?)`,
+      )
+      .run(numero, original.client_id, original.iva_percentatge, original.id, motiu.trim());
+
+    return result.lastInsertRowid;
+  });
+
+  const rectificativaId = rectificar();
+  const rectificativa = db.prepare('SELECT * FROM factures WHERE id = ?').get(rectificativaId);
+  res.status(201).json(withDetails(rectificativa));
 });
 
 module.exports = router;
