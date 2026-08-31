@@ -2,11 +2,11 @@
 doc_id: DOC-07-HIST
 doc_name: DOC-07-TRAZABILIDAD-HIST
 of_document: DOC-07-TRAZABILIDAD.md
-version: 1.12.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.13.0       # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-05 coherencia y trazabilidad
 generator_version: "1.2"
-generated_at: 2026-08-29T18:00:00+02:00
+generated_at: 2026-08-31T19:00:00+02:00
 project: app-taller
 project_code: TALLER
 purpose: >
@@ -35,6 +35,87 @@ Una entrada por versión, de la más nueva a la más antigua. El estado actual e
 Todas las versiones han sido de **pasada `pre`**: en ninguna existían
 `DOC-19-RALLY-TESTCASES.csv` ni `DOC-20-RALLY-STATE.json`, así que en ninguna se ha
 escrito jamás un `GAP EXPORT`, un `NOT RUN` ni un resultado.
+
+---
+
+## 1.13.0 — 2026-08-31 · MINOR
+
+**Fidelidad:** primaria.
+
+**Motivo del salto.** `DOC-05-PLAN-PRUEBAS.md` subió de **1.8.0 a 1.10.0** en dos
+revisiones post-implementación de A-03, una por cada spec cerrado desde 1.12.0:
+`SPE-07-importes-negativos` (`Origen: BUG-003`, `Implemented` 2026-08-30) añade
+`TC-120`–`TC-126` (7 casos) sobre `REQ-019` (+3), `REQ-022` (+1), `REQ-034` (+1) y
+`REQ-036` (+2); `SPE-08-factura-rectificativa` (`Origen: BUG-004`, `Implemented`
+2026-08-31) añade `TC-127`–`TC-132` (6 casos) sobre `REQ-047` (+4), `REQ-042` (+1) y
+`REQ-052` (+1). `DOC-04-FUNCIONAL.md` solo se movió de 1.3.1 a 1.3.2 (PATCH de
+metadatos de seguimiento en `Q-02`/`Q-06`/`Q-12`, bloque `requirements` idéntico
+byte a byte); no dispara el JOIN por sí mismo.
+
+**Precisión sobre el propio encargo.** El prompt que abre este ciclo citaba ocho
+requisitos como destino de los casos nuevos, incluyendo `REQ-035` y excluyendo
+`REQ-052`. Verificado sobre el YAML: `REQ-035` no recibe ningún caso nuevo (sigue
+con `TC-048;TC-049`) y `REQ-052` sí recibe uno (`TC-127`, colgado de `REQ-047`, no
+de `REQ-035`). Se prefiere el repositorio a la descripción del encargo, como en
+ciclos anteriores.
+
+**La matriz.** S-14 regenera `DOC-07-MATRIZ.csv`: sigue en 81 filas (ningún
+requisito nuevo), sube `test_case_count` total a **132** (eran 119), 7 filas
+cambian su `test_case_ids` (`REQ-019`, `REQ-022`, `REQ-034`, `REQ-036`, `REQ-042`,
+`REQ-047`, `REQ-052`). Cobertura sigue en **100,00 % (81/81), 0 GAP PLAN**. 0
+bloqueantes. `critico_caso_unico` baja de 17 a **15**: `REQ-036` sale por ganar dos
+casos; se corrige además un error heredado de la versión anterior, que seguía
+listando `REQ-027` en esa regla pese a tener 2 casos desde 1.11.0.
+
+**Cierres verificados en esta versión, los tres por lectura directa del árbol, no
+por arrastre de prosa:**
+
+- **`A-05-09` (colisión de `Q-30`) — CERRADO.** `DOC-06` 1.4.1 renumera sus dos
+  preguntas propias (`Q-30`→`Q-31`, `Q-31`→`Q-32`); `registro-ids.json` confirma
+  32 `Q-nnn` sin colisión.
+- **`A-05-12` (resumen de `verification_path` de DOC-05 vs sus datos) — CERRADO.**
+  Recontado sobre los 9 bloques `yaml testcases`: 116 `ui` / 14 `service` / 2
+  `mixed`, exactamente lo que declara el front-matter de DOC-05 1.10.0.
+- **`A-05-11b` se estrecha de 3 a 2 requisitos.** `REQ-027` se cierra: `TC-116`
+  (nacido en la revisión de SPE-06, 1.11.0) ejerce las dos mitades del vector
+  (`vehicle_id` vacío e inexistente); la versión anterior de este documento no lo
+  había corregido pese a que el caso ya existía.
+- **`A-05-08b` se estrecha de 3 a 2.** `REQ-036` deja de depender en exclusiva del
+  carril serial (que crece de 17 a 20 casos, arrastrando también el recuento
+  pendiente desde 1.11.0 de TC-112/TC-114/TC-118).
+
+**`A-05-03` — la familia queda vacía por primera vez.** `DOC-24-BUGS.json` sube a
+**v1.1.2** (2026-08-31) y marca los 4 defectos censados `fixed`, incluidos
+`BUG-003` (cerrado por SPE-07, detectado por el nuevo `TC-126`, `type: Regression`)
+y `BUG-004` (cerrado por SPE-08, detectado por `TC-127`/`TC-129`/`TC-131` sobre
+`REQ-047`, no sobre `REQ-043` donde `DOC-24` lo archivó). Queda un residuo
+documental: `REQ-035` sigue sin describir el bloqueo de stock insuficiente que el
+código ya aplica desde el 2026-08-21 (commit directo, sin spec).
+
+**`A-05-04` gana un segundo ejemplo.** `POST /api/factures/:id/rectificar` existe
+y se verifica con 6 casos nuevos, y ningún `REQ-nnn` de DOC-04 describe el
+mecanismo de factura rectificativa.
+
+**Nace `A-05-17`.** `DOC-04` 1.3.2 sigue declarando `Q-06` y `Q-12` con
+`gap_open_until_implemented: true` y `evolutivo.status: pending`, con `spec_ref`
+que describe ficheros que ya existen, están `Implemented` y tienen casos de
+prueba verificándolos. `Q-10` (mismo patrón, SPE-06) sí se resincronizó
+correctamente; sirve de precedente para lo que a `Q-06`/`Q-12` les falta.
+
+**§7.1 recalculado desde cero**, no arrastrado con `*` como en 1.11.0/1.12.0: ①
+10 preguntas/18 requisitos, ② 6/16, ③ 2/5, ⑤ 12/49; unión ①∪②∪③ = 34 requisitos
+(42,0 %, eran 32 sin contar aún `Q-30`); unión de los cuatro alcances = 66 (81,5 %).
+
+**Qué NO cambia.** Sigue siendo pasada `pre` (no existen DOC-19 ni DOC-20); la
+narrativa de riesgos del §6 sigue sin datos de ejecución; `DOC-23` (2.2.0) y
+`DOC-27` (1.1.0) no se han regenerado y no cubren ninguno de los 13 casos nuevos,
+que quedan sin evidencia de ejecución publicada (111 de 132, 84,1 %, baja del
+93,3 % anterior solo por el denominador).
+
+**Front-matter.** Adelgaza de las notas de procedencia extensas de 1.10.0/1.11.0
+a un bloque de matices acotado, siguiendo la misma poda que 1.6.0 aplicó a los
+campos derivados: los datos viven en §1/§5, los matices en «Procedencia», el
+porqué de cada cifra en este `-HIST.md`.
 
 ---
 

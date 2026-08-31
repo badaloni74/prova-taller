@@ -17,10 +17,10 @@ REQ-015,El sistema permite modificar los datos de un vehículo ya registrado.,ve
 REQ-016,El sistema permite dar de baja un vehículo previa confirmación del usuario.,vehicles,medium,TC-022,1,n/d,n/d,n/d,Correcto
 REQ-017,El sistema impide dar de baja un vehículo que tenga albaranes asociados.,vehicles,critical,TC-023,1,n/d,n/d,n/d,Correcto
 REQ-018,"El sistema ofrece un catálogo de piezas en el que cada pieza muestra su referencia, su precio y su stock actual.",peces,high,TC-024,1,n/d,n/d,n/d,Correcto
-REQ-019,El sistema permite dar de alta una pieza en el catálogo con su stock inicial.,peces,high,TC-025,1,n/d,n/d,n/d,Correcto
+REQ-019,El sistema permite dar de alta una pieza en el catálogo con su stock inicial.,peces,high,TC-025;TC-120;TC-124;TC-126,4,n/d,n/d,n/d,Correcto
 REQ-020,El sistema exige el nombre de la pieza tanto al darla de alta como al modificarla.,peces,critical,TC-026;TC-027,2,n/d,n/d,n/d,Correcto
 REQ-021,"La ficha de una pieza muestra su referencia, precio, coste, unidad, proveedor y stock.",peces,medium,TC-028,1,n/d,n/d,n/d,Correcto
-REQ-022,El sistema permite modificar los datos de una pieza del catálogo.,peces,high,TC-029,1,n/d,n/d,n/d,Correcto
+REQ-022,El sistema permite modificar los datos de una pieza del catálogo.,peces,high,TC-029;TC-121,2,n/d,n/d,n/d,Correcto
 REQ-023,El sistema permite dar de baja una pieza del catálogo previa confirmación del usuario.,peces,medium,TC-030,1,n/d,n/d,n/d,Correcto
 REQ-024,El sistema impide dar de baja una pieza que se haya utilizado en algún albarán.,peces,critical,TC-031,1,n/d,n/d,n/d,Correcto
 REQ-025,"El sistema ofrece un listado de albaranes filtrable por vehículo, por cliente y por situación del albarán.",albarans,high,TC-032;TC-033,2,n/d,n/d,n/d,Correcto
@@ -32,25 +32,25 @@ REQ-030,El sistema permite añadir a un albarán una línea de pieza indicando l
 REQ-031,"El sistema solo admite en un albarán líneas de pieza o de mano de obra: una anotación que no sea de ninguno de esos dos tipos no llega a registrarse, de modo que el albarán mantiene las líneas y los importes que ya tenía.",albarans,high,TC-041,1,n/d,n/d,n/d,Correcto
 REQ-032,El sistema exige que la cantidad de una línea de albarán sea mayor que cero.,albarans,critical,TC-042;TC-043;TC-044,3,n/d,n/d,n/d,Correcto
 REQ-033,El sistema exige que la pieza de una línea de pieza exista en el catálogo.,albarans,critical,TC-045,1,n/d,n/d,n/d,Correcto
-REQ-034,"Cuando el usuario no indica el precio de una línea de pieza, el sistema aplica el precio que la pieza tiene en el catálogo.",albarans,high,TC-046;TC-047,2,n/d,n/d,n/d,Correcto
+REQ-034,"Cuando el usuario no indica el precio de una línea de pieza, el sistema aplica el precio que la pieza tiene en el catálogo.",albarans,high,TC-046;TC-047;TC-123,3,n/d,n/d,n/d,Correcto
 REQ-035,"Al añadir una línea de pieza, el sistema descuenta del stock de esa pieza la cantidad consumida, en la misma operación que registra la línea.",albarans,critical,TC-048;TC-049,2,n/d,n/d,n/d,Correcto
-REQ-036,El sistema permite añadir a un albarán una línea de mano de obra con las horas trabajadas y su precio por hora.,albarans,critical,TC-050,1,n/d,n/d,n/d,Correcto
+REQ-036,El sistema permite añadir a un albarán una línea de mano de obra con las horas trabajadas y su precio por hora.,albarans,critical,TC-050;TC-122;TC-125,3,n/d,n/d,n/d,Correcto
 REQ-037,El sistema exige una descripción del trabajo en toda línea de mano de obra.,albarans,high,TC-051,1,n/d,n/d,n/d,Correcto
 REQ-038,El sistema permite retirar una línea de un albarán no facturado.,albarans,high,TC-052,1,n/d,n/d,n/d,Correcto
 REQ-039,"Al retirar una línea de pieza, el sistema devuelve al stock de esa pieza la cantidad que se había consumido, en la misma operación que elimina la línea.",albarans,critical,TC-053;TC-054,2,n/d,n/d,n/d,Correcto
 REQ-040,"El sistema permite modificar el vehículo, la fecha y las notas de un albarán no facturado.",albarans,medium,TC-055;TC-112;TC-114,3,n/d,n/d,n/d,Correcto
 REQ-041,"El sistema permite borrar un albarán no facturado junto con todas sus líneas, previa confirmación del usuario.",albarans,medium,TC-056,1,n/d,n/d,n/d,Correcto
-REQ-042,"El sistema impide modificar, borrar o alterar las líneas de un albarán que ya ha sido facturado.",albarans,critical,TC-057;TC-058;TC-059;TC-115,4,n/d,n/d,n/d,Correcto
+REQ-042,"El sistema impide modificar, borrar o alterar las líneas de un albarán que ya ha sido facturado.",albarans,critical,TC-057;TC-058;TC-059;TC-115;TC-128,5,n/d,n/d,n/d,Correcto
 REQ-043,El sistema permite emitir una factura a partir de los albaranes pendientes de facturar de un cliente.,factures,critical,TC-060;TC-061,2,n/d,n/d,n/d,Correcto
 REQ-044,El sistema exige que toda factura agrupe al menos un albarán.,factures,critical,TC-062,1,n/d,n/d,n/d,Correcto
 REQ-045,El sistema exige que todos los albaranes de una factura estén pendientes de facturar en el momento de emitirla.,factures,critical,TC-063,1,n/d,n/d,n/d,Correcto
 REQ-046,El sistema exige que todos los albaranes de una misma factura pertenezcan al mismo cliente.,factures,critical,TC-064,1,n/d,n/d,n/d,Correcto
-REQ-047,"Al emitir una factura, el sistema marca sus albaranes como facturados y los enlaza a ella en la misma operación.",factures,critical,TC-065;TC-066,2,n/d,n/d,n/d,Correcto
+REQ-047,"Al emitir una factura, el sistema marca sus albaranes como facturados y los enlaza a ella en la misma operación.",factures,critical,TC-065;TC-066;TC-127;TC-129;TC-130;TC-131,6,n/d,n/d,n/d,Correcto
 REQ-048,"El sistema asigna a cada factura un número correlativo anual sin intervención del usuario, con el formato año/F-nnnn.",factures,high,TC-067;TC-068,2,n/d,n/d,n/d,Correcto
 REQ-049,"La base de una factura es la suma de la cantidad por el precio de todas las líneas de los albaranes que agrupa, y su total es la base más el IVA.",factures,critical,TC-069;TC-070,2,n/d,n/d,n/d,Correcto
 REQ-050,"Cuando el usuario no indica un tipo de IVA al emitir la factura, el sistema aplica el 21 por ciento.",factures,critical,TC-071;TC-072,2,n/d,n/d,n/d,Correcto
 REQ-051,"El sistema presenta la base, el IVA y el total de una factura redondeados a dos decimales.",factures,high,TC-073,1,n/d,n/d,n/d,Correcto
-REQ-052,"El sistema ofrece un listado de facturas en el que cada factura muestra su número, su estado de pago y su total.",factures,high,TC-074,1,n/d,n/d,n/d,Correcto
+REQ-052,"El sistema ofrece un listado de facturas en el que cada factura muestra su número, su estado de pago y su total.",factures,high,TC-074;TC-132,2,n/d,n/d,n/d,Correcto
 REQ-053,"El detalle de una factura muestra los albaranes que agrupa, la base, el IVA y el total.",factures,high,TC-075,1,n/d,n/d,n/d,Correcto
 REQ-054,El sistema permite marcar una factura como pagada o devolverla a pendiente de cobro.,factures,high,TC-076;TC-077,2,n/d,n/d,n/d,Correcto
 REQ-055,El estado de pago de una factura solo puede ser pendiente o pagada.,factures,high,TC-078,1,n/d,n/d,n/d,Correcto
