@@ -2,17 +2,17 @@
 - Al automatitzar el nom dels elements ha d'estar en castellà (derivat del primer punt).
 - Revisar les automatitzacions per a que cada pantalla tingui els seus localitzadors i la funció corresponent per accedir-hi sempre i quan no es pugui accedir a ells de manera dinàmica
 - El nom dels agents no ha de ser a01- ..., a02-....
-a01-orquestador -> AG Orquestador
-a02-funcional -> AG Analista Funcional
-a03-pruebas -> AG QA de Plan Pruebas
-a04-manual -> User Manual Builder
+a01-orquestador -> Orquestador Agent
+a02-funcional -> Funcional Analist Agent 
+a03-pruebas -> QA Analist Agent
+a04-manual -> User Manual Builder Agent
 a05-trazabilidad -> Traceability & Coverage Agent 
-a06-refinamiento -> Business Refinement Agent 
-a07-impacto -> Impact Analysis Agent
+a07-impacto -> Impact Analist Agent 
 a08-estimacion -> Effort Estimation Agent
-a09-regresion -> Regression Planning Agent
-a12-roadmap -> RefactorizadorTechnical Strategy Advisor
-a15-funcionalidad -> Product Strategy Advisor
+a09-regresion -> Regression QA Agent
+a10-explorador -> Exploratory QA Agent 
+a12-roadmap -> Technical Strategy Agent 
+a15-funcionalidad -> Product Strategy Agent
 
 - donar una volta a tot ho que hi ha per refactoritzar-ho i fer-ho més àgil i econòmic en tokens 
 
