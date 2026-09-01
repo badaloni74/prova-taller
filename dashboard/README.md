@@ -1,9 +1,10 @@
 # Dashboard de trazabilidad y estado
 
 `dashboard-actual.html` es el dashboard con los **datos reales actuales** del
-proyecto: requisitos, casos de prueba, cobertura, preguntas abiertas,
-defectos, roadmap técnico, riesgos, evolutivos y documentos. Se abre
-directamente en el navegador, sin servidor.
+proyecto: requisitos, casos de prueba, cobertura, planes de prueba, preguntas
+abiertas, defectos, mejoras, riesgos, evolutivos, especificaciones, nuevas
+funcionalidades y documentos. Se abre directamente en el navegador, sin
+servidor.
 
 ## Cómo se regenera
 
@@ -34,11 +35,14 @@ obsolescencia, es el momento en que `docs/` ha terminado de cambiar.
 | Requisitos | `DOC-04-FUNCIONAL.md` (bloque `requirements`), enriquecido con la matriz |
 | Casos de Prueba | `DOC-05-PLAN-PRUEBAS.md` (bloques `testcases`) |
 | Cobertura | Matriz de `s14-matriz-trazabilidad` (`matriz.js`), ejecutada de verdad |
+| Test Plans | Módulos de `DOC-05` §4 como planes; estado de cada caso de `DOC-23` (UI) y `DOC-27` (servicio) |
 | Preguntas | `registro-ids.json` (anclas `Q-nnn`) |
 | Defectos | `DOC-24-BUGS.json`, con el cierre de `BUG-002` inferido de `specs/implemented/SPE-06-*` |
-| Mejoras Roadmap | `DOC-16-ROADMAP.md` (bloque `roadmap`) |
+| Mejoras | `DOC-16-ROADMAP.md` (bloque `roadmap`) |
 | Riesgos y Alertas | Sintetizado a partir de las demás fuentes (nunca inventado) |
 | Evolutivos | `specs/implemented/` y `specs/pending/` |
+| Especificaciones | Cabecera de cada `specs/implemented/SPE-nn-*` (estado, origen, fecha, objetivo) |
+| Nuevas funcionalidades | `DOC-25-PROPUESTAS-FUNCIONALES.md` (bloque `propuestas`, `FUN-nnn`) |
 | Documentos | Front-matter de cada `docs/DOC-nn-*.md` |
 
 ## Ficheros
