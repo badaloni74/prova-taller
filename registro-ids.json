@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-08-31T15:49:59.917Z",
+  "updated_at": "2026-09-01T06:03:38.439Z",
   "note": "Las anclas solo se anaden. Nunca se renumeran ni se reutilizan. Un ancla retirada pasa a status: deprecated y su numero no se libera.",
   "owners": {
     "UC-*": "S-01 skill-doc-base",
@@ -3245,6 +3245,86 @@
       "module": "factures",
       "created": "2026-08-31",
       "status": "active"
+    },
+    "REQ-082": {
+      "text": "El sistema permite rectificar una factura emitida, generando una factura rectificativa nueva, numerada aparte, que referencia a la original.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "factures",
+      "source_anchors": "[UC-FAC-05]",
+      "priority": "critical"
+    },
+    "REQ-083": {
+      "text": "El sistema exige indicar un motivo para rectificar una factura.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "factures",
+      "source_anchors": "[UC-FAC-05]",
+      "priority": "high"
+    },
+    "REQ-084": {
+      "text": "Al rectificar una factura, sus albaranes vuelven a estado pendiente de facturar y quedan libres de ella, en la misma operación.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "factures",
+      "source_anchors": "[BR-FAC-10, UC-FAC-05]",
+      "priority": "critical"
+    },
+    "REQ-085": {
+      "text": "La factura original no cambia ningún campo propio al rectificarse; queda marcada como anulada solo por existir la rectificativa que la referencia.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "factures",
+      "source_anchors": "[BR-FAC-10, UC-FAC-05]",
+      "priority": "critical"
+    },
+    "REQ-086": {
+      "text": "El sistema impide rectificar una factura que ya tiene una rectificativa.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "factures",
+      "source_anchors": "[BR-FAC-11, UC-FAC-05]",
+      "priority": "critical"
+    },
+    "REQ-087": {
+      "text": "El sistema exige que el precio y, si se informa, el coste de una pieza sean mayores que cero, tanto al darla de alta como al modificarla.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "peces",
+      "source_anchors": "[BR-PEC-03, UC-PEC-02, UC-PEC-04]",
+      "priority": "critical"
+    },
+    "REQ-088": {
+      "text": "El sistema impide que el estoc de una pieza sea negativo, tanto al darla de alta como al modificarla; cero es un valor válido.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "peces",
+      "source_anchors": "[BR-PEC-04, UC-PEC-02, UC-PEC-04]",
+      "priority": "critical"
+    },
+    "REQ-089": {
+      "text": "El sistema exige que el precio de una línea de albarán sea mayor que cero: en una línea de pieza, solo cuando el precio se informa explícitamente; en una línea de mano de obra, siempre.",
+      "type": "requirement",
+      "document": "DOC-04-FUNCIONAL.md",
+      "created": "2026-09-01",
+      "status": "active",
+      "module": "albarans",
+      "source_anchors": "[BR-ALB-11, UC-ALB-03, UC-ALB-04]",
+      "priority": "critical"
     }
   }
 }
