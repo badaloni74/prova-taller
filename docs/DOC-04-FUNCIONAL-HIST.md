@@ -2,11 +2,11 @@
 doc_id: DOC-04-HIST
 doc_name: DOC-04-FUNCIONAL-HIST
 of_document: DOC-04-FUNCIONAL.md
-version: 1.3.2        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
+version: 1.4.0        # no se versiona por separado: refleja la versión del documento que historia, para que S-16 no lo lea como artefacto sin versión
 status: draft
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-30T10:30:00+02:00
+generated_at: 2026-09-01T09:30:00+02:00
 ---
 
 # DOC-04-FUNCIONAL · Historial de versiones
@@ -23,6 +23,100 @@ esta regeneración, y son fieles a lo que allí constaba. Se señalan como
 reconstruidas. Las fechas de 1.0.0 y 1.1.0 son aproximadas, tomadas de
 `registro-ids.json` (anclas `REQ-*` creadas el 2026-08-15, preguntas `Q-*`
 creadas el 2026-08-16).
+
+---
+
+## 1.4.0 — 2026-09-01 — MINOR — `SPE-07` y `SPE-08` cierran `Q-12` y `Q-06`; ocho requisitos nuevos
+
+Consume `DOC-01-BASE-ASIS.md` 1.3.0 (antes 1.2.0), que incorpora cinco reglas de
+negocio nuevas, un caso de uso nuevo y un término de glosario nuevo, resultado
+de ocho commits sobre `client/`/`server/` desde `345a3ae` que entregan
+`SPE-07-importes-negativos` (origen `BUG-003`) y `SPE-08-factura-rectificativa`
+(origen `BUG-004`), ambos `status: Implemented`.
+
+**Anclas nuevas en DOC-01 1.3.0** (registradas por `S-01` el 2026-08-31):
+
+- `BR-PEC-03` — el precio y, si se informa, el coste de una pieza deben ser
+  mayores que cero.
+- `BR-PEC-04` — el estoc de una pieza no puede ser negativo; cero es válido.
+- `BR-ALB-11` — el precio de una línea de albarán debe ser mayor que cero: en
+  pieza solo si se informa explícitamente, en mano de obra siempre.
+- `BR-FAC-10` — al emitir una rectificativa, los albaranes de la original
+  vuelven a pendiente y quedan libres de ella, sin que la original cambie
+  ningún campo propio.
+- `BR-FAC-11` — una factura ya rectificada no se puede volver a rectificar.
+- `UC-FAC-05` — Rectificar una factura emitida.
+- Glosario: «Factura rectificativa» (término nuevo, no ambiguo).
+
+**Ocho requisitos nuevos**, ninguno de los 81 anteriores se reformula, se
+elimina ni cambia de prioridad, confianza o ancla:
+
+| REQ | Módulo | Ancla de origen | Enunciado (resumen) |
+|---|---|---|---|
+| REQ-082 | factures | UC-FAC-05 | Permite rectificar una factura, emitiendo una rectificativa numerada aparte |
+| REQ-083 | factures | UC-FAC-05 | Exige un motivo para rectificar |
+| REQ-084 | factures | BR-FAC-10, UC-FAC-05 | Los albaranes de la original vuelven a pendiente y quedan libres de ella |
+| REQ-085 | factures | BR-FAC-10, UC-FAC-05 | La original no cambia ningún campo propio; queda marcada como anulada por la existencia de la rectificativa |
+| REQ-086 | factures | BR-FAC-11, UC-FAC-05 | Impide rectificar una factura ya rectificada |
+| REQ-087 | peces | BR-PEC-03, UC-PEC-02, UC-PEC-04 | Precio y coste de una pieza deben ser mayores que cero |
+| REQ-088 | peces | BR-PEC-04, UC-PEC-02, UC-PEC-04 | El estoc de una pieza no puede ser negativo |
+| REQ-089 | albarans | BR-ALB-11, UC-ALB-03, UC-ALB-04 | El precio de una línea debe ser mayor que cero |
+
+**Por qué esta granularidad.** `BR-FAC-10` agrupa tres comportamientos
+comprobables por separado —numeración de la rectificativa (recogida ya en la
+acción base, `REQ-082`), liberación de los albaranes (`REQ-084`) e
+inmutabilidad de la factura original (`REQ-085`)— y se separan por el mismo
+criterio que ya se aplicó a `BR-ALB-10` en el ciclo 1.3.0: agrupar dos
+comportamientos en un solo `REQ-nnn` deja a uno de los dos sin prueba propia
+sin que nadie lo note. `BR-PEC-03` y `BR-PEC-04` se mantienen separadas
+(importe monetario vs. cantidad de stock) en vez de fundirse en un único
+«los importes de una pieza deben ser positivos».
+
+**`Q-06` y `Q-12` pasan a `answered` con evolutivo `implemented`** (ver
+apartado 6.2 del documento principal), con el mismo criterio ya aplicado a
+`Q-10` en el ciclo 1.3.0 (spec trazable + `REQ-nnn` que materializa la
+decisión):
+
+- `Q-06` (factura rectificativa) — `implemented_on: 2026-08-31`,
+  `implemented_by: SPEC 08`, `realised_in: [BR-FAC-10, BR-FAC-11, UC-FAC-05,
+  REQ-082, REQ-083, REQ-084, REQ-085, REQ-086]`. `describes_gap_in` y
+  `affects_requirements` no cambian (`REQ-042`, `REQ-047`, `REQ-043`): esos
+  requisitos siguen describiendo el sistema tal cual, sin reformularse.
+- `Q-12` (importes negativos) — `implemented_on: 2026-08-30`,
+  `implemented_by: SPEC 07`, `realised_in: [BR-PEC-03, BR-PEC-04, BR-ALB-11,
+  REQ-087, REQ-088, REQ-089]`. Igual que en `Q-06`, `REQ-019`, `REQ-022`,
+  `REQ-034` y `REQ-036` no se reformulan.
+- `Q-02` **no se toca en este ciclo**: aunque el mismo tema (stock negativo) ya
+  está corregido en código (`BUG-001`, `fixed` desde `DOC-24` 1.1.0), su cierre
+  no pasó por un spec trazable ni `REQ-035` se reformuló para reflejarlo — el
+  criterio de cierre que exige este documento (ver nota de `Q-02` en el bloque
+  estructurado) no se cumple todavía. Sigue con evolutivo pendiente.
+
+`open_questions_summary.pending_evolutivo` pasa de 5 a **3** (`Q-02`, `Q-14`,
+`Q-15` — `Q-02` sigue `pending` porque su cierre en código no pasó por un spec
+trazable, ver más arriba) y `implemented_evolutivo` pasa de 1 a **3** (`Q-06`,
+`Q-10`, `Q-12`). Las seis preguntas `answered` se reparten así: 3 pendientes +
+3 implementadas.
+
+**Por qué MINOR.** El bloque `requirements` gana ocho entradas. **`DOC-05`,
+`DOC-06` y `DOC-07` quedan desfasados** y deben revisarse por A-03, A-04 y A-05.
+Nota para A-03: `DOC-05` ya había incorporado `TC-120` a `TC-132` para SPE-07 y
+SPE-08 colgados de los `REQ-nnn` más próximos que existían entonces (`REQ-019`,
+`REQ-022`, `REQ-034`, `REQ-036`, `REQ-042`, `REQ-047`, `REQ-052`); falta
+recolgarlos de `REQ-082` a `REQ-089`, igual que ocurrió con `REQ-080`/`REQ-081`
+en el ciclo 1.3.0.
+
+**`registro-ids.json`.** Se añaden `REQ-082` a `REQ-089` vía `s12-registro-ids`
+(`next` reservó desde `REQ-082`, siguiente libre tras `REQ-081`; `sync
+--block requirements`). Las seis anclas `BR-PEC-03`, `BR-PEC-04`, `BR-ALB-11`,
+`BR-FAC-10`, `BR-FAC-11` y `UC-FAC-05` ya estaban registradas por `S-01` antes
+de esta regeneración y no se tocan. `Q-06` y `Q-12` no cambian de `status`,
+`resolution` ni `blocks` en el registro —esos campos siguen siendo `answered` /
+`gap_confirmed`, sin cambios—: los campos `implemented_on`, `implemented_by`,
+`realised_in` y el `evolutivo` ampliado son propios del bloque `open_questions`
+del cuerpo de DOC-04, no del esquema `questions` de `s12-registro-ids` (mismo
+criterio que en 1.3.0 para `Q-10`). Verificado con `sync --block requirements`
+y `validate --doc docs/DOC-04-FUNCIONAL.md --block requirements`.
 
 ---
 

@@ -1,27 +1,28 @@
 ---
 doc_id: DOC-04
 doc_name: DOC-04-FUNCIONAL
-version: 1.3.2
+version: 1.4.0
 status: draft
+history: DOC-04-FUNCIONAL-HIST.md
 generator: A-02 documentación funcional
 generator_version: "1.0"
-generated_at: 2026-08-30T10:30:00+02:00
+generated_at: 2026-09-01T09:30:00+02:00
 source:
   repo_path: C:\Claude\AppDani
   vcs: git
-  branch: master
-  commit_sha: bdfb987b3e5b5a3dd46f54e0a41fe37bdcf92516
-  working_tree_clean: true
+  branch: spec-08-factura-rectificativa
+  commit_sha: dff17721337bfb56c4e868c6d509daa8bd8ce192
+  working_tree_clean: false   # solo ficheros sin versionar y ajenos al ciclo (ApuntsAgentsISkills.txt, dashboard/, promptDashboard.txt) mas docs/DOC-09-IMPACTO-factura-rectificativa.md; el arbol versionado esta limpio
 inputs:
   - id: DOC-01-BASE-ASIS.md
     from: S-01
-    version: 1.2.0
-    hash: sha256:e3fb11505afc6253fc801d043871fb8a749b4e618118031e4c9883cb41f79fee
+    version: 1.3.0
+    hash: sha256:aff457ef04ccfee18f7bb2c72cfd62b71dd4e9d7d498bbabdf921ab0ef0bd2b4
     present: true
   - id: registro-ids.json
     from: S-01
     version: "1"
-    hash: sha256:10a49e22b052dc50f9006d5ef533559b0f0602b3ccd35c3b53aef37dc3f7cf09
+    hash: sha256:f01e0c84d6c93e1beb4e39c70b63132f477b558aaa5b574463fa7c292197e38e
     present: true
   - id: DOC-03-API.md
     from: S-03
@@ -45,13 +46,81 @@ inputs:
 > actual, con su `version` en el front-matter. El historial está en
 > **`docs/DOC-04-FUNCIONAL-HIST.md`**.
 >
-> `status: draft`. 81 requisitos activos, ninguno deprecado.
+> `status: draft`. 89 requisitos activos, ninguno deprecado.
 
 ## Procedencia
 
 Este apartado explica de dónde sale el documento y cómo se ha usado cada entrada.
 El dato en crudo —versión y hash de cada fuente— está en el bloque `inputs` del
 front-matter, que es lo que lee `S-16 · Cascada de obsolescencia`.
+
+**Motivo de la versión 1.4.0 (MINOR).** `DOC-01-BASE-ASIS.md` ha pasado de
+**1.2.0** a **1.3.0** (MINOR): ocho commits sobre `client/` o `server/` desde
+`345a3ae` entregan `SPE-07-importes-negativos` (origen `BUG-003`) y
+`SPE-08-factura-rectificativa` (origen `BUG-004`), ambos `status: Implemented`.
+
+- **Cinco reglas de negocio nuevas.** `BR-PEC-03` y `BR-PEC-04` (el precio y,
+  si se informa, el coste de una pieza deben ser mayores que cero; el estoc no
+  puede ser negativo, aunque cero sí es válido); `BR-ALB-11` (el precio de una
+  línea de albarán debe ser mayor que cero: en una línea de pieza solo cuando
+  se informa a mano, en una de mano de obra siempre); `BR-FAC-10` y `BR-FAC-11`
+  (al emitir una rectificativa, los albaranes de la original vuelven a
+  pendiente y quedan libres de ella sin que la original cambie ningún campo
+  propio; una factura ya rectificada no se puede volver a rectificar).
+- **Caso de uso nuevo `UC-FAC-05` · Rectificar una factura emitida**, con su
+  flujo detallado en DOC-01 §3.5.
+- **Término de glosario nuevo:** «Factura rectificativa».
+- **Se cierran `Q-06` y `Q-12`** como evolutivo **implementado** (ver 6.2): el
+  negocio ya las había contestado el 2026-08-16; ahora el comportamiento que
+  pedían ya está en el sistema.
+
+**Consecuencia sobre los requisitos.** Se añaden **ocho** requisitos nuevos —
+`REQ-082` a `REQ-089`— y **ninguno de los 81 anteriores se reformula, se
+elimina ni cambia de prioridad, confianza o ancla**. El detalle de cada uno y
+por qué se ha separado así está en los apartados 3.3, 3.4 y 3.5. Reparto:
+
+- `peces` — `REQ-087` (`BR-PEC-03`, precio y coste positivos) y `REQ-088`
+  (`BR-PEC-04`, estoc no negativo). Ambos nacen de la misma acción de alta y
+  modificación (`UC-PEC-02`, `UC-PEC-04`), igual que `REQ-020` nace de
+  `BR-PEC-01`.
+- `albarans` — `REQ-089` (`BR-ALB-11`, precio de línea positivo, en pieza solo
+  si se informa y en mano de obra siempre), sobre `UC-ALB-03` y `UC-ALB-04`.
+- `factures` — cinco requisitos sobre `UC-FAC-05`: `REQ-082` (acción base:
+  emitir la rectificativa numerada aparte, referenciando la original),
+  `REQ-083` (el motivo es obligatorio), `REQ-084` (`BR-FAC-10`, los albaranes
+  de la original vuelven a pendiente y quedan libres de ella), `REQ-085`
+  (`BR-FAC-10`, la original no cambia ningún campo propio y queda marcada como
+  anulada solo por la existencia de la rectificativa) y `REQ-086` (`BR-FAC-11`,
+  no se puede rectificar dos veces). Se separan en cinco porque `BR-FAC-10`
+  por sí sola agrupa numeración, liberación de albaranes e inmutabilidad —tres
+  comportamientos comprobables por separado—, siguiendo el mismo criterio que
+  ya se aplicó a `BR-ALB-10` en el ciclo 1.3.0.
+
+**Por qué MINOR y no PATCH.** El bloque `requirements` gana ocho entradas
+nuevas. **Al subir MINOR, `DOC-05`, `DOC-06` y `DOC-07` quedan desfasados**
+respecto a este bloque y deben revisarse por sus propietarios (A-03, A-04,
+A-05). Nota para A-03: `DOC-05` ya incorporó casos de prueba para SPE-07 y
+SPE-08 (`TC-120` a `TC-132`) colgados de `REQ-019`, `REQ-022`, `REQ-034`,
+`REQ-036`, `REQ-042`, `REQ-047` y `REQ-052` —los más próximos que existían
+entonces—; lo que falta es que esos casos queden colgados de `REQ-082` a
+`REQ-089`, igual que pasó con `REQ-080`/`REQ-081` en el ciclo 1.3.0.
+
+**Qué se ha leído de cada entrada (ciclo 1.4.0).**
+
+- **`DOC-01-BASE-ASIS.md` 1.3.0** — apartados 1 a 5 y el bloque `inventory` del
+  apartado 9. No se ha leído el apartado 6 ni `DOC-02-TECNICA.md`.
+- **`registro-ids.json`** — se han leído las seis anclas que `S-01` ya había
+  registrado en este ciclo (`BR-PEC-03`, `BR-PEC-04`, `BR-ALB-11`, `BR-FAC-10`,
+  `BR-FAC-11`, `UC-FAC-05`, todas `created: 2026-08-31`) y se han **añadido**
+  `REQ-082` a `REQ-089` vía `s12-registro-ids` (`next` reservó desde `REQ-082`,
+  el siguiente libre tras `REQ-081`). No se ha deprecado ninguna entrada.
+- **`DOC-03-API.md`**, **contexto de Confluence** — siguen sin existir.
+  Declarados `present: false`.
+- **Respuestas de negocio** — mismo lote del 2026-08-16 que en ciclos
+  anteriores; no hay respuestas nuevas.
+
+Detalle completo en `DOC-04-FUNCIONAL-HIST.md`. El resto de este apartado
+describe el ciclo 1.3.2 y anteriores, que siguen vigentes.
 
 **Motivo de la versión 1.3.2 (PATCH).** Corrección puntual de metadatos de
 seguimiento en tres entradas del bloque `open_questions` — `Q-02`, `Q-06` y
@@ -186,7 +255,7 @@ ni permisos.
 | ACT-01 | Personal del taller | Humano | Único usuario. Gestiona clientes, vehículos, piezas, albaranes, facturas, personal y nóminas sin restricción de permisos. |
 
 Todos los requisitos de este documento tienen a `ACT-01` como actor. Si en el
-futuro se añadiera identificación de usuarios, cambiaría la premisa de los 81
+futuro se añadiera identificación de usuarios, cambiaría la premisa de los 89
 requisitos, no solo de algunos.
 
 ## 3. Requisitos por módulo
@@ -223,20 +292,30 @@ pendiente puede acabar cargándose a otro cliente.
 
 ### 3.3 Piezas — `peces`
 
-Catálogo de piezas del taller, con su precio y su stock. **Siete requisitos**
-(`REQ-018` a `REQ-024`). `REQ-021` (la ficha muestra referencia, precio, coste,
-unidad, proveedor y stock) tiene confianza `medium` porque dos de esos campos
-—`coste` y `unidad`— no intervienen en ningún cálculo ni validación y su sentido
-está en duda (`Q-01` y `Q-03`). La baja de una pieza se impide si se ha usado en
-algún albarán (`REQ-024`). El alta con stock inicial (`REQ-019`) está señalada
-por `Q-02` y `Q-12`: el negocio ya decidió que el stock y los importes no pueden
-ser negativos, pero eso todavía no está construido.
+Catálogo de piezas del taller, con su precio y su stock. **Nueve requisitos**
+(`REQ-018` a `REQ-024`, más `REQ-087` y `REQ-088`). `REQ-021` (la ficha muestra
+referencia, precio, coste, unidad, proveedor y stock) tiene confianza `medium`
+porque dos de esos campos —`coste` y `unidad`— no intervienen en ningún cálculo
+ni validación y su sentido está en duda (`Q-01` y `Q-03`). La baja de una pieza
+se impide si se ha usado en algún albarán (`REQ-024`).
+
+**Importes positivos — `REQ-087` y `REQ-088`, nuevos en 1.4.0.** `REQ-087`
+exige que el precio y, si se informa, el coste de una pieza sean mayores que
+cero, tanto al darla de alta como al modificarla; `REQ-088` exige que el stock
+nunca sea negativo, aunque cero sí es un valor válido. Se enuncian por
+separado porque son dos comprobaciones distintas —una sobre importes
+monetarios, otra sobre una cantidad— con el mismo origen (`BR-PEC-03` y
+`BR-PEC-04`) y la misma acción que las dispara (`UC-PEC-02`, alta; `UC-PEC-04`,
+modificación). El alta con stock inicial (`REQ-019`) y la modificación
+(`REQ-022`) seguían señaladas hasta ahora por `Q-02` y `Q-12`: `Q-12` **ya está
+implementada** (ver 6.2) y su hueco lo cierran `REQ-087` y `REQ-088`; `Q-02`
+sigue con evolutivo pendiente y sigue señalando a `REQ-035` y `REQ-019`.
 
 ### 3.4 Albaranes — `albarans`
 
 Hoja de trabajo de cada intervención, con sus líneas de pieza y de mano de obra.
-**Veinte requisitos** (`REQ-025` a `REQ-042`, más `REQ-080` y `REQ-081`), el
-módulo con más reglas del documento.
+**Veintiún requisitos** (`REQ-025` a `REQ-042`, más `REQ-080`, `REQ-081` y
+`REQ-089`), el módulo con más reglas del documento.
 
 - **Apertura y numeración.** Un albarán se abre para un vehículo existente
   (`REQ-027`), nace sin líneas y en situación de pendiente de facturar
@@ -268,24 +347,56 @@ módulo con más reglas del documento.
   (`REQ-046` / `TC-064`). Tenerlos separados hace que esa divergencia se detecte.
 - Sobre un albarán ya facturado, cualquier intento de cambiar el vehículo se
   rechaza por estar facturado (`REQ-042`), no por el motivo de `REQ-080`.
+- **Precio de línea positivo — `REQ-089`, nuevo en 1.4.0.** El precio de una
+  línea debe ser mayor que cero: en una línea de pieza, solo cuando el precio
+  se informa a mano (si no se informa, se hereda el de catálogo, ya validado
+  por `REQ-087` al dar de alta la pieza); en una línea de mano de obra,
+  siempre. Nace de `BR-ALB-11`, disparada tanto por `UC-ALB-03` (línea de
+  pieza) como por `UC-ALB-04` (línea de mano de obra). Cierra el hueco que
+  señalaba `Q-12` (ya implementada, ver 6.2) sobre `REQ-034` y `REQ-036`, que
+  seguían describiendo el sistema sin ese límite.
 
 ### 3.5 Facturas — `factures`
 
 Emisión de facturas agrupando albaranes, con base, IVA y total, y seguimiento del
-cobro. **Trece requisitos** (`REQ-043` a `REQ-055`). Una factura agrupa al menos
-un albarán (`REQ-044`), todos pendientes de facturar (`REQ-045`) y todos del
-mismo cliente (`REQ-046`). Emitirla marca sus albaranes como facturados en la
-misma operación (`REQ-047`). La base es la suma de cantidad por precio de las
-líneas de sus albaranes y el total es base más IVA (`REQ-049`); el IVA por
-defecto es el 21 % (`REQ-050`) y no hay regla que acote qué otros tipos son
-admisibles (`Q-09`). `REQ-055` (el estado de pago solo puede ser pendiente o
-pagada) se queda a propósito en el vocabulario admisible: DOC-01 no documenta
-ninguna consecuencia observable de que ese estado tome un tercer valor, así que
-enunciar aquí qué se vería sería inventar comportamiento. El negocio ya pidió
-recuento y filtro de facturas pendientes de cobro (`Q-14`), pero es un evolutivo
-pendiente; hasta que exista, `REQ-055` describe el sistema actual y su
-comprobación sigue limitada. `REQ-052` y `REQ-055` están además señalados por
-`Q-13` (el término «estado» es ambiguo).
+cobro. **Dieciocho requisitos** (`REQ-043` a `REQ-055`, más `REQ-082` a
+`REQ-086`). Una factura agrupa al menos un albarán (`REQ-044`), todos pendientes
+de facturar (`REQ-045`) y todos del mismo cliente (`REQ-046`). Emitirla marca
+sus albaranes como facturados en la misma operación (`REQ-047`). La base es la
+suma de cantidad por precio de las líneas de sus albaranes y el total es base
+más IVA (`REQ-049`); el IVA por defecto es el 21 % (`REQ-050`) y no hay regla
+que acote qué otros tipos son admisibles (`Q-09`). `REQ-055` (el estado de pago
+solo puede ser pendiente o pagada) se queda a propósito en el vocabulario
+admisible: DOC-01 no documenta ninguna consecuencia observable de que ese
+estado tome un tercer valor, así que enunciar aquí qué se vería sería inventar
+comportamiento. El negocio ya pidió recuento y filtro de facturas pendientes de
+cobro (`Q-14`), pero es un evolutivo pendiente; hasta que exista, `REQ-055`
+describe el sistema actual y su comprobación sigue limitada. `REQ-052` y
+`REQ-055` están además señalados por `Q-13` (el término «estado» es ambiguo).
+
+**Rectificar una factura emitida — `REQ-082` a `REQ-086`, nuevos en 1.4.0,**
+sobre `UC-FAC-05`. Cierran el hueco que señalaba `Q-06` (ya implementada, ver
+6.2): hasta ahora una factura emitida no se podía corregir de ninguna manera.
+
+- `REQ-082` es la acción base: el sistema permite rectificar una factura
+  emitida, generando una factura rectificativa nueva, numerada aparte
+  (`año/R-nnnn`), que referencia a la original.
+- `REQ-083` exige indicar un motivo para rectificar, igual que `REQ-037` exige
+  descripción en una línea de mano de obra.
+- `REQ-084` (`BR-FAC-10`) dice que, en la misma operación, los albaranes que
+  agrupaba la factura original vuelven a pendiente de facturar y quedan libres
+  de ella —el reverso exacto de `REQ-047`, que los marca como facturados al
+  emitir—, quedando disponibles para agruparse en una factura nueva.
+- `REQ-085` (`BR-FAC-10`) protege lo que no cambia: la factura original no
+  modifica ningún campo propio al rectificarse, y queda marcada como anulada
+  solo por la existencia de la rectificativa que la referencia, nunca por un
+  campo de estado propio. Se separa de `REQ-084` porque son dos garantías
+  independientes —una mueve los albaranes, otra preserva la inmutabilidad de la
+  factura— y conviene poder perder una sin perder la otra sin que nadie lo note.
+- `REQ-086` (`BR-FAC-11`) impide rectificar dos veces la misma factura.
+
+Una factura se puede rectificar en cualquier estado de pago, pendiente o
+pagada: `REQ-054` y `REQ-082` son compatibles entre sí, no se excluyen.
 
 ### 3.6 Personal — `personal`
 
@@ -347,17 +458,20 @@ módulos implicados sepa que el otro le afecta.
 | REQ-049 | factures | albarans | El importe de la factura se obtiene de las líneas de sus albaranes |
 | REQ-080 | albarans | clients, vehicles | Cambiar el vehículo de un albarán no puede cambiar el cliente al que se factura |
 | REQ-081 | albarans | clients, vehicles | El selector de vehículo se acota al cliente actual del albarán |
+| REQ-089 | albarans | peces | El precio de línea positivo hereda de catálogo cuando no se informa a mano (`REQ-087`) |
+| REQ-084 | factures | albarans | Rectificar libera los albaranes de la factura original a pendiente de facturar |
 | REQ-062 | personal | nomines | La existencia de nóminas condiciona la baja del empleado |
 | REQ-075 a REQ-078 | shell | todos | Idioma y tema afectan a todas las pantallas de la aplicación |
 
 Dos comportamientos transversales merecen una nota adicional:
 
-- **Integridad de las operaciones dobles.** `REQ-035`, `REQ-039`, `REQ-047` y
-  `REQ-080` exigen que dos efectos ocurran —o no ocurran— juntos: registrar la
-  línea y mover el stock; emitir la factura y marcar sus albaranes; y, en
-  `REQ-080`, o se guarda toda la cabecera válida o no se guarda ni el vehículo, ni
-  la fecha, ni las notas. Para el negocio, la mitad de esas operaciones no es un
-  resultado aceptable.
+- **Integridad de las operaciones dobles.** `REQ-035`, `REQ-039`, `REQ-047`,
+  `REQ-080` y `REQ-084` exigen que dos efectos ocurran —o no ocurran— juntos:
+  registrar la línea y mover el stock; emitir la factura y marcar sus
+  albaranes; en `REQ-080`, o se guarda toda la cabecera válida o no se guarda
+  ni el vehículo, ni la fecha, ni las notas; en `REQ-084`, emitir la
+  rectificativa y devolver sus albaranes a pendiente son la misma operación.
+  Para el negocio, la mitad de esas operaciones no es un resultado aceptable.
 - **Ausencia de requisitos de acceso.** El sistema no identifica a quien lo usa
   (DOC-01, apartado 2). No se emite ningún requisito de autenticación,
   autorización ni traza de quién hizo qué, porque ninguna ancla de DOC-01 lo
@@ -366,7 +480,7 @@ Dos comportamientos transversales merecen una nota adicional:
 
 ## 5. Trazabilidad de anclas
 
-Las **78 anclas** `UC-nnn` (40) y `BR-nnn` (38) de DOC-01 1.2.0 y los requisitos
+Las **84 anclas** `UC-nnn` (41) y `BR-nnn` (43) de DOC-01 1.3.0 y los requisitos
 que han generado.
 
 | Ancla | Enunciado en DOC-01 | Requisitos derivados |
@@ -388,8 +502,8 @@ que han generado.
 | UC-PEC-05 | Borrar una pieza | REQ-023, REQ-024 |
 | UC-ALB-01 | Consultar el listado de albaranes | REQ-025 |
 | UC-ALB-02 | Abrir un albarán para un vehículo | REQ-026, REQ-027, REQ-028 |
-| UC-ALB-03 | Añadir una línea de pieza | REQ-030, REQ-034, REQ-035 |
-| UC-ALB-04 | Añadir una línea de mano de obra | REQ-036, REQ-037 |
+| UC-ALB-03 | Añadir una línea de pieza | REQ-030, REQ-034, REQ-035, REQ-089 |
+| UC-ALB-04 | Añadir una línea de mano de obra | REQ-036, REQ-037, REQ-089 |
 | UC-ALB-05 | Retirar una línea | REQ-038, REQ-039 |
 | UC-ALB-06 | Modificar la cabecera de un albarán | REQ-040, REQ-042, REQ-080, REQ-081 |
 | UC-ALB-07 | Borrar un albarán | REQ-041, REQ-042 |
@@ -397,6 +511,7 @@ que han generado.
 | UC-FAC-02 | Consultar el listado de facturas | REQ-052 |
 | UC-FAC-03 | Consultar el detalle de una factura | REQ-053 |
 | UC-FAC-04 | Marcar una factura como pagada o pendiente | REQ-054 |
+| UC-FAC-05 | Rectificar una factura emitida | REQ-082, REQ-083, REQ-084, REQ-085, REQ-086 |
 | UC-PER-01 | Consultar el listado de empleados | REQ-056 |
 | UC-PER-02 | Dar de alta un empleado | REQ-057 |
 | UC-PER-03 | Consultar la ficha de un empleado | REQ-059 |
@@ -420,6 +535,8 @@ que han generado.
 | BR-VEH-04 | No se puede borrar un vehículo que tenga albaranes asociados | REQ-017 |
 | BR-PEC-01 | El nombre de la pieza es obligatorio | REQ-020 |
 | BR-PEC-02 | No se puede borrar una pieza usada en algún albarán | REQ-024 |
+| BR-PEC-03 | El precio y, si se informa, el coste de una pieza deben ser mayores que cero | REQ-087 |
+| BR-PEC-04 | El estoc de una pieza no puede ser negativo; cero es válido | REQ-088 |
 | BR-ALB-01 | Un albarán pertenece siempre a un vehículo existente | REQ-027 |
 | BR-ALB-02 | Un albarán nace en estado pendiente | REQ-028 |
 | BR-ALB-03 | Un albarán facturado no se puede modificar ni borrar, ni tocar sus líneas | REQ-042 |
@@ -430,6 +547,7 @@ que han generado.
 | BR-ALB-08 | Añadir una línea de pieza descuenta el stock; retirarla lo devuelve | REQ-035, REQ-039 |
 | BR-ALB-09 | El número de albarán se genera solo, con formato año/A-nnnn | REQ-029 |
 | BR-ALB-10 | Al modificar la cabecera de un albarán no facturado no se puede sustituir su vehículo por otro de un cliente distinto; el intento se rechaza sin guardar la cabecera, y el selector solo ofrece los vehículos del cliente actual | REQ-080, REQ-081 |
+| BR-ALB-11 | El precio de una línea debe ser mayor que cero, en pieza solo si se informa explícitamente y en mano de obra siempre | REQ-089 |
 | BR-FAC-01 | Una factura agrupa al menos un albarán | REQ-044 |
 | BR-FAC-02 | Todos los albaranes de una factura deben estar pendientes de facturar | REQ-045 |
 | BR-FAC-03 | Todos los albaranes de una factura deben ser del mismo cliente | REQ-046 |
@@ -439,6 +557,8 @@ que han generado.
 | BR-FAC-07 | Base, IVA y total se presentan redondeados a dos decimales | REQ-051 |
 | BR-FAC-08 | El estado de pago solo puede ser pendiente o pagada | REQ-055 |
 | BR-FAC-09 | El número de factura se genera solo, con formato año/F-nnnn | REQ-048 |
+| BR-FAC-10 | Al emitir una factura rectificativa, los albaranes de la factura original vuelven a estado pendiente y quedan libres de ella, sin que la factura original cambie ningún campo propio | REQ-084, REQ-085 |
+| BR-FAC-11 | Una factura ya rectificada no se puede volver a rectificar | REQ-086 |
 | BR-PER-01 | El nombre del empleado es obligatorio | REQ-058 |
 | BR-PER-02 | No se puede borrar un empleado que tenga nóminas asociadas | REQ-062 |
 | BR-NOM-01 | Una nómina pertenece a un empleado existente | REQ-065 |
@@ -450,8 +570,8 @@ que han generado.
 | BR-SHL-01 | El idioma por defecto es el castellano y la elección del usuario se recuerda entre sesiones | REQ-076 |
 | BR-SHL-02 | El tema por defecto sigue la preferencia del sistema operativo y la elección del usuario se recuerda | REQ-078 |
 
-**Anclas sin requisito derivado: ninguna.** Las 40 anclas `UC-nnn` y las 38
-`BR-nnn` de DOC-01 1.2.0 han producido al menos un requisito. La cobertura total
+**Anclas sin requisito derivado: ninguna.** Las 41 anclas `UC-nnn` y las 43
+`BR-nnn` de DOC-01 1.3.0 han producido al menos un requisito. La cobertura total
 se explica igual que en versiones anteriores: DOC-01 documenta un sistema **ya
 construido**, así que ninguna ancla se queda fuera por «no aplicable». La única
 ancla discutible sigue siendo `UC-SHL-03` (módulo no desarrollado), para la que
@@ -462,7 +582,13 @@ como requisitos, porque A-02 no inventa requisitos.
 
 `BR-ALB-10` genera **dos** requisitos porque agrupa dos comportamientos —el
 rechazo en servidor y el filtrado del selector— que conviene poder probar por
-separado.
+separado. `BR-FAC-10` genera igualmente **dos** (`REQ-084`, `REQ-085`) por el
+mismo motivo: agrupa liberar los albaranes y preservar la inmutabilidad de la
+factura original. `UC-FAC-05` genera **cinco** requisitos (`REQ-082` a
+`REQ-086`) porque su flujo detallado en DOC-01 describe cinco comportamientos
+distintos y comprobables por separado: la acción de emitir la rectificativa, la
+obligatoriedad del motivo, la liberación de albaranes, la inmutabilidad de la
+original y el bloqueo de una segunda rectificación.
 
 ## 6. Preguntas abiertas y respuestas del negocio
 
@@ -488,9 +614,11 @@ como `Q-30` (renumerada desde `Q-16` por colisión con la `Q-16` de DOC-05; ver
 | `answered` + `resolution: gap_confirmed`, evolutivo pendiente | El negocio confirma que el comportamiento actual es un hueco y debe cambiar; el cambio aún no está construido. | No | Sí, pendiente |
 | `answered` + `resolution: gap_confirmed`, evolutivo **implementado** | El negocio lo confirmó como hueco y el cambio **ya está en el sistema**. | No | Ya entregado |
 
-Hoy no hay ninguna pregunta `as_designed`. De las seis respondidas, **cinco
-siguen pendientes de evolutivo** y **una (`Q-10`) ya está implementada** —como
-`BR-ALB-10`, `REQ-080` y `REQ-081`, entregada por SPEC 06—.
+Hoy no hay ninguna pregunta `as_designed`. De las seis respondidas, **tres ya
+están implementadas** —`Q-10` (`BR-ALB-10`, `REQ-080`, `REQ-081`, SPEC 06),
+`Q-12` (`BR-PEC-03`, `BR-PEC-04`, `BR-ALB-11`, `REQ-087` a `REQ-089`, SPEC 07) y
+`Q-06` (`BR-FAC-10`, `BR-FAC-11`, `UC-FAC-05`, `REQ-082` a `REQ-086`, SPEC 08)—
+y **tres siguen pendientes de evolutivo** (`Q-02`, `Q-14`, `Q-15`).
 
 ### 6.1 Preguntas abiertas — 10
 
@@ -542,9 +670,9 @@ hoy.
 | ID | Requisitos que describen el hueco | Decisión de negocio (2026-08-16) | Estado del evolutivo |
 |---|---|---|---|
 | Q-02 | REQ-035, REQ-019 | **Bloquear.** No se puede añadir una línea de pieza si no hay existencias suficientes. El stock deja de poder quedar negativo. | Censado como `BUG-001` en `DOC-24` (no `BUG-003`, que es el de `Q-12`) — **ya `status: fixed`** desde `DOC-24` 1.1.0 (commit `ed61c24`, 2026-08-21). El cierre no pasó por `/spec` ni queda reflejado en `REQ-035`; ver nota en el bloque estructurado. |
-| Q-06 | REQ-042, REQ-047 | **Factura rectificativa.** Para corregir una factura emitida por error se emite una factura nueva que anula la anterior; ambas quedan en el histórico. La inmutabilidad de la factura original no se toca. | Pendiente (grande). Entidad nueva, numeración propia, afecta al cálculo de totales. `BUG-004` sigue abierto en `DOC-24`; sin spec propio todavía. |
+| Q-06 | REQ-042, REQ-047 | **Factura rectificativa.** Para corregir una factura emitida por error se emite una factura nueva que anula la anterior; ambas quedan en el histórico. La inmutabilidad de la factura original no se toca. | **Implementado.** Entregado como SPEC 08 (`specs/implemented/SPE-08-factura-rectificativa.md`, `status: Implemented`, 2026-08-31), realizado en `BR-FAC-10`, `BR-FAC-11`, `UC-FAC-05` y `REQ-082` a `REQ-086`. `BUG-004` pasa a `fixed` en `DOC-24`. |
 | Q-10 | REQ-040, REQ-046 | **Impedir el cambio de cliente.** Se puede corregir el vehículo de un albarán no facturado dentro del mismo cliente, pero no mover el albarán a otro cliente. | **Implementado.** Entregado como SPEC 06 (`status: Implemented`), realizado en `BR-ALB-10`, `REQ-080` y `REQ-081`. No pasó por DOC-08 (mecanismo ya retirado). |
-| Q-12 | REQ-019, REQ-022, REQ-034, REQ-036 | **Bloquear los importes negativos.** Precio, coste y stock de una pieza, precio de una línea de albarán y precio por hora de la mano de obra deben ser siempre positivos. | Pendiente (medio). `BUG-003` sigue abierto en `DOC-24`; spec en redacción (`SPE-07`, Draft) al cierre de esta corrección. |
+| Q-12 | REQ-019, REQ-022, REQ-034, REQ-036 | **Bloquear los importes negativos.** Precio, coste y stock de una pieza, precio de una línea de albarán y precio por hora de la mano de obra deben ser siempre positivos. | **Implementado.** Entregado como SPEC 07 (`specs/implemented/SPE-07-importes-negativos.md`, `status: Implemented`, 2026-08-30), realizado en `BR-PEC-03`, `BR-PEC-04`, `BR-ALB-11` y `REQ-087` a `REQ-089`. `BUG-003` pasa a `fixed` en `DOC-24`. |
 | Q-14 | REQ-052, REQ-055 | **Recuento y filtro de facturas pendientes de cobro.** | Pendiente (medio). |
 | Q-15 | REQ-063, REQ-073 | **Igual que Q-14 en nóminas:** recuento y filtro de nóminas pendientes de pago. | Pendiente (medio). |
 
@@ -561,6 +689,24 @@ que ninguna pregunta se borra, pero deja de contar como evolutivo pendiente y su
 requisitos ya no son un hueco por describir. Lo que queda abierto del mismo asunto
 —la puerta del vehículo— es `Q-30`.
 
+**Sobre `Q-06`, ahora implementada.** Su decisión describía un hueco en
+`REQ-042` y `REQ-047` (una factura emitida no se podía corregir de ninguna
+manera). Ese hueco **ya no existe**: el sistema lo cierra con `UC-FAC-05` y sus
+cinco requisitos (`REQ-082` a `REQ-086`), entregados en SPEC 08. `REQ-042` y
+`REQ-047` no se reformulan —siguen siendo ciertos tal cual: un albarán
+facturado sigue bloqueado y emitir factura sigue marcando sus albaranes—, y lo
+que resolvía el hueco vive en los requisitos nuevos, igual que `Q-10` se
+resolvió sin tocar `REQ-040`.
+
+**Sobre `Q-12`, ahora implementada.** Su decisión describía un hueco en
+`REQ-019`, `REQ-022`, `REQ-034` y `REQ-036` (ningún importe de pieza ni de línea
+de albarán tenía suelo). Ese hueco **ya no existe**: el sistema lo cierra con
+`REQ-087` y `REQ-088` (precio, coste y stock de pieza) y `REQ-089` (precio de
+línea), entregados en SPEC 07. Los cuatro requisitos originales tampoco se
+reformulan: siguen describiendo la acción tal cual (dar de alta, modificar,
+añadir una línea), y el límite de positividad es un requisito propio, con el
+mismo criterio que separó `BR-CLI-01` de `BR-CLI-02`/`BR-CLI-03` en clientes.
+
 **Matices sobre `Q-14` y `Q-15`.** Se contestaron en su parte operativa (qué
 recuento o filtro espera el negocio), no en qué debería verse si el estado de pago
 acabara con un valor fuera de los dos admitidos. Esa segunda mitad deja de ser un
@@ -570,8 +716,9 @@ una consecuencia observable y `REQ-055` y `REQ-073` serán verificables de verda
 pendientes no dice nada sobre si una nómina pagada debe poder modificarse o
 borrarse.
 
-**Quién recoge las decisiones pendientes.** Las cinco que siguen pendientes
-generan una petición de evolutivo de Fase 2. El mecanismo vigente es `/spec` →
+**Quién recoge las decisiones pendientes.** Las tres que siguen pendientes
+(`Q-02`, `Q-14`, `Q-15`) generan una petición de evolutivo de Fase 2. El
+mecanismo vigente es `/spec` →
 `specs/*.md` (`Origin: BUG-nnn` cuando el spec resuelve un bug catalogado de
 `DOC-24`); el agente `A-06` y el documento `DOC-08` a los que remitía esta
 frase están retirados. A-02 no escribe ningún spec ni inventa aquí el
@@ -596,9 +743,9 @@ diferencia es el tipo de aviso:
   cambiar en un sentido ya conocido, pero no todavía: hoy siguen siendo verdad.
   Cuando el spec correspondiente (`/spec` → `specs/*.md`) se implante, las
   pruebas que cuelgan de ellos habrá que revisarlas.
-- Los señalados por `Q-10`, **respondida e implementada**, ya reflejan la
-  decisión de negocio: `REQ-080` y `REQ-081` son el estado deseado y el estado
-  actual a la vez.
+- Los señalados por `Q-06`, `Q-10` y `Q-12`, **respondidas e implementadas**, ya
+  reflejan la decisión de negocio: `REQ-082` a `REQ-089` (más `REQ-080` y
+  `REQ-081`) son el estado deseado y el estado actual a la vez.
 
 ## 7. Bloque estructurado
 
@@ -1254,6 +1401,70 @@ requirements:
     priority: high
     confidence: high
     status: active
+  - id: REQ-082
+    statement: "El sistema permite rectificar una factura emitida, generando una factura rectificativa nueva, numerada aparte, que referencia a la original."
+    module: factures
+    source_anchors: [UC-FAC-05]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-083
+    statement: "El sistema exige indicar un motivo para rectificar una factura."
+    module: factures
+    source_anchors: [UC-FAC-05]
+    actors: [ACT-01]
+    priority: high
+    confidence: high
+    status: active
+  - id: REQ-084
+    statement: "Al rectificar una factura, sus albaranes vuelven a estado pendiente de facturar y quedan libres de ella, en la misma operación."
+    module: factures
+    source_anchors: [BR-FAC-10, UC-FAC-05]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-085
+    statement: "La factura original no cambia ningún campo propio al rectificarse; queda marcada como anulada solo por existir la rectificativa que la referencia."
+    module: factures
+    source_anchors: [BR-FAC-10, UC-FAC-05]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-086
+    statement: "El sistema impide rectificar una factura que ya tiene una rectificativa."
+    module: factures
+    source_anchors: [BR-FAC-11, UC-FAC-05]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-087
+    statement: "El sistema exige que el precio y, si se informa, el coste de una pieza sean mayores que cero, tanto al darla de alta como al modificarla."
+    module: peces
+    source_anchors: [BR-PEC-03, UC-PEC-02, UC-PEC-04]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-088
+    statement: "El sistema impide que el estoc de una pieza sea negativo, tanto al darla de alta como al modificarla; cero es un valor válido."
+    module: peces
+    source_anchors: [BR-PEC-04, UC-PEC-02, UC-PEC-04]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
+  - id: REQ-089
+    statement: "El sistema exige que el precio de una línea de albarán sea mayor que cero: en una línea de pieza, solo cuando el precio se informa explícitamente; en una línea de mano de obra, siempre."
+    module: albarans
+    source_anchors: [BR-ALB-11, UC-ALB-03, UC-ALB-04]
+    actors: [ACT-01]
+    priority: critical
+    confidence: high
+    status: active
 # Esquema de open_questions, ampliado en 1.2.0 y compatible hacia atrás:
 #   status  : open | answered           -> solo `open` cuenta como pregunta abierta
 #   resolution (solo si answered):
@@ -1332,13 +1543,16 @@ open_questions:
     answered_by: negocio
     answer: "Factura rectificativa. Para corregir una factura emitida por error se emite una factura nueva que anula la anterior; ambas quedan en el histórico. La inmutabilidad de la factura original no se toca."
     describes_gap_in: [REQ-042, REQ-047]
-    gap_open_until_implemented: true
+    gap_open_until_implemented: false
+    implemented_on: 2026-08-31
+    implemented_by: "SPEC 08 (specs/implemented/SPE-08-factura-rectificativa/SPE-08-factura-rectificativa.md, status: Implemented)"
+    realised_in: [BR-FAC-10, BR-FAC-11, UC-FAC-05, REQ-082, REQ-083, REQ-084, REQ-085, REQ-086]
     evolutivo:
       scope: large
-      status: pending
+      status: implemented
       mechanism: "/spec -> specs/*.md (Origin: BUG-004)"
-      spec_ref: "SPE-08, previsto a continuación de SPE-07; no redactado todavía, no existe ningún fichero SPE-08 en specs/ a fecha de esta corrección (2026-08-30)"
-      note: "Entidad nueva con numeración propia; afecta al cálculo de totales. BUG-004 (docs/DOC-24-BUGS.json) sigue abierto. Los campos owner: A-06 / target_doc: DOC-08 que llevaba antes este bloque se sustituyen porque ese agente y ese documento están retirados; el mecanismo vigente para formalizar el evolutivo es /spec -> specs/*.md."
+      spec_ref: "SPE-08-factura-rectificativa"
+      note: "Entregada como SPEC 08. BUG-004 (docs/DOC-24-BUGS.json) pasa a status: fixed el 2026-08-31."
   - id: Q-07
     question: "Los albaranes no tienen ninguna situación intermedia entre pendiente y facturado. ¿El taller trabaja así o falta reflejar un paso real del trabajo?"
     blocks: REQ-028
@@ -1388,13 +1602,16 @@ open_questions:
     answered_by: negocio
     answer: "Bloquear los importes negativos. El precio, el coste y el stock de una pieza, el precio de una línea de albarán y el precio por hora de la mano de obra deben ser siempre positivos."
     describes_gap_in: [REQ-019, REQ-022, REQ-034, REQ-036]
-    gap_open_until_implemented: true
+    gap_open_until_implemented: false
+    implemented_on: 2026-08-30
+    implemented_by: "SPEC 07 (specs/implemented/SPE-07-importes-negativos/SPE-07-importes-negativos.md, status: Implemented)"
+    realised_in: [BR-PEC-03, BR-PEC-04, BR-ALB-11, REQ-087, REQ-088, REQ-089]
     evolutivo:
       scope: medium
-      status: pending
+      status: implemented
       mechanism: "/spec -> specs/*.md (Origin: BUG-003)"
-      spec_ref: "SPE-07, en redacción (Draft) a fecha de esta corrección (2026-08-30); no existe todavía ningún fichero SPE-07 en specs/"
-      note: "BUG-003 (docs/DOC-24-BUGS.json) sigue abierto. Los campos owner: A-06 / target_doc: DOC-08 que llevaba antes este bloque se sustituyen porque ese agente y ese documento están retirados; el mecanismo vigente es /spec -> specs/*.md."
+      spec_ref: "SPE-07-importes-negativos"
+      note: "Entregada como SPEC 07. BUG-003 (docs/DOC-24-BUGS.json) pasa a status: fixed el 2026-08-30."
   - id: Q-13
     question: "El término estado designa a la vez la situación del albarán (pendiente o facturado) y la situación de cobro de facturas y nóminas (pendiente o pagada). El glosario lo marca como ambiguo. ¿Con qué nombres deben aparecer ambos conceptos en la interfaz y en los filtros?"
     blocks: REQ-025
@@ -1447,8 +1664,8 @@ open_questions_summary:
   answered: 6
   answered_gap_confirmed: 6
   answered_as_designed: 0
-  pending_evolutivo: 5
-  implemented_evolutivo: 1
+  pending_evolutivo: 3
+  implemented_evolutivo: 3
   last_answered_on: 2026-08-16
   requirements_affected_by_open: 18
   requirements_affected_by_answered: 16
